@@ -650,33 +650,41 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 .sc .rt b{font-family:var(--font-num);font-size:12px;color:var(--text);text-align:center;}
 .sil4.focus .rt{opacity:.3;} .sil4.focus .rt.on{opacity:1;color:var(--text);font-weight:800;} .sil4.focus .rt.on .tr{height:11px;}
 .sc .ana{font-size:10.5px;color:var(--mid);background:var(--gray);border-radius:6px;padding:5px 8px;line-height:1.35;}
-/* ── bridge: market by segment 2026 vs 2030 ── */
-.vstrip{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;background:#fff;border:1px solid var(--border);border-radius:8px;padding:5px 10px;margin-bottom:8px;font-size:11px;white-space:nowrap;}
-.vstrip .lb{font-weight:800;color:var(--mid);font-size:10.5px;letter-spacing:.04em;margin-inline-end:6px;}
-.vstrip .v{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:14px;background:var(--gray);font-weight:600;color:var(--text);} .vstrip .v i{width:9px;height:9px;border-radius:50%;}
-.vstrip .v b{font-family:var(--font-num);direction:ltr;} .vstrip .v em{font-style:normal;font-size:10px;font-weight:700;direction:ltr;} .vstrip .v em.up{color:var(--green);} .vstrip .v em.flat{color:var(--amber);direction:rtl;} .vstrip .v em.down{color:var(--primary);}
-.vstrip .v.tot{background:var(--dark);color:#fff;font-weight:700;} .vstrip .v.tot b{font-size:13px;} .vstrip .v.tot u{text-decoration:none;color:var(--pink-soft);font-family:var(--font-num);font-weight:800;font-size:13px;direction:ltr;display:inline-block;}
-.vstrip .v.pa i{background:var(--pa);} .vstrip .v.ft i{background:var(--ft);} .vstrip .v.cs i{background:var(--cs);} .vstrip .v.ot i{background:var(--ot);} .vstrip .v.cp{background:#fff5f8;border:1px solid var(--primary);font-weight:800;} .vstrip .v.cp i{background:var(--cp);}
-.segrows{width:100%;display:flex;flex-direction:column;gap:6px;flex:1;min-height:0;}
-.segrows .hd{display:grid;grid-template-columns:150px 1fr 190px 120px;gap:10px;font-size:10.5px;color:var(--light);font-weight:700;padding:0 12px;} .segrows .hd small{font-weight:600;}
-.segrows .hd .k{display:inline-block;width:14px;height:7px;border-radius:4px;vertical-align:middle;margin:0 3px;} .segrows .hd .k.y0{background:#c9c0c6;} .segrows .hd .k.y1{background:var(--primary);}
-.sr{display:grid;grid-template-columns:150px 1fr 190px 120px;align-items:center;gap:10px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:5px 12px;flex:1;}
+/* ── bridge: where the new money goes, by segment ── */
+.segrows{width:100%;display:flex;flex-direction:column;gap:5px;flex:1;min-height:0;}
+.segrows .hd{display:grid;grid-template-columns:150px 1fr 196px 210px;gap:10px;font-size:10.5px;color:var(--light);font-weight:700;padding:0 12px;} .segrows .hd small{font-weight:600;}
+.segrows .hd .k{display:inline-block;width:14px;height:7px;border-radius:4px;vertical-align:middle;margin:0 3px;} .segrows .hd .k.y0{background:#c9c0c6;} .segrows .hd .k.y1{background:linear-gradient(90deg,#c25700,#5a8f9e,#0f8b8d,#e40c5b,#741984);}
+.sr{display:grid;grid-template-columns:150px 1fr 196px 210px;align-items:center;gap:10px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:5px 12px;flex:1;}
 .sr.star{background:#fff8f1;border-color:var(--amber);}
-.sr .b span u{text-decoration:none;color:var(--primary);font-size:11px;margin-inline-start:4px;}
-.sr .shr{display:grid;grid-template-columns:1fr 38px;align-items:center;gap:6px;} .sr .shr .trk{position:relative;height:16px;background:#eeeaed;border-radius:5px;}
-.sr .shr .trk i{position:absolute;right:0;top:0;height:100%;border-radius:5px;width:0;background:var(--primary);transition:width 1.2s cubic-bezier(.2,.8,.2,1);} .sr.weak .shr .trk i{background:#d9a3b6;}
-.sr .shr .trk em{position:absolute;top:-3px;bottom:-3px;right:var(--avg);border-right:2px dashed var(--dark);} .sr .shr.first .trk em::after{content:'7.7%';position:absolute;top:-12px;right:-12px;font-family:var(--font-num);font-size:9px;font-weight:800;color:var(--dark);}
-.sr .shr b{font-family:var(--font-num);font-size:15px;font-weight:800;direction:ltr;text-align:left;} .sr.weak .shr b{color:var(--primary);}
-.sr .cr b{display:block;font-size:12.5px;font-weight:800;line-height:1.15;} .sr .cr small{font-size:10px;color:var(--mid);font-weight:600;} .sr.star .cr b{color:var(--amber);}
-.sr .wn .wchip{font-size:10px;padding:3px 8px;white-space:nowrap;}
-.sr .pr{background:var(--gray);border-radius:7px;padding:5px 10px;text-align:center;line-height:1.15;} .sr .pr b{display:block;font-family:var(--font-num);font-size:13px;font-weight:800;direction:ltr;color:var(--primary-dark);} .sr .pr small{display:block;font-size:9.5px;color:var(--mid);font-weight:600;}
-.sr .pr.na{background:#f3f1f2;border:1px dashed #cdbfc8;} .sr .pr.na b{color:var(--light);}
 .sr .nm b{font-family:var(--font-num);font-size:15px;font-weight:800;display:block;direction:ltr;text-align:right;line-height:1.1;} .sr .nm small{font-size:10.5px;color:var(--mid);font-weight:600;}
-.sr .bars{display:flex;flex-direction:column;gap:3px;}
-.sr .b{display:flex;align-items:center;gap:8px;} .sr .b em{font-style:normal;font-family:var(--font-num);font-size:9.5px;color:var(--light);min-width:26px;direction:ltr;}
-.sr .b i{display:block;height:12px;border-radius:6px;width:0;transition:width 1.4s cubic-bezier(.2,.8,.2,1);} .sr .b.y0 i{background:#c9c0c6;height:9px;}
-.sr .b span{font-family:var(--font-num);font-size:12px;font-weight:700;direction:ltr;min-width:46px;color:var(--mid);} .sr .b.y1 span{color:var(--text);font-weight:800;}
-.sr .cg{text-align:center;font-family:var(--font-num);font-size:18px;font-weight:800;color:var(--primary);direction:ltr;line-height:1;} .sr .cg small{display:block;font-family:var(--font);font-size:9px;color:var(--light);font-weight:600;margin-top:2px;}
+.sr.star .nm b{color:var(--amber);}
+/* money: one bar = today (gray) + new money to 2030 (segment colour) */
+.sr .mny{display:flex;flex-direction:column;gap:3px;}
+.sr .mtrk{display:flex;height:13px;border-radius:7px;overflow:hidden;background:#f4f1f3;}
+.sr .mtrk i{display:block;height:100%;width:0;transition:width 1.3s cubic-bezier(.2,.8,.2,1);} .sr .mtrk i.base{background:#c9c0c6;}
+.sr .mnum{font-size:10.5px;color:var(--light);font-weight:600;line-height:1;}
+.sr .mnum b{font-family:var(--font-num);font-size:14px;font-weight:800;direction:ltr;display:inline-block;margin-inline-end:5px;}
+.sr .mnum span{font-family:var(--font-num);direction:ltr;display:inline-block;}
+/* share: Check Point vs the share leader, same 0–35% scale */
+.sr .shp{display:grid;grid-template-columns:1fr 40px;align-items:center;gap:7px;}
+.sr .sbs{display:flex;flex-direction:column;gap:3px;}
+.sr .sb{display:grid;grid-template-columns:26px 1fr 30px;align-items:center;gap:5px;}
+.sr .sb em{font-style:normal;font-family:var(--font-num);font-size:9.5px;font-weight:700;color:var(--light);direction:ltr;text-align:right;}
+.sr .sb .t{height:11px;background:#f0eef0;border-radius:6px;overflow:hidden;display:flex;}
+.sr .sb .t i{display:block;height:100%;width:0;border-radius:6px;background:var(--primary);transition:width 1.2s cubic-bezier(.2,.8,.2,1);}
+.sr .sb b{font-family:var(--font-num);font-size:12.5px;font-weight:800;direction:ltr;text-align:left;color:var(--mid);}
+.sr .sb.me em{color:var(--primary);} .sr .sb.me b{color:var(--primary);font-size:14px;}
+.sr .gapx{font-family:var(--font-num);font-size:16px;font-weight:800;direction:ltr;text-align:center;color:var(--primary-dark);line-height:1;}
+.sr .gapx.lead{font-family:var(--font);font-size:10px;font-weight:800;color:var(--green);}
+/* verdict */
+.sr .vrd{display:flex;flex-direction:column;gap:2px;align-items:flex-start;}
+.sr .vchip{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 9px;border-radius:12px;white-space:nowrap;}
+.sr .vchip.focus{background:var(--amber);color:#fff;} .sr .vchip.hold{background:var(--dark);color:#fff;} .sr .vchip.skip{background:var(--gray);color:var(--light);border:1px dashed #cdbfc8;}
+.sr .vrd small{font-size:10px;color:var(--mid);font-weight:600;line-height:1.25;}
+/* the line that carries the argument */
+.sdiv{display:flex;align-items:center;gap:9px;font-size:11px;color:var(--text);font-weight:600;padding:0 12px;}
+.sdiv::before,.sdiv::after{content:'';flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--primary) 0 6px,transparent 6px 12px);}
+.sdiv b{font-family:var(--font-num);font-size:14px;font-weight:800;color:var(--primary);direction:ltr;display:inline-block;}
 /* ── 4a: vendor share momentum ── */
 .mktbar{display:inline-flex;align-items:center;gap:8px;background:var(--dark);color:#fff;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:600;margin-bottom:10px;align-self:flex-start;}
 .mktbar b{font-family:var(--font-num);direction:ltr;font-size:16px;font-weight:800;} .mktbar u{text-decoration:none;color:var(--pink-soft);font-family:var(--font-num);font-weight:800;font-size:16px;direction:ltr;}
@@ -705,10 +713,10 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 .racecard .thd{font-size:14px;font-weight:800;color:#fff;letter-spacing:.02em;}
 .donuts{display:flex;justify-content:space-between;gap:8px;}
 .dn2{display:flex;flex-direction:column;align-items:center;gap:7px;flex:1;}
-.dn2 .ring{width:76px;height:76px;border-radius:50%;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.dn2 .ring::after{content:'';position:absolute;width:46px;height:46px;border-radius:50%;background:var(--dark);}
-.dn2 .ring em{position:relative;z-index:1;font-style:normal;font-size:8.5px;font-weight:800;color:var(--pink-soft);letter-spacing:.06em;line-height:1;}
-.dn2 .ring span{position:relative;z-index:1;font-family:var(--font-num);font-weight:800;font-size:15px;color:#fff;direction:ltr;line-height:1.1;}
+.dn2 .ring{width:66px;height:66px;border-radius:50%;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.dn2 .ring::after{content:'';position:absolute;width:40px;height:40px;border-radius:50%;background:var(--dark);}
+.dn2 .ring em{position:relative;z-index:1;font-style:normal;font-size:8px;font-weight:800;color:var(--pink-soft);letter-spacing:.06em;line-height:1;}
+.dn2 .ring span{position:relative;z-index:1;font-family:var(--font-num);font-weight:800;font-size:13px;color:#fff;direction:ltr;line-height:1.1;}
 .dn2 .ring.y20{background:conic-gradient(var(--cp) 0 8.3%,var(--pa) 8.3% 22.8%,var(--ft) 22.8% 39.3%,var(--cs) 39.3% 52.8%,#6b5b66 52.8% 100%);}
 .dn2 .ring.y26{background:conic-gradient(var(--cp) 0 7.7%,var(--pa) 7.7% 27.2%,var(--ft) 27.2% 46.2%,var(--cs) 46.2% 59.2%,#6b5b66 59.2% 100%);}
 .dn2 .ring.y30{background:conic-gradient(var(--cp) 0 6.5%,var(--pa) 6.5% 30.5%,var(--ft) 30.5% 52.5%,var(--cs) 52.5% 64.5%,#6b5b66 64.5% 100%);}
@@ -717,6 +725,16 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 .dleg span{display:inline-flex;align-items:center;gap:4px;} .dleg span::before{content:'';width:8px;height:8px;border-radius:50%;}
 .dleg .cp::before{background:var(--cp);} .dleg .pa::before{background:var(--pa);} .dleg .ft::before{background:var(--ft);} .dleg .cs::before{background:var(--cs);} .dleg .ot::before{background:#6b5b66;}
 .tcap{font-size:12.5px;line-height:1.55;color:rgba(255,255,255,.85);} .tcap b{color:#fff;}
+.shtab{width:100%;border-collapse:collapse;font-size:10.5px;color:rgba(255,255,255,.9);}
+.shtab th{font-family:var(--font-num);font-weight:700;color:rgba(255,255,255,.5);font-size:9.5px;padding:2px 3px;text-align:center;direction:ltr;}
+.shtab th:first-child{text-align:start;}
+.shtab td{padding:2.5px 3px;text-align:center;font-family:var(--font-num);font-weight:700;direction:ltr;}
+.shtab td:first-child{text-align:start;font-family:var(--font);font-weight:600;white-space:nowrap;}
+.shtab td i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-inline-end:5px;vertical-align:middle;}
+.shtab tr.pa td i{background:var(--pa);} .shtab tr.ft td i{background:var(--ft);} .shtab tr.cs td i{background:var(--cs);} .shtab tr.cp td i{background:var(--cp);} .shtab tr.ot td i{background:#6b5b66;}
+.shtab tr.cp{background:rgba(228,12,91,.14);} .shtab tr.cp td{color:#fff;}
+.shtab tr.ot td{color:rgba(255,255,255,.5);}
+.shtab tr.hd2 td{padding-top:5px;}
 .bridge .tot{font-size:14px;color:var(--mid);font-weight:600;} .bridge .tot b{font-family:var(--font-num);color:var(--text);font-size:19px;direction:ltr;display:inline-block;} .bridge .tot em{font-style:normal;color:var(--primary);font-weight:800;font-family:var(--font-num);direction:ltr;display:inline-block;margin-inline-start:6px;}
 .bridge{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;}
 .bridge .two{display:flex;gap:40px;width:100%;max-width:1000px;}
@@ -925,8 +943,14 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
           <div class="dn2"><div class="ring y26"><em>CP</em><span>7.7%</span></div><div class="yl">2026<small>היום</small></div></div>
           <div class="dn2"><div class="ring y30"><em>CP</em><span>6.5%</span></div><div class="yl">2030<small>תחזית</small></div></div>
         </div>
-        <div class="dleg"><span class="cp">Check Point</span><span class="pa">Palo Alto</span><span class="ft">Fortinet</span><span class="cs">Cisco</span><span class="ot">אחרים</span></div>
-        <div class="tcap">הפרוסה של <b>Check Point</b> מצטמצמת משנה לשנה, בעוד <b>Palo Alto</b> ו-<b>Fortinet</b> תופסים נתח גדל.</div>
+        <table class="shtab">
+          <tr><th>נתח %</th><th>2020</th><th>2026</th><th>2030</th></tr>
+          <tr class="pa"><td><i></i>Palo Alto</td><td>14.5</td><td>19.5</td><td>24</td></tr>
+          <tr class="ft"><td><i></i>Fortinet</td><td>16.5</td><td>19</td><td>22</td></tr>
+          <tr class="cs"><td><i></i>Cisco</td><td>13</td><td>13</td><td>12</td></tr>
+          <tr class="cp"><td><i></i>Check Point</td><td>8.3</td><td>7.7</td><td>6.5</td></tr>
+          <tr class="ot"><td><i></i>אחרים</td><td>47.7</td><td>40.8</td><td>35.5</td></tr>
+        </table>
       </div>
     </div>
     <div class="thread" style="margin-top:10px">
@@ -942,26 +966,25 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
   <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
 </section>
 
-<!-- ═══════════ 4b · SEGMENT GROWTH MAP ═══════════ -->
+<!-- ═══════════ 4b · WHERE THE NEW MONEY GOES ═══════════ -->
 <section class="slide" data-ch="2" id="sBridge">
-  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>שוק ה-Firewall: שישה סגמנטים, שש הזדמנויות</h2></div>
-    <div class="tags"><span class="tag pink">$13.8B → ~$20B</span><span class="tag purple">6 Segments</span><span class="tag amber">2026 → 2030</span></div></div>
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>שוק ה-Firewall: לאן הולך הכסף החדש</h2></div>
+    <div class="tags"><span class="tag amber">+$6.5B New</span><span class="tag pink">$13.8B → ~$20B</span><span class="tag purple">2026 → 2030</span></div></div>
   <div class="rail"></div>
   <div class="body">
     <div class="eyebrow">פרק 2 · השוק</div>
-    <h1 class="title">השוק גדל 45% עד 2030 — <span class="hl">אבל הצמיחה מרוכזת בדיוק בסגמנטים שבהם אנחנו רק 3–5%</span></h1>
-    <div class="mktbar" id="mtot"></div>
+    <h1 class="title">71% מהכסף החדש עד 2030 מרוכז בשלושה סגמנטים, <span class="hl">ובהם Check Point מחזיק 3.6%</span></h1>
     <div class="segrows" id="segrows">
-      <div class="hd"><span>סגמנט</span><span>הכנסות · <i class="k y0"></i> 2026 · <i class="k y1"></i> 2030 · צמיחה/שנה</span><span>נתח Check Point <small>(קו = הממוצע 7.7%)</small></span><span>מי מוביל בסגמנט</span></div>
+      <div class="hd"><span>סגמנט</span><span><i class="k y0"></i> גודל 2026 · <i class="k y1"></i> כסף חדש עד 2030 <small>(השורות מוינו לפי הכסף החדש)</small></span><span>נתח שוק: Check Point מול מוביל הנתח</span><span>הכרעה</span></div>
     </div>
     <div class="thread" style="margin-top:8px">
-      <div class="k">3–5%<small>בצמיחה</small></div><div class="sep"></div>
-      <div class="t">הצמיחה מרוכזת ב-<b>Branch, Data Center</b> ו-<b>Cloud</b>, שם אנחנו ב-<b>3–5%</b> בלבד. חזקים בסגמנטים שגדלים לאט. השלב הבא: מה מכריע בכל סגמנט.</div>
-      <div class="next">הבא: <b>מה מכריע בכל סגמנט</b></div>
+      <div class="k">25G<small>צוואר הבקבוק</small></div><div class="sep"></div>
+      <div class="t">אותו מספר חוסם את שני הכיסים: הצמיחה ב-<b>Data Center</b> בסך <b>+$1.3B</b>, וה-<span class="en">renewals</span> ב-<b>HQ</b> ו-<b>Regulated</b> בסך <b>+$1.5B</b>. סגמנט אחד לתקוף, שלושה להגן, פתרון הנדסי אחד.</div>
     </div>
     <div class="src" style="margin-top:6px">
-      <span class="t">מקורות</span> MarkWide CAGR 9.6% · Gartner 07/2026 · IDC Security Appliance Tracker · Gartner Peer Insights · CyberRatings · נתח CP לסגמנט — אומדן מכויל לסך 7.7%
+      <span class="t">מקורות</span> MarkWide CAGR 9.6% · Gartner 07/2026 · IDC Security Appliance Tracker · Gartner Peer Insights · CyberRatings
     </div>
+    <div class="assume"><b>הנחות:</b> כסף חדש = גודל 2026 × (1+CAGR)⁴ פחות גודל 2026. נתחי ה-vendors לסגמנט הם <b>אומדן</b> מכויל, כך שהסכום המשוקלל מחזיר את הנתחים הכוללים: CP 7.7% · PA 19.5% · FTN 19% · Cisco 13%. "מוביל הנתח" = נתח שוק, ולא מי מנצח בקריטריון (השקף הבא).</div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
   <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
@@ -1702,20 +1725,38 @@ const SEG=[{n:'HQ',s0:22,c:.05,g:0,col:'#741984',sh:.10},{n:'Regulated',s0:14,c:
  function focus(i){document.querySelectorAll('#attrs button').forEach(b=>b.classList.toggle('on',+b.dataset.a===i)); grid.classList.add('focus'); grid.querySelectorAll('.rt').forEach(r=>r.classList.toggle('on',+r.dataset.a===i)); document.getElementById('aexp').innerHTML=ATTR[i].e;}
  document.querySelectorAll('#attrs button').forEach(b=>b.onclick=()=>focus(+b.dataset.a)); focus(0);})();
 
-/* ───────── BRIDGE: market by segment, 2026 vs 2030 (same SEG model as the next slide) ───────── */
+/* ───────── BRIDGE: where the new money goes, 2026 → 2030 (same SEG model as the next slide) ───────── */
 (function(){const s=document.getElementById('sBridge'), wrap=document.getElementById('segrows');
  const DESC={HQ:'מטה ארגוני · קמפוס',Regulated:'בנקים · ממשלה · בריאות',OT:'תעשייה · SCADA · תשתיות',Branch:'סניפים · SD-WAN',DC:'Data Center · Hyperscale',Cloud:'Firewall וירטואלי בענן'};
- const PROD={HQ:'<b>9300 · 9400</b>',Regulated:'<b>כל הקו</b><small>FIPS · EAL4+</small>',OT:'<b>9100–9400</b><small>latency 1.85μs</small>',Branch:'<b>9100 · 9200</b><small>+ Spark לקטנים</small>',DC:'<b>9700 · 9800</b><small>+ Maestro</small>',Cloud:'<b>CloudGuard</b><small>לא ה-9000</small>'};
- const WIN={Branch:['ft','Fortinet'],DC:['mix','PA / Fortinet'],HQ:['cp','Check Point'],Regulated:['cp','Check Point'],Cloud:['pa','Palo Alto'],OT:['cp','Check Point']};
- const AVG=7.7, MAX=22;
- const rows=SEG.map(sg=>({n:sg.n,col:sg.col,c:sg.c,sh:sg.sh*100,v0:sg.s0/100*13.8,v1:sg.s0/100*13.8*Math.pow(1+sg.c,4)})).sort((a,b)=>b.v1-a.v1);
- const max=rows[0].v1, t0=rows.reduce((a,r)=>a+r.v0,0), t1=rows.reduce((a,r)=>a+r.v1,0);
- document.getElementById('mtot').innerHTML=`השוק: <b>$${t0.toFixed(1)}B</b> → <b>~$20B</b> <u>≈ +45%</u> עד 2030 · MarkWide 9.6% CAGR`;
- wrap.insertAdjacentHTML('beforeend',rows.map((r,i)=>`<div class="sr ${r.n==='DC'?'star':''} ${r.sh<AVG?'weak':'strong'}"><div class="nm"><b>${r.n}</b><small>${DESC[r.n]}</small></div>
-   <div class="bars"><div class="b y0"><em>2026</em><i data-w="${r.v0/max*100}"></i><span>$${r.v0.toFixed(1)}B</span></div><div class="b y1"><em>2030</em><i data-w="${r.v1/max*100}" style="background:${r.col}"></i><span>$${r.v1.toFixed(1)}B <u>+${Math.round(r.c*100)}%</u></span></div></div>
-   <div class="shr ${i?'':'first'}" style="--w:${r.sh/MAX*100}%;--avg:${AVG/MAX*100}%"><div class="trk"><i data-w="${r.sh/MAX*100}"></i><em></em></div><b>${r.sh.toFixed(0)}%</b></div>
-   <div class="wn"><span class="wchip ${WIN[r.n][0]}">${WIN[r.n][1]}</span></div></div>`).join(''));
- let shown=false; function run(){shown=true; wrap.querySelectorAll('i[data-w]').forEach((el,k)=>setTimeout(()=>el.style.width=el.dataset.w+'%',k*50));}
+ /* share leader per segment — estimate, calibrated so the weighted sum returns the known totals */
+ const LEAD={Branch:['ft','FTN',28],DC:['pa','PA',26],Cloud:['pa','PA',34],Regulated:['pa','PA',16],HQ:['pa','PA',20],OT:['ft','FTN',20]};
+ /* verdict: focus one, defend three, skip two */
+ const VRD={DC:['focus','★ להתמקד','המוצר כבר שם. הפער הוא מספר אחד'],
+            Branch:['skip','✕ לא הקרב שלנו','מכריעים מחיר ו-SD-WAN. שניהם לא שלנו'],
+            Cloud:['skip','✕ מוצר אחר','CloudGuard, לא קופסת ה-9000'],
+            Regulated:['hold','🛡 להגן','Compliance על כל הקו. הנתח הגבוה שלנו'],
+            HQ:['hold','🛡 להגן','ב-renewal בודקים היום גם TP+TLS'],
+            OT:['hold','🛡 להגן','latency 1.85μs. קטן אבל שלנו']};
+ const SMAX=35, SPLIT=3;
+ const rows=SEG.map(sg=>{const v0=sg.s0/100*13.8, v1=v0*Math.pow(1+sg.c,4);
+   return {n:sg.n,col:sg.col,c:sg.c,sh:sg.sh*100,v0,v1,add:v1-v0};}).sort((a,b)=>b.add-a.add);
+ const max=Math.max(...rows.map(r=>r.v1)), tAdd=rows.reduce((a,r)=>a+r.add,0);
+ const grp=k=>{const g=k?rows.slice(SPLIT):rows.slice(0,SPLIT), a=g.reduce((x,r)=>x+r.add,0);
+   return {pct:Math.round(a/tAdd*100), sh:(g.reduce((x,r)=>x+r.add*r.sh,0)/a).toFixed(1)};};
+ const up=grp(0), dn=grp(1);
+ const row=r=>{const L=LEAD[r.n], V=VRD[r.n], lead=r.sh>=L[2];
+  return `<div class="sr ${r.n==='DC'?'star':''}"><div class="nm"><b>${r.n}</b><small>${DESC[r.n]}</small></div>
+   <div class="mny"><div class="mtrk"><i class="base" data-w="${r.v0/max*100}"></i><i class="add" data-w="${r.add/max*100}" style="background:${r.col}"></i></div>
+    <div class="mnum"><b style="color:${r.col}">+$${r.add.toFixed(1)}B</b> חדש · <span>$${r.v0.toFixed(1)}B → $${r.v1.toFixed(1)}B</span> · <span>+${Math.round(r.c*100)}%/y</span></div></div>
+   <div class="shp"><div class="sbs">
+     <div class="sb me"><em>CP</em><div class="t"><i data-w="${r.sh/SMAX*100}"></i></div><b>${r.sh.toFixed(0)}%</b></div>
+     <div class="sb"><em>${L[1]}</em><div class="t"><i data-w="${L[2]/SMAX*100}" style="background:var(--${L[0]})"></i></div><b>${L[2]}%</b></div></div>
+    <div class="gapx ${lead?'lead':''}">${lead?'מובילים':'×'+(L[2]/r.sh).toFixed(L[2]/r.sh<2?1:0)}</div></div>
+   <div class="vrd"><span class="vchip ${V[0]}">${V[1]}</span><small>${V[2]}</small></div></div>`;};
+ wrap.insertAdjacentHTML('beforeend',rows.slice(0,SPLIT).map(row).join('')
+  +`<div class="sdiv">מעל הקו: <b>${up.pct}%</b> מהכסף החדש, ונתח משוקלל של <b>${up.sh}%</b> · מתחת לקו: <b>${dn.pct}%</b> מהכסף, ונתח של <b>${dn.sh}%</b></div>`
+  +rows.slice(SPLIT).map(row).join(''));
+ let shown=false; function run(){shown=true; wrap.querySelectorAll('i[data-w]').forEach((el,k)=>setTimeout(()=>el.style.width=el.dataset.w+'%',k*40));}
  new MutationObserver(()=>{if(s.classList.contains('active')&&!shown)setTimeout(run,400);}).observe(s,{attributes:true});})();
 
 /* ───────── S6 simulator ───────── */
