@@ -1,0 +1,6 @@
+# Cursor IDE files
+.cursor/
+
+# OS files
+Thumbs.db
+.DS_Store

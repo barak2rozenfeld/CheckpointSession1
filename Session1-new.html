@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check Point 9000 — Session 1 | ברק רוזנפלד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#e40c5b; --primary-dark:#b70d4e; --pink-soft:#ff7ba8;
+    --purple:#741984; --dark:#290e23; --dark-2:#1a0916;
+    --white:#fff; --off:#f7f5f6; --gray:#f0eef0; --border:#e4e4e4;
+    --text:#1a1a1a; --mid:#555; --light:#8a8a8a;
+    --green:#0a8a4b; --amber:#c25700; --steel:#5a8f9e;
+    --font:'Heebo','Segoe UI',Arial,sans-serif;
+    --font-num:'Barlow Semi Condensed','Heebo',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;overflow:hidden;background:#0d0510;font-family:var(--font);}
+  svg text{direction:ltr;}
+
+  /* bidi isolation for Latin/technical runs inside Hebrew */
+  .en{unicode-bidi:isolate;direction:ltr;}
+  .num{unicode-bidi:isolate;direction:ltr;font-family:var(--font-num);font-weight:700;}
+
+  /* ── Deck ── */
+  .deck{position:relative;width:100vw;height:100vh;}
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;
+    opacity:0;visibility:hidden;transform:translateX(40px);
+    transition:opacity .45s ease, transform .45s ease, visibility .45s;background:var(--white);}
+  .slide.active{opacity:1;visibility:visible;transform:translateX(0);z-index:2;}
+
+  /* ── chrome ── */
+  .topbar{background:var(--dark);padding:18px 60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+  .topbar .brand{display:flex;align-items:center;gap:18px;}
+  .topbar .brand img{height:24px;}
+  .topbar .brand .sep{width:1px;height:24px;background:rgba(255,255,255,.2);}
+  .topbar .brand h2{color:#fff;font-size:17px;font-weight:700;}
+  .tags{display:flex;gap:8px;}
+  .tag{padding:4px 11px;border-radius:3px;font-size:11px;font-weight:700;letter-spacing:.04em;}
+  .tag.pink{background:rgba(228,12,91,.18);color:var(--primary);}
+  .tag.purple{background:rgba(116,25,132,.24);color:#c98fd6;}
+  .tag.amber{background:rgba(194,87,0,.2);color:#e08a3c;}
+
+  .tristripe{display:flex;flex-shrink:0;}
+  .tristripe .a{flex:3;height:4px;background:var(--primary);}
+  .tristripe .b{flex:1;height:4px;background:var(--purple);}
+  .tristripe .c{flex:1;height:4px;background:var(--dark);}
+
+  .body{flex:1;padding:28px 60px;overflow:hidden;display:flex;flex-direction:column;}
+  .footer{flex-shrink:0;background:var(--off);padding:11px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);}
+  .footer .c{color:var(--light);font-size:11px;}
+  .footer .n{color:var(--primary);font-size:11px;font-weight:700;}
+
+  .eyebrow{color:var(--primary);font-size:12px;font-weight:700;letter-spacing:.12em;margin-bottom:6px;}
+  .eyebrow.amber{color:var(--amber);}
+  .eyebrow.purple{color:var(--purple);}
+  h1.title{font-size:24px;font-weight:800;color:var(--text);line-height:1.15;margin-bottom:2px;}
+
+  /* ══ TITLE SLIDE ══ */
+  #s1{background:var(--dark-2);justify-content:center;overflow:hidden;}
+  #s1 .hero-glow{position:absolute;left:50%;bottom:-30%;transform:translateX(-50%);width:120%;height:110%;
+    background:radial-gradient(ellipse at center,rgba(255,120,20,.55) 0%,rgba(228,12,91,.55) 22%,rgba(116,25,132,.35) 45%,rgba(41,14,35,0) 68%);filter:blur(6px);pointer-events:none;}
+  #s1 .hero-inner{position:relative;z-index:2;padding:0 90px;}
+  #s1 img.logo{height:34px;margin-bottom:50px;}
+  #s1 .eyebrow{color:var(--pink-soft);margin-bottom:16px;}
+  #s1 h1{font-size:56px;font-weight:800;color:#fff;line-height:1.05;letter-spacing:-.01em;margin-bottom:14px;}
+  #s1 .sub{font-size:22px;color:rgba(255,255,255,.8);font-weight:300;margin-bottom:44px;}
+  #s1 .meta{display:flex;align-items:stretch;}
+  #s1 .meta .item{padding-inline:30px;border-inline-start:1px solid rgba(255,255,255,.2);}
+  #s1 .meta .item:first-child{padding-inline-start:0;border:0;}
+  #s1 .meta .lbl{color:rgba(255,255,255,.45);font-size:11px;letter-spacing:.1em;margin-bottom:5px;}
+  #s1 .meta .val{color:#fff;font-size:16px;font-weight:500;}
+  #s1 .nav-hint{position:absolute;bottom:34px;inset-inline-start:90px;color:rgba(255,255,255,.4);font-size:13px;z-index:2;}
+
+  /* ── blocks ── */
+  .card{border:1px solid var(--border);border-radius:6px;padding:16px 18px;background:var(--white);}
+  .card .ch{color:var(--mid);font-size:11px;font-weight:700;letter-spacing:.08em;margin-bottom:12px;}
+  .svg-frame{border:1px solid var(--border);border-radius:6px;padding:14px;background:var(--off);display:flex;align-items:center;justify-content:center;}
+  .svg-frame svg{width:100%;height:auto;}
+
+  /* org-type cards */
+  .orgs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .org{border:1px solid var(--border);border-top:3px solid var(--primary);border-radius:6px;padding:13px 15px;transition:transform .15s,box-shadow .15s;}
+  .org:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(228,12,91,.12);}
+  .org:nth-child(2){border-top-color:var(--purple);}
+  .org:nth-child(3){border-top-color:var(--amber);}
+  .org:nth-child(4){border-top-color:var(--steel);}
+  .org h4{font-size:14.5px;color:var(--text);margin-bottom:6px;}
+  .org p{font-size:12px;color:var(--mid);line-height:1.5;}
+
+  /* mechanism chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .chip{background:var(--off);border:1px solid var(--border);border-radius:20px;padding:5px 13px;font-size:12px;color:var(--text);font-weight:500;}
+  .chip b{color:var(--primary-dark);}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  thead tr{background:var(--dark);}
+  th{padding:9px 11px;color:#fff;font-weight:600;font-size:11.5px;text-align:right;white-space:nowrap;}
+  th.c{text-align:center;} th.cp{color:var(--primary);font-weight:700;}
+  td{padding:8px 11px;border-bottom:1px solid var(--border);color:var(--text);}
+  td.c{text-align:center;}
+  tbody tr:nth-child(even){background:var(--off);}
+  tbody tr{transition:background .15s;}
+  tbody tr:hover{background:rgba(228,12,91,.06);}
+  .wt{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;}
+  .wt.crit{background:rgba(183,13,78,.12);color:var(--primary-dark);}
+  .wt.high{background:rgba(116,25,132,.12);color:var(--purple);}
+  .ok{color:var(--green);font-weight:600;} .warn{color:var(--amber);font-weight:600;} .bad{color:var(--primary-dark);font-weight:600;}
+  .seg-cell{font-weight:600;color:var(--primary-dark);}
+
+  /* why-box */
+  .why-box{background:var(--dark);border-radius:6px;padding:16px 20px;color:rgba(255,255,255,.9);font-size:13px;line-height:1.6;}
+  .why-box .h{color:var(--pink-soft);font-size:11px;font-weight:700;letter-spacing:.1em;margin-bottom:7px;}
+  .why-box b{color:#fff;}
+
+  /* winner tag */
+  .win-cp{color:var(--primary-dark);font-weight:700;}
+  .win-other{color:var(--mid);font-weight:600;}
+
+  /* donut */
+  .legend .row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);}
+  .legend .row:last-child{border:0;}
+  .legend .name{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--text);font-weight:500;}
+  .legend .sw{width:11px;height:11px;border-radius:3px;}
+  .legend .pct{font-family:var(--font-num);font-size:14px;font-weight:700;color:var(--text);}
+
+  /* verticals strip */
+  .verts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .vert{border:1px solid var(--border);border-inline-start:3px solid var(--purple);border-radius:5px;padding:10px 13px;}
+  .vert h4{font-size:13px;color:var(--text);margin-bottom:5px;}
+  .vert span{font-size:11px;color:var(--mid);line-height:1.5;display:block;}
+
+  /* bars (animated) */
+  .bar-row{margin-bottom:12px;}
+  .bar-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;}
+  .bar-head .lbl{font-size:12.5px;font-weight:600;color:var(--text);}
+  .bar-head .val{font-family:var(--font-num);font-size:15px;font-weight:700;}
+  .bar-track{background:var(--gray);border-radius:3px;height:13px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:3px;width:0;transition:width 1s cubic-bezier(.2,.8,.2,1);}
+  .slide.active .bar-fill{width:var(--w);}
+
+  /* architecture schematics */
+  .arch{border:1px solid var(--border);border-radius:6px;padding:12px 14px;margin-bottom:10px;}
+  .arch.cp{border-inline-start:3px solid var(--primary);}
+  .arch.ft{border-inline-start:3px solid var(--amber);}
+  .arch.pa{border-inline-start:3px solid var(--purple);}
+  .arch .at{font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .arch .at .tp{font-family:var(--font-num);}
+  .flow{display:flex;align-items:center;gap:7px;}
+  .node{padding:6px 10px;border-radius:4px;font-size:11px;font-weight:600;color:#fff;white-space:nowrap;}
+  .node.green{background:var(--green);} .node.amber{background:var(--amber);} .node.purple{background:var(--purple);} .node.gray{background:#8a8a8a;}
+  .flow .ar{color:var(--light);font-size:14px;}
+  .arch .note{font-size:11px;color:var(--mid);margin-top:7px;}
+  .arch .note b{color:var(--amber);}
+
+  /* callout */
+  .callout{background:var(--dark);border-radius:6px;padding:14px 20px;display:flex;align-items:center;gap:20px;}
+  .callout .big{font-family:var(--font-num);font-size:36px;font-weight:700;color:var(--primary);line-height:1;flex-shrink:0;text-align:center;}
+  .callout .big small{display:block;font-family:var(--font);font-size:10px;color:rgba(255,255,255,.55);font-weight:400;margin-top:4px;}
+  .callout .sep{width:1px;align-self:stretch;background:rgba(255,255,255,.16);}
+  .callout .txt{color:rgba(255,255,255,.9);font-size:13px;line-height:1.55;}
+  .callout .txt b{color:#fff;}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .grid-wide{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;}
+  .mt-auto{margin-top:auto;}
+
+  /* ── funnel (chain of logic) ── */
+  .funnel{display:flex;align-items:stretch;gap:10px;margin:14px 0 6px;}
+  .stage{flex:1;border-radius:8px;padding:15px 15px 13px;position:relative;border:1px solid var(--border);display:flex;flex-direction:column;min-height:120px;}
+  .stage .sno{position:absolute;top:-11px;inset-inline-start:14px;width:26px;height:26px;border-radius:50%;
+    background:var(--primary);color:#fff;font-family:var(--font-num);font-weight:700;font-size:14px;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(228,12,91,.35);}
+  .stage .stp{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--light);margin-top:4px;}
+  .stage .st{font-size:14.5px;font-weight:800;color:var(--text);margin:5px 0 6px;line-height:1.15;}
+  .stage .sd{font-size:11.5px;color:var(--mid);line-height:1.5;}
+  .stage.s-a{background:#faf6f8;}
+  .stage.s-b{background:#f8eef3;}
+  .stage.s-c{background:#f6e4ee;}
+  .stage.s-d{background:var(--dark);border-color:var(--dark);}
+  .stage.s-d .st{color:#fff;} .stage.s-d .sd{color:rgba(255,255,255,.8);} .stage.s-d .stp{color:var(--pink-soft);}
+  .stage.s-d .sno{background:#fff;color:var(--primary);}
+  .stage .kpi{margin-top:auto;padding-top:8px;font-size:11.5px;color:var(--mid);}
+  .stage .kpi b{font-family:var(--font-num);font-size:14px;}
+  .stage.s-d .kpi{color:rgba(255,255,255,.75);}
+  .funnel .fx{flex:0 0 auto;align-self:center;width:0;height:0;
+    border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:12px solid var(--primary);}
+  .to-next{display:flex;align-items:center;justify-content:flex-start;gap:10px;
+    background:rgba(228,12,91,.07);border:1px dashed var(--primary);border-radius:6px;padding:9px 16px;margin-top:12px;}
+  .to-next .st5{color:var(--primary-dark);font-weight:700;font-size:13px;}
+  .to-next .arrow-lg{color:var(--primary);font-size:18px;font-weight:800;}
+  .to-next .desc{color:var(--mid);font-size:12px;}
+
+  /* ── security inspection stack ── */
+  .stack-wrap{display:grid;grid-template-columns:1.08fr .92fr;gap:18px;margin-top:14px;align-items:stretch;}
+  .inspection-stack{border:1px solid var(--border);border-radius:8px;background:var(--off);padding:18px;display:flex;flex-direction:column;gap:12px;}
+  .layer{border-radius:7px;padding:13px 16px;border:1px solid var(--border);background:#fff;display:grid;grid-template-columns:86px 1fr 125px;gap:14px;align-items:center;}
+  .layer.fw{border-inline-start:5px solid var(--green);}
+  .layer.ngfw{border-inline-start:5px solid var(--purple);}
+  .layer.tp{border-inline-start:5px solid var(--primary);box-shadow:0 10px 22px rgba(228,12,91,.08);}
+  .layer .abbr{font-family:var(--font-num);font-size:26px;font-weight:700;direction:ltr;text-align:center;}
+  .layer.fw .abbr{color:var(--green);} .layer.ngfw .abbr{color:var(--purple);} .layer.tp .abbr{color:var(--primary);}
+  .layer h3{font-size:15px;color:var(--text);margin-bottom:4px;}
+  .layer p{font-size:11.5px;color:var(--mid);line-height:1.45;}
+  .layer .metric{font-family:var(--font-num);font-size:17px;font-weight:700;text-align:center;padding:8px;border-radius:5px;background:var(--off);direction:ltr;}
+  .engine-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px;}
+  .engine{border:1px solid var(--border);border-radius:6px;padding:10px 12px;background:#fff;}
+  .engine b{display:block;color:var(--primary-dark);font-size:12.5px;margin-bottom:4px;}
+  .engine span{font-size:11px;color:var(--mid);line-height:1.35;display:block;}
+  .metric-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+  .metric-card{border:1px solid var(--border);border-top:3px solid var(--green);border-radius:6px;padding:11px;background:#fff;text-align:center;}
+  .metric-card:nth-child(2){border-top-color:var(--purple);}
+  .metric-card:nth-child(3){border-top-color:var(--primary);}
+  .metric-card .m{font-family:var(--font-num);font-size:24px;font-weight:700;direction:ltr;}
+  .metric-card .l{font-size:11px;color:var(--mid);}
+  .layer-map{display:grid;grid-template-columns:1.08fr .92fr;gap:18px;margin-top:14px;align-items:stretch;}
+  .osi-map{border:1px solid var(--border);border-radius:8px;background:var(--off);padding:16px;}
+  .osi-grid{display:grid;grid-template-columns:90px 1fr;gap:8px;margin-top:10px;}
+  .osi-layer{height:58px;border-radius:7px;border:1px solid var(--border);background:#fff;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;}
+  .osi-layer .ln{font-family:var(--font-num);font-size:16px;font-weight:700;color:var(--text);direction:ltr;}
+  .osi-layer .ld{font-size:10.5px;color:var(--mid);line-height:1.25;}
+  .coverage{position:relative;border-radius:7px;background:#fff;border:1px solid var(--border);overflow:hidden;}
+  .cover-band{position:absolute;left:14px;right:14px;border-radius:7px;padding:8px 12px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 6px 14px rgba(0,0,0,.08);}
+  .cover-band .btitle{font-family:var(--font-num);font-size:20px;font-weight:700;direction:ltr;}
+  .cover-band .bdesc{font-size:11px;line-height:1.3;text-align:right;}
+  .cover-band.fw{bottom:7px;height:122px;background:var(--green);}
+  .cover-band.ngfw{top:66px;height:185px;background:var(--purple);opacity:.94;}
+  .cover-band.tp{top:7px;height:300px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));opacity:.94;}
+  .process-flow{border:1px solid var(--border);border-radius:8px;background:#fff;padding:16px;display:flex;flex-direction:column;}
+  .flow-step{display:grid;grid-template-columns:30px 1fr 72px;gap:10px;align-items:center;border-bottom:1px solid var(--border);padding:10px 0;}
+  .flow-step:first-of-type{padding-top:0;}
+  .flow-step:last-of-type{border:0;}
+  .flow-step .idx{width:28px;height:28px;border-radius:50%;background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-weight:700;}
+  .flow-step h4{font-size:13px;color:var(--text);margin-bottom:3px;}
+  .flow-step p{font-size:11px;color:var(--mid);line-height:1.35;}
+  .badge{border-radius:18px;padding:4px 8px;text-align:center;font-size:10px;font-weight:700;color:#fff;direction:ltr;}
+  .badge.fw{background:var(--green);} .badge.ngfw{background:var(--purple);} .badge.tp{background:var(--primary);}
+  .packet-stage{display:grid;grid-template-columns:92px 1fr 105px;gap:12px;align-items:center;border:1px solid var(--border);border-radius:7px;background:#fff;padding:10px 12px;margin-bottom:8px;position:relative;}
+  .packet-stage::before{content:"";position:absolute;inset-inline-start:43px;top:100%;width:2px;height:9px;background:#cfc7cc;}
+  .packet-stage:last-child::before{display:none;}
+  .packet-stage .stage-layer{font-family:var(--font-num);font-size:18px;font-weight:700;direction:ltr;text-align:center;}
+  .packet-stage .stage-main h4{font-size:13.5px;color:var(--text);margin-bottom:3px;}
+  .packet-stage .stage-main p{font-size:11.2px;color:var(--mid);line-height:1.35;}
+  .packet-stage .stage-protect{border-radius:18px;padding:5px 8px;color:#fff;font-size:10px;font-weight:700;text-align:center;direction:ltr;}
+  .packet-stage.fw{border-inline-start:5px solid var(--green);}
+  .packet-stage.ngfw{border-inline-start:5px solid var(--purple);}
+  .packet-stage.tp{border-inline-start:5px solid var(--primary);}
+  .packet-stage.fw .stage-layer{color:var(--green);} .packet-stage.ngfw .stage-layer{color:var(--purple);} .packet-stage.tp .stage-layer{color:var(--primary);}
+  .packet-stage.fw .stage-protect{background:var(--green);} .packet-stage.ngfw .stage-protect{background:var(--purple);} .packet-stage.tp .stage-protect{background:var(--primary);}
+  .skip-lane{border:1px dashed var(--green);border-radius:7px;background:#f2faf6;padding:11px 13px;margin-bottom:10px;}
+  .skip-lane h4{font-size:13px;color:var(--green);margin-bottom:5px;}
+  .skip-lane p{font-size:11.5px;color:var(--mid);line-height:1.45;}
+  .config-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px;}
+  .config-chip{border:1px solid var(--border);border-radius:6px;background:var(--off);padding:8px 10px;font-size:11px;color:var(--mid);line-height:1.35;}
+  .config-chip b{display:block;color:var(--text);font-size:11.5px;margin-bottom:2px;}
+
+  .drop-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;margin-top:14px;align-items:stretch;}
+  .drop-chart{border:1px solid var(--border);border-radius:8px;background:var(--off);padding:16px;}
+  .drop-row{display:grid;grid-template-columns:88px 1fr 78px;gap:12px;align-items:center;margin-bottom:13px;}
+  .drop-row:last-child{margin-bottom:0;}
+  .vendor{font-weight:800;font-size:12.5px;color:var(--text);}
+  .drop-bars{display:flex;flex-direction:column;gap:6px;}
+  .thin-bar{height:14px;border-radius:4px;background:#e7e2e6;overflow:hidden;position:relative;}
+  .thin-bar .fill{height:100%;border-radius:4px;width:var(--w);}
+  .thin-bar .lbl{position:absolute;inset:0;display:flex;align-items:center;padding-inline-start:7px;font-family:var(--font-num);font-size:10px;font-weight:700;color:#fff;direction:ltr;}
+  .retention{font-family:var(--font-num);font-size:22px;font-weight:700;text-align:center;direction:ltr;}
+  .retention small{display:block;font-family:var(--font);font-size:10px;font-weight:600;color:var(--light);direction:rtl;}
+  .cp-c{color:var(--primary);} .ft-c{color:var(--amber);} .pa-c{color:var(--purple);}
+  .legend-mini{display:flex;gap:10px;margin-top:8px;font-size:10.5px;color:var(--mid);}
+  .legend-mini span{display:flex;align-items:center;gap:5px;}
+  .legend-mini i{display:inline-block;width:12px;height:7px;border-radius:2px;}
+  .packet-story{display:grid;grid-template-columns:1.08fr .92fr;gap:18px;margin-top:14px;align-items:stretch;}
+  .route-card{border:1px solid var(--border);border-radius:8px;background:#fff;padding:14px;margin-bottom:10px;}
+  .route-card.fast{border-inline-start:5px solid var(--green);}
+  .route-card.deep{border-inline-start:5px solid var(--primary);}
+  .route-card h3{font-size:14px;color:var(--text);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+  .route-card .route-sub{font-size:11px;color:var(--mid);font-weight:500;}
+  .route-flow{display:flex;align-items:center;gap:6px;direction:ltr;}
+  .route-box{border-radius:5px;padding:8px 9px;min-width:72px;text-align:center;color:#fff;font-size:10.5px;font-weight:700;line-height:1.25;}
+  .route-box.gray{background:#8a8a8a;} .route-box.fw{background:var(--green);} .route-box.ngfw{background:var(--purple);} .route-box.tp{background:var(--primary);} .route-box.out{background:var(--dark);}
+  .route-arrow{color:#aaa;font-weight:800;}
+  .route-notes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}
+  .route-note{background:var(--off);border:1px solid var(--border);border-radius:5px;padding:7px 8px;font-size:10.8px;color:var(--mid);line-height:1.35;}
+  .route-note b{color:var(--text);display:block;margin-bottom:2px;}
+  .config-stack{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px;}
+  .config-card{border:1px solid var(--border);border-radius:7px;background:#fff;padding:11px 12px;border-top:4px solid var(--green);}
+  .config-card:nth-child(2){border-top-color:var(--purple);}
+  .config-card:nth-child(3){border-top-color:var(--primary);}
+  .config-card:nth-child(4){border-top-color:var(--primary-dark);}
+  .config-card h3{font-size:13px;color:var(--text);margin-bottom:6px;}
+  .config-card .pct{font-family:var(--font-num);font-size:24px;font-weight:700;direction:ltr;}
+  .config-card p{font-size:10.8px;color:var(--mid);line-height:1.35;}
+  .market-story{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px;}
+  .market-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+  .market-card{border:1px solid var(--border);border-radius:7px;background:#fff;padding:10px 11px;border-top:4px solid var(--gray);}
+  .market-card h3{font-size:12px;color:var(--text);margin-bottom:5px;}
+  .market-card .driver{font-size:10.5px;color:var(--primary-dark);font-weight:700;margin-bottom:4px;}
+  .market-card p{font-size:10.2px;color:var(--mid);line-height:1.32;}
+  .market-card.cp{border-top-color:var(--primary);}
+  .market-card.ft{border-top-color:var(--amber);}
+  .market-card.pa{border-top-color:var(--purple);}
+  .market-card.neutral{border-top-color:var(--steel);}
+  .story-grid{display:grid;grid-template-columns:.42fr 1.58fr;gap:14px;align-items:stretch;}
+  .assumptions{background:var(--off);border:1px solid var(--border);border-radius:6px;padding:8px 11px;font-size:9.8px;color:var(--mid);line-height:1.35;}
+  .assumptions b{color:var(--text);}
+  /* ── market map: donuts + trend ── */
+  .market-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:12px;align-items:stretch;}
+  .donut-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 10px;margin-top:10px;}
+  .donut-cell{display:flex;flex-direction:column;align-items:center;text-align:center;border:1px solid var(--border);border-radius:8px;background:#fff;padding:12px 8px 11px;}
+  .donut-cell .dwrap{position:relative;width:142px;height:142px;}
+  .donut-cell svg,.overall-donut svg{width:100%;height:100%;transform:rotate(-90deg);}
+  .donut-cell .dc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;direction:ltr;}
+  .donut-cell .dc b{font-family:var(--font-num);font-size:22px;font-weight:800;line-height:1;}
+  .donut-cell .dc small{font-size:9.2px;color:var(--light);margin-top:3px;letter-spacing:.05em;}
+  .donut-cell h4{font-size:13.2px;color:var(--text);margin-top:8px;line-height:1.2;}
+  .donut-cell .lead{font-size:11px;color:var(--mid);margin-top:3px;}
+  .donut-cell .lead b{font-weight:700;}
+  .vendor-legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:9px;font-size:10.4px;color:var(--mid);justify-content:center;}
+  .vendor-legend span{display:flex;align-items:center;gap:5px;}
+  .vendor-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;}
+  .overall-wrap{display:grid;grid-template-columns:118px 1fr;gap:12px;align-items:center;margin-top:6px;}
+  .overall-donut{position:relative;width:118px;height:118px;}
+  .overall-donut .dc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;direction:ltr;}
+  .overall-donut .dc b{font-family:var(--font-num);font-size:17px;font-weight:800;color:var(--text);line-height:1;}
+  .overall-donut .dc small{font-size:8.4px;color:var(--light);margin-top:2px;}
+  .share-list{font-size:10.6px;color:var(--mid);line-height:1.35;}
+  .share-list div{display:flex;justify-content:space-between;gap:8px;padding:2.5px 0;border-bottom:1px dashed var(--border);}
+  .share-list div:last-child{border-bottom:none;}
+  .share-list b{font-family:var(--font-num);direction:ltr;color:var(--text);font-weight:700;}
+  .share-list .vn{display:flex;align-items:center;gap:6px;}
+  .share-list .vn i{width:9px;height:9px;border-radius:2px;display:inline-block;}
+  .fact-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:9px;}
+  .fact{background:var(--off);border:1px solid var(--border);border-radius:6px;padding:6px 8px;text-align:center;}
+  .fact b{display:block;font-family:var(--font-num);font-size:14.5px;color:var(--primary-dark);direction:ltr;font-weight:800;line-height:1.1;}
+  .fact span{font-size:9.4px;color:var(--mid);line-height:1.25;display:block;margin-top:2px;}
+  .trend-chart svg{width:100%;height:auto;max-height:196px;display:block;margin:4px auto 0;}
+  .momentum{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:10px;}
+  .mom{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--border);border-radius:6px;padding:7px 9px;background:#fff;border-inline-start:4px solid var(--gray);}
+  .mom .arrow{font-family:var(--font-num);font-size:17px;font-weight:800;line-height:1;direction:ltr;min-width:24px;}
+  .mom .mt{font-size:11px;color:var(--mid);line-height:1.35;}
+  .mom .mt b{display:block;color:var(--text);font-size:11.8px;}
+  .mom.up{border-inline-start-color:var(--green);} .mom.up .arrow{color:var(--green);}
+  .mom.flat{border-inline-start-color:var(--steel);} .mom.flat .arrow{color:var(--steel);}
+  .mom.down{border-inline-start-color:var(--primary);} .mom.down .arrow{color:var(--primary);}
+  .donut-cell .size{font-size:10.6px;color:var(--primary-dark);font-weight:700;margin-top:3px;direction:ltr;}
+
+  /* ── segment size: today vs 2030 ── */
+  :root{--sg1:#2f5fd0;--sg2:#4b2a63;--sg3:#0a8a4b;--sg4:#e40c5b;--sg5:#0e8fa6;--sg6:#c25700;}
+  .seg-layout{display:grid;grid-template-columns:1.18fr .82fr;gap:14px;margin-top:12px;align-items:stretch;}
+  .seg-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:14.6px;}
+  .seg-table th{font-size:11px;color:var(--mid);font-weight:700;text-align:start;padding:5px 8px;border-bottom:2px solid var(--border);letter-spacing:.03em;}
+  .seg-table td{padding:13px 9px;border-bottom:1px solid var(--border);vertical-align:middle;}
+  .seg-table .sname{font-weight:700;color:var(--text);white-space:nowrap;display:flex;align-items:center;gap:7px;}
+  .seg-table .sname i{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none;}
+  .seg-table .sname small{display:block;font-weight:400;color:var(--light);font-size:10.6px;}
+  .sbar{display:flex;align-items:center;gap:7px;direction:ltr;}
+  .sbar .trk{flex:1;height:16px;background:var(--gray);border-radius:3px;overflow:hidden;}
+  .sbar .fil{height:100%;width:var(--w);border-radius:3px;}
+  .sbar b{font-family:var(--font-num);font-size:14.5px;min-width:38px;text-align:right;}
+  .sbar small{font-family:var(--font-num);font-size:11px;color:var(--light);min-width:42px;}
+  .seg-table .cagr{font-family:var(--font-num);font-weight:700;direction:ltr;text-align:center;white-space:nowrap;}
+  .seg-table .dir{font-family:var(--font-num);font-size:15px;font-weight:800;text-align:center;direction:ltr;}
+  .dir.up{color:var(--green);} .dir.flat{color:var(--steel);} .dir.down{color:var(--primary);}
+  .seg-stack{margin-top:14px;}
+  .stack-row{display:grid;grid-template-columns:78px 1fr;gap:10px;align-items:center;margin-top:7px;}
+  .stack-row .yl{font-size:11.5px;font-weight:800;color:var(--text);direction:ltr;text-align:center;}
+  .stack-row .yl small{display:block;font-weight:400;color:var(--light);font-size:9.6px;}
+  .stack{display:flex;height:40px;border-radius:6px;overflow:hidden;direction:ltr;border:1px solid var(--border);}
+  .stack span{display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-num);font-size:12.5px;font-weight:700;width:var(--w);}
+  .stack-note{display:flex;gap:16px;font-size:11.4px;color:var(--mid);margin-top:7px;flex-wrap:wrap;}
+  .stack-note span{display:flex;align-items:center;gap:5px;}
+  .stack-note i{width:10px;height:10px;border-radius:3px;display:inline-block;}
+  .assume-list{list-style:none;counter-reset:a;font-size:12.6px;color:var(--mid);line-height:1.5;margin-top:8px;}
+  .assume-list li{counter-increment:a;display:grid;grid-template-columns:20px 1fr;gap:6px;padding:8px 0;border-bottom:1px dashed var(--border);}
+  .assume-list li:last-child{border-bottom:none;}
+  .assume-list li::before{content:counter(a);font-family:var(--font-num);font-weight:800;color:var(--primary);font-size:11px;}
+  .assume-list b{color:var(--text);}
+  /* ── SWOT ── */
+  .swot{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+  .sw{border:1px solid var(--border);border-radius:8px;background:#fff;overflow:hidden;display:flex;flex-direction:column;}
+  .sw .swh{display:flex;align-items:center;gap:14px;padding:12px 18px;color:#fff;}
+  .sw .swh b{font-family:var(--font-num);font-size:30px;font-weight:800;line-height:1;}
+  .sw .swh span{font-size:17px;font-weight:700;}
+  .sw .swh small{margin-inline-start:auto;font-size:12.5px;opacity:.85;font-weight:500;}
+  .sw ul{list-style:none;padding:10px 18px 12px;margin:0;font-size:15px;color:var(--mid);line-height:1.42;}
+  .sw li{display:grid;grid-template-columns:auto 1fr;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border);align-items:baseline;}
+  .sw li:last-child{border-bottom:none;}
+  .sw li b{color:var(--text);white-space:nowrap;}
+  .sw li.hot{background:#fff1f6;margin:0 -18px;padding:9px 18px;border-inline-start:4px solid var(--primary);border-bottom:none;}
+  .sw li.hot b{color:var(--primary-dark);}
+  .sw.s .swh{background:var(--green);} .sw.w .swh{background:var(--primary);} .sw.o .swh{background:var(--purple);} .sw.t .swh{background:var(--amber);}
+  .assume-list.compact{font-size:10.6px;line-height:1.38;margin-top:4px;}
+  .assume-list.compact li{padding:4px 0;grid-template-columns:16px 1fr;}
+  .rev-chart svg{width:100%;height:auto;display:block;}
+  .split-callout{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+  .split-callout .box{border-radius:7px;padding:9px 12px;color:#fff;}
+  .split-callout .box.cp{background:linear-gradient(135deg,var(--dark),#5a1043);}
+  .split-callout .box.gr{background:linear-gradient(135deg,#0a5a33,var(--green));}
+  .split-callout .box .k{font-family:var(--font-num);font-size:22px;font-weight:800;direction:ltr;line-height:1;}
+  .split-callout .box .t{font-size:11.6px;opacity:.9;margin-top:4px;line-height:1.35;}
+  .main-policy-table{margin-top:14px;font-size:13.6px;}
+  .main-policy-table td{padding:13px 13px;line-height:1.4;}
+  .main-policy-table th{padding:11px 13px;font-size:12.5px;}
+  .main-policy-table .num{font-size:15px;}
+  .evidence-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:14px;}
+  .evidence-card{border:1px solid var(--border);border-radius:8px;background:#fff;padding:14px;display:flex;flex-direction:column;min-height:270px;}
+  .evidence-card h3{font-size:15px;color:var(--text);margin-bottom:4px;}
+  .evidence-card .hint{font-size:10.5px;color:var(--light);margin-bottom:12px;}
+  .mini-bar{margin-bottom:12px;}
+  .mini-bar .mb-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;}
+  .mini-bar .mb-name{font-size:11.5px;font-weight:700;color:var(--text);}
+  .mini-bar .mb-val{font-family:var(--font-num);font-size:15px;font-weight:700;direction:ltr;}
+  .mini-bar .mb-track{height:15px;border-radius:4px;background:var(--gray);overflow:hidden;}
+  .mini-bar .mb-fill{height:100%;width:var(--w);border-radius:4px;}
+  .define-row{border-top:1px solid var(--border);padding-top:10px;margin-top:auto;font-size:11.2px;color:var(--mid);line-height:1.45;}
+  .define-row b{color:var(--primary-dark);}
+
+  /* ── processor comparison ── */
+  .processor-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:13px;align-items:stretch;}
+  .data-path{border:1px solid var(--border);border-radius:8px;background:var(--off);padding:16px;}
+  .path-title{font-size:12px;font-weight:700;color:var(--mid);letter-spacing:.08em;margin-bottom:12px;}
+  .path-row{display:flex;align-items:center;gap:9px;margin-bottom:12px;direction:ltr;}
+  .path-node{flex:1;min-height:70px;border-radius:7px;padding:11px 12px;color:#fff;display:flex;flex-direction:column;justify-content:center;text-align:center;}
+  .path-node .pn{font-size:12px;font-weight:700;}
+  .path-node .pd{font-size:10.5px;opacity:.82;margin-top:4px;line-height:1.35;}
+  .path-node.green{background:var(--green);} .path-node.amber{background:var(--amber);} .path-node.red{background:var(--primary);} .path-node.purple{background:var(--purple);}
+  .queue{display:flex;gap:3px;justify-content:center;margin-top:7px;}
+  .queue span{width:18px;height:7px;border-radius:2px;background:rgba(255,255,255,.55);}
+  .bneck{border:2px solid var(--primary);background:#fff;border-radius:7px;padding:12px;margin-top:10px;}
+  .bneck .bh{color:var(--primary-dark);font-size:14px;font-weight:800;margin-bottom:5px;}
+  .bneck .bt{font-size:12px;color:var(--mid);line-height:1.5;}
+  .proc-card{border:1px solid var(--border);border-radius:7px;padding:12px 14px;background:#fff;margin-bottom:10px;}
+  .proc-card h3{font-size:14px;color:var(--text);margin-bottom:7px;display:flex;justify-content:space-between;gap:10px;}
+  .proc-card p{font-size:11.5px;color:var(--mid);line-height:1.45;}
+  .proc-card.cp{border-inline-start:5px solid var(--primary);}
+  .proc-card.ft{border-inline-start:5px solid var(--amber);}
+  .proc-card.pa{border-inline-start:5px solid var(--purple);}
+  .proc-card .score{font-family:var(--font-num);font-weight:700;direction:ltr;white-space:nowrap;}
+
+  /* NAV */
+  .nav{position:fixed;bottom:22px;inset-inline-end:60px;display:flex;align-items:center;gap:14px;z-index:50;}
+  .nav button{width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;background:var(--primary);color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+  .nav button:hover{background:var(--primary-dark);}
+  .nav button:disabled{background:#cfc7cc;cursor:default;}
+  .nav .count{font-family:var(--font-num);font-size:14px;color:var(--mid);font-weight:600;min-width:44px;text-align:center;direction:ltr;}
+  .dots{position:fixed;bottom:28px;inset-inline-start:60px;display:flex;gap:9px;z-index:50;}
+  .dots .dot{width:9px;height:9px;border-radius:50%;background:#cfc7cc;cursor:pointer;transition:all .2s;}
+  .dots .dot.active{background:var(--primary);width:26px;border-radius:5px;}
+  .progress{position:fixed;top:0;inset-inline-start:0;height:3px;background:var(--primary);z-index:60;transition:width .4s ease;}
+
+  @media print{
+    @page{size:1280px 720px;margin:0;}
+    html,body{overflow:visible;height:auto;} .deck{height:auto;}
+    .slide{position:relative;opacity:1!important;visibility:visible!important;transform:none!important;width:1280px;height:720px;page-break-after:always;}
+    .slide.active .bar-fill,.slide .bar-fill{width:var(--w)!important;}
+    .nav,.dots,.progress,#s1 .nav-hint{display:none!important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+  <!-- ══ SLIDE 1 — TITLE ══ -->
+  <section class="slide active" id="s1">
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <img src="checkpoint-logo.PNG" alt="Check Point" class="logo">
+      <div class="eyebrow"><span class="en">Senior PM Assignment</span> · ספטמבר 2026</div>
+      <h1><span class="en">Quantum 9000 Series</span></h1>
+      <div class="sub"><span class="en">Session 1</span> — ניתוח שוק, מוצר וארכיטקטורה</div>
+      <div class="meta">
+        <div class="item"><div class="lbl">מגיש</div><div class="val">ברק רוזנפלד</div></div>
+        <div class="item"><div class="lbl">קהל</div><div class="val"><span class="en">R&amp;D · Product · Sales · Marketing</span></div></div>
+        <div class="item"><div class="lbl">משך</div><div class="val">15 דקות</div></div>
+      </div>
+    </div>
+    <div class="nav-hint">← → למעבר · <span class="en">F11</span> למסך מלא</div>
+  </section>
+
+  <!-- ══ SLIDE 4 — MARKET MAP: 6 SEGMENT DONUTS + OVERALL + TREND ══ -->
+  <section class="slide" id="s2m">
+    <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>מפת השוק — מי מחזיק מה, ולאן זה הולך</h2></div>
+      <div class="tags"><span class="tag pink">Market Share</span><span class="tag purple">6 Segments</span><span class="tag amber">Trend 2020→2030</span></div></div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="body">
+      <div class="eyebrow">תמונה כללית → פילוח לשישה שווקים → מגמה</div>
+      <h1 class="title">אותו שוק של <span class="num">$13.8B</span> נראה אחרת בכל סגמנט — Check Point חזקה יחסית (<span class="num">×2</span>) רק בסגמנטים שגדלים הכי לאט</h1>
+
+      <div class="market-layout">
+        <!-- LEFT: 6 segment donuts -->
+        <div class="card">
+          <div class="ch">שישה שווקים — נתח vendor בתוך כל סגמנט (אומדן, מסתכם לנתח הכולל) · במרכז: המוביל בנפח</div>
+          <div class="donut-grid">
+            <div class="donut-cell">
+              <div class="dwrap" data-donut='[["ft",28],["cs",12],["pa",8],["cp",3],["ot",49]]'><div class="dc"><b style="color:var(--amber)">28%</b><small>FORTINET</small></div></div>
+              <h4>Branch / Mid-Market</h4><div class="lead">Fortinet מוביל · <b>CP 3%</b> — הכי חלשים</div><div class="size">~30% of market · ≈$4.1B</div>
+            </div>
+            <div class="donut-cell">
+              <div class="dwrap" data-donut='[["pa",24],["ft",16],["cs",14],["cp",10],["ot",36]]'><div class="dc"><b style="color:var(--purple)">24%</b><small>PALO ALTO</small></div></div>
+              <h4>Enterprise HQ</h4><div class="lead">PA מוביל · <b>CP 10%</b> — מעל הממוצע</div><div class="size">~22% of market · ≈$3.0B</div>
+            </div>
+            <div class="donut-cell">
+              <div class="dwrap" data-donut='[["pa",22],["cp",18],["cs",14],["ft",12],["ot",34]]'><div class="dc"><b style="color:var(--purple)">22%</b><small>PALO ALTO</small></div></div>
+              <h4>Regulated (Gov / Finance)</h4><div class="lead">PA מוביל · <b>CP 18% = #2</b> · ×2.4 מהממוצע</div><div class="size">~14% of market · ≈$1.9B</div>
+            </div>
+            <div class="donut-cell">
+              <div class="dwrap" data-donut='[["pa",30],["ft",20],["cs",16],["cp",5],["ot",29]]'><div class="dc"><b style="color:var(--purple)">30%</b><small>PALO ALTO</small></div></div>
+              <h4>Data Center</h4><div class="lead">PA / Fortinet · <b>CP 5%</b> — ASIC מנצח</div><div class="size">~20% of market · ≈$2.8B</div>
+            </div>
+            <div class="donut-cell">
+              <div class="dwrap" data-donut='[["ft",22],["cp",15],["cs",14],["pa",12],["ot",37]]'><div class="dc"><b style="color:var(--amber)">22%</b><small>FORTINET</small></div></div>
+              <h4>OT / HFT (Latency)</h4><div class="lead">Fortinet מוביל · <b>CP 15% = #2</b> · ×2 מהממוצע</div><div class="size">~6% of market · ≈$0.8B</div>
+            </div>
+            <div class="donut-cell">
+              <div class="dwrap" data-donut='[["pa",30],["ft",18],["cs",8],["cp",3],["ot",41]]'><div class="dc"><b style="color:var(--purple)">30%</b><small>PALO ALTO</small></div></div>
+              <h4>Cloud-first / SASE</h4><div class="lead">PA מוביל · <b>CP 3%</b> · Zscaler ב-Others</div><div class="size">~8% of market · ≈$1.1B</div>
+            </div>
+          </div>
+          <div class="vendor-legend">
+            <span><i style="background:var(--primary)"></i>Check Point</span>
+            <span><i style="background:var(--amber)"></i>Fortinet</span>
+            <span><i style="background:var(--purple)"></i>Palo Alto</span>
+            <span><i style="background:var(--steel)"></i>Cisco</span>
+            <span><i style="background:#d9d4da"></i>Others</span>
+          </div>
+        </div>
+
+        <!-- RIGHT: overall + trend -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card">
+            <div class="ch">השוק כולו — 2026</div>
+            <div class="overall-wrap">
+              <div class="overall-donut" data-donut='[["pa",19.5],["ft",19],["cs",13],["cp",7.5],["ot",41]]' data-sw="7.5"><div class="dc"><b>$13.8B</b><small>ENTERPRISE FW</small></div></div>
+              <div class="share-list">
+                <div><span class="vn"><i style="background:var(--purple)"></i>Palo Alto</span><b>~19.5% · ≈$2.7B</b></div>
+                <div><span class="vn"><i style="background:var(--amber)"></i>Fortinet</span><b>~19% · ≈$2.6B</b></div>
+                <div><span class="vn"><i style="background:var(--steel)"></i>Cisco</span><b>~13% · ≈$1.8B</b></div>
+                <div><span class="vn"><i style="background:var(--primary)"></i>Check Point</span><b>~7.5% · ≈$1.0B</b></div>
+                <div><span class="vn"><i style="background:#d9d4da"></i>Others</span><b>~41% · ≈$5.7B</b></div>
+              </div>
+            </div>
+            <div class="fact-row">
+              <div class="fact"><b>9.6%</b><span>CAGR → ~$20B ב-2030</span></div>
+              <div class="fact"><b>~70%</b><span>Top-4 מכל המשלוחים</span></div>
+              <div class="fact"><b>+$9.9B</b><span>HW firewall חדש עד 2030</span></div>
+            </div>
+          </div>
+
+          <div class="card trend-chart" style="flex:1;">
+            <div class="ch">מגמה — נתח שוק לפי vendor, 2020→2026, ומי גדל עכשיו</div>
+            <svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+              <g stroke="#ece6ea" stroke-width="1">
+                <line x1="36" y1="22" x2="330" y2="22"/><line x1="36" y1="42" x2="330" y2="42"/><line x1="36" y1="62" x2="330" y2="62"/>
+                <line x1="36" y1="82" x2="330" y2="82"/><line x1="36" y1="102" x2="330" y2="102"/><line x1="36" y1="122" x2="330" y2="122"/>
+              </g>
+              <g font-size="9" fill="#8a7f86" text-anchor="end" font-family="Barlow Semi Condensed, sans-serif">
+                <text x="31" y="25">25%</text><text x="31" y="45">20%</text><text x="31" y="65">15%</text><text x="31" y="85">10%</text><text x="31" y="105">5%</text><text x="31" y="125">0</text>
+              </g>
+              <g font-size="10" fill="#5f5560" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-weight="600">
+                <text x="50" y="137">2020</text><text x="140" y="137">2022</text><text x="230" y="137">2024</text><text x="320" y="137">2026e</text>
+              </g>
+              <!-- Cisco -->
+              <polyline points="50,58 140,58.8 230,70 320,74" fill="none" stroke="#5a8f9e" stroke-width="2.2" stroke-linejoin="round"/>
+              <!-- Palo Alto -->
+              <polyline points="50,56 140,58.4 230,44 320,38" fill="none" stroke="#741984" stroke-width="2.2" stroke-linejoin="round"/>
+              <!-- Fortinet -->
+              <polyline points="50,73.6 140,58.8 230,46 320,42" fill="none" stroke="#c25700" stroke-width="2.2" stroke-linejoin="round"/>
+              <!-- Check Point -->
+              <polyline points="50,88.8 140,91.2 230,92 320,94" fill="none" stroke="#e40c5b" stroke-width="3" stroke-linejoin="round"/>
+              <g fill="#fff" stroke-width="2">
+                <circle cx="50" cy="88.8" r="3" stroke="#e40c5b"/><circle cx="140" cy="91.2" r="3" stroke="#e40c5b"/><circle cx="230" cy="92" r="3" stroke="#e40c5b"/><circle cx="320" cy="94" r="3" stroke="#e40c5b"/>
+                <circle cx="320" cy="42" r="2.6" stroke="#c25700"/><circle cx="320" cy="38" r="2.6" stroke="#741984"/><circle cx="320" cy="74" r="2.6" stroke="#5a8f9e"/>
+              </g>
+              <g font-size="9.6" font-weight="700" font-family="Barlow Semi Condensed, sans-serif">
+                <text x="328" y="34" fill="#741984">PA 21%</text>
+                <text x="328" y="49" fill="#c25700">FTN 20%</text>
+                <text x="328" y="77" fill="#5a8f9e">Cisco 12%</text>
+                <text x="328" y="97" fill="#e40c5b">CP 7%</text>
+              </g>
+              <text x="54" y="83" font-size="7.8" fill="#b70d4e" font-family="Barlow Semi Condensed, sans-serif" font-weight="700">CP: 8.3% → 7% since 2020</text>
+            </svg>
+            <div class="momentum">
+              <div class="mom up"><div class="arrow">↑↑</div><div class="mt"><b>Palo Alto</b>הכנסות <span class="num">+34%</span> (FY26), NGS ARR <span class="num">+63%</span> — פלטפורמה + SASE</div></div>
+              <div class="mom up"><div class="arrow">↑</div><div class="mt"><b>Fortinet</b>Product rev <span class="num">+16%</span> (2025), <span class="num">+52%</span> ב-Q2'26 — refresh + ASIC</div></div>
+              <div class="mom flat"><div class="arrow">→</div><div class="mt"><b>Cisco</b>Security <span class="num">+14%</span>, אבל נתח appliances נשחק <span class="num">16%→13%</span></div></div>
+              <div class="mom down"><div class="arrow">↓</div><div class="mt"><b>Check Point</b>Product rev <span class="num">−14%</span> (Q2'26) — "lower demand for firewall appliances"</div></div>
+            </div>
+            <div class="why-box" style="padding:8px 11px;margin-top:10px;font-size:11px;line-height:1.45;">
+              <b>2030 outlook:</b> הצמיחה עוברת ל-SASE / Hybrid Mesh; appliances צומחים לאט. מי שגדל מחזיק Data Center + Branch (נפח) או SASE (ענן). מי שנשען על Regulated + HQ בלבד — כמונו — מאבד נתח ב-renewals אם אין differentiator ב-TP.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="assumptions" style="margin-top:10px;">
+        <b>מקורות והנחות:</b> נתח כולל ומגמה — IDC Worldwide Security Appliance Tracker (הכנסות appliances, Q4 של כל שנה; 2026e הערכה מ-1H26). גודל שוק $13.8B ו-CAGR 9.6% — MarkWide / Gartner. ערכי $ לכל vendor נגזרים (נתח × $13.8B), לא revenue מדווח. מומנטום — דוחות כספיים Q2'26 / FY25-26 של החברות. <b>פילוח לשישה סגמנטים הוא אומדן</b> — אין נתון פומבי ברזולוציה זו. הנתחים נבנו כך שהסכום המשוקלל (נתח × גודל סגמנט) מתכנס לנתח הכולל של IDC (CP ≈7.7%, Fortinet ≈20%, PA ≈20%, Cisco ≈13%). "Others" גדול ב-Branch/Cloud כי שם השוק מפוצל (SonicWall, Sophos, WatchGuard, Huawei, Zscaler).
+      </div>
+    </div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> — Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+  </section>
+
+  <!-- ══ SLIDE 5 — SEGMENT SIZE: TODAY vs 2030 ══ -->
+  <section class="slide" id="s2s">
+    <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>כמה כל סגמנט תופס — היום, ובעוד ארבע שנים</h2></div>
+      <div class="tags"><span class="tag pink">2026 → 2030</span><span class="tag purple">Segment Size</span><span class="tag amber">Assumptions</span></div></div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="body">
+      <div class="eyebrow">מודל: נתח סגמנט × גודל שוק · כל הנחה מפורטת מימין</div>
+      <h1 class="title">השוק גדל מ-<span class="num">$13.8B</span> ל-<span class="num">~$20B</span> — אבל הצמיחה נמצאת ב-Branch, Data Center ו-Cloud, לא בסגמנטים שבהם אנחנו חזקים</h1>
+
+      <div class="seg-layout">
+        <!-- LEFT: table + stacked bars -->
+        <div class="card">
+          <div class="ch">גודל כל סגמנט — מצב היום (2026) מול תחזית (2030)</div>
+          <table class="seg-table">
+            <thead><tr>
+              <th>סגמנט</th><th style="width:27%">היום · 2026 (<span class="en">$13.8B</span>)</th><th class="c">CAGR הנחה</th><th style="width:27%">2030 (<span class="en">~$20B</span>)</th><th class="c">נתח</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td><div class="sname"><i style="background:var(--sg1)"></i><span>Branch / Mid-Market<small>SD-WAN + Basic FW · Fortinet</small></span></div></td>
+                <td><div class="sbar"><div class="trk"><div class="fil" style="--w:84%;background:var(--sg1)"></div></div><b>30%</b><small>$4.1B</small></div></td>
+                <td class="cagr" style="color:var(--green)">~13%</td>
+                <td><div class="sbar"><div class="trk"><div class="fil" style="--w:90%;background:var(--sg1)"></div></div><b>32%</b><small>$6.7B</small></div></td>
+                <td class="dir up">↑</td>
+              </tr>
+              <tr>
+                <td><div class="sname"><i style="background:var(--sg2)"></i><span>Enterprise HQ<small>NGFW + Standard TP · PA מוביל, CP ×1.3</small></span></div></td>
+                <td><div class="sbar"><div class="trk"><div class="fil" style="--w:62%;background:var(--sg2)"></div></div><b>22%</b><small>$3.0B</small></div></td>
+                <td class="cagr" style="color:var(--primary)">~6%</td>
+                <td><div class="sbar"><div class="trk"><div class="fil" style="--w:50%;background:var(--sg2)"></div></div><b>18%</b><small>$3.8B</small></div></td>
+                <td class="dir down">↓</td>
+              </tr>
+              <tr>
+                <td><div class="sname"><i style="background:var(--sg3)"></i><span>Data Center<small>Full TP high-volume · PA / Fortinet</small></span></div></td>
+                <td><div class="sbar"><div class="trk"><div class="fil" style="--w:56%;background:var(--sg3)"></div></div><b>20%</b><small>$2.8B</small></div></td>
+                <td class="cagr" style="color:var(--green)">~11%</td>
+                <td><div class="sbar"><div class="trk"><div class="fil" style="--w:56%;background:var(--sg3)"></div></div><b>20%</b><small>$4.2B</small></div></td>
+                <td class="dir flat">→</td>
+              </tr>
+              <tr>
+                <td><div class="sname"><i style="background:var(--sg4)"></i><span>Regulated<small>Full TP + TLS + DLP · CP #2, ×2.4</small></span></div></td>
+                <td><div class="sbar"><div class="trk"><div class="fil" style="--w:39%;background:var(--sg4)"></div></div><b>14%</b><small>$1.9B</small></div></td>
+                <td class="cagr" style="color:var(--steel)">~10%</td>
+                <td><div class="sbar"><div class="trk"><div class="fil" style="--w:39%;background:var(--sg4)"></div></div><b>14%</b><small>$2.8B</small></div></td>
+                <td class="dir flat">→</td>
+              </tr>
+              <tr>
+                <td><div class="sname"><i style="background:var(--sg5)"></i><span>Cloud-first / SASE edge<small>Virtual FW + FWaaS · Palo Alto</small></span></div></td>
+                <td><div class="sbar"><div class="trk"><div class="fil" style="--w:22%;background:var(--sg5)"></div></div><b>8%</b><small>$1.1B</small></div></td>
+                <td class="cagr" style="color:var(--green)">~18%</td>
+                <td><div class="sbar"><div class="trk"><div class="fil" style="--w:28%;background:var(--sg5)"></div></div><b>10%</b><small>$2.1B</small></div></td>
+                <td class="dir up">↑↑</td>
+              </tr>
+              <tr>
+                <td><div class="sname"><i style="background:var(--sg6)"></i><span>OT / HFT<small>Allowlist + minimal TP · CP #2, ×2</small></span></div></td>
+                <td><div class="sbar"><div class="trk"><div class="fil" style="--w:17%;background:var(--sg6)"></div></div><b>6%</b><small>$0.8B</small></div></td>
+                <td class="cagr" style="color:var(--green)">~12%</td>
+                <td><div class="sbar"><div class="trk"><div class="fil" style="--w:17%;background:var(--sg6)"></div></div><b>6%</b><small>$1.3B</small></div></td>
+                <td class="dir flat">→</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="seg-stack">
+            <div class="ch">איך השוק "נראה" — הרכב לפי סגמנט</div>
+            <div class="stack-row"><div class="yl">2026<small>$13.8B</small></div>
+              <div class="stack">
+                <span style="--w:30%;background:var(--sg1)">30%</span><span style="--w:22%;background:var(--sg2)">22%</span><span style="--w:20%;background:var(--sg3)">20%</span><span style="--w:14%;background:var(--sg4)">14%</span><span style="--w:8%;background:var(--sg5)">8%</span><span style="--w:6%;background:var(--sg6)">6%</span>
+              </div></div>
+            <div class="stack-row"><div class="yl">2030<small>~$20B</small></div>
+              <div class="stack">
+                <span style="--w:32%;background:var(--sg1)">32%</span><span style="--w:18%;background:var(--sg2)">18%</span><span style="--w:20%;background:var(--sg3)">20%</span><span style="--w:14%;background:var(--sg4)">14%</span><span style="--w:10%;background:var(--sg5)">10%</span><span style="--w:6%;background:var(--sg6)">6%</span>
+              </div></div>
+            <div class="stack-note">
+              <span><i style="background:var(--sg1)"></i>Branch</span><span><i style="background:var(--sg2)"></i>Enterprise HQ</span><span><i style="background:var(--sg3)"></i>Data Center</span><span><i style="background:var(--sg4)"></i>Regulated</span><span><i style="background:var(--sg5)"></i>Cloud / SASE</span><span><i style="background:var(--sg6)"></i>OT / HFT</span>
+            </div>
+          </div>
+
+          <div class="split-callout">
+            <div class="box cp"><div class="k">42% → 38%</div><div class="t">הסגמנטים שבהם Check Point חזקה יחסית (HQ + Regulated + OT) — נתח מהשוק היום ← 2030</div></div>
+            <div class="box gr"><div class="k">58% → 62%</div><div class="t">הסגמנטים שגדלים (Branch + Data Center + Cloud) — שם Fortinet ו-Palo Alto שולטות, ושם נדרש TP Throughput / TCO</div></div>
+          </div>
+        </div>
+
+        <!-- RIGHT: revenue projection + assumptions -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card rev-chart">
+          <div class="ch">אם הכל ממשיך ככה — הכנסות Firewall לפי vendor, 2026 → 2030 (<span class="en">$B</span>)</div>
+          <svg viewBox="0 0 420 178" xmlns="http://www.w3.org/2000/svg" dir="ltr">
+            <g stroke="#ece6ea" stroke-width="1"><line x1="34" y1="15" x2="405" y2="15"/><line x1="34" y1="40" x2="405" y2="40"/><line x1="34" y1="65" x2="405" y2="65"/><line x1="34" y1="90" x2="405" y2="90"/><line x1="34" y1="115" x2="405" y2="115"/><line x1="34" y1="140" x2="405" y2="140"/></g>
+            <g font-size="8.5" fill="#8a7f86" text-anchor="end" font-family="Barlow Semi Condensed, sans-serif"><text x="29" y="18">$5B</text><text x="29" y="43">$4B</text><text x="29" y="68">$3B</text><text x="29" y="93">$2B</text><text x="29" y="118">$1B</text><text x="29" y="143">0</text></g>
+            <!-- Check Point -->
+            <rect x="52" y="113.5" width="26" height="26.5" fill="#e40c5b" opacity=".38" rx="2"/><rect x="82" y="106" width="26" height="34" fill="#e40c5b" rx="2"/>
+            <text x="65" y="109" font-size="8.5" text-anchor="middle" fill="#8a7f86" font-family="Barlow Semi Condensed">1.06</text><text x="95" y="101" font-size="9" font-weight="700" text-anchor="middle" fill="#b70d4e" font-family="Barlow Semi Condensed">1.36</text>
+            <!-- Fortinet -->
+            <rect x="142" y="71.5" width="26" height="68.5" fill="#c25700" opacity=".38" rx="2"/><rect x="172" y="15" width="26" height="125" fill="#c25700" rx="2"/>
+            <text x="155" y="67" font-size="8.5" text-anchor="middle" fill="#8a7f86" font-family="Barlow Semi Condensed">2.74</text><text x="185" y="11" font-size="9" font-weight="700" text-anchor="middle" fill="#c25700" font-family="Barlow Semi Condensed">5.0</text>
+            <!-- Palo Alto -->
+            <rect x="232" y="71.7" width="26" height="68.3" fill="#741984" opacity=".38" rx="2"/><rect x="262" y="20" width="26" height="120" fill="#741984" rx="2"/>
+            <text x="245" y="67" font-size="8.5" text-anchor="middle" fill="#8a7f86" font-family="Barlow Semi Condensed">2.73</text><text x="275" y="16" font-size="9" font-weight="700" text-anchor="middle" fill="#741984" font-family="Barlow Semi Condensed">4.8</text>
+            <!-- Cisco -->
+            <rect x="322" y="94.2" width="26" height="45.8" fill="#5a8f9e" opacity=".38" rx="2"/><rect x="352" y="87.5" width="26" height="52.5" fill="#5a8f9e" rx="2"/>
+            <text x="335" y="90" font-size="8.5" text-anchor="middle" fill="#8a7f86" font-family="Barlow Semi Condensed">1.83</text><text x="365" y="83" font-size="9" font-weight="700" text-anchor="middle" fill="#5a8f9e" font-family="Barlow Semi Condensed">2.1</text>
+            <!-- vendor labels + deltas -->
+            <g font-size="10" font-weight="700" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" fill="#3a2f36">
+              <text x="80" y="155">Check Point</text><text x="170" y="155">Fortinet</text><text x="260" y="155">Palo Alto</text><text x="350" y="155">Cisco</text>
+            </g>
+            <g font-size="9" font-weight="700" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif">
+              <text x="80" y="169" fill="#e40c5b">+28% · share 7.7→6.5%</text><text x="170" y="169" fill="#0a8a4b">+82% · 20→24%</text><text x="260" y="169" fill="#0a8a4b">+76% · 20→23%</text><text x="350" y="169" fill="#5a8f9e">+15% · 13→10%</text>
+            </g>
+            <g font-size="8.5" fill="#8a7f86" font-family="Barlow Semi Condensed, sans-serif"><rect x="300" y="4" width="9" height="9" fill="#8a7f86" opacity=".38" rx="1"/><text x="312" y="12">2026</text><rect x="338" y="4" width="9" height="9" fill="#8a7f86" rx="1"/><text x="350" y="12">2030</text></g>
+          </svg>
+          <div class="why-box" style="padding:7px 10px;margin-top:6px;font-size:10.8px;line-height:1.4;">
+            השוק גדל <span class="num">+52%</span>; Check Point גדלה <span class="num">+28%</span> — <b>לגדול לאט מהשוק = להתכווץ.</b> Fortinet ו-Palo Alto מוסיפות כל אחת <span class="num">≈$2.2B</span>; אנחנו <span class="num">≈$0.3B</span>.
+          </div>
+        </div>
+
+        <div class="card" style="flex:1;">
+          <div class="ch">ההנחות מאחורי המספרים</div>
+          <ol class="assume-list compact">
+            <li><span><b>גודל שוק:</b> $13.8B (2026) → ~$20B (2030), CAGR 9.6% (MarkWide / Gartner). $ סגמנט = נתח × גודל שוק.</span></li>
+            <li><span><b>מיפוי סגמנטים</b> (לא קיימים אצל האנליסטים): Branch ≈ SMEs + branches; HQ ≈ campus edge; DC ≈ high-end appliances; Regulated ≈ BFSI + Gov + Health; OT ≈ industrial / trading; Cloud ≈ virtual FW + FWaaS.</span></li>
+            <li><span><b>Branch ~13%:</b> SMEs ≈ 31% מ-NGFW, צומחים 16% (Mordor 2025); הנחנו פחות — חלק זולג ל-managed / SASE.</span></li>
+            <li><span><b>HQ ~6%:</b> SASE מחליף appliances בקצה הקמפוס (Fortinet SASE billings +40%). מתחת לשוק → נתח יורד.</span></li>
+            <li><span><b>DC ~11%:</b> hardware עדיין 54%; Gartner +$9.9B HW עד 2030; AI east-west traffic. נתח יציב, $ גדל.</span></li>
+            <li><span><b>Regulated ~10%:</b> BFSI צומח 15.7%, Zero Trust DoD 2027, NIS2 — מול זליגה ל-virtual / sovereign cloud. נטו ≈ שוק.</span></li>
+            <li><span><b>Cloud ~18%:</b> virtual/cloud FW +15.1%, hybrid cloud +16.2% (Mordor). SASE כשוק <b>לא</b> נכלל — רק ה-firewall שבתוכו. <b>OT ~12%:</b> IT/OT + NIS2; קטן אבסולוטית.</span></li>
+            <li><span><b>הכנסות vendor:</b> Σ(נתח בסגמנט × גודל סגמנט) — מתכנס ל-IDC היום. 2030 = אפקט mix + המשך drift 2020→26 של IDC: CP −0.2 נק'/שנה, PA +0.75, Cisco −0.7, Fortinet +0.8 (ממותן מ-1.3). לא כולל M&A, מיתון, tariffs. ±3 נק' סבירות.</span></li>
+          </ol>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> — Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+  </section>
+
+  <!-- ══ SLIDE 4 — SWOT ══ -->
+  <section class="slide" id="s2w">
+    <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>SWOT — איפה אנחנו עומדים</h2></div>
+      <div class="tags"><span class="tag pink">Check Point</span><span class="tag purple">vs Fortinet · PA · Cisco</span><span class="tag amber">2026</span></div></div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="body">
+      <div class="eyebrow">מהשוק אל המוצר</div>
+      <h1 class="title">מנצחים בקריטריון — <span class="en">efficacy</span>, <span class="en">compliance</span>, <span class="en">latency</span> — ומפסידים בנפח. חולשה אחת מחברת את הכל</h1>
+
+      <div class="swot">
+        <div class="sw s">
+          <div class="swh"><b>S</b><span>Strengths</span><small>למה לקוחות Regulated נשארים</small></div>
+          <ul>
+            <li><b>Efficacy 99%+</b><span>top tier עם Palo Alto (CyberRatings); ThreatCloud AI — 300+ מקורות</span></li>
+            <li><b>SmartConsole</b><span>ניהול policy הטוב בקטגוריה — Visibility אחת לכל ה-estate</span></li>
+            <li><b>Latency 1.85μs</b><span>מנצח Fortinet ו-PA — selling point ל-OT / SCADA / HFT בלבד</span></li>
+            <li><b>Compliance</b><span>FIPS 140-2 + Common Criteria EAL4+ על כל ה-line — יתרון ב-Gov / Finance</span></li>
+            <li><b>AI Factory FW</b><span>כבר רץ על Nvidia BlueField DPU בשטח — יש לנו ניסיון מחוץ ל-x86</span></li>
+          </ul>
+        </div>
+        <div class="sw w">
+          <div class="swh"><b>W</b><span>Weaknesses</span><small>למה מפסידים בנפח</small></div>
+          <ul>
+            <li class="hot"><b>TP Throughput</b><span><span class="num">25 Gbps</span> TP מול <span class="num">400 Gbps</span> FW — ה-TP רץ על x86 CPU</span></li>
+            <li><b>TCO +57%</b><span><span class="num">$22K</span> מול <span class="num">$14K</span> Fortinet לאותו use case</span></li>
+            <li><b>Licensing</b><span>Blade licensing מסובך; SD-WAN לא bundled — עלות נוספת</span></li>
+            <li><b>Momentum</b><span>נתח <span class="num">7.7%</span> ויורד; Product revenue <span class="num">−14%</span> ב-Q2'26</span></li>
+            <li><b>Branch / Cloud</b><span>~<span class="num">3%</span> בלבד — לא משחקים בסגמנטים שגדלים הכי מהר</span></li>
+          </ul>
+        </div>
+        <div class="sw o">
+          <div class="swh"><b>O</b><span>Opportunities</span><small>איפה יש חלון</small></div>
+          <ul>
+            <li><b>Refresh 2025–27</b><span>ארגונים שדחו רכישות ב-COVID מחליפים עכשיו — הבסיס שלנו בשוק</span></li>
+            <li><b>Sovereign / Regulated</b><span>ממשלות בונות AI פרטי: צריכות FIPS + EAL4+ + air-gapped</span></li>
+            <li><b>Securing AI</b><span><span class="num">$21.9B</span> חדש עד 2030 (Gartner); Lakera — AI-native security</span></li>
+            <li><b>Consolidation</b><span>לקוחות מצמצמים vendors — פלטפורמה אחת (Infinity)</span></li>
+            <li><b>Post-Quantum</b><span>NIST סגר תקנים — גל refresh של הצפנה ב-2027+</span></li>
+          </ul>
+        </div>
+        <div class="sw t">
+          <div class="swh"><b>T</b><span>Threats</span><small>מה קורה אם לא נזוז</small></div>
+          <ul>
+            <li><b>Fortinet SPU</b><span>ASIC סוגר את פער ה-efficacy ומוריד מחיר — "good enough" ב-Regulated</span></li>
+            <li><b>PA: SASE</b><span>"perimeter is dead" — Prisma Access לוקח את קצה הקמפוס (HQ ↓)</span></li>
+            <li><b>Hyperscalers</b><span>AWS / Azure / GCP native firewalls בסגמנט Cloud</span></li>
+            <li><b>CVE-2026-50751</b><span>authentication bypass (יוני 2026) — פוגע בנרטיב ה-efficacy</span></li>
+            <li><b>Mid-market erosion</b><span>Fortinet לוקח renewals — <span class="num">8.3% → 7%</span> מאז 2020</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:12px;">
+        <div class="big">TP<small>the weakness</small></div>
+        <div class="sep"></div>
+        <div class="txt" style="font-size:14.5px;">החולשה שמחברת את הכל היא <b>TP Throughput</b>: זה מה שמונע מאיתנו לזוז ל-Data Center ול-Branch, ושם הצמיחה. כדי להבין למה — צריך לרדת לרמת ה-packet: מה המוצר עושה לו, איפה כל שכבה רצה, ולמה ב-x86 הוא נתקע.</div>
+      </div>
+    </div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> — Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+  </section>
+
+  <!-- ══ SLIDE 2 — PROBLEM & WHO ══ -->
+  <section class="slide" id="s2">
+    <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>המוצר — מה הוא עושה, ומי קונה אותו</h2></div>
+      <div class="tags"><span class="tag pink">Product</span><span class="tag purple">6 Segments</span><span class="tag amber">→ Packet</span></div></div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="body">
+      <div class="eyebrow">מה-SWOT אל ה-packet</div>
+      <h1 class="title">לפני שנצלול ל-<span class="en">packet</span>: מה ה-<span class="en">9000</span> עושה בפועל — עוצר איומים בתעבורה, רובה מוצפנת — ומי קונה אותו בכל סגמנט</h1>
+
+      <!-- threat wall schematic -->
+      <div class="svg-frame" style="margin-top:12px;padding:8px 14px;">
+        <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" dir="ltr" style="max-height:330px;display:block;margin:0 auto;">
+          <!-- left: threats -->
+          <text x="90" y="18" text-anchor="middle" font-size="12" fill="#8a8a8a" font-family="Heebo">איומים נכנסים</text>
+          <g font-family="Heebo" font-size="11.5">
+            <rect x="20" y="30" width="140" height="24" rx="4" fill="#fdecec" stroke="#e6a6a6"/><text x="90" y="46" text-anchor="middle" fill="#b70d4e">Malware / Ransomware</text>
+            <rect x="20" y="62" width="140" height="24" rx="4" fill="#fdecec" stroke="#e6a6a6"/><text x="90" y="78" text-anchor="middle" fill="#b70d4e">Phishing</text>
+            <rect x="20" y="94" width="140" height="24" rx="4" fill="#fdecec" stroke="#e6a6a6"/><text x="90" y="110" text-anchor="middle" fill="#b70d4e">Bot / C2</text>
+            <rect x="20" y="126" width="140" height="24" rx="4" fill="#fdecec" stroke="#e6a6a6"/><text x="90" y="142" text-anchor="middle" fill="#b70d4e">Exploits (CVE)</text>
+            <rect x="20" y="158" width="140" height="24" rx="4" fill="#fdecec" stroke="#e6a6a6"/><text x="90" y="174" text-anchor="middle" fill="#b70d4e">Data Exfiltration</text>
+          </g>
+          <!-- arrows to wall -->
+          <g stroke="#c25700" stroke-width="2">
+            <line x1="160" y1="42" x2="288" y2="80"/><line x1="160" y1="74" x2="288" y2="90"/>
+            <line x1="160" y1="106" x2="288" y2="100"/><line x1="160" y1="138" x2="288" y2="110"/><line x1="160" y1="170" x2="288" y2="120"/>
+          </g>
+          <!-- wall (firewall) -->
+          <rect x="290" y="24" width="70" height="152" rx="8" fill="#290e23" stroke="#e40c5b" stroke-width="2"/>
+          <circle cx="325" cy="46" r="9" fill="#e40c5b"/>
+          <text x="325" y="108" text-anchor="middle" font-size="12.5" fill="#fff" font-weight="700" font-family="Heebo" transform="rotate(-90 325 108)">Check Point 9000</text>
+          <!-- blocked X marks -->
+          <g stroke="#e40c5b" stroke-width="2.5"><line x1="278" y1="72" x2="292" y2="86"/><line x1="292" y1="72" x2="278" y2="86"/>
+            <line x1="278" y1="104" x2="292" y2="118"/><line x1="292" y1="104" x2="278" y2="118"/></g>
+          <!-- clean traffic passes -->
+          <line x1="360" y1="100" x2="470" y2="100" stroke="#0a8a4b" stroke-width="2.5"/>
+          <polygon points="470,94 484,100 470,106" fill="#0a8a4b"/>
+          <text x="425" y="90" text-anchor="middle" font-size="11" fill="#0a8a4b" font-family="Heebo">תעבורה נקייה</text>
+          <!-- protected network -->
+          <rect x="500" y="60" width="200" height="80" rx="6" fill="#f2faf6" stroke="#a8d5be"/>
+          <text x="600" y="86" text-anchor="middle" font-size="12.5" fill="#0a8a4b" font-weight="700" font-family="Heebo">רשת מוגנת</text>
+          <text x="600" y="106" text-anchor="middle" font-size="10.5" fill="#555" font-family="Heebo">Finance · R&amp;D · Servers</text>
+          <text x="600" y="124" text-anchor="middle" font-size="10" fill="#8a8a8a" font-family="Heebo">85% תעבורה מוצפנת — נפתחת ונבדקת</text>
+        </svg>
+      </div>
+
+      <!-- who needs it -->
+      <div class="eyebrow purple" style="margin-top:14px;">מי קונה — אותם שישה סגמנטים, ומה כל אחד דורש מה-packet</div>
+      <div class="orgs" style="grid-template-columns:repeat(6,1fr);gap:9px;">
+        <div class="org" style="border-top-color:var(--sg1);padding:14px 14px;"><h4 style="font-size:15px;">Branch / Mid-Market</h4><p style="font-size:12.6px;">סניפים · <span class="en">SD-WAN</span> · בדיקה בסיסית — <b>TCO</b></p></div>
+        <div class="org" style="border-top-color:var(--sg2);padding:14px 14px;"><h4 style="font-size:15px;">Enterprise HQ</h4><p style="font-size:12.6px;">מטה 500+ · <span class="en">rule base</span> מורכב — <b>Visibility</b></p></div>
+        <div class="org" style="border-top-color:var(--sg4);padding:14px 14px;"><h4 style="font-size:15px;">Regulated</h4><p style="font-size:12.6px;">בנקים · ממשלה · בריאות — <b>Compliance</b>, בדיקה מלאה</p></div>
+        <div class="org" style="border-top-color:var(--sg3);padding:14px 14px;"><h4 style="font-size:15px;">Data Center</h4><p style="font-size:12.6px;">נפח ענק · <span class="en">east-west</span> — <b>TP Throughput</b></p></div>
+        <div class="org" style="border-top-color:var(--sg6);padding:14px 14px;"><h4 style="font-size:15px;">OT / HFT</h4><p style="font-size:12.6px;">בורסות · <span class="en">SCADA</span> — <b>Latency</b>, כל μs</p></div>
+        <div class="org" style="border-top-color:var(--sg5);padding:14px 14px;"><h4 style="font-size:15px;">Cloud-first</h4><p style="font-size:12.6px;">SaaS · משתמשים בכל מקום — <b>SASE</b></p></div>
+      </div>
+
+      <div class="chips">
+        <span class="chip">מה הוא עושה ל-packet:</span>
+        <span class="chip"><b>IPS</b></span><span class="chip"><b>Antivirus</b></span><span class="chip"><b>Anti-Bot</b></span>
+        <span class="chip"><b>TLS Inspection</b></span><span class="chip"><b>App Control</b></span><span class="chip"><b>DLP</b></span><span class="chip"><b>Identity Awareness</b></span>
+        <span class="chip" style="background:var(--dark);color:#fff;border-color:var(--dark);margin-inline-start:auto;">בשקף הבא: איך packet עובר דרך כל השכבות האלה ←</span>
+      </div>
+    </div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> — Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+  </section>
+
+  <!-- ══ SLIDE 3 — PACKET PATH WITH / WITHOUT SECURITY ══ -->
+  <section class="slide" id="s2b">
+    <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>Packet path: בלי אבטחה עמוקה מול עם אבטחה עמוקה</h2></div>
+      <div class="tags"><span class="tag pink">Packet Flow</span><span class="tag purple">Config</span><span class="tag amber">Throughput</span></div></div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="body">
+      <div class="eyebrow">הסדר החדש: קודם רואים את המחיר, ואז מבינים את מסלול ה-packet</div>
+      <h1 class="title">אותו packet יכול לעבור מסלול קצר ומהיר — או מסלול עמוק עם <span class="en">NGFW + TP + TLS Inspection</span></h1>
+
+      <div class="packet-story">
+        <div>
+          <div class="route-card fast">
+            <h3>מסלול קצר: ללא שכבות אבטחה עמוקות <span class="route-sub">Basic FW / Fast Path</span></h3>
+            <div class="route-flow">
+              <div class="route-box gray">Packet In</div><div class="route-arrow">→</div>
+              <div class="route-box fw">L3/L4<br>FW</div><div class="route-arrow">→</div>
+              <div class="route-box fw">Rule / Session</div><div class="route-arrow">→</div>
+              <div class="route-box out">ALLOW<br>OUT</div>
+            </div>
+            <div class="route-notes">
+              <div class="route-note"><b>מה מופעל?</b>IP, Port, Protocol, Session table</div>
+              <div class="route-note"><b>מה לא מופעל?</b>אין פתיחת TLS, אין DPI, אין sandbox</div>
+              <div class="route-note"><b>מתי?</b>traffic פשוט, rule מאפשר, session מוכר</div>
+            </div>
+          </div>
+
+          <div class="route-card deep">
+            <h3>מסלול עמוק: עם שכבות אבטחה <span class="route-sub">NGFW / TP / TLS Inspection</span></h3>
+            <div class="route-flow">
+              <div class="route-box gray">Packet In</div><div class="route-arrow">→</div>
+              <div class="route-box fw">FW<br>L3/L4</div><div class="route-arrow">→</div>
+              <div class="route-box ngfw">NGFW<br>App/User</div><div class="route-arrow">→</div>
+              <div class="route-box tp">TLS<br>Decrypt</div><div class="route-arrow">→</div>
+              <div class="route-box tp">TP<br>DPI</div><div class="route-arrow">→</div>
+              <div class="route-box out">ALLOW /<br>BLOCK</div>
+            </div>
+            <div class="route-notes">
+              <div class="route-note"><b>מה מופעל?</b>App Control, URL, Identity, IPS, AV, Anti-Bot</div>
+              <div class="route-note"><b>TLS</b>decrypt זמני → inspect → re-encrypt החוצה</div>
+              <div class="route-note"><b>מתי?</b>policy / risk / segment מחייבים בדיקה עמוקה</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="drop-chart">
+          <div class="ch">המחיר: קצב נשאר לפי קונפיגורציה (<span class="en">Check Point 9800</span>)</div>
+          <div class="bar-row"><div class="bar-head"><span class="lbl">Basic FW / Fast Path</span><span class="val" style="color:var(--green)"><span class="num">400G</span></span></div><div class="bar-track"><div class="bar-fill" style="--w:100%;background:var(--green)"></div></div></div>
+          <div class="bar-row"><div class="bar-head"><span class="lbl">NGFW Policy</span><span class="val" style="color:var(--purple)"><span class="num">67.7G</span></span></div><div class="bar-track"><div class="bar-fill" style="--w:16.9%;background:var(--purple)"></div></div></div>
+          <div class="bar-row"><div class="bar-head"><span class="lbl">Standard / Full TP</span><span class="val" style="color:var(--primary)"><span class="num">25G</span></span></div><div class="bar-track"><div class="bar-fill" style="--w:6.25%;background:var(--primary)"></div></div></div>
+          <div class="bar-row"><div class="bar-head"><span class="lbl">Full TP + TLS Inspection</span><span class="val" style="color:var(--primary-dark)"><span class="num">~10G</span></span></div><div class="bar-track"><div class="bar-fill" style="--w:2.5%;background:var(--primary-dark)"></div></div></div>
+          <div class="callout mt-auto" style="margin-top:14px;">
+            <div class="big">400→10<small>when deep security is on</small></div>
+            <div class="sep"></div>
+            <div class="txt">זה הסיפור: לא כל packet יקר, אבל כשלקוח דורש <b>Full TP + TLS Inspection</b>, המסלול מתארך וה-throughput נחתך.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> — Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+  </section>
+
+  <!-- ══ SLIDE 7 — POLICY PER MARKET TABLE ══ -->
+  <section class="slide" id="s2c">
+    <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>קונפיגורציה לפי שוק — ואז ירידת Throughput</h2></div>
+      <div class="tags"><span class="tag pink">Assumption</span><span class="tag purple">Market Fit</span><span class="tag amber">Competitors</span></div></div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="body">
+      <div class="eyebrow">שני דברים שונים: mix תעבורה בתוך לקוח + התאמה לשוק</div>
+      <h1 class="title">לא כל traffic עובר אותה בדיקה: policy מחליטה כמה עמוק לבדוק, והשוק קובע כמה “עמוק” הלקוח נוטה להיות</h1>
+
+      <div style="margin-top:12px;">
+        <div class="card" style="display:flex;flex-direction:column;">
+          <div class="ch">מה האחוזים מייצגים?</div>
+          <div class="why-box" style="padding:11px 14px;margin-bottom:10px;font-size:12.8px;line-height:1.5;">
+            <b>אומדן בתוך לקוח Enterprise טיפוסי</b> — לפי נפח תעבורה, לא לפי מספר תקיפות ולא לפי נתח שוק.
+            ה-policy מנתבת כל traffic class לפרופיל בדיקה אחר לפי מקור/יעד, אפליקציה, משתמש, URL, רמת סיכון ו-TLS policy.
+          </div>
+          <table class="main-policy-table">
+            <thead><tr>
+              <th>שוק</th><th>Policy מתאים</th><th class="c">אומדן traffic</th><th>קריטריון חשוב</th><th>למה</th><th class="c">מי מנצח בקריטריון · מי גדול בנפח</th>
+            </tr></thead>
+            <tbody>
+              <tr><td>Branch / Mid-Market</td><td><span class="en">Basic FW + URL + SD-WAN</span></td><td class="c"><span class="num">~45%</span></td><td>TCO</td><td>הרבה traffic פשוט; לא כל packet צריך DPI</td><td class="c"><span class="win-other">Fortinet</span> TCO + SD-WAN<br><small style="color:var(--light)">גם בנפח</small></td></tr>
+              <tr><td>Enterprise HQ</td><td><span class="en">NGFW Policy + Standard TP</span></td><td class="c"><span class="num">~30%</span></td><td>Visibility + Efficacy</td><td>Visibility = מי המשתמש/אפליקציה/URL; Efficacy = כמה איומים נחסמים וכמה false positives</td><td class="c"><span class="win-cp">Check Point</span> SmartConsole + 99%+<br><small style="color:var(--light)">בנפח: Palo Alto</small></td></tr>
+              <tr><td>Regulated</td><td><span class="en">Full TP + TLS Inspection + DLP</span></td><td class="c"><span class="num">~7%</span></td><td>Compliance</td><td>תוכן רגיש דורש audit, פענוח סלקטיבי ובקרת זליגה</td><td class="c"><span class="win-cp">Check Point</span> FIPS/EAL4+<br><small style="color:var(--light)">בנפח: Palo Alto · CP #2</small></td></tr>
+              <tr><td>Data Center</td><td><span class="en">Full TP + selective TLS</span></td><td class="c"><span class="num">~18%</span></td><td>TP Throughput</td><td>נפח גבוה; כל ירידת Gbps מורגשת מיידית</td><td class="c"><span class="win-other">PA / Fortinet</span> DPC / SPU<br><small style="color:var(--light)">גם בנפח</small></td></tr>
+              <tr><td>OT / HFT</td><td><span class="en">Allowlist + minimal TP</span></td><td class="c">סלקטיבי</td><td>Latency</td><td>בדיקה עמוקה רק בנקודות סיכון כדי לא לפגוע בזמן תגובה</td><td class="c"><span class="win-cp">Check Point</span> <span class="num">1.85μs</span><br><small style="color:var(--light)">בנפח: Fortinet · CP #2</small></td></tr>
+              <tr><td>Cloud-first / SASE</td><td><span class="en">SASE / SWG + NGFW edge</span></td><td class="c">משתנה</td><td>SASE integration</td><td>אבטחת משתמשים/SaaS בענן: SWG, ZTNA, CASB ו-FW-as-a-service</td><td class="c"><span class="win-other">Palo Alto</span> Prisma Access<br><small style="color:var(--light)">גם בנפח</small></td></tr>
+            </tbody>
+          </table>
+          <div class="callout mt-auto" style="margin-top:16px;">
+            <div class="big">~7%<small>deepest path</small></div>
+            <div class="sep"></div>
+            <div class="txt" style="font-size:13.5px;">גם אם רק חלק קטן מהתעבורה עובר <span class="en">Full TP + TLS Inspection</span>, זה בדיוק החלק שבו לקוחות enterprise מודדים אותנו — ושם ה-<b>x86 bottleneck</b> נחשף.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="assumptions">
+        <b>הנחות בשקף:</b> אחוזי התעבורה הם אומדן להמחשה בתוך לקוח Enterprise טיפוסי לפי נפח traffic, לא לפי מספר packets, לא לפי מספר תקיפות ולא לפי נתח שוק. הנתבים לתצורה נקבעים ע"י policy: source/destination, user group, app/category, risk, data sensitivity ו-TLS policy. נתוני throughput נלקחו מטבלאות המחקר/datasheets; ערכי TLS של Fortinet/Palo Alto הם טווח מוערך מהמחקר; Palo Alto לא מפרסמת את כל מדדי הביניים באותו פורמט.
+      </div>
+    </div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> — Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+  </section>
+
+  <!-- ══ SLIDE 5 — THROUGHPUT DROP GRAPH ══ -->
+  <section class="slide" id="s2c-drop">
+    <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>גרף ירידת Throughput לפי קונפיגורציה</h2></div>
+      <div class="tags"><span class="tag pink">TP Throughput</span><span class="tag purple">Competitors</span><span class="tag amber">Config</span></div></div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="body">
+      <div class="eyebrow">המחיר הביצועי של שכבות אבטחה</div>
+      <h1 class="title">ככל שהלקוח מפעיל פרופיל עמוק יותר, רואים כמה throughput נשאר לכל vendor</h1>
+
+      <div class="grid-wide" style="margin-top:14px;grid-template-columns:1.45fr .75fr;">
+        <div class="drop-chart">
+          <div class="ch">ציר X: קונפיגורציית לקוח · ציר Y: קצב תעבורה (<span class="en">Gbps</span>)</div>
+          <svg viewBox="0 0 650 335" xmlns="http://www.w3.org/2000/svg" dir="ltr" style="width:100%;height:auto;margin-top:8px;">
+            <g font-family="Heebo">
+              <line x1="60" y1="28" x2="60" y2="250" stroke="#8a8a8a" stroke-width="1.5"/>
+              <line x1="60" y1="250" x2="610" y2="250" stroke="#8a8a8a" stroke-width="1.5"/>
+              <g fill="#8a8a8a" font-size="11">
+                <text x="48" y="254" text-anchor="end">0</text><text x="48" y="199" text-anchor="end">100</text>
+                <text x="48" y="143" text-anchor="end">200</text><text x="48" y="88" text-anchor="end">300</text><text x="48" y="32" text-anchor="end">400</text>
+              </g>
+              <g stroke="#e4e4e4" stroke-width="1">
+                <line x1="60" y1="195" x2="610" y2="195"/><line x1="60" y1="139" x2="610" y2="139"/>
+                <line x1="60" y1="84" x2="610" y2="84"/><line x1="60" y1="28" x2="610" y2="28"/>
+              </g>
+              <text x="22" y="28" fill="#555" font-size="11" transform="rotate(-90 22 28)">Throughput (Gbps)</text>
+              <g fill="#555" font-size="11">
+                <text x="95" y="277" text-anchor="middle">Basic FW</text>
+                <text x="220" y="277" text-anchor="middle">NGFW Policy</text>
+                <text x="345" y="277" text-anchor="middle">Standard TP</text>
+                <text x="470" y="277" text-anchor="middle">Full TP</text>
+                <text x="585" y="277" text-anchor="middle">Full TP + TLS</text>
+              </g>
+              <polyline points="95,28 220,212.4 345,236.1 470,236.1 585,244.4" fill="none" stroke="#e40c5b" stroke-width="5" stroke-linejoin="round"/>
+              <polyline points="95,117.4 220,166.8 345,195 470,195 585,222.2" fill="none" stroke="#c25700" stroke-width="5" stroke-linejoin="round"/>
+              <polyline points="95,139 470,133.9 585,200" fill="none" stroke="#741984" stroke-width="5" stroke-linejoin="round" stroke-dasharray="8 6"/>
+              <g fill="#e40c5b"><circle cx="95" cy="28" r="6"/><circle cx="220" cy="212.4" r="6"/><circle cx="345" cy="236.1" r="6"/><circle cx="470" cy="236.1" r="6"/><circle cx="585" cy="244.4" r="6"/></g>
+              <g fill="#c25700"><circle cx="95" cy="117.4" r="6"/><circle cx="220" cy="166.8" r="6"/><circle cx="345" cy="195" r="6"/><circle cx="470" cy="195" r="6"/><circle cx="585" cy="222.2" r="6"/></g>
+              <g fill="#741984"><circle cx="95" cy="139" r="6"/><circle cx="470" cy="133.9" r="6"/><circle cx="585" cy="200" r="6"/></g>
+              <g font-size="11" font-weight="700">
+                <text x="100" y="20" fill="#e40c5b">CP 400</text><text x="225" y="206" fill="#e40c5b">67.7</text><text x="475" y="230" fill="#e40c5b">25</text><text x="590" y="239" fill="#e40c5b">~10</text>
+                <text x="100" y="110" fill="#c25700">FTN 239</text><text x="225" y="160" fill="#c25700">150</text><text x="475" y="189" fill="#c25700">100</text><text x="590" y="216" fill="#c25700">~50</text>
+                <text x="100" y="134" fill="#741984">PA 200</text><text x="475" y="128" fill="#741984">189</text><text x="590" y="194" fill="#741984">~90</text>
+              </g>
+            </g>
+          </svg>
+          <div class="legend-mini">
+            <span><i style="background:var(--primary)"></i>Check Point</span>
+            <span><i style="background:var(--amber)"></i>Fortinet</span>
+            <span><i style="background:var(--purple)"></i>Palo Alto (חלק מהנקודות לא מפורסמות)</span>
+          </div>
+        </div>
+
+        <div class="card" style="display:flex;flex-direction:column;">
+          <div class="ch">מה הגרף מראה?</div>
+          <div class="engine-grid" style="grid-template-columns:1fr;">
+            <div class="engine"><b>המדד</b><span>Throughput ב-<span class="en">Gbps</span>, לא GHz.</span></div>
+            <div class="engine"><b>הציר</b><span>מעבר מ-Basic FW לפרופיל אבטחה עמוק יותר.</span></div>
+            <div class="engine"><b>המסר</b><span>הבעיה נחשפת ב-Full TP / TLS, בעיקר ב-Data Center ו-Regulated.</span></div>
+          </div>
+          <div class="callout mt-auto">
+            <div class="big">TP<small>the real test</small></div>
+            <div class="sep"></div>
+            <div class="txt">מכאן עוברים לשאלה הארכיטקטונית: למה הקו של Check Point יורד חד יותר? בגלל איפה ה-TP רץ.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> — Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+  </section>
+
+  <!-- ══ SLIDE 5 — CRITERIA EVIDENCE ══ -->
+  <section class="slide" id="s2d">
+    <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>ראיות לקריטריונים: TCO, Latency, Compliance</h2></div>
+      <div class="tags"><span class="tag amber">TCO</span><span class="tag purple">Latency</span><span class="tag pink">Compliance</span></div></div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="body">
+      <div class="eyebrow">למה כל שוק בוחר אחרת?</div>
+      <h1 class="title">כל קריטריון מתבטא במדד אחר: מחיר, זמן תגובה, תקנים, או יכולת לראות ולחסום איומים</h1>
+
+      <div class="evidence-grid">
+        <div class="evidence-card">
+          <h3><span class="en">TCO</span> — עלות ל-3 שנים</h3>
+          <div class="hint">נמוך יותר = יתרון ב-Branch / Mid-Market</div>
+          <div class="mini-bar"><div class="mb-head"><span class="mb-name">Fortinet</span><span class="mb-val ft-c">$14K</span></div><div class="mb-track"><div class="mb-fill" style="--w:33%;background:var(--amber)"></div></div></div>
+          <div class="mini-bar"><div class="mb-head"><span class="mb-name">Check Point</span><span class="mb-val cp-c">$22K</span></div><div class="mb-track"><div class="mb-fill" style="--w:51%;background:var(--primary)"></div></div></div>
+          <div class="mini-bar"><div class="mb-head"><span class="mb-name">Palo Alto</span><span class="mb-val pa-c">$43K</span></div><div class="mb-track"><div class="mb-fill" style="--w:100%;background:var(--purple)"></div></div></div>
+          <div class="define-row"><b>מה זה אומר:</b> לקוח budget-driven יעדיף throughput/price ו-SD-WAN מובנה. לכן Fortinet שולט ב-Mid-Market/Branch.</div>
+        </div>
+
+        <div class="evidence-card">
+          <h3><span class="en">Latency</span> — זמן עיכוב ל-packet</h3>
+          <div class="hint">נמוך יותר = טוב יותר ל-OT / HFT</div>
+          <div class="mini-bar"><div class="mb-head"><span class="mb-name">Check Point</span><span class="mb-val cp-c">1.85μs</span></div><div class="mb-track"><div class="mb-fill" style="--w:37%;background:var(--primary)"></div></div></div>
+          <div class="mini-bar"><div class="mb-head"><span class="mb-name">Fortinet</span><span class="mb-val ft-c">4.8μs</span></div><div class="mb-track"><div class="mb-fill" style="--w:96%;background:var(--amber)"></div></div></div>
+          <div class="mini-bar"><div class="mb-head"><span class="mb-name">Palo Alto</span><span class="mb-val pa-c">~5μs</span></div><div class="mb-track"><div class="mb-fill" style="--w:100%;background:var(--purple)"></div></div></div>
+          <div class="define-row"><b>מה זה אומר:</b> בסביבות OT, SCADA ו-HFT, אפילו microseconds משפיעים. לכן policy נוטה להיות allowlist + minimal TP.</div>
+        </div>
+
+        <div class="evidence-card">
+          <h3><span class="en">Compliance</span> + <span class="en">Visibility/Efficacy</span></h3>
+          <div class="hint">מדד איכות/תקינה, לא גרף throughput</div>
+          <table style="font-size:10.5px;">
+            <thead><tr><th>קריטריון</th><th class="c">CP</th><th class="c">Fortinet</th><th class="c">PA</th></tr></thead>
+            <tbody>
+              <tr><td>FIPS 140-2</td><td class="c ok">כל הדגמים</td><td class="c warn">נבחרים</td><td class="c warn">נבחרים</td></tr>
+              <tr><td>CC EAL4+</td><td class="c ok">כן</td><td class="c warn">חלקי</td><td class="c warn">חלקי</td></tr>
+              <tr><td>Detection / Efficacy</td><td class="c ok">99%+</td><td class="c warn">~96%</td><td class="c ok">99%+</td></tr>
+              <tr><td>SASE Integration</td><td class="c">Harmony</td><td class="c">FortiSASE</td><td class="c ok">Prisma</td></tr>
+            </tbody>
+          </table>
+          <div class="define-row"><b>SASE:</b> אבטחה בענן לעובדים/SaaS: SWG, ZTNA, CASB ו-FW-as-a-service. <b>Visibility:</b> לראות user/app/URL. <b>Efficacy:</b> לזהות ולחסום איומים בפועל.</div>
+        </div>
+      </div>
+
+      <div class="assumptions" style="margin-top:12px;">
+        <b>הנחות:</b> TCO מבוסס על אומדן 3 שנים במחקר; latency ו-throughput מדווחים מדפי vendor / טבלאות המחקר; compliance הוא קטגוריאלי ולא throughput; SASE רלוונטי בעיקר ללקוחות cloud-first/hybrid work שבהם חלק מהinspection עובר לענן.
+      </div>
+    </div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> — Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+  </section>
+
+  <!-- ══ SLIDE 3 — THE CHAIN (funnel: market → segments → criteria → THE criterion) ══ -->
+  <section class="slide" id="s3">
+    <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>השתלשלות: מהשוק אל צוואר הבקבוק</h2></div>
+      <div class="tags"><span class="tag pink">Market</span><span class="tag purple">Segments</span><span class="tag amber">The Criterion</span></div></div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="body">
+      <div class="eyebrow">שרשרת ההיגיון</div>
+      <h1 class="title">איך מ-<span class="num">$13.8B</span> שוק מגיעים לקריטריון <b style="color:var(--primary)">אחד</b> שמכריע הכל</h1>
+
+      <!-- 4-stage numbered funnel -->
+      <div class="funnel">
+        <div class="stage s-a">
+          <div class="sno">1</div>
+          <div class="stp">השוק</div>
+          <div class="st"><span class="en">NGFW</span> — <span class="num">$13.8B</span></div>
+          <div class="sd">שוק ה-<span class="en">Firewall</span> הארגוני, גדל <span class="num">~10%</span> בשנה</div>
+          <div class="kpi"><b>4</b> שחקנים מובילים</div>
+        </div>
+        <div class="fx"></div>
+        <div class="stage s-b">
+          <div class="sno">2</div>
+          <div class="stp">מתחלק ל־</div>
+          <div class="st"><span class="num">6</span> סגמנטים</div>
+          <div class="sd">לא לפי גודל — אלא לפי <b>סוג הלקוח והשימוש</b> שלו</div>
+          <div class="kpi">Enterprise · Regulated · DC · Branch…</div>
+        </div>
+        <div class="fx"></div>
+        <div class="stage s-c">
+          <div class="sno">3</div>
+          <div class="stp">כל סגמנט נשלט ע"י</div>
+          <div class="st">קריטריון הנדסי דומיננטי</div>
+          <div class="sd">הדרישה שהכי חשובה לו — היא שקובעת מי מנצח</div>
+          <div class="kpi"><span class="en">Efficacy · Compliance · Latency · TCO · Throughput</span></div>
+        </div>
+        <div class="fx"></div>
+        <div class="stage s-d">
+          <div class="sno">4</div>
+          <div class="stp">הקריטריון המכריע</div>
+          <div class="st"><span class="en">Throughput</span> תחת <span class="en">TP</span> ★</div>
+          <div class="sd">כאן נחתכות עסקאות ה-<span class="en">Data Center</span> — וכאן <b style="color:var(--pink-soft)">אנחנו מפסידים</b></div>
+          <div class="kpi"><span class="en">CP</span> <b style="color:var(--pink-soft)">25</b> · <span class="en">FTN</span> <b>100</b> · <span class="en">PA</span> <b>189</b> <span class="en">Gbps</span></div>
+        </div>
+      </div>
+
+      <!-- concrete: how the market divides -->
+      <table style="margin-top:14px;">
+        <thead><tr>
+          <th>הסגמנט</th><th>הקריטריון הדומיננטי שמגדיר אותו</th><th class="c">מי מנצח</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>Enterprise HQ Perimeter</td><td>Security Efficacy + ניהול מרכזי</td><td class="c"><span class="win-cp">Check Point</span></td></tr>
+          <tr><td>Regulated — Bank / Gov / Defense / Health</td><td>Compliance (<span class="en">FIPS · EAL4+</span>)</td><td class="c"><span class="win-cp">Check Point</span></td></tr>
+          <tr><td>Latency-Sensitive — HFT / OT</td><td>Latency (<span class="num">1.85μs</span>)</td><td class="c"><span class="win-cp">Check Point</span></td></tr>
+          <tr><td>Mid-Market / Branch</td><td>TCO + SD-WAN מובנה</td><td class="c"><span class="win-other">Fortinet</span></td></tr>
+          <tr><td>Cloud-First / SASE</td><td>SASE integration</td><td class="c"><span class="win-other">Palo Alto</span></td></tr>
+          <tr style="background:rgba(228,12,91,.06);"><td><b>Data Center — High Throughput</b></td><td><b style="color:var(--primary-dark)">Throughput תחת TP</b> ← הקריטריון המכריע</td><td class="c"><span class="win-other">Fortinet / PA</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="to-next">
+        <span class="arrow-lg">↙</span>
+        <span class="st5">שקף הבא:</span>
+        <span class="desc">למה דווקא בקריטריון הזה אנחנו מפסידים? כי <b>Intel x86 הוא צוואר הבקבוק</b> של ה-<span class="en">TP</span>.</span>
+      </div>
+    </div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> — Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+  </section>
+
+  <!-- ══ SLIDE 5 — X86 BOTTLENECK / PROCESSOR ARCHITECTURE ══ -->
+  <section class="slide" id="s5">
+    <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>Intel x86 — איפה נוצר צוואר הבקבוק</h2></div>
+      <div class="tags"><span class="tag amber">Processors</span><span class="tag pink">TP Bottleneck</span></div></div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="body">
+      <div class="eyebrow amber">הקריטריון הקריטי מהשקף הקודם: <span class="en">TP Throughput</span></div>
+      <h1 class="title">הבעיה אינה “כמה פאקטים עוברים” — אלא מי מעבד את הבדיקה העמוקה של <span class="en">Threat Prevention</span></h1>
+
+      <div class="processor-layout">
+        <div class="data-path">
+          <div class="path-title">Check Point 9800 — תעבורה מהירה עד שמגיעים ל-TP</div>
+          <div class="path-row">
+            <div class="path-node green">
+              <div class="pn">FW Fast Path</div>
+              <div class="pd">L3/L4 filtering<br>up to 400 Gbps</div>
+            </div>
+            <div class="ar">→</div>
+            <div class="path-node amber">
+              <div class="pn">NGFW Context</div>
+              <div class="pd">Apps · Users · URL<br>policy decision</div>
+            </div>
+            <div class="ar">→</div>
+            <div class="path-node red">
+              <div class="pn">x86 CPU · TP Engines</div>
+              <div class="pd">IPS · AV · Anti-Bot · TLS<br>deep inspection</div>
+              <div class="queue"><span></span><span></span><span></span><span></span></div>
+            </div>
+          </div>
+
+          <div class="bneck">
+            <div class="bh">צוואר הבקבוק: CPU כללי מקבל עומס בדיקה עמוקה</div>
+            <div class="bt">ה-<span class="en">x86</span> גמיש וחזק, אבל <span class="en">TP</span> דורש הרבה פעולות מקביליות: פתיחת קבצים, חתימות, TLS, sandbox וניתוח תוכן. כשזה מתרכז על CPU כללי נוצרים queue, latency וירידה חדה ב-<span class="en">throughput</span>.</div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <div class="bar-row"><div class="bar-head"><span class="lbl">Firewall בלבד</span><span class="val" style="color:var(--green)"><span class="num">400 Gbps</span></span></div><div class="bar-track"><div class="bar-fill" style="--w:100%;background:var(--green)"></div></div></div>
+            <div class="bar-row"><div class="bar-head"><span class="lbl">NGFW</span><span class="val" style="color:var(--purple)"><span class="num">67.7 Gbps</span></span></div><div class="bar-track"><div class="bar-fill" style="--w:16.9%;background:var(--purple)"></div></div></div>
+            <div class="bar-row"><div class="bar-head"><span class="lbl">Full TP</span><span class="val" style="color:var(--primary)"><span class="num">25 Gbps</span></span></div><div class="bar-track"><div class="bar-fill" style="--w:6.25%;background:var(--primary)"></div></div></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="proc-card cp">
+            <h3><span>Check Point</span><span class="score">TP 25G</span></h3>
+            <p><b>מבנה:</b> האצת <span class="en">FW</span> מהירה, אבל בדיקות <span class="en">TP</span> משמעותיות עוברות ל-<span class="en">Intel x86 CPU</span>. היתרון: גמישות. החיסרון: עומס בדיקה עמוקה יוצר bottleneck.</p>
+          </div>
+          <div class="proc-card ft">
+            <h3><span>Fortinet</span><span class="score">TP 100G</span></h3>
+            <p><b>מבנה:</b> <span class="en">NP/SPU ASIC</span> ייעודי מאיץ גם packet processing וגם חלק גדול מפונקציות security inspection. לכן ה-<span class="en">TP</span> לא נופל כולו על CPU כללי.</p>
+          </div>
+          <div class="proc-card pa">
+            <h3><span>Palo Alto</span><span class="score">TP 189G</span></h3>
+            <p><b>מבנה:</b> <span class="en">Dedicated Processing Cards</span> מפצלות את עומסי security processing. העומס מתוכנן כחומרה ייעודית ולא כתור אחד סביב CPU כללי.</p>
+          </div>
+          <div class="callout" style="margin-top:12px;">
+            <div class="big">x86<small>not the enemy</small></div>
+            <div class="sep"></div>
+            <div class="txt"><b>המסר:</b> <span class="en">x86</span> לא “חלש”; הוא פשוט לא המקום האופטימלי להריץ את כל עומס ה-<span class="en">TP</span> בזמן אמת. המתחרים מעבירים יותר מהעבודה לחומרה ייעודית.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+    <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> — Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+  </section>
+
+</div>
+
+<div class="dots" id="dots"></div>
+<div class="nav">
+  <button id="prev" aria-label="קודם">›</button>
+  <span class="count" id="count">1 / 11</span>
+  <button id="next" aria-label="הבא">‹</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length; let cur = 0;
+  const progress = document.getElementById('progress');
+  const count = document.getElementById('count');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const dotsWrap = document.getElementById('dots');
+  slides.forEach((_, i) => { const d=document.createElement('div'); d.className='dot'+(i===0?' active':''); d.addEventListener('click',()=>go(i)); dotsWrap.appendChild(d); });
+  const dots = Array.from(dotsWrap.children);
+  function go(i){
+    if(i<0||i>=total) return;
+    slides[cur].classList.remove('active'); dots[cur].classList.remove('active');
+    cur=i;
+    slides[cur].classList.add('active'); dots[cur].classList.add('active');
+    count.textContent=(cur+1)+' / '+total;
+    progress.style.width=((cur+1)/total*100)+'%';
+    prevBtn.disabled=(cur===0); nextBtn.disabled=(cur===total-1);
+  }
+  nextBtn.addEventListener('click',()=>go(cur+1));
+  prevBtn.addEventListener('click',()=>go(cur-1));
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft'||e.key===' '||e.key==='PageDown'){go(cur+1);e.preventDefault();}
+    else if(e.key==='ArrowRight'||e.key==='PageUp'){go(cur-1);e.preventDefault();}
+    else if(e.key==='Home')go(0); else if(e.key==='End')go(total-1);
+  });
+  go(0);
+
+  /* donut charts (market map slide) — rendered from data-donut='[["vendor",pct],...]' */
+  (function(){
+    const COLOR={cp:'#e40c5b',ft:'#c25700',pa:'#741984',cs:'#5a8f9e',ot:'#d9d4da'};
+    const NS='http://www.w3.org/2000/svg', R=15.9155; // circumference = 100
+    document.querySelectorAll('[data-donut]').forEach(el=>{
+      const data=JSON.parse(el.dataset.donut), sw=el.dataset.sw||8;
+      const svg=document.createElementNS(NS,'svg'); svg.setAttribute('viewBox','0 0 42 42');
+      const ring=document.createElementNS(NS,'circle');
+      ring.setAttribute('cx',21); ring.setAttribute('cy',21); ring.setAttribute('r',R);
+      ring.setAttribute('fill','none'); ring.setAttribute('stroke','#f1eef0'); ring.setAttribute('stroke-width',sw);
+      svg.appendChild(ring);
+      let off=0;
+      data.forEach(([k,p])=>{
+        const c=document.createElementNS(NS,'circle');
+        c.setAttribute('cx',21); c.setAttribute('cy',21); c.setAttribute('r',R);
+        c.setAttribute('fill','none'); c.setAttribute('stroke',COLOR[k]||'#ccc'); c.setAttribute('stroke-width',sw);
+        c.setAttribute('stroke-dasharray',p+' '+(100-p)); c.setAttribute('stroke-dashoffset',-off);
+        svg.appendChild(c); off+=p;
+      });
+      el.prepend(svg);
+    });
+  })();
+</script>
+</body>
+</html>

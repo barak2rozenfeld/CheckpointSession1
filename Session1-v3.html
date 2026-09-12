@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum 9000 — Session 1 v3 | ברק רוזנפלד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&family=Barlow+Semi+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#e40c5b; --primary-dark:#b70d4e; --pink-soft:#ff7ba8;
+  --purple:#741984; --dark:#290e23; --dark-2:#1a0916;
+  --white:#fff; --off:#f7f5f6; --gray:#f0eef0; --border:#e4e4e4;
+  --text:#1a1a1a; --mid:#555; --light:#8a8a8a;
+  --green:#0a8a4b; --amber:#c25700; --steel:#5a8f9e; --teal:#0f8b8d;
+  --cp:#e40c5b; --ft:#c25700; --pa:#741984; --cs:#5a8f9e; --ot:#d9d4da;
+  --font:'Heebo','Segoe UI',Arial,sans-serif;
+  --font-num:'Barlow Semi Condensed','Heebo',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;background:#0d0510;font-family:var(--font);color:var(--text);}
+svg text{direction:ltr;}
+.en{unicode-bidi:isolate;direction:ltr;}
+.num{unicode-bidi:isolate;direction:ltr;font-family:var(--font-num);font-weight:700;}
+b{font-weight:700;}
+button{font-family:inherit;}
+
+/* ── stage: fixed 1280×720 design, scaled to fit any screen ── */
+.stage{position:fixed;left:50%;top:50%;width:1280px;height:720px;transform-origin:center;transform:translate(-50%,-50%);box-shadow:0 0 80px rgba(0,0,0,.6);}
+.deck{position:relative;width:1280px;height:720px;overflow:hidden;}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateX(40px);
+  transition:opacity .45s ease,transform .45s ease,visibility .45s;background:var(--white);}
+.slide.active{opacity:1;visibility:visible;transform:translateX(0);z-index:2;}
+
+/* ── chrome ── */
+.topbar{background:var(--dark);padding:12px 56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.topbar .brand{display:flex;align-items:center;gap:16px;}
+.topbar .brand img{height:22px;}
+.topbar .brand .sep{width:1px;height:22px;background:rgba(255,255,255,.2);}
+.topbar .brand h2{color:#fff;font-size:16px;font-weight:700;}
+.tags{display:flex;gap:8px;}
+.tag{padding:3px 10px;border-radius:3px;font-size:10.5px;font-weight:700;letter-spacing:.04em;direction:ltr;unicode-bidi:isolate;}
+.tag.pink{background:rgba(228,12,91,.18);color:var(--pink-soft);}
+.tag.purple{background:rgba(116,25,132,.3);color:#c98fd6;}
+.tag.amber{background:rgba(194,87,0,.22);color:#e08a3c;}
+.tag.teal{background:rgba(15,139,141,.25);color:#7fd6d8;}
+
+/* story rail */
+.rail{background:var(--dark-2);padding:0 56px;display:flex;gap:0;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.06);}
+.rail .st{flex:1;padding:7px 0 6px;font-size:11px;color:rgba(255,255,255,.35);font-weight:600;display:flex;align-items:center;gap:8px;position:relative;}
+.rail .st i{display:inline-flex;width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.08);font-size:9.5px;font-style:normal;align-items:center;justify-content:center;font-family:var(--font-num);}
+.rail .st.done{color:rgba(255,255,255,.6);} .rail .st.done i{background:rgba(228,12,91,.35);}
+.rail .st.now{color:#fff;} .rail .st.now i{background:var(--primary);}
+.rail .st.now::after{content:'';position:absolute;bottom:-1px;inset-inline-start:0;width:calc(100% - 14px);height:2px;background:var(--primary);}
+
+.tristripe{display:flex;flex-shrink:0;}
+.tristripe .a{flex:3;height:4px;background:var(--primary);}
+.tristripe .b{flex:1;height:4px;background:var(--purple);}
+.tristripe .c{flex:1;height:4px;background:var(--dark);}
+
+.body{flex:1;padding:16px 56px 10px;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
+.footer{flex-shrink:0;background:var(--off);padding:8px 56px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);}
+.footer .c{color:var(--light);font-size:10.5px;}
+.footer .n{color:var(--primary);font-size:10.5px;font-weight:700;}
+
+.eyebrow{color:var(--primary);font-size:11px;font-weight:800;letter-spacing:.12em;margin-bottom:4px;}
+h1.title{font-size:21px;font-weight:800;color:var(--text);line-height:1.2;margin-bottom:10px;}
+h1.title .hl{color:var(--primary);}
+.assume{font-size:8.5px;color:var(--light);line-height:1.4;margin-top:6px;opacity:.75;border-top:1px solid #ede8ec;padding-top:5px;}
+.assume b{color:var(--mid);}
+.pill{display:inline-block;padding:1px 7px;border-radius:10px;font-size:9.5px;font-weight:700;background:var(--gray);color:var(--mid);vertical-align:middle;}
+.pill.warn{background:#fff1e6;color:var(--amber);}
+.pill.ok{background:#e6f5ec;color:var(--green);}
+.pill.pink{background:#fde6ee;color:var(--primary-dark);}
+
+/* thread — story bridge */
+.thread{margin-top:auto;display:flex;align-items:center;gap:12px;background:var(--dark);color:#fff;padding:9px 16px;border-radius:7px;flex-shrink:0;}
+.thread .k{font-family:var(--font-num);font-size:22px;font-weight:800;color:var(--pink-soft);line-height:1;white-space:nowrap;direction:ltr;}
+.thread .k small{display:block;font-family:var(--font);font-size:9.5px;color:rgba(255,255,255,.5);font-weight:500;direction:rtl;text-align:left;}
+.thread .sep{width:1px;height:28px;background:rgba(255,255,255,.18);}
+.thread .t{font-size:12.5px;line-height:1.4;}
+.thread .t b{color:var(--pink-soft);}
+.thread .next{margin-inline-start:auto;font-size:11px;color:rgba(255,255,255,.55);white-space:nowrap;}
+.thread .next b{color:#fff;}
+
+/* layout */
+.grid{display:grid;gap:14px;min-height:0;}
+.card{background:var(--off);border:1px solid var(--border);border-radius:8px;padding:12px 14px;min-height:0;display:flex;flex-direction:column;}
+.card.white{background:#fff;}
+.card.dark{background:var(--dark);border-color:var(--dark);color:#fff;}
+.card .ch{font-size:11px;font-weight:800;color:var(--mid);letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.card.dark .ch{color:rgba(255,255,255,.6);}
+.ch .dotc{width:8px;height:8px;border-radius:50%;background:var(--primary);}
+
+/* bars */
+.bar{display:flex;align-items:center;gap:8px;margin:5px 0;}
+.bar .lb{font-size:11.5px;font-weight:600;color:var(--mid);min-width:120px;}
+.bar .trk{flex:1;height:14px;background:#e9e5e8;border-radius:4px;overflow:hidden;position:relative;}
+.bar .fil{height:100%;width:0;border-radius:4px;transition:width .9s cubic-bezier(.2,.8,.2,1);background:var(--primary);}
+.slide.active .bar .fil{width:var(--w);}
+.bar .v{font-family:var(--font-num);font-size:13.5px;font-weight:800;min-width:60px;direction:ltr;text-align:left;}
+.bar.cp .fil{background:var(--cp);} .bar.ft .fil{background:var(--ft);} .bar.pa .fil{background:var(--pa);} .bar.cs .fil{background:var(--cs);}
+
+/* KPIs */
+.kpis{display:flex;gap:10px;}
+.kpi{flex:1;background:#fff;border:1px solid var(--border);border-radius:7px;padding:9px 11px;}
+.kpi .v{font-family:var(--font-num);font-size:24px;font-weight:800;color:var(--primary);line-height:1;direction:ltr;text-align:right;}
+.kpi .v.dark{color:var(--text);} .kpi .v.green{color:var(--green);} .kpi .v.amber{color:var(--amber);} .kpi .v.purple{color:var(--purple);}
+.kpi .l{font-size:10.5px;color:var(--mid);margin-top:4px;line-height:1.3;}
+
+/* toggles / controls */
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.tg{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;background:#fff;cursor:pointer;font-size:12px;font-weight:700;color:var(--mid);transition:all .2s;user-select:none;}
+.tg .sw{width:30px;height:16px;border-radius:8px;background:#d5cfd3;position:relative;transition:background .2s;flex-shrink:0;}
+.tg .sw::after{content:'';position:absolute;top:2px;inset-inline-start:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:transform .2s;}
+.tg.on{border-color:var(--primary);color:var(--primary-dark);background:#fff5f8;}
+.tg.on .sw{background:var(--primary);} .tg.on .sw::after{transform:translateX(-14px);}
+.tg.dis{opacity:.45;cursor:default;}
+.seg{display:inline-flex;border:1.5px solid var(--border);border-radius:20px;overflow:hidden;background:#fff;}
+.seg button{border:none;background:none;padding:6px 13px;font-size:12px;font-weight:700;color:var(--mid);cursor:pointer;transition:all .2s;}
+.seg button.on{background:var(--dark);color:#fff;}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:#e2dde0;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--primary);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);}
+.sl{display:flex;flex-direction:column;gap:3px;}
+.sl .slh{display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:var(--mid);}
+.sl .slh b{font-family:var(--font-num);color:var(--text);direction:ltr;font-size:13px;}
+
+/* hero */
+.hero{background:radial-gradient(1200px 600px at 80% 20%,rgba(228,12,91,.35),transparent 60%),radial-gradient(900px 500px at 10% 90%,rgba(116,25,132,.45),transparent 60%),var(--dark-2);color:#fff;justify-content:center;padding:0 90px;}
+.hero .logo{height:40px;width:auto;align-self:flex-start;margin-bottom:28px;background:#fff;padding:7px 12px;border-radius:6px;}
+.hero .eyebrow{color:var(--pink-soft);}
+.hero h1{font-size:46px;font-weight:900;line-height:1.08;margin:6px 0 10px;}
+.hero h1 .en{font-weight:800;}
+.hero .sub{font-size:20px;color:rgba(255,255,255,.75);font-weight:400;margin-bottom:34px;}
+.hero .sub b{color:#fff;font-weight:700;}
+.hero .thesis{display:flex;gap:14px;margin-bottom:34px;}
+.hero .th{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:14px 18px;}
+.hero .th .v{font-family:var(--font-num);font-size:38px;font-weight:800;color:var(--pink-soft);line-height:1;direction:ltr;text-align:right;}
+.hero .th .l{font-size:12.5px;color:rgba(255,255,255,.7);margin-top:6px;line-height:1.35;}
+.hero .meta{display:flex;gap:40px;}
+.hero .meta .lbl{font-size:10.5px;color:rgba(255,255,255,.45);letter-spacing:.1em;font-weight:700;}
+.hero .meta .val{font-size:15px;font-weight:600;margin-top:2px;}
+.hero .hint{position:absolute;bottom:26px;inset-inline-start:90px;font-size:11px;color:rgba(255,255,255,.4);}
+
+/* S2 product */
+.solve{display:flex;flex-direction:column;gap:8px;}
+.solve .row{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--border);border-radius:7px;padding:9px 11px;}
+.solve .row .ic{width:30px;height:30px;border-radius:7px;background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-weight:800;font-size:13px;flex-shrink:0;}
+.solve .row h4{font-size:12.5px;font-weight:800;margin-bottom:2px;}
+.solve .row p{font-size:11px;color:var(--mid);line-height:1.4;}
+.flowmini{display:flex;align-items:center;gap:6px;margin-top:8px;background:var(--dark);border-radius:8px;padding:10px 12px;color:#fff;}
+.flowmini .box{flex:1;text-align:center;font-size:10.5px;line-height:1.3;padding:6px 4px;border-radius:5px;background:rgba(255,255,255,.07);}
+.flowmini .box b{display:block;font-size:11.5px;}
+.flowmini .box.gw{background:var(--primary);flex:1.4;}
+.flowmini .arr{color:rgba(255,255,255,.5);font-size:16px;}
+.flowmini .box .th-anim{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--pink-soft);margin:0 1px;animation:blip 1.6s infinite;}
+@keyframes blip{0%,100%{opacity:.25}50%{opacity:1}}
+.models{display:flex;gap:6px;margin-bottom:8px;}
+.models button{flex:1;border:1.5px solid var(--border);background:#fff;border-radius:7px;padding:7px 4px;cursor:pointer;transition:all .2s;}
+.models button .m{font-family:var(--font-num);font-size:17px;font-weight:800;direction:ltr;}
+.models button .p{font-size:9.5px;color:var(--light);line-height:1.2;margin-top:1px;}
+.models button.on{border-color:var(--primary);background:#fff5f8;} .models button.on .m{color:var(--primary);}
+.models button:hover{border-color:var(--pink-soft);}
+.constline{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.constline span{font-size:10.5px;font-weight:700;background:#fff;border:1px solid var(--border);border-radius:14px;padding:3px 9px;color:var(--mid);}
+.constline span b{color:var(--text);}
+.spec{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;}
+.spec .s{background:#fff;border:1px solid var(--border);border-radius:6px;padding:7px 9px;}
+.spec .s .v{font-family:var(--font-num);font-size:18px;font-weight:800;direction:ltr;text-align:right;}
+.spec .s .l{font-size:10px;color:var(--mid);}
+
+/* S3 market */
+.donutwrap{position:relative;width:150px;height:150px;margin:0 auto;}
+.donutwrap svg{width:100%;height:100%;transform:rotate(-90deg);}
+.donutwrap .dc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.donutwrap .dc b{font-family:var(--font-num);font-size:22px;font-weight:800;line-height:1;}
+.donutwrap .dc small{font-size:9.5px;color:var(--light);font-weight:700;}
+.legend{display:flex;flex-direction:column;gap:4px;margin-top:8px;}
+.legend .li{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--mid);}
+.legend .li i{width:9px;height:9px;border-radius:2px;}
+.legend .li b{font-family:var(--font-num);color:var(--text);margin-inline-start:auto;direction:ltr;}
+.stack{display:flex;height:34px;border-radius:6px;overflow:hidden;margin:6px 0;}
+.stack span{display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-num);font-size:12px;font-weight:800;transition:flex .7s cubic-bezier(.2,.8,.2,1);white-space:nowrap;overflow:hidden;}
+.stack.grp span{font-size:13px;}
+.sglbl{display:flex;justify-content:space-between;font-size:10px;color:var(--light);}
+.mom{display:flex;flex-direction:column;gap:6px;}
+.mom .r{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:11px;line-height:1.35;}
+.mom .r .arrow{font-family:var(--font-num);font-size:17px;font-weight:800;min-width:24px;text-align:center;direction:ltr;}
+.mom .r b.n{font-family:var(--font-num);direction:ltr;}
+.mom .r.up .arrow{color:var(--green);} .mom .r.flat .arrow{color:var(--amber);} .mom .r.down .arrow{color:var(--primary);}
+.mom .r.down{border-color:var(--primary);background:#fff5f8;}
+
+/* S4 table */
+table.tb{width:100%;border-collapse:collapse;font-size:11.5px;}
+table.tb th{font-size:10px;letter-spacing:.06em;color:var(--light);text-align:right;padding:5px 8px;border-bottom:2px solid var(--border);font-weight:800;}
+table.tb td{padding:7px 8px;border-bottom:1px solid var(--border);vertical-align:middle;}
+table.tb tr.r:hover td{background:#fff;}
+table.tb tr.win td{background:#f0f9f4;} table.tb tr.lose td{background:#fff5f8;}
+table.tb tr.star td{background:#fff1e6;}
+table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-space:nowrap;}
+.wchip{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10.5px;font-weight:800;color:#fff;}
+.wchip.cp{background:var(--cp);} .wchip.ft{background:var(--ft);} .wchip.pa{background:var(--pa);} .wchip.mix{background:linear-gradient(90deg,var(--pa),var(--ft));}
+.ev{display:flex;flex-direction:column;gap:8px;}
+.ev .card{padding:9px 11px;}
+.ev .card .ch{margin-bottom:5px;}
+.ev .bar{margin:3px 0;} .ev .bar .lb{min-width:76px;font-size:10.5px;} .ev .bar .trk{height:10px;} .ev .bar .v{font-size:12px;min-width:48px;}
+
+/* S5 SWOT */
+.swot{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px;flex:1;min-height:0;}
+.sw{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;min-height:0;overflow:hidden;position:relative;}
+.sw .swh{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.sw .swh b{font-family:var(--font-num);font-size:28px;font-weight:800;line-height:1;}
+.sw .swh h3{font-size:13px;font-weight:800;} .sw .swh small{display:block;font-size:10px;color:var(--light);font-weight:500;}
+.sw ul{list-style:none;display:flex;flex-direction:column;gap:3px;}
+.sw li{font-size:10.8px;line-height:1.35;color:var(--mid);padding-inline-start:10px;position:relative;}
+.sw li::before{content:'';position:absolute;inset-inline-start:0;top:6px;width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.5;}
+.sw li b{color:var(--text);}
+.sw.S{border-top:4px solid var(--green);} .sw.S .swh b{color:var(--green);}
+.sw.W{border-top:4px solid var(--primary);} .sw.W .swh b{color:var(--primary);}
+.sw.O{border-top:4px solid var(--teal);} .sw.O .swh b{color:var(--teal);}
+.sw.T{border-top:4px solid var(--amber);} .sw.T .swh b{color:var(--amber);}
+.sw li.hinge{background:#fff1f5;border:1.5px solid var(--primary);border-radius:5px;padding:4px 8px 4px 10px;color:var(--text);animation:pulse 2.2s infinite;}
+.sw li.hinge::before{display:none;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(228,12,91,.35)}50%{box-shadow:0 0 0 5px rgba(228,12,91,0)}}
+
+/* S6 simulator */
+.sim{display:grid;grid-template-columns:1.25fr 1fr;gap:14px;flex:1;min-height:0;}
+.path{display:flex;align-items:center;gap:5px;margin:8px 0 4px;}
+.path .st{flex:1;text-align:center;border-radius:6px;padding:8px 4px;font-size:10.5px;font-weight:700;color:#fff;background:var(--steel);transition:all .35s;line-height:1.25;}
+.path .st small{display:block;font-size:9px;font-weight:500;opacity:.8;}
+.path .st.cpu{background:var(--primary);} .path .st.sil{background:var(--teal);} .path .st.off{background:#d9d4da;color:#8a8a8a;transform:scale(.94);}
+.path .arr{color:var(--light);font-size:14px;}
+.gauge{display:flex;gap:10px;margin-top:8px;}
+.gauge .g{flex:1;background:#fff;border:1px solid var(--border);border-radius:8px;padding:9px 11px;position:relative;overflow:hidden;}
+.gauge .g .nm{font-size:10.5px;font-weight:800;color:var(--mid);display:flex;justify-content:space-between;}
+.gauge .g .nm small{font-weight:600;color:var(--light);}
+.gauge .g .val{font-family:var(--font-num);font-size:34px;font-weight:800;line-height:1.05;direction:ltr;text-align:right;transition:color .3s;}
+.gauge .g .unit{font-size:10px;color:var(--light);}
+.gauge .g .tr{height:8px;background:#ece8eb;border-radius:4px;margin-top:6px;overflow:hidden;}
+.gauge .g .tr i{display:block;height:100%;border-radius:4px;transition:width .7s cubic-bezier(.2,.8,.2,1);}
+.gauge .g.cp .tr i{background:var(--cp);} .gauge .g.ft .tr i{background:var(--ft);} .gauge .g.pa .tr i{background:var(--pa);}
+.gauge .g .ru{font-size:10px;font-weight:800;color:#fff;background:var(--dark);padding:2px 8px;border-radius:9px;font-family:var(--font-num);direction:ltr;}
+.gauge .g .cfg{font-size:10.5px;color:var(--light);font-weight:600;margin-top:2px;}
+#s6 .gauge .g .val{font-size:34px;} #s6 .gauge .g .nm{font-size:12px;} #s6 .gauge .g .unit{font-size:10.5px;} #s6 .gauge .g{padding:8px 12px;}
+/* per-vendor silicon lanes */
+.lanes{display:grid;grid-template-columns:112px repeat(5,1fr);gap:3px;margin:6px 0 0;}
+.lanes .lh{background:var(--dark);color:#fff;border-radius:5px;padding:4px 3px;text-align:center;font-size:10px;font-weight:800;line-height:1.15;transition:opacity .3s;} .lanes .lh small{display:block;font-size:8.5px;font-weight:500;opacity:.75;}
+.lanes .lh.corner{background:transparent;color:var(--mid);text-align:start;padding-inline-start:4px;} .lanes .lh.corner small{color:var(--light);}
+.lanes .ln{display:flex;flex-direction:column;justify-content:center;padding:2px 6px;border-inline-start:4px solid;border-radius:4px;background:var(--gray);line-height:1.15;} .lanes .ln b{font-size:11px;font-weight:800;} .lanes .ln small{font-size:9px;color:var(--light);font-weight:600;direction:ltr;text-align:start;}
+.lanes .ln.cp{border-color:var(--cp);} .lanes .ln.ft{border-color:var(--ft);} .lanes .ln.pa{border-color:var(--pa);}
+.lanes .c{border-radius:5px;padding:4px 3px;text-align:center;font-size:10.5px;font-weight:800;color:#fff;line-height:1.15;transition:all .35s;} .lanes .c small{display:block;font-size:8.5px;font-weight:500;opacity:.85;margin-top:1px;}
+.lanes .c.asic{background:var(--teal);} .lanes .c.acc{background:var(--amber);} .lanes .c.cpu{background:var(--primary);}
+.lanes .c.acc.mix{background:linear-gradient(135deg,var(--amber) 0 60%,var(--primary) 60% 100%);}
+.lanes .c.off{background:#e6e2e5;color:#9a9a9a;transform:scale(.96);} .lanes .lh.off{opacity:.35;}
+#s6 .leg span{font-size:10px;}
+#s6 .tg{font-size:11px;padding:5px 9px;gap:6px;white-space:nowrap;} #s6 .tgrow{flex-wrap:nowrap;gap:6px;} #s6 .sim{gap:12px;} #s6 .card.white{padding-top:10px;padding-bottom:8px;} #s6 .tg small{font-size:9.5px;} #s6 .ratio .r .v{font-size:20px;} #s6 .ratio .r .l{font-size:10px;} #s6 .ratio .r{padding:5px 8px;} #s6 .ratio{margin-top:6px;}
+#s6 .gauge{margin-top:6px;} #s6 .gauge .g .cfg{display:none;} #s6 .gauge .g .val{font-size:28px;} #s6 .gauge .g .tr{margin-top:4px;height:6px;}
+#s6 .solve .row p{font-size:11.5px;} #s6 .solve .row h4{font-size:13px;} #s6 .kpi .v{font-size:30px;} #s6 .kpi .l{font-size:11.5px;}
+.ratio{display:flex;gap:8px;margin-top:8px;}
+.ratio .r{flex:1;background:var(--dark);color:#fff;border-radius:7px;padding:8px 10px;text-align:center;}
+.ratio .r .v{font-family:var(--font-num);font-size:22px;font-weight:800;color:var(--pink-soft);direction:ltr;}
+.ratio .r .l{font-size:10px;color:rgba(255,255,255,.6);}
+
+/* S7 architecture */
+.pipes{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.pipe{background:#fff;border:1px solid var(--border);border-radius:8px;padding:9px 10px;display:flex;flex-direction:column;gap:4px;}
+.pipe h4{font-size:12.5px;font-weight:800;display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
+.pipe h4 small{font-family:var(--font-num);font-size:11px;color:var(--light);font-weight:700;direction:ltr;}
+.pipe .stg{border-radius:5px;padding:5px 8px;font-size:10.5px;font-weight:700;color:#fff;line-height:1.25;position:relative;cursor:default;transition:transform .15s;}
+.pipe .stg small{display:block;font-size:9px;font-weight:500;opacity:.85;}
+.pipe .stg:hover{transform:translateX(-3px);}
+.pipe .stg.sil{background:var(--teal);} .pipe .stg.cpu{background:var(--primary);} .pipe .stg.sw{background:#8a5a9a;} .pipe .stg.io{background:var(--steel);}
+.pipe .stg.dpu{background:var(--green);}
+.pipe .foot{margin-top:auto;padding-top:6px;border-top:1px dashed var(--border);font-size:10px;color:var(--mid);line-height:1.35;}
+.pipe .foot b{font-family:var(--font-num);color:var(--text);direction:ltr;}
+.pipe.cp{border-top:4px solid var(--cp);} .pipe.ft{border-top:4px solid var(--ft);} .pipe.pa{border-top:4px solid var(--pa);} .pipe.cs{border-top:4px solid var(--cs);}
+.leg{display:flex;gap:12px;font-size:10.5px;color:var(--mid);font-weight:700;margin-bottom:6px;}
+.leg i{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-2px;margin-inline-end:4px;}
+.demo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
+.demo .card{padding:9px 12px;}
+.cmp{display:flex;gap:10px;align-items:stretch;margin-top:6px;}
+.cmp .c{flex:1;border-radius:7px;padding:8px 10px;color:#fff;}
+.cmp .c .v{font-family:var(--font-num);font-size:28px;font-weight:800;line-height:1;direction:ltr;text-align:right;}
+.cmp .c .l{font-size:10px;opacity:.8;margin-top:3px;line-height:1.3;}
+.cmp .c.x86{background:var(--primary);} .cmp .c.tcam{background:var(--teal);}
+.axis{position:relative;height:118px;margin-top:6px;}
+.axis .ax{position:absolute;background:#cfc7cc;} .axis .ax.h{bottom:18px;left:24px;right:6px;height:1.5px;} .axis .ax.v{left:24px;top:2px;bottom:18px;width:1.5px;}
+.axis .al{position:absolute;font-size:9.5px;color:var(--light);font-weight:700;}
+.axis .pt{position:absolute;width:11px;height:11px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1.5px currentColor;}
+.axis .pt span{position:absolute;inset-inline-end:14px;top:-3px;font-size:10px;font-weight:800;white-space:nowrap;color:var(--text);}
+.axis .pt.cp{color:var(--cp);background:var(--cp);} .axis .pt.ft{color:var(--ft);background:var(--ft);} .axis .pt.pa{color:var(--pa);background:var(--pa);} .axis .pt.cs{color:var(--cs);background:var(--cs);}
+.axis .pt.tgt{color:var(--green);background:#fff;border:2px dashed var(--green);box-shadow:none;animation:pulse 2.2s infinite;}
+
+/* S8 feature */
+.feat{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;flex:1;min-height:0;}
+.box9800{background:var(--dark);border-radius:10px;padding:12px 14px;color:#fff;position:relative;}
+.box9800 .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:11px;color:rgba(255,255,255,.6);font-weight:700;}
+.box9800 .hd b{color:#fff;font-family:var(--font-num);font-size:13px;}
+.chips{display:flex;gap:6px;align-items:stretch;}
+.chips .ch2{flex:1;border-radius:7px;padding:8px 6px;text-align:center;font-size:10.5px;font-weight:700;line-height:1.25;transition:all .5s;position:relative;}
+.chips .ch2 small{display:block;font-size:9px;opacity:.8;font-weight:500;margin-top:2px;}
+.chips .ch2.io{background:rgba(255,255,255,.12);} .chips .ch2.sil{background:var(--teal);} .chips .ch2.cpu{background:var(--primary);} .chips .ch2.dpu{background:var(--green);}
+.chips .ch2.move{animation:moveIn .6s ease;}
+@keyframes moveIn{0%{transform:translateY(-14px);opacity:.3}100%{transform:none;opacity:1}}
+.chips .arr{display:flex;align-items:center;color:rgba(255,255,255,.4);}
+.lane{margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.lane .ln{border-radius:7px;padding:8px 10px;font-size:10.5px;line-height:1.35;}
+.lane .ln h5{font-size:11px;font-weight:800;margin-bottom:3px;display:flex;justify-content:space-between;}
+.lane .ln h5 span{font-family:var(--font-num);direction:ltr;}
+.lane .ln.x86{background:rgba(228,12,91,.16);border:1px solid rgba(228,12,91,.5);}
+.lane .ln.dpu{background:rgba(10,138,75,.18);border:1px solid rgba(10,138,75,.6);}
+.lane .ln ul{list-style:none;color:rgba(255,255,255,.85);} .lane .ln li{padding-inline-start:9px;position:relative;} .lane .ln li::before{content:'·';position:absolute;inset-inline-start:0;}
+.gauges2{display:flex;gap:8px;margin-top:10px;}
+.gauges2 .g{flex:1;background:rgba(255,255,255,.06);border-radius:7px;padding:7px 10px;}
+.gauges2 .g .l{font-size:10px;color:rgba(255,255,255,.6);font-weight:700;}
+.gauges2 .g .v{font-family:var(--font-num);font-size:26px;font-weight:800;direction:ltr;text-align:right;line-height:1.05;transition:color .4s;}
+.gauges2 .g .v small{font-size:11px;color:rgba(255,255,255,.5);font-weight:600;}
+.why2{display:flex;flex-direction:column;gap:8px;min-height:0;}
+.why2 .cmp{padding:9px 11px;} .why2 .cmp .ch{display:flex;align-items:center;gap:6px;margin-bottom:6px;} .why2 .cmp .ch .seg{margin-inline-start:auto;} .why2 .cmp .ch .seg button{font-size:10px;padding:2px 8px;}
+.why2 .cmp .ch .as{font-size:9.5px;color:var(--light);font-weight:600;}
+.hbars{display:flex;flex-direction:column;gap:7px;}
+.hbars .hb{display:grid;grid-template-columns:124px 1fr 58px;align-items:center;gap:8px;font-size:11px;}
+.hbars .hb .n{font-weight:800;color:var(--mid);line-height:1.15;} .hbars .hb .n small{display:block;font-size:9px;font-weight:600;color:var(--light);}
+.hbars .hb .tr{height:18px;background:#f0ecef;border-radius:4px;position:relative;overflow:visible;}
+.hbars .hb .tr i{position:absolute;inset-inline-start:0;top:0;height:100%;border-radius:4px;transition:width .8s cubic-bezier(.2,.8,.2,1),background .4s;}
+.hbars .hb .v{font-family:var(--font-num);font-weight:800;font-size:13px;direction:ltr;text-align:right;transition:color .4s;display:flex;align-items:baseline;justify-content:flex-end;gap:3px;} .hbars .hb .v small{font-family:var(--font);font-size:8.5px;font-weight:700;direction:rtl;}
+.hbars .hb.cp0 i{background:#c9bfc6;} .hbars .hb.ft i{background:var(--ft);} .hbars .hb.pa i{background:var(--pa);}
+.hbars .hb.cpb i{background:transparent;border:1.5px dashed var(--primary);box-sizing:border-box;} .hbars .hb.cpb .v{color:var(--light);}
+.hbars.on .hb.cpb i{background:var(--primary);border-color:var(--primary);} .hbars.on .hb.cpb .v{color:var(--primary);} .hbars.on .hb.cpb .n{color:var(--primary-dark);}
+.tconote{background:#fff7ea;border:1px solid #f1d9a8;border-radius:7px;padding:7px 10px;font-size:10.5px;line-height:1.4;color:var(--mid);} .tconote b{color:var(--text);}
+.why{display:flex;flex-direction:column;gap:7px;}
+.why .w{display:flex;gap:9px;background:#fff;border:1px solid var(--border);border-radius:7px;padding:8px 10px;align-items:flex-start;}
+.why .w .ic{width:28px;height:28px;border-radius:7px;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-size:12px;font-weight:800;flex-shrink:0;background:var(--dark);}
+.why .w h5{font-size:12px;font-weight:800;} .why .w p{font-size:10.5px;color:var(--mid);line-height:1.38;}
+.why .w.g .ic{background:var(--green);} .why .w.p .ic{background:var(--purple);} .why .w.t .ic{background:var(--teal);}
+
+/* S9 feasibility */
+/* ── sHow: DPU packet path ── */
+.how{display:grid;grid-template-columns:1.55fr 1fr;gap:12px;flex:1;min-height:0;}
+.how .card{padding:10px 12px;} .how .card .ch{display:flex;align-items:center;gap:6px;}
+.flow{display:flex;align-items:stretch;gap:4px;position:relative;margin-top:6px;padding-bottom:26px;}
+.flow .farr{display:flex;align-items:center;color:var(--light);font-size:13px;flex-shrink:0;}
+.flow .grp{border-radius:8px;padding:5px;display:flex;flex-direction:column;gap:4px;}
+.flow .grp.io{background:var(--gray);justify-content:center;} .flow .grp.dpu{background:#e6f5ec;border:1.5px solid var(--green);flex:1;} .flow .grp.x86{background:#fdeaf1;border:1.5px solid var(--primary);}
+.flow .gh{font-size:10px;font-weight:800;color:var(--green);display:flex;justify-content:space-between;gap:6px;padding:0 3px;} .flow .grp.x86 .gh{color:var(--primary-dark);} .flow .gh span{font-weight:600;color:var(--light);font-size:9px;}
+.flow .stns{display:flex;gap:3px;align-items:stretch;flex:1;}
+.flow .stn{background:#fff;border-radius:6px;padding:6px 5px;text-align:center;flex:1;min-width:70px;line-height:1.15;border:1.5px solid transparent;transition:all .3s;position:relative;}
+.flow .stn b{display:block;font-size:11.5px;font-weight:800;} .flow .stn small{display:block;font-size:9.2px;color:var(--mid);font-weight:600;margin-top:2px;}
+.flow .stn em{display:block;font-style:normal;font-size:9px;font-weight:800;margin-top:4px;padding:1px 4px;border-radius:4px;background:#e6f5ec;color:var(--green);direction:ltr;}
+.flow .grp.x86 .stn em{background:#fdeaf1;color:var(--primary-dark);}
+.flow .stn.lit{border-color:var(--dark);box-shadow:0 2px 10px rgba(0,0,0,.12);transform:translateY(-1px);}
+.lanes.cmpl{grid-template-columns:104px repeat(5,1fr);margin-top:6px;} .lanes.cmpl .c{padding:5px 3px;} .lanes.cmpl .lh{padding:5px 3px;}
+.flow .stn{padding:8px 5px;}
+.flow .pk{position:absolute;width:18px;height:18px;border-radius:50%;background:var(--dark);border:3px solid #fff;box-shadow:0 0 0 2px var(--dark),0 3px 8px rgba(0,0,0,.3);transition:left .55s cubic-bezier(.4,0,.2,1),top .55s;z-index:3;pointer-events:none;left:0;top:0;}
+.flow .pk.tls{background:var(--green);box-shadow:0 0 0 2px var(--green);} .flow .pk.x{background:var(--primary);box-shadow:0 0 0 2px var(--primary);}
+.flow .fast{position:absolute;inset-inline:6% 4%;bottom:0;height:20px;border-bottom:2px dashed var(--purple);border-inline:2px dashed var(--purple);border-radius:0 0 10px 10px;font-size:9.5px;color:var(--purple);font-weight:700;text-align:center;} .flow .fast span{position:relative;top:11px;background:#fff;padding:0 8px;}
+.hows{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}
+.hows .hw{background:var(--gray);border-radius:7px;padding:7px 9px;display:flex;gap:8px;align-items:flex-start;}
+.hows .hw .v{font-family:var(--font-num);font-size:20px;font-weight:800;color:var(--primary);line-height:1;direction:ltr;flex-shrink:0;} .hows .hw .l{font-size:9.8px;color:var(--mid);line-height:1.35;font-weight:500;}
+.how .side{display:flex;flex-direction:column;gap:8px;}
+.how .side .card.g{border-top:3px solid var(--green);} .how .side .card.a{border-top:3px solid var(--amber);}
+.mv{list-style:none;display:flex;flex-direction:column;gap:3px;margin-top:5px;} .mv li{font-size:10.5px;line-height:1.35;color:var(--mid);padding-inline-start:12px;position:relative;} .mv li b{color:var(--text);}
+.mv li::before{content:'';position:absolute;inset-inline-start:0;top:6px;width:6px;height:6px;border-radius:2px;background:var(--green);} .mv.stay li::before{background:var(--primary);}
+.bnd{font-size:10.5px;line-height:1.4;color:var(--mid);margin-top:5px;}
+.feas{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.feas .card ul{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.feas .card li{font-size:10.8px;line-height:1.38;color:var(--mid);padding-inline-start:12px;position:relative;}
+.feas .card li::before{content:'';position:absolute;inset-inline-start:0;top:6px;width:6px;height:6px;border-radius:2px;background:var(--primary);}
+.feas .card.g li::before{background:var(--green);} .feas .card.t li::before{background:var(--teal);} .feas .card.a li::before{background:var(--amber);}
+.feas .card li b{color:var(--text);}
+.tl{display:flex;align-items:stretch;gap:0;margin-top:10px;position:relative;}
+.tl .ms{flex:1;text-align:center;position:relative;padding-top:16px;}
+.tl .ms::before{content:'';position:absolute;top:6px;left:0;right:0;height:3px;background:#e2dde0;}
+.tl .ms::after{content:'';position:absolute;top:1px;left:50%;transform:translateX(-50%);width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--primary);}
+.tl .ms.ga::after{background:var(--primary);}
+.tl .ms .q{font-family:var(--font-num);font-size:13px;font-weight:800;direction:ltr;}
+.tl .ms .w{font-size:10px;color:var(--mid);line-height:1.3;}
+.alt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;}
+.alt .o{background:#fff;border:1px solid var(--border);border-radius:7px;padding:8px 10px;}
+.alt .o h5{font-size:11.5px;font-weight:800;display:flex;justify-content:space-between;}
+.alt .o h5 span{font-family:var(--font-num);font-size:11px;direction:ltr;color:var(--light);}
+.alt .o p{font-size:10px;color:var(--mid);line-height:1.35;margin-top:3px;}
+.alt .o.pick{border:2px solid var(--green);background:#f0f9f4;}
+
+/* S10 business */
+.biz{display:grid;grid-template-columns:1fr 1.5fr;gap:14px;flex:1;min-height:0;}
+.sliders{display:flex;flex-direction:column;gap:11px;}
+.rev{display:flex;gap:10px;align-items:flex-end;height:150px;padding:0 6px;border-bottom:1.5px solid var(--border);}
+.rev .yr{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:2px;height:100%;}
+.rev .yr .col{width:100%;display:flex;flex-direction:column-reverse;border-radius:5px 5px 0 0;overflow:hidden;transition:height .6s cubic-bezier(.2,.8,.2,1);}
+.rev .yr .col i{display:block;transition:height .6s;} .rev .yr .col i.hw{background:var(--primary);} .rev .yr .col i.win{background:var(--purple);}
+.rev .yr .tv{font-family:var(--font-num);font-size:14px;font-weight:800;direction:ltr;}
+.rev .yr .yl{font-size:10px;color:var(--light);font-weight:700;margin-top:3px;}
+.legend2{display:flex;gap:14px;font-size:10.5px;color:var(--mid);font-weight:700;margin-top:6px;}
+.legend2 i{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:-1px;margin-inline-end:4px;}
+.invtb{width:100%;font-size:10.8px;border-collapse:collapse;margin-top:4px;}
+.invtb td{padding:4px 6px;border-bottom:1px solid var(--border);color:var(--mid);} .invtb td.n{font-family:var(--font-num);direction:ltr;text-align:left;font-weight:800;color:var(--text);}
+.invtb tr.tot td{border-top:2px solid var(--dark);border-bottom:none;color:var(--text);font-weight:800;}
+
+/* S11 risks */
+.risks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;flex:1;min-height:0;}
+.rk{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:5px;}
+.rk .rh{display:flex;justify-content:space-between;align-items:center;}
+.rk .rh h4{font-size:12.5px;font-weight:800;}
+.rk .sev{display:flex;gap:3px;} .rk .sev i{width:9px;height:9px;border-radius:2px;background:#e4dfe2;} .rk .sev i.on{background:var(--primary);}
+.rk .sev.a i.on{background:var(--amber);} .rk .sev.g i.on{background:var(--green);}
+.rk p{font-size:10.5px;color:var(--mid);line-height:1.38;}
+.rk .mit{margin-top:auto;background:var(--off);border-radius:5px;padding:6px 8px;font-size:10.5px;line-height:1.35;}
+.rk .mit b{color:var(--green);}
+
+/* S12 ask */
+.ask{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.ak{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 14px;border-top:5px solid var(--primary);}
+.ak.p{border-top-color:var(--purple);} .ak.t{border-top-color:var(--teal);}
+.ak .who{font-size:10px;letter-spacing:.08em;color:var(--light);font-weight:800;}
+.ak h3{font-size:15px;font-weight:800;margin:3px 0 5px;}
+.ak p{font-size:11px;color:var(--mid);line-height:1.4;}
+.ak .row{display:flex;gap:6px;margin-top:8px;}
+.ak .row .b{flex:1;background:var(--off);border-radius:5px;padding:6px 7px;text-align:center;}
+.ak .row .b .v{font-family:var(--font-num);font-size:15px;font-weight:800;direction:ltr;} .ak .row .b .l{font-size:9.5px;color:var(--light);}
+.dm{margin-top:12px;display:grid;grid-template-columns:150px 1fr 1fr;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;font-size:11px;}
+.dm div{padding:7px 10px;border-bottom:1px solid var(--border);line-height:1.35;}
+.dm .h{background:var(--dark);color:#fff;font-weight:800;font-size:11px;}
+.dm .h.y{background:var(--green);} .dm .h.n{background:var(--primary);}
+.dm .k{font-weight:800;background:var(--off);}
+.dm .y{background:#f0f9f4;} .dm .n{background:#fff5f8;}
+.bigask{display:flex;align-items:center;gap:18px;background:var(--dark);color:#fff;border-radius:10px;padding:14px 20px;margin-top:12px;}
+.bigask .v{font-family:var(--font-num);font-size:40px;font-weight:800;color:var(--pink-soft);line-height:1;direction:ltr;}
+.bigask .v small{display:block;font-family:var(--font);font-size:10px;color:rgba(255,255,255,.5);font-weight:500;direction:rtl;}
+.bigask .t{font-size:14px;line-height:1.45;} .bigask .t b{color:var(--pink-soft);}
+
+/* nav — centered in footer band */
+.navwrap{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:18px;z-index:50;direction:ltr;}
+.nav{display:flex;align-items:center;gap:10px;}
+.nav button{width:26px;height:26px;border-radius:50%;border:none;cursor:pointer;background:var(--primary);color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.nav button:hover{background:var(--primary-dark);} .nav button:disabled{background:#cfc7cc;cursor:default;}
+.nav .count{font-family:var(--font-num);font-size:12px;color:var(--mid);font-weight:600;min-width:40px;text-align:center;direction:ltr;}
+.dots{display:flex;gap:6px;}
+.dots .dot{width:7px;height:7px;border-radius:50%;background:#cfc7cc;cursor:pointer;transition:all .2s;}
+.dots .dot.active{background:var(--primary);width:20px;border-radius:4px;}
+.slide.hero ~ .navwrap .count{color:rgba(255,255,255,.6);}
+.progress{position:absolute;top:0;right:0;height:3px;background:var(--primary);z-index:60;transition:width .4s ease;}
+
+/* ── HERO v2: problem · who · product ── */
+.hero .split{display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:center;}
+.hero .prob{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-inline-start:5px solid var(--primary);border-radius:10px;padding:16px 20px;margin-top:22px;}
+.hero .prob .lbl{font-size:10.5px;letter-spacing:.14em;color:var(--pink-soft);font-weight:800;margin-bottom:6px;}
+.hero .prob p{font-size:17px;line-height:1.5;color:rgba(255,255,255,.9);}
+.hero .prob p b{color:#fff;}
+.hero .who{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:20px 22px;}
+.hero .who .lbl{font-size:10.5px;letter-spacing:.14em;color:rgba(255,255,255,.5);font-weight:800;margin-bottom:8px;}
+.hero .who .nm{font-size:26px;font-weight:900;line-height:1.1;}
+.hero .who .role{font-size:13px;color:var(--pink-soft);font-weight:700;margin:4px 0 12px;}
+.hero .who ul{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.hero .who li{font-size:12.5px;line-height:1.4;color:rgba(255,255,255,.82);padding-inline-start:14px;position:relative;}
+.hero .who li::before{content:'';position:absolute;inset-inline-start:0;top:7px;width:6px;height:6px;border-radius:50%;background:var(--primary);}
+.hero .who li b{color:#fff;}
+.hero .meta{margin-top:26px;}
+
+/* ── WHAT-IS slide: traffic through the gateway ── */
+.what{display:grid;grid-template-columns:1fr 430px;gap:14px;flex:1;min-height:0;}
+.scene{background:var(--dark);border-radius:12px;padding:16px 18px;color:#fff;position:relative;display:flex;flex-direction:column;}
+.scene .lane3{display:grid;grid-template-columns:150px 1fr 150px;gap:0;align-items:center;flex:1;position:relative;}
+.scene .end{border-radius:10px;padding:12px 10px;text-align:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);}
+.scene .end h4{font-size:14px;font-weight:800;margin-bottom:6px;}
+.scene .end .ico{font-size:30px;line-height:1;margin-bottom:6px;}
+.scene .end p{font-size:10.5px;color:rgba(255,255,255,.65);line-height:1.4;}
+.scene .end.org{background:rgba(10,138,75,.18);border-color:rgba(10,138,75,.5);}
+.scene .end.net{background:rgba(228,12,91,.14);border-color:rgba(228,12,91,.45);}
+.scene .wire{position:relative;height:140px;margin:0 8px;}
+.scene .end{padding:10px 8px;} .scene .end .ico{font-size:26px;margin-bottom:4px;} .scene .end h4{font-size:13px;margin-bottom:4px;}
+.layers .ly{padding:6px 9px;} .layers .ly .d{font-size:9.5px;}
+.scene .wire .line{position:absolute;top:50%;left:0;right:0;height:3px;background:rgba(255,255,255,.18);transform:translateY(-50%);}
+.scene .gw{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:200px;display:flex;gap:4px;padding:8px;border-radius:12px;background:#0d0510;border:2px solid var(--primary);box-shadow:0 0 30px rgba(228,12,91,.35);z-index:3;}
+.scene .gw .sh{flex:1;height:112px;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:9.5px;font-weight:800;text-align:center;line-height:1.15;transition:all .35s;color:#fff;padding:2px;}
+.scene .gw .sh small{font-size:8px;font-weight:600;opacity:.75;}
+.scene .gw .sh.off{background:rgba(255,255,255,.06);color:rgba(255,255,255,.3);}
+.scene .gw .sh.l4.on{background:var(--teal);} .scene .gw .sh.l7.on{background:#8a5a9a;} .scene .gw .sh.tp.on{background:var(--primary);} .scene .gw .sh.tls.on{background:var(--amber);}
+.scene .gwlbl{position:absolute;left:50%;top:calc(50% + 66px);transform:translateX(-50%);font-size:11px;font-weight:800;white-space:nowrap;color:var(--pink-soft);z-index:3;}
+.scene .pk{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;margin-top:-7px;z-index:2;display:flex;align-items:center;justify-content:center;font-size:9px;}
+.scene .pk.good{background:#6fe3a1;box-shadow:0 0 8px #6fe3a1;} .scene .pk.bad{background:#ff5c8a;box-shadow:0 0 8px #ff5c8a;}
+.scene .pk.pop{animation:pop .45s forwards;} @keyframes pop{0%{transform:scale(1)}60%{transform:scale(1.9);opacity:.9}100%{transform:scale(0);opacity:0}}
+.scene .cfgbar{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;}
+.scene .cfgbar .lbl{font-size:11px;color:rgba(255,255,255,.55);font-weight:700;}
+.scene .cfgbar .seg{border-color:rgba(255,255,255,.2);background:transparent;} .scene .cfgbar .seg button{color:rgba(255,255,255,.7);} .scene .cfgbar .seg button.on{background:var(--primary);color:#fff;}
+.scene .stat{margin-inline-start:auto;font-size:12px;color:rgba(255,255,255,.7);} .scene .stat b{font-family:var(--font-num);color:#fff;font-size:16px;direction:ltr;}
+.layers{display:flex;gap:6px;margin-top:10px;}
+.layers .ly{flex:1;border-radius:8px;padding:8px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);transition:all .3s;}
+.layers .ly .n{font-family:var(--font-num);font-size:13px;font-weight:800;direction:ltr;text-align:right;padding-bottom:4px;border-bottom:1px solid rgba(255,255,255,.15);margin-bottom:4px;} .layers .ly .t{font-size:10.5px;font-weight:700;margin-top:0;color:var(--pink-soft);letter-spacing:.01em;} .layers .ly .d{font-size:9.5px;color:rgba(255,255,255,.55);line-height:1.4;margin-top:4px;padding-top:4px;border-top:1px solid rgba(255,255,255,.07);}
+.layers .ly.on{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.35);} .layers .ly.off{opacity:.4;}
+.threats{display:flex;flex-direction:column;gap:5px;flex:1;min-height:0;}
+.threats .th{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:7px;padding:5px 9px;font-size:11.5px;transition:all .3s;}
+.threats .th .ic{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;background:var(--gray);}
+.threats .th .tx{flex:1;line-height:1.25;font-weight:700;} .threats .th .tx small{display:block;font-size:9.5px;color:var(--light);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.threats .th .res{font-size:10px;font-weight:800;padding:3px 8px;border-radius:10px;white-space:nowrap;flex-shrink:0;text-align:center;line-height:1.2;} .threats .th .res small{display:block;font-size:8.5px;font-weight:600;opacity:.8;direction:ltr;}
+.scene .pk{z-index:4;}
+.tpg{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:5px 10px;position:relative;min-width:210px;}
+.tpg .l{font-size:10.5px;color:rgba(255,255,255,.6);font-weight:700;} .tpg b{font-family:var(--font-num);font-size:22px;font-weight:800;color:var(--pink-soft);direction:ltr;line-height:1;} .tpg .u{font-size:10px;color:rgba(255,255,255,.5);}
+.tpg .tr{position:absolute;left:8px;right:8px;bottom:2px;height:3px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden;} .tpg .tr i{display:block;height:100%;background:var(--pink-soft);transition:width .6s cubic-bezier(.2,.8,.2,1);}
+.pkt{margin-top:8px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 10px;}
+.pkt .pl{font-size:10.5px;color:var(--mid);font-weight:700;margin-bottom:6px;}
+.pkt .pkseg{display:flex;gap:2px;direction:rtl;}
+.pkt .s{flex:1;color:#fff;border-radius:4px;padding:5px 4px;text-align:center;font-family:var(--font-num);font-size:12px;font-weight:800;direction:ltr;line-height:1.1;}
+.pkt .s small{display:block;font-family:var(--font);font-size:8.5px;font-weight:600;opacity:.85;direction:rtl;margin-top:2px;}
+.pkt .s.l4{background:var(--teal);} .pkt .s.tls{background:var(--amber);} .pkt .s.l7{background:#8a5a9a;} .pkt .s.tp{background:var(--primary);flex:1.4;}
+.threats .th.ok{border-color:rgba(10,138,75,.5);} .threats .th.ok .res{background:#e6f5ec;color:var(--green);}
+.threats .th.miss{border-color:rgba(228,12,91,.55);background:#fff5f8;} .threats .th.miss .res{background:#fde6ee;color:var(--primary-dark);}
+.threats .th.na .res{background:var(--gray);color:var(--light);}
+
+/* ── LINEUP slide: same software, six sizes ── */
+.line{display:grid;grid-template-columns:1fr 340px;gap:14px;flex:1;min-height:0;}
+.stairs{display:flex;align-items:stretch;gap:10px;flex:1;padding:6px 4px 0;}
+.stairs .mdl{flex:1;display:flex;flex-direction:column;justify-content:flex-end;border-radius:9px 9px 6px 6px;background:#fff;border:1.5px solid var(--border);transition:all .35s;cursor:pointer;overflow:hidden;}
+.stairs .mdl .cap{background:var(--dark);color:#fff;padding:8px 8px 6px;text-align:center;flex-shrink:0;}
+.stairs .mdl .cap .m{font-family:var(--font-num);font-size:23px;font-weight:800;direction:ltr;line-height:1;}
+.stairs .mdl .cap .fit{font-size:10px;color:rgba(255,255,255,.65);margin-top:3px;line-height:1.25;min-height:26px;}
+.stairs .mdl .bd{padding:8px 8px 6px;display:flex;flex-direction:column;gap:5px;flex:1;justify-content:flex-start;}
+.stairs .mdl .tp{font-family:var(--font-num);font-size:26px;font-weight:800;color:var(--primary);direction:ltr;text-align:center;line-height:1;} .stairs .mdl .tp small{display:block;font-family:var(--font);font-size:9.5px;color:var(--light);font-weight:600;margin-top:2px;}
+.stairs .mdl .sp{font-size:10.5px;color:var(--mid);display:flex;justify-content:space-between;border-top:1px dashed var(--border);padding-top:5px;} .stairs .mdl .sp b{font-family:var(--font-num);direction:ltr;color:var(--text);}
+.stairs .mdl.rec{border-color:var(--primary);box-shadow:0 8px 24px rgba(228,12,91,.22);transform:translateY(-6px);} .stairs .mdl.rec .cap{background:var(--primary);}
+.stairs .mdl.dim{opacity:.55;}
+.stairs .mdl .sp.cpu b{color:var(--purple);}
+.stairs .mdl.rec .sp.cpu b{color:#d8a8e8;}
+.stairs .mdl .sp.nic b{color:var(--steel);}
+.stairs .mdl.rec .sp.nic b{color:#a8d4df;}
+
+.stairs .mdl .sp.thr span{color:var(--mid);}
+.stairs .mdl .sp.thr b{color:var(--primary-dark);font-size:11.5px;}
+.stairs .mdl.rec .sp.thr{border-bottom-color:rgba(255,255,255,.2);}
+.stairs .mdl .sp.thr{border-top:none;padding-top:0;border-bottom:1px solid rgba(228,12,91,.18);padding-bottom:5px;margin-bottom:3px;font-weight:700;}
+
+#sizetip{background:var(--dark);color:#fff;border-radius:7px;padding:6px 10px;font-size:11px;line-height:1.4;margin-bottom:6px;display:none;}
+#sizetip.vis{display:block;}
+#sizetip .tip-cols{display:flex;align-items:center;gap:8px;}
+#sizetip .tip-col{flex:1;display:flex;flex-direction:column;gap:1px;}
+#sizetip .tip-lbl{font-size:9px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.4);text-transform:uppercase;}
+#sizetip .tip-val{font-family:var(--font-num);font-size:17px;font-weight:800;color:#fff;line-height:1;direction:ltr;} #sizetip .tip-val small{font-size:9.5px;font-weight:600;color:rgba(255,255,255,.5);}
+#sizetip .tip-sub{font-size:9px;color:rgba(255,255,255,.4);margin-top:1px;direction:ltr;unicode-bidi:isolate;}
+#sizetip .tip-div{width:1px;height:32px;background:rgba(255,255,255,.12);flex-shrink:0;}
+
+.same-hd{font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--mid);text-transform:uppercase;margin-bottom:2px;}
+.same-pills{display:flex;gap:6px;flex-wrap:wrap;}
+.same-pills span{font-size:11px;font-weight:700;background:#fff;border:1px solid var(--border);border-radius:14px;padding:3px 10px;color:var(--mid);} .same-pills span b{color:var(--text);}
+.metric3{display:flex;flex-direction:column;gap:8px;}
+.metric3 .mx{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;border-inline-start:5px solid var(--steel);}
+.metric3 .mx h5{font-size:13px;font-weight:800;display:flex;justify-content:space-between;align-items:center;} .metric3 .mx h5 span{font-family:var(--font-num);font-size:16px;direction:ltr;color:var(--text);}
+.metric3 .mx p{font-size:11.5px;color:var(--mid);line-height:1.45;margin-top:3px;}
+.metric3 .mx.b{border-inline-start-color:var(--purple);} .metric3 .mx.c{border-inline-start-color:var(--primary);background:#fff8fa;}
+
+/* ── BRIDGE slide: 26% vs 52% ── */
+/* ── sources & assumptions box (slides 2–4) ── */
+.src{background:transparent;border:none;border-top:1px solid #e8e3e7;padding:4px 2px 0;font-size:10px;color:var(--light);line-height:1.5;margin-top:6px;opacity:.85;}
+.src a{color:var(--light);text-decoration:underline dotted;} .src .t{font-weight:600;color:var(--mid);margin-inline-end:4px;}
+.src .t{display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:.12em;color:#fff;background:var(--primary-dark);border-radius:4px;padding:1px 6px;margin-inline-end:6px;vertical-align:middle;}
+.src a{color:var(--primary-dark);text-decoration:underline dotted;font-family:var(--font-num);direction:ltr;display:inline-block;font-weight:700;}
+.src a:hover{text-decoration:underline solid;}
+.src .as{color:var(--light);font-weight:400;font-size:8px;opacity:.7;}
+.slide.dark .src,.hero .src{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.65);} .slide.dark .src a{color:var(--pink-soft);}
+/* ── S5: vendor legend with momentum + CP share per segment ── */
+.legend.mom2 .li{display:grid;grid-template-columns:12px 1fr auto auto;align-items:center;gap:8px;} .legend.mom2 .li em{font-style:normal;font-size:10.5px;font-weight:700;min-width:92px;text-align:left;direction:ltr;}
+.legend.mom2 .li em.up{color:var(--green);} .legend.mom2 .li em.flat{color:var(--amber);direction:rtl;text-align:right;} .legend.mom2 .li em.down{color:var(--primary);}
+.legend.mom2 .li.cpli{font-weight:800;color:var(--primary-dark);background:#fff5f8;border-radius:6px;padding:3px 6px;margin:0 -6px;}
+.segshare{display:flex;flex-direction:column;gap:7px;flex:1;justify-content:center;}
+.ss{display:grid;grid-template-columns:150px 1fr 110px;align-items:center;gap:12px;}
+.ss .nm b{font-family:var(--font-num);font-size:15px;font-weight:800;display:block;direction:ltr;text-align:right;line-height:1.1;} .ss .nm small{font-size:10.5px;color:var(--mid);font-weight:600;}
+.ss .trk{position:relative;height:26px;background:#eeeaed;border-radius:6px;} .ss .trk i{position:absolute;inset-inline-start:0;top:0;height:100%;border-radius:6px;width:0;transition:width 1.2s cubic-bezier(.2,.8,.2,1);background:var(--primary);}
+.ss.weak .trk i{background:#d9a3b6;} .ss .trk em{position:absolute;top:-4px;bottom:-4px;inset-inline-start:var(--avg);border-inline-start:2px dashed var(--dark);} .ss .trk em::after{content:'7.7%';position:absolute;top:-13px;inset-inline-start:-14px;font-family:var(--font-num);font-size:9px;font-weight:800;color:var(--dark);}
+.ss .trk span{position:absolute;top:0;bottom:0;display:flex;align-items:center;right:calc(var(--w) + 8px);font-family:var(--font-num);font-size:14px;font-weight:800;direction:ltr;}
+.ss:not(.first) .trk em::after{display:none;}
+.ss.weak .trk span{color:var(--primary);} .ss .lead{display:flex;flex-direction:column;align-items:flex-start;gap:2px;font-size:9.5px;color:var(--light);font-weight:700;}
+.segshare .hd{display:grid;grid-template-columns:150px 1fr 110px;gap:12px;font-size:10.5px;color:var(--light);font-weight:700;margin-bottom:4px;}
+/* ── S6: criterion cards ── */
+.crits{display:grid;grid-template-columns:1fr 1fr 1fr 1.35fr;gap:10px;flex:1;min-height:0;}
+.crit{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 16px 12px;display:flex;flex-direction:column;gap:10px;position:relative;}
+.crit .big{font-family:var(--font-num);font-size:44px;font-weight:800;line-height:1;direction:ltr;text-align:right;color:var(--green);margin:6px 0 2px;} .crit .big small{font-family:var(--font);font-size:12px;font-weight:700;color:var(--mid);display:block;direction:rtl;margin-top:4px;}
+.crit.win{border-top:4px solid var(--green);} .crit.lose{border:2px solid var(--primary);background:#fff5f8;}
+.crit .k{font-size:9.5px;letter-spacing:.12em;font-weight:800;color:var(--light);} .crit.win .k{color:var(--green);} .crit.lose .k{color:var(--primary);}
+.crit h3{font-size:22px;font-weight:900;line-height:1.1;} .crit .seg{font-size:12.5px;color:var(--mid);} .crit .seg b{color:var(--text);}
+.crit .ev2{font-size:13px;line-height:1.5;} .crit .ev2 .n{font-family:var(--font-num);font-weight:800;direction:ltr;display:inline-block;font-size:14px;}
+.crit .bar{margin:4px 0;} .crit .bar .lb{min-width:96px;font-size:12px;} .crit .bar .trk{height:15px;} .crit .bar .v{font-size:14px;min-width:48px;}
+.crit .bar.dim .fil{opacity:.55;} .crit .bar.dim .lb{color:var(--light);}
+.crit .who{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;color:var(--mid);margin-top:auto;padding-top:8px;border-top:1px dashed var(--border);}
+.crit .star{position:absolute;top:-12px;inset-inline-start:12px;background:var(--amber);color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:10px;}
+.also{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.also .a{background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:11.5px;line-height:1.4;display:flex;align-items:center;gap:10px;} .also .a .wchip{flex-shrink:0;}
+/* ── S6: SWOT technical × commercial ── */
+.swctl{display:flex;align-items:center;gap:6px;margin-bottom:8px;font-size:11px;} .swctl .lbl{font-weight:700;color:var(--mid);}
+.swctl .seg button{font-size:11px;padding:4px 10px;}
+.swctl .vleg{margin-inline-start:auto;font-size:10.5px;color:var(--mid);font-weight:600;display:flex;align-items:center;gap:4px;} .swctl .vleg i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-inline-start:6px;}
+.swot2{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px;flex:1;min-height:0;}
+.swot2 .q{background:#fff;border:1px solid var(--border);border-radius:9px;padding:6px 8px;display:flex;flex-direction:column;gap:4px;min-height:0;border-top:4px solid var(--green);overflow:hidden;}
+#s5 .title{font-size:19px;} .swot2 .dim{overflow:hidden;}
+.swot2 .q.W{border-top-color:var(--primary);} .swot2 .q.O{border-top-color:var(--teal);} .swot2 .q.T{border-top-color:var(--amber);}
+.swot2 .qh{display:flex;align-items:center;gap:6px;line-height:1;} .swot2 .qh b{font-family:var(--font-num);font-size:18px;font-weight:800;line-height:1;width:22px;color:var(--green);} .swot2 .q.W .qh b{color:var(--primary);} .swot2 .q.O .qh b{color:var(--teal);} .swot2 .q.T .qh b{color:var(--amber);}
+.swot2 .qh h3{font-size:12px;font-weight:900;line-height:1;display:inline;} .swot2 .qh small{font-size:9.5px;color:var(--light);font-weight:600;margin-inline-start:6px;}
+.swot2 .dims{display:grid;grid-template-columns:1.45fr 1fr;gap:6px;flex:1;min-height:0;}
+.swot2 .dim{background:var(--gray);border-radius:7px;padding:5px 6px;display:flex;flex-direction:column;gap:3px;transition:opacity .25s;} .swot2 .dim.c{background:#f3eff6;}
+.swot2 .dim.off{opacity:.18;}
+.swot2 .dim h5{font-size:9.5px;letter-spacing:.08em;font-weight:800;color:var(--mid);margin-bottom:1px;} .swot2 .dim.c h5{color:#6a4a78;}
+.swot2 .it{display:flex;gap:5px;align-items:center;background:#fff;border-radius:5px;padding:5px 7px;font-size:10px;line-height:1.2;transition:opacity .25s;border:1px solid transparent;cursor:help;}
+.swot2 .it b{display:block;font-weight:800;font-size:11.5px;line-height:1.25;} .swot2 .it small{display:block;color:var(--mid);font-size:9.5px;font-weight:500;line-height:1.3;max-height:0;opacity:0;overflow:hidden;transition:max-height .3s ease,opacity .3s ease,margin-top .3s ease;}
+.swot2 .it:hover{border-color:var(--border);background:var(--off);} .swot2 .it:hover small{max-height:80px;opacity:1;margin-top:3px;} .swot2 .it.hinge:hover small{max-height:90px;}
+.swctl{margin-bottom:6px;} #s5 .thread .t{font-size:11px;} #s5 .thread{margin-top:6px!important;}
+.swot2 .it.off{opacity:.2;} .swot2 .it.hinge{border-color:var(--primary);background:#fff5f8;} .swot2 .it.hinge b{color:var(--primary-dark);}
+.swot2 .it .vs{display:flex;flex-direction:column;gap:2px;padding-top:3px;flex-shrink:0;} .swot2 .it .vs i{width:6px;height:6px;border-radius:50%;} .swot2 .vs i.ft{background:var(--ft);} .swot2 .vs i.pa{background:var(--pa);} .swot2 .vs i.cs{background:var(--cs);}
+/* ── S5: segment × criteria heatmap ── */
+.hmwrap{display:grid;grid-template-columns:1.45fr 1fr;gap:12px;flex:1;min-height:0;}
+.hmcard{display:flex;flex-direction:column;}
+.hm{display:grid;grid-template-columns:140px repeat(7,1fr);gap:4px;flex:1;align-content:stretch;}
+.hm .ch1{font-size:10.5px;font-weight:800;color:var(--mid);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:3px;line-height:1.15;} .hm .ch1 small{display:block;font-weight:600;color:var(--light);font-size:9px;}
+.hm .rh{display:flex;flex-direction:column;justify-content:center;padding:0 10px;border-radius:7px;cursor:pointer;background:var(--gray);transition:all .2s;border:2px solid transparent;}
+.hm .rh b{font-family:var(--font-num);font-size:14px;font-weight:800;direction:ltr;text-align:right;line-height:1.1;} .hm .rh small{font-size:9.5px;color:var(--mid);font-weight:600;}
+.hm .rh:hover{background:#eee8ec;} .hm .rh.on{background:var(--dark);border-color:var(--dark);} .hm .rh.on b,.hm .rh.on small{color:#fff;}
+.hm .rh.star b::after{content:' ★';color:var(--amber);}
+.hm .c{border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-size:17px;font-weight:800;cursor:pointer;transition:all .2s;position:relative;min-height:40px;}
+.hm .c.w0{background:#f6f3f5;color:#cfc7cc;font-size:11px;} .hm .c.w1{background:#ece6ea;} .hm .c.w2{background:#dccfd8;} .hm .c.w3{background:#c7aec0;box-shadow:inset 0 0 0 2px #a98aa0;}
+.hm .c.ok{color:var(--green);} .hm .c.bad{color:var(--primary);}
+.hm .c.w3.bad{background:#f7c7d6;box-shadow:inset 0 0 0 2px var(--primary);} .hm .c.w3.ok{background:#cdebd9;box-shadow:inset 0 0 0 2px var(--green);}
+.hm.sel .c:not(.rowon){opacity:.35;} .hm.sel .c.rowon{transform:scale(1.04);}
+.hmleg{display:flex;gap:14px;align-items:center;font-size:10.5px;color:var(--mid);font-weight:600;margin-top:8px;flex-wrap:wrap;}
+.hmleg i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:middle;margin-inline-end:4px;} .hmleg .w3{background:#c7aec0;box-shadow:inset 0 0 0 2px #a98aa0;} .hmleg .w2{background:#dccfd8;} .hmleg .w1{background:#ece6ea;}
+.hmleg .ok{color:var(--green);font-weight:800;} .hmleg .bad{color:var(--primary);font-weight:800;}
+.hmdet{display:flex;flex-direction:column;gap:8px;}
+.hmdet .hd{display:flex;align-items:baseline;justify-content:space-between;gap:8px;} .hmdet .hd h3{font-size:22px;font-weight:900;line-height:1;} .hmdet .hd h3 small{font-family:var(--font);font-size:11px;color:var(--mid);font-weight:600;display:block;margin-top:3px;}
+.hmdet .hd .sz{font-family:var(--font-num);font-size:12px;color:var(--mid);font-weight:700;direction:ltr;text-align:left;}
+.hmdet .dr{display:grid;grid-template-columns:22px 1fr 60px;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:7px;padding:6px 9px;}
+.hmdet .dr .g{font-family:var(--font-num);font-size:18px;font-weight:800;text-align:center;} .hmdet .dr.ok .g{color:var(--green);} .hmdet .dr.bad .g{color:var(--primary);}
+.hmdet .dr .n{font-size:12px;font-weight:800;line-height:1.15;} .hmdet .dr .n small{display:block;font-size:10px;color:var(--mid);font-weight:500;line-height:1.35;margin-top:1px;}
+.hmdet .dr .wt{display:flex;gap:2px;justify-content:flex-end;} .hmdet .dr .wt i{width:14px;height:6px;border-radius:2px;background:#e4dde2;} .hmdet .dr .wt i.f{background:var(--dark);}
+.hmdet .dr.w3{border-color:#a98aa0;} .hmdet .dr.w3.bad{border-color:var(--primary);background:#fff5f8;} .hmdet .dr.w3.ok{border-color:var(--green);background:#f0f9f4;}
+.hmdet .vd{margin-top:auto;background:var(--dark);color:#fff;border-radius:8px;padding:9px 12px;font-size:12px;line-height:1.45;} .hmdet .vd b{color:var(--pink-soft);} .hmdet .vd .wchip{float:left;margin-inline-start:8px;}
+/* ── S6b: silicon types ── */
+.attrs{display:flex;align-items:center;gap:6px;flex-wrap:wrap;} .attrs .lbl{font-size:11px;font-weight:700;color:var(--mid);margin-inline-end:4px;}
+.attrs button{border:1px solid var(--border);background:#fff;border-radius:16px;padding:5px 12px;font:inherit;font-size:11.5px;font-weight:700;color:var(--mid);cursor:pointer;transition:all .2s;}
+.attrs button.on{background:var(--dark);color:#fff;border-color:var(--dark);}
+.aexp{font-size:12px;color:var(--mid);line-height:1.45;margin:6px 0 8px;padding:7px 12px;background:#fff;border-inline-start:4px solid var(--primary);border-radius:6px;min-height:34px;} .aexp b{color:var(--text);}
+.sil4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;flex:1;min-height:0;}
+.sc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 13px;display:flex;flex-direction:column;gap:8px;border-top:4px solid var(--primary);}
+.sc.ft{border-top-color:var(--ft);} .sc.pa{border-top-color:var(--pa);} .sc.dpu{border-top-color:var(--green);}
+.sc .tp{display:flex;align-items:center;gap:9px;} .sc .ico{width:42px;height:42px;border-radius:9px;background:var(--primary);color:#fff;font-family:var(--font-num);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sc h3{font-size:15.5px;font-weight:900;line-height:1.1;} .sc .tp small{font-size:10.5px;color:var(--mid);font-weight:600;}
+.sc .whos{display:flex;gap:4px;flex-wrap:wrap;} .sc .whos .wchip{font-size:9.5px;padding:2px 7px;}
+.sc .how{font-size:11.5px;line-height:1.45;color:var(--text);} .sc .how b{color:var(--primary-dark);}
+.sc .rts{display:flex;flex-direction:column;gap:5px;margin-top:auto;}
+.sc .rt{display:grid;grid-template-columns:1fr 70px 14px;align-items:center;gap:6px;font-size:10.5px;color:var(--mid);font-weight:600;transition:opacity .25s;}
+.sc .rt .tr{height:8px;background:#eeeaed;border-radius:4px;overflow:hidden;} .sc .rt .tr i{display:block;height:100%;width:0;border-radius:4px;transition:width .9s cubic-bezier(.2,.8,.2,1);}
+.slide.active .sc .rt .tr i{width:var(--w);}
+.sc .rt .tr i.lo{background:var(--primary);} .sc .rt .tr i.md{background:var(--amber);} .sc .rt .tr i.hi{background:var(--green);}
+.sc .rt b{font-family:var(--font-num);font-size:12px;color:var(--text);text-align:center;}
+.sil4.focus .rt{opacity:.3;} .sil4.focus .rt.on{opacity:1;color:var(--text);font-weight:800;} .sil4.focus .rt.on .tr{height:11px;}
+.sc .ana{font-size:10.5px;color:var(--mid);background:var(--gray);border-radius:6px;padding:5px 8px;line-height:1.35;}
+/* ── bridge: market by segment 2026 vs 2030 ── */
+.vstrip{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;background:#fff;border:1px solid var(--border);border-radius:8px;padding:5px 10px;margin-bottom:8px;font-size:11px;white-space:nowrap;}
+.vstrip .lb{font-weight:800;color:var(--mid);font-size:10.5px;letter-spacing:.04em;margin-inline-end:6px;}
+.vstrip .v{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:14px;background:var(--gray);font-weight:600;color:var(--text);} .vstrip .v i{width:9px;height:9px;border-radius:50%;}
+.vstrip .v b{font-family:var(--font-num);direction:ltr;} .vstrip .v em{font-style:normal;font-size:10px;font-weight:700;direction:ltr;} .vstrip .v em.up{color:var(--green);} .vstrip .v em.flat{color:var(--amber);direction:rtl;} .vstrip .v em.down{color:var(--primary);}
+.vstrip .v.tot{background:var(--dark);color:#fff;font-weight:700;} .vstrip .v.tot b{font-size:13px;} .vstrip .v.tot u{text-decoration:none;color:var(--pink-soft);font-family:var(--font-num);font-weight:800;font-size:13px;direction:ltr;display:inline-block;}
+.vstrip .v.pa i{background:var(--pa);} .vstrip .v.ft i{background:var(--ft);} .vstrip .v.cs i{background:var(--cs);} .vstrip .v.ot i{background:var(--ot);} .vstrip .v.cp{background:#fff5f8;border:1px solid var(--primary);font-weight:800;} .vstrip .v.cp i{background:var(--cp);}
+.segrows{width:100%;display:flex;flex-direction:column;gap:6px;flex:1;min-height:0;}
+.segrows .hd{display:grid;grid-template-columns:150px 1fr 190px 120px;gap:10px;font-size:10.5px;color:var(--light);font-weight:700;padding:0 12px;} .segrows .hd small{font-weight:600;}
+.segrows .hd .k{display:inline-block;width:14px;height:7px;border-radius:4px;vertical-align:middle;margin:0 3px;} .segrows .hd .k.y0{background:#c9c0c6;} .segrows .hd .k.y1{background:var(--primary);}
+.sr{display:grid;grid-template-columns:150px 1fr 190px 120px;align-items:center;gap:10px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:5px 12px;flex:1;}
+.sr.star{background:#fff8f1;border-color:var(--amber);}
+.sr .b span u{text-decoration:none;color:var(--primary);font-size:11px;margin-inline-start:4px;}
+.sr .shr{display:grid;grid-template-columns:1fr 38px;align-items:center;gap:6px;} .sr .shr .trk{position:relative;height:16px;background:#eeeaed;border-radius:5px;}
+.sr .shr .trk i{position:absolute;right:0;top:0;height:100%;border-radius:5px;width:0;background:var(--primary);transition:width 1.2s cubic-bezier(.2,.8,.2,1);} .sr.weak .shr .trk i{background:#d9a3b6;}
+.sr .shr .trk em{position:absolute;top:-3px;bottom:-3px;right:var(--avg);border-right:2px dashed var(--dark);} .sr .shr.first .trk em::after{content:'7.7%';position:absolute;top:-12px;right:-12px;font-family:var(--font-num);font-size:9px;font-weight:800;color:var(--dark);}
+.sr .shr b{font-family:var(--font-num);font-size:15px;font-weight:800;direction:ltr;text-align:left;} .sr.weak .shr b{color:var(--primary);}
+.sr .cr b{display:block;font-size:12.5px;font-weight:800;line-height:1.15;} .sr .cr small{font-size:10px;color:var(--mid);font-weight:600;} .sr.star .cr b{color:var(--amber);}
+.sr .wn .wchip{font-size:10px;padding:3px 8px;white-space:nowrap;}
+.sr .pr{background:var(--gray);border-radius:7px;padding:5px 10px;text-align:center;line-height:1.15;} .sr .pr b{display:block;font-family:var(--font-num);font-size:13px;font-weight:800;direction:ltr;color:var(--primary-dark);} .sr .pr small{display:block;font-size:9.5px;color:var(--mid);font-weight:600;}
+.sr .pr.na{background:#f3f1f2;border:1px dashed #cdbfc8;} .sr .pr.na b{color:var(--light);}
+.sr .nm b{font-family:var(--font-num);font-size:15px;font-weight:800;display:block;direction:ltr;text-align:right;line-height:1.1;} .sr .nm small{font-size:10.5px;color:var(--mid);font-weight:600;}
+.sr .bars{display:flex;flex-direction:column;gap:3px;}
+.sr .b{display:flex;align-items:center;gap:8px;} .sr .b em{font-style:normal;font-family:var(--font-num);font-size:9.5px;color:var(--light);min-width:26px;direction:ltr;}
+.sr .b i{display:block;height:12px;border-radius:6px;width:0;transition:width 1.4s cubic-bezier(.2,.8,.2,1);} .sr .b.y0 i{background:#c9c0c6;height:9px;}
+.sr .b span{font-family:var(--font-num);font-size:12px;font-weight:700;direction:ltr;min-width:46px;color:var(--mid);} .sr .b.y1 span{color:var(--text);font-weight:800;}
+.sr .cg{text-align:center;font-family:var(--font-num);font-size:18px;font-weight:800;color:var(--primary);direction:ltr;line-height:1;} .sr .cg small{display:block;font-family:var(--font);font-size:9px;color:var(--light);font-weight:600;margin-top:2px;}
+/* ── 4a: vendor share momentum ── */
+.mktbar{display:inline-flex;align-items:center;gap:8px;background:var(--dark);color:#fff;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:600;margin-bottom:10px;align-self:flex-start;}
+.mktbar b{font-family:var(--font-num);direction:ltr;font-size:16px;font-weight:800;} .mktbar u{text-decoration:none;color:var(--pink-soft);font-family:var(--font-num);font-weight:800;font-size:16px;direction:ltr;}
+.racewrap{flex:1;display:grid;grid-template-columns:1fr 330px;gap:24px;min-height:0;align-items:stretch;}
+.race{display:flex;flex-direction:column;justify-content:center;gap:18px;padding-inline-end:6px;}
+.rr{display:grid;grid-template-columns:150px 1fr 60px 106px;align-items:center;gap:16px;}
+.rr .rn{font-size:16px;font-weight:800;display:flex;align-items:center;gap:9px;}
+.rr .rn i{width:13px;height:13px;border-radius:50%;flex-shrink:0;}
+.rr.pa .rn i{background:var(--pa);} .rr.ft .rn i{background:var(--ft);} .rr.cs .rn i{background:var(--cs);} .rr.cp .rn i{background:var(--cp);}
+.rr .trk{height:26px;background:var(--gray);border-radius:7px;overflow:hidden;position:relative;}
+.rr .trk b{position:absolute;inset-inline-end:0;top:0;height:100%;border-radius:7px;}
+.rr.pa .trk b{background:var(--pa);} .rr.ft .trk b{background:var(--ft);} .rr.cs .trk b{background:var(--cs);} .rr.cp .trk b{background:var(--cp);}
+.rr .pct{font-family:var(--font-num);font-size:24px;font-weight:800;direction:ltr;text-align:start;}
+.rr .mo{font-family:var(--font-num);font-weight:800;font-size:14px;direction:ltr;text-align:center;padding:4px 6px;border-radius:13px;white-space:nowrap;}
+.mo.up{background:#e6f5ec;color:var(--green);} .mo.flat{background:#fff1e6;color:var(--amber);} .mo.down{background:#fde6ee;color:var(--primary-dark);}
+.rr.cp{background:#fff5f8;border:1.5px solid var(--primary);border-radius:10px;padding:7px 12px;margin:0 -12px;}
+.racecard{background:var(--dark);color:#fff;border-radius:14px;padding:22px 24px;display:flex;flex-direction:column;justify-content:center;gap:8px;}
+.racecard .big{font-family:var(--font-num);font-size:48px;font-weight:800;direction:ltr;line-height:1;color:#fff;}
+.racecard .big s{text-decoration:none;color:var(--pink-soft);margin:0 4px;}
+.racecard .dn{align-self:flex-start;background:rgba(228,12,91,.25);color:#ffb3cd;font-family:var(--font-num);font-weight:800;font-size:15px;padding:4px 12px;border-radius:13px;direction:ltr;margin:2px 0 4px;}
+.racecard .cap{font-size:13px;line-height:1.55;color:rgba(255,255,255,.82);} .racecard .cap b{color:#fff;}
+.bridge .tot{font-size:14px;color:var(--mid);font-weight:600;} .bridge .tot b{font-family:var(--font-num);color:var(--text);font-size:19px;direction:ltr;display:inline-block;} .bridge .tot em{font-style:normal;color:var(--primary);font-weight:800;font-family:var(--font-num);direction:ltr;display:inline-block;margin-inline-start:6px;}
+.bridge{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;}
+.bridge .two{display:flex;gap:40px;width:100%;max-width:1000px;}
+.bridge .grow{flex:1;background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px 26px;position:relative;overflow:hidden;}
+.bridge .grow h3{font-size:16px;font-weight:800;color:var(--mid);letter-spacing:.04em;}
+.bridge .grow .big{font-family:var(--font-num);font-size:72px;font-weight:800;line-height:1;direction:ltr;text-align:right;margin:8px 0 4px;}
+.bridge .grow .sub{font-size:14px;color:var(--mid);} .bridge .grow .sub b{font-family:var(--font-num);direction:ltr;color:var(--text);}
+.bridge .grow .trk{height:22px;background:#ece8eb;border-radius:11px;margin-top:16px;overflow:hidden;}
+.bridge .grow .trk i{display:block;height:100%;width:0;border-radius:11px;transition:width 1.6s cubic-bezier(.2,.8,.2,1);}
+.bridge .grow.mkt .big{color:var(--text);} .bridge .grow.mkt .trk i{background:var(--dark);}
+.bridge .grow.cp{border:2px solid var(--primary);} .bridge .grow.cp .big{color:var(--primary);} .bridge .grow.cp .trk i{background:var(--primary);}
+.bridge .q{font-size:24px;font-weight:900;text-align:center;line-height:1.3;max-width:900px;}
+.bridge .q .hl{color:var(--primary);}
+.bridge .note{font-size:12px;color:var(--light);text-align:center;}
+
+/* S11 sizing */
+#s11 .risks{gap:12px;} #s11 .rk{padding:14px 16px;gap:8px;} #s11 .rk .rh h4{font-size:14.5px;} #s11 .rk p{font-size:12.5px;line-height:1.5;} #s11 .rk .mit{font-size:12.5px;line-height:1.5;padding:9px 11px;} #s11 .rk .sev i{width:11px;height:11px;}
+/* S12 sizing */
+#s12 .ak{padding:14px 16px;} #s12 .ak h3{font-size:17px;} #s12 .ak p{font-size:12.5px;line-height:1.5;} #s12 .ak .row .b .v{font-size:17px;} #s12 .ak .row .b .l{font-size:10.5px;}
+#s12 .dm{font-size:12px;} #s12 .dm div{padding:9px 12px;} #s12 .bigask .t{font-size:15px;} #s12 .bigask .v{font-size:44px;}
+/* S10 sizing */
+#s10 .sliders{gap:15px;} #s10 .sl .slh{font-size:12px;} #s10 .sl .slh b{font-size:15px;}
+#s10 .invtb{font-size:12px;margin-top:14px!important;} #s10 .invtb td{padding:6px 7px;}
+#s10 .rev{height:200px;} #s10 .rev .yr .tv{font-size:17px;} #s10 .rev .yr .yl{font-size:11.5px;}
+#s10 .kpis{margin-top:14px!important;} #s10 .kpi .v{font-size:28px;} #s10 .kpi .l{font-size:11px;}
+#s10 .solve .row{padding:11px 13px;} #s10 .solve .row p{font-size:12px;} #s10 .solve .row h4{font-size:13.5px;}
+#s10 .card .assume{margin-top:auto;padding-top:10px;font-size:10.5px;}
+/* S9 sizing */
+#s9 .feas{gap:14px;} #s9 .feas .card{padding:16px 18px;} #s9 .feas .card ul{gap:9px;} #s9 .feas .card li{font-size:13.5px;line-height:1.5;padding-inline-start:16px;} #s9 .feas .card li::before{top:8px;width:7px;height:7px;}
+#s9 .feas .card .ch{font-size:13.5px;margin-bottom:10px;}
+#s9 .alt{margin-top:16px;gap:14px;} #s9 .alt .o{padding:12px 16px;} #s9 .alt .o h5{font-size:14.5px;} #s9 .alt .o h5 span{font-size:13px;} #s9 .alt .o p{font-size:12.5px;line-height:1.45;margin-top:5px;}
+#s9 .tl{margin-top:20px;} #s9 .tl .ms{padding-top:24px;} #s9 .tl .ms .q{font-size:16px;} #s9 .tl .ms .w{font-size:12.5px;line-height:1.4;}
+#s9 .thread{margin-top:auto!important;}
+/* S8 sizing */
+#s8 .box9800{padding:14px 16px;display:flex;flex-direction:column;} #s8 .box9800 .hd{font-size:12px;margin-bottom:10px;} #s8 .box9800 .seg button.on{background:var(--primary);}
+#s8 .chips .ch2{padding:10px 6px;font-size:12px;} #s8 .chips .ch2 small{font-size:10px;margin-top:3px;}
+#s8 .lane{margin-top:10px;gap:10px;} #s8 .lane .ln{padding:9px 12px;font-size:11.5px;line-height:1.5;} #s8 .lane .ln h5{font-size:12.5px;margin-bottom:4px;}
+#s8 .gauges2{margin-top:10px;gap:10px;} #s8 .gauges2 .g{padding:8px 12px;} #s8 .gauges2 .g .l{font-size:11px;} #s8 .gauges2 .g .v{font-size:30px;} #s8 .gauges2 .g .v small{font-size:10.5px;}
+#s8 .box9800 .assume{margin-top:auto!important;font-size:10.5px;padding-top:8px;}
+#s8 .why{gap:8px;} #s8 .why .w{padding:9px 12px;} #s8 .why .w h5{font-size:13px;margin-bottom:2px;} #s8 .why .w p{font-size:11.5px;line-height:1.45;} #s8 .why .w .ic{width:30px;height:30px;font-size:13px;}
+#s8 .thread{margin-top:8px!important;}
+/* S7 layout */
+.s7grid{display:grid;grid-template-columns:1fr 330px;gap:12px;flex:1;min-height:0;}
+.s7grid .pipes{grid-template-columns:repeat(4,1fr);gap:8px;}
+.s7grid .demo{display:flex;flex-direction:column;gap:10px;margin-top:0;}
+.s7grid .demo .card{flex:1;}
+.s7grid .pipe .stg{padding:6px 8px;font-size:10.8px;} .s7grid .pipe .stg small{font-size:9.2px;}
+.s7grid .cmp .c .v{font-size:30px;} .s7grid .cmp .c .l{font-size:10px;}
+.s7grid .axis{height:108px;}
+/* S5 sizing */
+#s5 .sw{padding:10px 16px;} #s5 .sw .swh{margin-bottom:6px;} #s5 .sw .swh b{font-size:32px;} #s5 .sw .swh h3{font-size:15px;} #s5 .sw .swh small{font-size:11px;}
+#s5 .sw ul{gap:4px;} #s5 .sw li{font-size:12px;line-height:1.42;padding-inline-start:13px;} #s5 .sw li::before{top:8px;width:5px;height:5px;} #s5 .sw li.hinge{padding:5px 11px 5px 13px;}
+#s5 .thread{margin-top:8px!important;}
+/* S4 sizing */
+#s4 table.tb{font-size:12.5px;} #s4 table.tb td{padding:11px 9px;} #s4 table.tb th{font-size:10.5px;} #s4 .wchip{font-size:11px;padding:3px 10px;white-space:nowrap;}
+#s4 .assume{font-size:11px;margin-top:auto;padding-top:10px;} #s4 .ev .card{flex:1;} #s4 .ev .bar .trk{height:13px;} #s4 .ev .bar .lb{font-size:11.5px;min-width:100px;} #s4 .ev .bar .v{font-size:13.5px;}
+/* S3 sizing */
+#s3 .donutwrap{width:190px;height:190px;} #s3 .donutwrap .dc b{font-size:26px;} #s3 .legend{gap:6px;margin-top:10px;} #s3 .legend .li{font-size:12px;}
+#s3 .kpi .v{font-size:24px;} #s3 .kpi .l{font-size:11px;}
+#s3 .src{margin-top:8px;}
+
+@media print{
+  @page{size:1280px 720px;margin:0;}
+  html,body{overflow:visible;height:auto;} .deck{height:auto;} .stage{position:static;transform:none!important;box-shadow:none;}
+  .slide{position:relative;opacity:1!important;visibility:visible!important;transform:none!important;width:1280px;height:720px;page-break-after:always;}
+  .bar .fil{width:var(--w)!important;}
+  .swot2 .it small{max-height:none!important;opacity:1!important;margin-top:2px!important;}
+  .nav,.dots,.progress,.hero .hint{display:none!important;}
+}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+<!-- ═══════════ 1 · HERO ═══════════ -->
+<section class="slide hero active" data-ch="0">
+  <img src="checkpoint-logo.PNG" alt="Check Point" class="logo">
+  <div class="eyebrow"><span class="en">Senior PM Assignment · Session 1</span> · ספטמבר 2026</div>
+  <h1 style="font-size:64px"><span class="en">Quantum 9000 Series</span></h1>
+  <div class="meta" style="margin-top:28px">
+    <div><div class="lbl">מגיש</div><div class="val">ברק רוזנפלד</div></div>
+    <div><div class="lbl">קהל</div><div class="val"><span class="en">R&amp;D · Product · Sales · Marketing</span></div></div>
+    <div><div class="lbl">משך</div><div class="val">15 דקות + דיון</div></div>
+  </div>
+  <div class="hint">← → למעבר · <span class="en">F11</span> למסך מלא · כל שקף אינטראקטיבי — לחצו על הבקרות</div>
+</section>
+
+<!-- ═══════════ 2 · WHAT IS IT ═══════════ -->
+<section class="slide" data-ch="1" id="sWhat">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>מה הוא עושה ומה הוא מונע</h2></div>
+    <div class="tags"><span class="tag pink">Security Gateway</span><span class="tag teal">L3 → L7</span><span class="tag purple">Interactive</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 1 · המוצר</div>
+    <h1 class="title">Quantum 9000: <span class="hl">שכבת ההגנה שבין הארגון לכל מה שמחוץ לו</span></h1>
+    <div class="what">
+      <div class="scene">
+        <div class="lane3">
+          <div class="end net"><div class="ico">🌐</div><h4>האינטרנט</h4><p>לקוחות, ספקים ו-<span class="en">SaaS</span>. ביניהם: פישינג, נוזקות ופורצים</p></div>
+          <div class="wire" id="wire">
+            <div class="line"></div>
+            <div class="gw" id="gw">
+              <div class="sh l4 on" data-k="l4">L3/4<small>כתובות ופורטים</small></div>
+              <div class="sh tls off" data-k="tls">TLS<small>פתיחת הצפנה</small></div>
+              <div class="sh l7 off" data-k="l7">L7<small>אפליקציה ו-URL</small></div>
+              <div class="sh tp off" data-k="tp">Threat Prevention<small>IPS · AV/Emulation · Anti-Bot</small></div>
+            </div>
+            <div class="gwlbl">Quantum 9000 · Security Gateway</div>
+          </div>
+          <div class="end org"><div class="ico">🏢</div><h4>הארגון</h4><p>שרתים, נתונים, מערכות עסקיות</p></div>
+        </div>
+        <div class="cfgbar">
+          <span class="lbl">רמת הגנה:</span>
+          <div class="seg" id="cfgseg"><button class="on" data-c="0">Firewall</button><button data-c="1">L7 Control<small style="display:block;font-size:9px;font-weight:400;opacity:.7;line-height:1.2">App Control + URL Filtering</small></button><button data-c="2">Threat Prevention</button><button data-c="3">TLS Inspection</button></div>
+          <span class="stat">נעצרו <b id="stBlock">0</b> · חדרו <b id="stPass" style="color:#ff5c8a">0</b></span>
+          <div class="tpg"><span class="l" id="stTpLabel">Firewall Throughput</span><b id="stTp">400</b><span class="u">Gbps</span><div class="tr"><i id="stTpb" style="width:100%"></i></div></div>
+        </div>
+        <div class="layers" id="layers">
+          <div class="ly on"  data-k="l4" ><div class="n">L3–L4</div><div class="t">סינון לפי IP ופורט</div><div class="d">מי שולח, למי, באיזה פורט. בדיקת הכתובת על המכתב, בלי לפתוח</div></div>
+          <div class="ly off" data-k="l7" ><div class="n">L7</div><div class="t">זיהוי אפליקציה ומשתמש</div><div class="d">זיהוי האפליקציה, האתר והמשתמש</div></div>
+          <div class="ly off" data-k="tp" ><div class="n">Threat Prevention</div><div class="t">ניתוח תוכן ואיתור איומים</div><div class="d">קובץ נגוע, ניצול באג, תקשורת עם תוקף. בדיקת התוכן עצמו</div></div>
+          <div class="ly off" data-k="tls"><div class="n">TLS Inspection</div><div class="t">פענוח תעבורה מוצפנת</div><div class="d">פענוח HTTPS לצורך בדיקת L7 ו-Threat Prevention. ללא זה, שתי השכבות הקודמות עיוורות לתעבורה מוצפנת</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><span class="dotc"></span>8 תרחישי פריצה</div>
+        <div class="threats" id="threats"></div>
+        <div class="assume"><b>הנחות:</b> מספרי Throughput מייצגים את דגם 9800 כדוגמה לקו · FW = מעבדה, חבילות 1518B · TP = <span class="en">Enterprise Testing Conditions</span> · <b>מקור:</b> <span class="en">Check Point Appliance Comparison Chart 2026</span></div>
+      </div>
+    </div>
+    <div class="thread">
+      <div class="k">4<small>שכבות</small></div><div class="sep"></div>
+      <div class="t">כל שכבה נוספת מרחיבה את ההגנה. <b>הארגון מוגן יותר</b> ככל שיותר שכבות פעילות.</div>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+<!-- ═══════════ 3 · LINEUP ═══════════ -->
+<section class="slide" data-ch="1" id="sLine">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>הקו: אותה תוכנה, שישה גדלים</h2></div>
+    <div class="tags"><span class="tag pink">Quantum 9000</span><span class="tag purple">6 Models</span><span class="tag teal">1RU</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 1 · המוצר</div>
+    <h1 class="title">פלטפורמה אחת, <span class="hl">6 דגמים</span></h1>
+    <div class="line">
+      <div class="card">
+        <div class="sl" style="margin-bottom:4px"><div class="slh"><span>גודל הארגון</span><b id="orgv">2,000 משתמשים</b></div><input type="range" id="org" min="0" max="100" step="1" value="45"></div>
+        <div id="sizetip"></div>
+        <div class="stairs" id="stairs"></div>
+      </div>
+      <div class="metric3">
+        <div class="ch" style="margin-bottom:0"><span class="dotc"></span>הביצועים של דגם <span class="en" id="mxm">9800</span></div>
+        <div class="mx"><h5>Firewall <span id="mxfw">400 Gbps</span></h5><p>רק שכבת המעטפה (<span class="en">L3/4</span>). מספר מעבדה, חבילות גדולות. ערך שיווקי בלבד; אינו מייצג עומס ארגוני אמיתי.</p></div>
+        <div class="mx b"><h5>Threat Prevention <span id="mxtp">25 Gbps</span></h5><p>כל השכבות פעילות, על תמהיל תעבורה ארגוני אמיתי (<span class="en">Enterprise Testing Conditions</span>). <b>זה המספר שמשווים ב-RFP.</b></p></div>
+        <div class="mx c"><h5>TP + TLS Inspection <span id="mxtls">~10 Gbps</span></h5><p>כל השכבות פעילות, כולל פענוח הצפנה. הנתון הקרוב ביותר לתנאי שטח. נשארים עם <b><span id="mxr">3%</span> ממספר הכותרת</b>; בפועל, רוב הארגונים מפעילים על תת-קבוצה מהתעבורה.</p></div>
+        <div class="same" style="margin-top:6px">
+          <div class="same-hd">משותף לכל הדגמים בקו</div>
+          <div class="same-pills">
+            <span>Gaia OS</span><span>SmartConsole</span><span>Software Blades</span><span>1RU</span><span>עומד בתקנים: <b>FIPS 140-2 · EAL4+</b></span><span>Maestro Clustering</span>
+          </div>
+        </div>
+        <div class="src" style="margin-top:auto">
+          <span class="t">מקורות והנחות</span> <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank">Appliance Chart 2026</a> · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-accessory-guide.pdf" target="_blank">Accessory Guide 2026</a> · CPU models: <a href="https://csrc.nist.gov/projects/cryptographic-module-validation-program/entropy-validations/certificate/309" target="_blank">NIST FIPS Cert #309</a> · TP+TLS: נתוני Check Point; לא מספר RFP · "משתמשים" = אומדן לפי ~1–2 Mbps למשתמש · Load factor 70%
+        </div>
+      </div>
+    </div>
+    <div class="thread">
+      <div class="k">6<small>דגמים</small></div><div class="sep"></div>
+      <div class="t">מסניף גדול ועד <b>Data Center</b>, אותה קופסה עם יותר כוח עיבוד.</div>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+<!-- ═══════════ 4a · MARKET SHARE MOMENTUM ═══════════ -->
+<section class="slide" data-ch="2" id="sShare">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>מרוץ נתחי השוק: מי עולה, מי יורד</h2></div>
+    <div class="tags"><span class="tag pink">Market Share</span><span class="tag purple">2020 → 2026</span><span class="tag amber">Momentum</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 2 · השוק</div>
+    <h1 class="title">אנחנו ה-<span class="en">vendor</span> היחיד שנתח השוק שלו <span class="hl">יורד</span> — בזמן ש-<span class="en">Palo Alto</span> ו-<span class="en">Fortinet</span> מזנקים</h1>
+    <div class="mktbar">השוק: <b>$13.8B</b> → <b>~$20B</b> <u>+45%</u> עד 2030</div>
+    <div class="racewrap">
+      <div class="race">
+        <div class="rr pa"><div class="rn"><i></i>Palo Alto</div><div class="trk"><b style="width:100%"></b></div><div class="pct">19.5%</div><div class="mo up">↑↑ +34%</div></div>
+        <div class="rr ft"><div class="rn"><i></i>Fortinet</div><div class="trk"><b style="width:97%"></b></div><div class="pct">19%</div><div class="mo up">↑ +16%</div></div>
+        <div class="rr cs"><div class="rn"><i></i>Cisco</div><div class="trk"><b style="width:67%"></b></div><div class="pct">13%</div><div class="mo flat">→ flat</div></div>
+        <div class="rr cp"><div class="rn"><i></i>Check Point</div><div class="trk"><b style="width:39%"></b></div><div class="pct">7.7%</div><div class="mo down">↓ −14%</div></div>
+      </div>
+      <div class="racecard">
+        <div class="big">8.3% <s>→</s> 7.0%</div>
+        <div class="dn">−14% מאז 2020</div>
+        <div class="cap">ארבעת המובילים = <b>~59%</b> מהשוק; היתר מפוצל. אנחנו עדיין <b>מספר 4</b> — אבל שלושת המובילים מזנקים דווקא ב<b>סגמנטים שגדלים מהר</b>. זו לא בעיית מוצר בודדת אלא <b>שאלה של איפה משחקים</b>.</div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">#4<small>ויורד</small></div><div class="sep"></div>
+      <div class="t">מי שמזנק — מזנק בדיוק בסגמנטים שגדלים מהר. השאלה הבאה: <b>איפה בדיוק הצמיחה, ואיפה אנחנו עומדים בכל סגמנט</b>.</div>
+      <div class="next">הבא: <b>איפה הצמיחה</b></div>
+    </div>
+    <div class="src" style="margin-top:6px">
+      <span class="t">מקורות</span> IDC Security Appliance Tracker · Gartner 07/2026 · MarkWide CAGR 9.6% · נתח CP 8.3%→7.0% מאז 2020 — אומדן מכויל
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+<!-- ═══════════ 4b · SEGMENT GROWTH MAP ═══════════ -->
+<section class="slide" data-ch="2" id="sBridge">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>שוק ה-Firewall: שישה סגמנטים, שש הזדמנויות</h2></div>
+    <div class="tags"><span class="tag pink">$13.8B → ~$20B</span><span class="tag purple">6 Segments</span><span class="tag amber">2026 → 2030</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 2 · השוק</div>
+    <h1 class="title">השוק גדל 45% עד 2030 — <span class="hl">אבל הצמיחה מרוכזת בדיוק בסגמנטים שבהם אנחנו רק 3–5%</span></h1>
+    <div class="mktbar" id="mtot"></div>
+    <div class="segrows" id="segrows">
+      <div class="hd"><span>סגמנט</span><span>הכנסות · <i class="k y0"></i> 2026 · <i class="k y1"></i> 2030 · צמיחה/שנה</span><span>נתח Check Point <small>(קו = הממוצע 7.7%)</small></span><span>מי מוביל בסגמנט</span></div>
+    </div>
+    <div class="thread" style="margin-top:8px">
+      <div class="k">3–5%<small>בצמיחה</small></div><div class="sep"></div>
+      <div class="t">הצמיחה מרוכזת ב-<b>Branch, Data Center</b> ו-<b>Cloud</b>, שם אנחנו ב-<b>3–5%</b> בלבד. חזקים בסגמנטים שגדלים לאט. השלב הבא: מה מכריע בכל סגמנט.</div>
+      <div class="next">הבא: <b>מה מכריע בכל סגמנט</b></div>
+    </div>
+    <div class="src" style="margin-top:6px">
+      <span class="t">מקורות</span> MarkWide CAGR 9.6% · Gartner 07/2026 · IDC Security Appliance Tracker · Gartner Peer Insights · CyberRatings · נתח CP לסגמנט — אומדן מכויל לסך 7.7%
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+<!-- ═══════════ 4 · SEGMENT × CRITERION ═══════════ -->
+<section class="slide" data-ch="2" id="s4">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>הקריטריון המכריע בכל סגמנט</h2></div>
+    <div class="tags"><span class="tag pink">6 Segments</span><span class="tag purple">7 Criteria</span><span class="tag amber">CP vs Best</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 2 · השוק</div>
+    <h1 class="title">בשלושה סגמנטים אנחנו בפסגה; בשלושה אחרים, פחות. <span class="hl">רק ב-Data Center הפער הוא הנדסי</span></h1>
+    <div class="hmwrap">
+      <div class="card white hmcard">
+        <div class="ch" style="margin-bottom:6px"><span class="dotc"></span>מה מכריע בכל סגמנט ואיפה אנחנו עומדים · <b>לחצו על סגמנט</b></div>
+        <div class="hm" id="hm"></div>
+        <div class="hmleg"><span><i class="w3"></i> מכריע</span><span><i class="w2"></i> חשוב</span><span><i class="w1"></i> משני</span><span class="ok">✓ Check Point מוביל / שווה</span><span class="bad">✗ Check Point מאחור</span></div>
+      </div>
+      <div class="card hmdet" id="hmdet"></div>
+    </div>    <div class="thread">
+      <div class="k">★ DC<small>הפואנטה</small></div><div class="sep"></div>
+      <div class="t"><b>Data Center</b> הוא הסגמנט הצומח שהקריטריון בו הנדסי, והמוצר כבר קיים. מספר אחד מפריד: <b>25G מול 100–189G</b>. זה גם מה שה-<b>HQ</b> בודק בחידוש.</div>
+      <div class="next">הבא: <b>SWOT</b></div>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+<!-- ═══════════ 5 · SWOT ═══════════ -->
+<section class="slide" data-ch="3" id="s5">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>SWOT: <span class="en">Check Point 9000 vs Fortinet · Palo Alto · Cisco</span></h2></div>
+    <div class="tags"><span class="tag pink">Technical</span><span class="tag purple">Commercial</span><span class="tag amber">Why Now</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 3 · הבעיה</div>
+    <h1 class="title" style="margin-bottom:6px">חזקים באיכות ובציות; <span class="hl">החולשה שמאחדת הכל היא הנדסית: throughput per RU</span></h1>
+    <div class="swctl">
+      <span class="lbl">מימד:</span><div class="seg" id="swdim"><button class="on" data-d="all">הכל</button><button data-d="t">🔧 טכני</button><button data-d="c">💼 מסחרי</button></div>
+      <span class="lbl" style="margin-inline-start:14px">מול:</span><div class="seg" id="swvs"><button class="on" data-v="all">כולם</button><button data-v="ft">Fortinet</button><button data-v="pa">Palo Alto</button><button data-v="cs">Cisco</button></div>
+      <span class="vleg"><i style="background:var(--ft)"></i>Fortinet <i style="background:var(--pa)"></i>Palo Alto <i style="background:var(--cs)"></i>Cisco</span>
+      <span class="lbl" style="margin-inline-start:auto;color:var(--light);font-weight:600">רחפו על פריט לפרטים</span>
+    </div>
+    <div class="swot2" id="swot2"></div>    <div class="thread" style="margin-top:10px">
+      <div class="k">W → O<small>ההיגיון</small></div><div class="sep"></div>
+      <div class="t">בצד המסחרי: חולשות של מחיר ורישוי, קרב שלא נרצה לנצח בו מול ASIC זול. בצד הטכני: חולשה אחת, <b>throughput per RU</b>, שמופיעה ב-W, ב-T וגם ב-O כהזדמנות.</div>
+      <div class="next">הבא: <b>סימולטור ה-blades</b></div>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+<!-- ═══════════ 6 · SIMULATOR ═══════════ -->
+<section class="slide" data-ch="3" id="s6">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>הפעילו את ה-blades וראו מה קורה לתפוקה</h2></div>
+    <div class="tags"><span class="tag pink">Packet Path</span><span class="tag purple">Throughput</span><span class="tag teal">per RU</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 3 · הבעיה</div>
+    <h1 class="title">אותו <span class="en">packet</span>, אותה קופסה: <span class="hl">400 → 10 Gbps</span> כשמדליקים את כל מה שהלקוח מפעיל. <span class="en">ASIC</span> אחרי <span class="en">L4</span> יש למתחרים; לנו אין</h1>
+    <div class="sim">
+      <div class="card white">
+        <div class="ch"><span class="dotc"></span>קונפיגורציית הלקוח: לחצו להדלקה</div>
+        <div class="ctl tgrow">
+          <div class="tg on dis" data-lv="0"><span class="sw"></span>Firewall L3/L4</div>
+          <div class="tg" id="tg1" data-lv="1"><span class="sw"></span>App · URL · Identity <small style="font-weight:500;color:var(--light)">NGFW</small></div>
+          <div class="tg" id="tg2" data-lv="2"><span class="sw"></span>IPS · AV · Anti-Bot <small style="font-weight:500;color:var(--light)">TP</small></div>
+          <div class="tg" id="tg3" data-lv="3"><span class="sw"></span>TLS Inspection <small style="font-weight:500;color:var(--light)">85%</small></div>
+        </div>
+        <div class="lanes" id="lanes">
+          <div class="lh corner">שלב ←<small>מי מריץ אותו ↓</small></div>
+          <div class="lh">L3/4 · NAT · Session<small>Firewall</small></div>
+          <div class="lh" data-lv="1">App · URL · User<small>NGFW</small></div>
+          <div class="lh" data-lv="3">TLS Decrypt<small>handshake + bulk</small></div>
+          <div class="lh" data-lv="2">IPS · AV · Anti-Bot<small>signatures · regex</small></div>
+          <div class="lh" data-lv="3">Re-encrypt<small>TLS out</small></div>
+
+          <div class="ln cp"><b>Check Point 9800</b><small>x86 + FW ASIC</small></div>
+          <div class="c asic">FW ASIC<small>lookup · NAT · offload</small></div>
+          <div class="c cpu" data-lv="1">x86<small>תוכנה</small></div>
+          <div class="c cpu" data-lv="3">x86<small>אין crypto engine</small></div>
+          <div class="c cpu" data-lv="2">x86<small>regex בתוכנה</small></div>
+          <div class="c cpu" data-lv="3">x86<small>הצפנה בתוכנה</small></div>
+
+          <div class="ln ft"><b>Fortinet 6500F</b><small>NP7 + CP9 + CPU</small></div>
+          <div class="c asic">NP7<small>L3/4 · NAT · IPsec</small></div>
+          <div class="c cpu" data-lv="1">CPU<small>App Control בתוכנה</small></div>
+          <div class="c acc" data-lv="3">CP9<small>crypto offload</small></div>
+          <div class="c acc mix" data-lv="2">CP9 + CPU<small>pattern match בחומרה, verdict ב-CPU</small></div>
+          <div class="c acc" data-lv="3">CP9<small>crypto offload</small></div>
+
+          <div class="ln pa"><b>Palo Alto PA-5450</b><small>NC + DPC</small></div>
+          <div class="c asic">NC<small>network processor · session offload</small></div>
+          <div class="c cpu" data-lv="1">DPC cores<small>App-ID בתוכנה</small></div>
+          <div class="c acc" data-lv="3">DPC crypto<small>hardware offload</small></div>
+          <div class="c acc mix" data-lv="2">DPC engine + cores<small>signature match בחומרה, ML ב-cores</small></div>
+          <div class="c acc" data-lv="3">DPC crypto<small>hardware offload</small></div>
+        </div>
+        <div class="leg" style="margin-top:5px"><span><i style="background:var(--teal)"></i>ASIC / NP קבוע: מהיר, לא ניתן לשינוי</span><span><i style="background:var(--amber)"></i>מנוע האצה ייעודי (crypto · pattern)</span><span><i style="background:var(--primary)"></i>CPU כללי: תוכנה</span><span><i style="background:#d9d4da"></i>לא פעיל</span></div>        <div class="ctl" style="margin-top:8px;justify-content:space-between">
+          <div class="seg" id="ruseg"><button class="on" data-ru="0">per box</button><button data-ru="1">per RU (מנורמל)</button></div>
+          <span class="pill warn">FTN 6500F = 3RU · PA-5450 = 5U · CP 9800 = 1RU</span>
+        </div>
+        <div class="gauge">
+          <div class="g cp"><div class="nm"><span>Check Point 9800</span><span class="ru">1RU</span></div><div class="cfg">x86 + FW ASIC</div><div class="val" id="gcp">400</div><div class="unit">Gbps · <span id="lvname">Firewall</span></div><div class="tr"><i id="bcp" style="width:100%"></i></div></div>
+          <div class="g ft"><div class="nm"><span>Fortinet 6500F</span><span class="ru">3RU</span></div><div class="cfg">SPU NP7 + CP9</div><div class="val" id="gft">239</div><div class="unit">Gbps</div><div class="tr"><i id="bft" style="width:60%"></i></div></div>
+          <div class="g pa"><div class="nm"><span>Palo Alto PA-5450</span><span class="ru">5U</span></div><div class="cfg">2 NC + 4 DPC</div><div class="val" id="gpa">200</div><div class="unit">Gbps</div><div class="tr"><i id="bpa" style="width:50%"></i></div></div>
+        </div>
+        <div class="ratio">
+          <div class="r"><div class="v" id="r1">×0.6</div><div class="l">Fortinet / CP</div></div>
+          <div class="r"><div class="v" id="r2">×0.5</div><div class="l">Palo Alto / CP</div></div>
+          <div class="r"><div class="v" id="r3">—</div><div class="l">ירידה מ-FW ב-CP</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><span class="dotc"></span>מה זה אומר בפועל</div>
+        <div class="kpi" style="margin-bottom:8px"><div class="v">~7%</div><div class="l">מהתעבורה בלקוח <span class="en">Enterprise</span> טיפוסי עוברת את הנתיב העמוק (<span class="en">Full TP + TLS</span>). <b>אבל זה המספר שב-<span class="en">RFP</span></b>, וזה מה ש-<span class="en">DC</span> ו-<span class="en">Regulated</span> מודדים</div></div>
+        <div class="solve">
+          <div class="row"><div class="ic" style="background:var(--amber)">!</div><div><h4>הפער האמיתי קטן ממה שנהוג לומר, ועדיין קיים</h4><p>לפי קופסה: <span class="num">×4–7.5</span>. מנורמל ל-<span class="en">RU</span>: <span class="num">×1.3–1.5</span> ב-<span class="en">TP</span>, <span class="num">~×1.7</span> ב-<span class="en">TP+TLS</span>. השוואה הוגנת <b>מחזקת</b> את הטענה, כי היא שורדת את החדר.</p></div></div>
+          <div class="row"><div class="ic">DC</div><div><h4>ב-<span class="en">Data Center</span> קונים קופסה, לא <span class="en">RU</span></h4><p>לקוח שצריך <span class="num">100G TP</span> קונה <span class="en">6500F</span> אחד, או <span class="num">4×9800</span> + <span class="en">Maestro</span>. זה עובד, אבל זה <span class="en">TCO</span> וזה מקום ב-<span class="en">rack</span>. ה-<span class="en">scale-out</span> הוא תשובה, לא יתרון.</p></div></div>
+          <div class="row"><div class="ic" style="background:var(--primary)">TLS</div><div><h4>ה-<span class="en">TLS</span> הוא המכפיל</h4><p>מ-<span class="num">25</span> ל-<span class="num">~10</span>: <span class="en">handshake (ECDHE)</span> + <span class="en">bulk AES-GCM</span> על <span class="en">CPU</span> כללי. אצל המתחרים זה על <span class="en">crypto engine</span>. זה השלב הראשון להעביר.</p></div></div>
+        </div>
+        <div class="assume"><b>מקורות:</b> <span class="en">CP Appliance Chart · FortiGate 6000F DS · PA-5450 DS (PAN-OS 12.1)</span>. ערכי <span class="en">TLS</span> של <span class="en">FTN/PA</span> — טווח מוערך (~50%) מהמחקר; <span class="en">FTN 6500F SSL inspection</span> מפורסם <span class="num">130G</span> (בלבד, לא <span class="en">TP+TLS</span>). <span class="en">FW</span> = <span class="en">lab 1518B</span>.</div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">400→10<small>ב-CP</small></div><div class="sep"></div>
+      <div class="t">גם אצל המתחרים הקו יורד, אבל <b>פחות חד</b>. ההבדל אינו כמות ה-<b>cores</b>, אלא <b>איזה סיליקון מריץ כל שלב</b>.</div>
+      <div class="next">הבא: <b>ארכיטקטורה</b></div>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+<!-- ═══════════ 6b · SILICON TYPES ═══════════ -->
+<section class="slide" data-ch="3" id="sSil">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>ארבעה סוגי סיליקון, ארבע תפוקות שונות</h2></div>
+    <div class="tags"><span class="tag pink">x86</span><span class="tag amber">ASIC</span><span class="tag purple">DPC</span><span class="tag teal">DPU</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 3 · הבעיה</div>
+    <h1 class="title">אותה בדיקה, ארבעה סוגי סיליקון. <span class="hl">המספר נקבע לפי החומרה, לא לפי כמות הליבות</span></h1>
+    <div class="attrs" id="attrs"><span class="lbl">בחרו קריטריון:</span><button class="on" data-a="0">Throughput / RU</button><button data-a="1">גמישות — feature בתוכנה</button><button data-a="2">AI / ML בנתיב</button><button data-a="3">זמן ועלות פיתוח</button><button data-a="4">שדרוג אצל הלקוח</button></div>
+    <div class="aexp" id="aexp"></div>
+    <div class="sil4">
+      <div class="sc cp"><div class="tp"><div class="ico">x86</div><div><h3>CPU כללי</h3><small>Intel Xeon · הכל בתוכנה</small></div></div>
+        <div class="whos"><span class="wchip cp">Check Point 9000</span><span class="wchip cs">Cisco Firepower</span></div>
+        <p class="how">כל שלב בבדיקה הוא <b>קוד</b> על ליבות כלליות — <span class="en">SecureXL / CoreXL</span> מפזרים סשנים בין הליבות. כל בייט אחרי <span class="en">L4</span> עובר דרך ה-<span class="en">CPU</span>.</p>
+        <div class="rts"></div>
+        <div class="ana">🍳 שף אחד שיודע לבשל הכל, אבל מבשל מנה אחת בכל פעם</div></div>
+      <div class="sc ft"><div class="tp"><div class="ico" style="background:var(--ft)">ASIC</div><div><h3>סיליקון ייעודי</h3><small>Fortinet SPU · NP7 + CP9</small></div></div>
+        <div class="whos"><span class="wchip ft">Fortinet</span></div>
+        <p class="how">שבב שנחתך למשימה אחת: <span class="en">NP7</span> — טבלת סשנים ו-<span class="en">policy</span> ב-<span class="en">TCAM</span> (השוואה של כל החוקים <b>במקביל</b>); <span class="en">CP9</span> — <span class="en">SSL</span> ומאות מנועי <span class="en">regex</span> בחומרה. ה-<span class="en">CPU</span> רק מנהל.</p>
+        <div class="rts"></div>
+        <div class="ana">🏭 פס ייצור: מהיר מאוד, אבל שינוי = לבנות פס חדש (3–5 שנים, $300M+)</div></div>
+      <div class="sc pa"><div class="tp"><div class="ico" style="background:var(--pa)">DPC</div><div><h3>כרטיסי עיבוד מודולריים</h3><small>Palo Alto · <span class="en">Data Processing Cards</span></small></div></div>
+        <div class="whos"><span class="wchip pa">Palo Alto</span></div>
+        <p class="how">שלדה עם כרטיסים: <span class="en">Networking Cards</span> לקלט, <span class="en">DPC</span> — <span class="en">FPGA/ASIC + CPU</span> — ל-<span class="en">IPS/AV</span>. רוצים יותר <span class="en">TP</span>? מוסיפים כרטיס. יקר, ותופס <span class="en">5U</span>.</p>
+        <div class="rts"></div>
+        <div class="ana">🍽️ מטבח עם תחנות: מוסיפים תחנה כשצריך, משלמים על כל אחת</div></div>
+      <div class="sc dpu"><div class="tp"><div class="ico" style="background:var(--green)">DPU</div><div><h3>מעבד נתונים על כרטיס רשת</h3><small>Nvidia BlueField-3 · <span class="en">programmable</span></small></div></div>
+        <div class="whos"><span class="wchip cp">Check Point AIFF</span><span class="wchip" style="background:var(--green)">AWS · Azure</span></div>
+        <p class="how"><span class="en">NIC</span> שעליו מנועי <span class="en">crypto 400G</span>, <span class="en">RegEx</span>, טבלאות <span class="en">flow</span> בחומרה — ו-<span class="en">16 ליבות Arm</span> שאפשר לתכנת. מישהו אחר בנה את הסיליקון; אנחנו כותבים תוכנה עליו (<span class="en">DOCA</span>).</p>
+        <div class="rts"></div>
+        <div class="ana">👨‍🍳 עוזר-שף עם מכשירים: לוקח את העבודה הכבדה, השף נשאר לחשוב</div></div>
+    </div>
+    <div class="thread" style="margin-top:8px">
+      <div class="k">x86<small>הבחירה שלנו</small></div><div class="sep"></div>
+      <div class="t"><b>Check Point</b> בחרה <b>x86</b>: נכון לגמישות ול-<b>AI</b>, מודלים ב-OTA, engine חדש בלי חומרה. המס על כך הוא throughput: <b>400 → 25 → 10</b>. השאלה: כיצד עולים בציר התפוקה בלי לרדת בציר הגמישות.</div>
+      <div class="next">הבא: <b>ארבעה pipelines</b></div>
+    </div>
+    <div class="src" style="margin-top:6px">
+      <span class="t">מקורות</span> Fortinet SPU whitepaper · PA-5450 datasheet · Nvidia BlueField-3 · Check Point AIFF press release
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+<!-- ═══════════ 7 · ARCHITECTURE ═══════════ -->
+<section class="slide" data-ch="4">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>ארכיטקטורה: ארבעה pipelines, הבדל אחד</h2></div>
+    <div class="tags"><span class="tag pink">x86</span><span class="tag amber">SPU</span><span class="tag purple">DPC</span><span class="tag teal">Silicon vs CPU</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 4 · הארכיטקטורה</div>
+    <h1 class="title">ארבע ארכיטקטורות לאותה שאלה: <span class="hl">מי מעבד את ה-packet אחרי L4</span></h1>
+    <div class="leg"><span><i style="background:var(--steel)"></i>I/O</span><span><i style="background:var(--teal)"></i>סיליקון ייעודי</span><span><i style="background:#8a5a9a"></i>קרנל / software fast-path</span><span><i style="background:var(--primary)"></i><span class="en">x86 CPU</span> כללי</span><span style="margin-inline-start:auto;color:var(--light);font-weight:600">עברו עם העכבר על שלב</span></div>
+    <div class="s7grid">
+    <div class="pipes">
+      <div class="pipe cp"><h4>Check Point 9800 <small>x86 + FW ASIC</small></h4>
+        <div class="stg io">NIC<small>100G</small></div>
+        <div class="stg sil">FW ASIC (Lightspeed-class)<small>L3/4 forwarding · session · NAT</small></div>
+        <div class="stg sw">SecureXL<small>kernel fast path — bypass לסשנים מוכרים</small></div>
+        <div class="stg cpu">CoreXL — 28 FW instances<small>hash(5-tuple) → core · parallelism בתוכנה</small></div>
+        <div class="stg cpu">TLS decrypt / re-encrypt<small>ECDHE · AES-GCM על CPU</small></div>
+        <div class="stg cpu">IPS · AV · Anti-Bot<small>regex / signatures · O(log n) lookups</small></div>
+        <div class="stg cpu">App Control · URL · ThreatCloud AI<small>ML inference · OTA models</small></div>
+        <div class="foot">TP <b>25G</b> · TP+TLS <b>~10G</b> · per RU <b>25</b><br>הכל אחרי L4 — CPU. גמיש, אבל ה-bottleneck.</div></div>
+      <div class="pipe ft"><h4>Fortinet 6500F <small>SPU · 3RU</small></h4>
+        <div class="stg io">NIC<small>100G</small></div>
+        <div class="stg sil">NP7 — Network Processor<small>session table בחומרה (200M) · TCAM policy · NAT</small></div>
+        <div class="stg sil">CP9 — Content Processor<small>SSL offload · מאות regex engines במקביל · AV pattern</small></div>
+        <div class="stg cpu">CPU — control plane<small>FortiOS · logging · ניהול — לא בנתיב הנתונים</small></div>
+        <div class="foot">TP <b>100G</b> · per RU <b>~33</b><br>שדרוג TP = חומרה חדשה. ML בסיליקון מ-2005 — signature-first.</div></div>
+      <div class="pipe pa"><h4>Palo Alto PA-5450 <small>DPC · 5U</small></h4>
+        <div class="stg io">NIC — Networking Card<small>2× NC</small></div>
+        <div class="stg sil">App-ID first<small>סיווג L7 לפני policy · 150+ protocols</small></div>
+        <div class="stg sil">DPC ×4 — Data Processing Cards<small>IPS · AV · inline ML scoring</small></div>
+        <div class="stg cpu">CPU — policy / mgmt<small>PAN-OS · Panorama</small></div>
+        <div class="foot">TP <b>189G</b> · per RU <b>~38</b><br>modular: מוסיפים DPC = מוסיפים TP. יקר ($43K TCO).</div></div>
+      <div class="pipe cs"><h4>Cisco Firepower <small>x86 ×2 engines</small></h4>
+        <div class="stg io">NIC</div>
+        <div class="stg cpu">ASA engine<small>stateful FW · ACL — תור ראשון</small></div>
+        <div class="stg cpu">Snort / FTD engine<small>IPS · App · malware — תור שני</small></div>
+        <div class="stg cpu">FMC + ASDM<small>ניהול כפול</small></div>
+        <div class="foot">TP <b>~40G</b> · latency <b>~10μs</b><br>2013: קנו מוצר, לא ארכיטקטורה. שני stacks על אותו CPU.</div></div>
+    </div>
+    <div class="demo">
+      <div class="card"><div class="ch"><span class="dotc"></span>למה <span class="en">CPU</span> כללי מפסיד — <span class="en">policy lookup</span> · גררו את מספר החוקים</div>
+        <div class="sl"><div class="slh"><span>חוקים ב-<span class="en">rule base</span></span><b id="rulesv">10,000</b></div><input type="range" id="rules" min="1000" max="200000" step="1000" value="10000"></div>
+        <div class="cmp">
+          <div class="c x86"><div class="v" id="cmpx">14</div><div class="l">השוואות per packet על <span class="en">x86</span> — <span class="en">binary search O(log n)</span>, כל אחת = <span class="en">cache miss</span> פוטנציאלי</div></div>
+          <div class="c tcam"><div class="v">1</div><div class="l"><span class="en">TCAM</span> — כל השורות מושוות <b>במקביל</b>, <span class="en">O(1)</span>, <span class="en">clock cycle</span> אחד, בלי קשר ל-<span class="en">n</span></div></div>
+        </div>
+        <div class="assume">דוגמה 2 — <b>TLS</b>: <span class="en">ECDHE handshake + AES-GCM bulk</span> על <span class="en">CPU</span> כללי = <span class="en">CISC decode</span>, <span class="en">branch mispredicts</span>, <span class="en">memory copies</span>. <span class="en">Crypto engine</span> ייעודי = <span class="en">line rate</span>, אפס <span class="en">cycles</span> של <span class="en">CPU</span>. זה בדיוק השלב שאנחנו הכי מפסידים בו (25→10).</div></div>
+      <div class="card"><div class="ch"><span class="dotc"></span>ה-<span class="en">trade-off</span> האסטרטגי: למה <span class="en">x86</span> אינו האויב</div>
+        <div class="axis">
+          <div class="ax h"></div><div class="ax v"></div>
+          <div class="al" style="bottom:2px;right:4px">← Flexibility / AI capability</div><div class="al" style="top:-2px;left:30px">↑ Throughput / RU</div>
+          <div class="pt ft" style="left:30%;top:26%"><span>Fortinet — SPU</span></div>
+          <div class="pt pa" style="left:46%;top:14%"><span>Palo Alto — DPC</span></div>
+          <div class="pt cs" style="left:24%;top:68%"><span>Cisco</span></div>
+          <div class="pt cp" style="left:84%;top:62%"><span>Check Point — x86</span></div>
+          <div class="pt tgt" style="left:84%;top:24%"><span style="color:var(--green)">CP + DPU offload</span></div>
+        </div>
+        <div class="assume" style="margin-top:4px"><b>מה x86 נותן:</b> מודלי <span class="en">ML</span> ב-<span class="en">OTA</span>, <span class="en">ThreatCloud AI</span>, <span class="en">engine</span> חדש בלי <span class="en">HW refresh</span>. ה-<span class="en">ASIC</span> של 2005 מצוין ל-<span class="en">signatures</span>, גרוע ל-<span class="en">inference</span>. צדקנו בציר ה-<span class="en">AI</span>, שילמנו מס בציר ה-<span class="en">throughput</span>. המטרה: <b>לזוז למעלה בלי לזוז שמאלה</b>.</div></div>
+    </div>
+    </div><!-- /s7grid -->
+    <div class="thread" style="margin-top:8px">
+      <div class="k">no ASIC<small>הבחירה</small></div><div class="sep"></div>
+      <div class="t">בניית <b>ASIC</b> עצמי: 15 שנה מאוחר מדי, <b>$300M+</b>, ולא ב-DNA שלנו. הדרך השלישית: להניח את השלבים הכבדים על סיליקון שמישהו אחר כבר בנה. <b>כבר עושים את זה ב-AIFF</b>.</div>
+      <div class="next">הבא: <b>ה-Feature</b></div>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+<!-- ═══════════ 8 · FEATURE ═══════════ -->
+<section class="slide" data-ch="5" id="s8">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>Quantum Boost: מודול DPU ל-9700/9800</h2></div>
+    <div class="tags"><span class="tag teal">BlueField-3</span><span class="tag pink">TP Offload</span><span class="tag purple">Field Upgrade</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 5 · הפתרון <span class="pill warn" style="margin-inline-start:8px">שם עבודה</span></div>
+    <h1 class="title"><span class="en">TLS</span> ו-<span class="en">pattern matching</span> עוברים מה-<span class="en">x86</span> לכרטיס. התוצאה: <span class="hl">×4 TP+TLS באותו 1RU, בשדרוג בשטח</span></h1>
+    <div class="feat">
+      <div class="box9800">
+        <div class="hd"><span>Quantum 9800 · 1RU · <span class="en">expansion slot</span></span><div class="seg" style="border-color:rgba(255,255,255,.25);background:transparent"><button class="on" id="fb0" style="color:#fff">היום</button><button id="fb1" style="color:#fff">עם Quantum Boost</button></div></div>
+        <div class="chips" id="fchips">
+          <div class="ch2 io">NIC<small>100G</small></div><span class="arr">←</span>
+          <div class="ch2 sil">FW ASIC<small>L3/4 · session</small></div><span class="arr">←</span>
+          <div class="ch2 cpu" data-mv="1">TLS<small>decrypt / re-encrypt</small></div><span class="arr">←</span>
+          <div class="ch2 cpu" data-mv="1">IPS · AV · Bot<small>regex · signatures</small></div><span class="arr">←</span>
+          <div class="ch2 cpu">Policy · App · ThreatCloud<small>x86 — נשאר</small></div><span class="arr">←</span>
+          <div class="ch2 io">OUT</div>
+        </div>
+        <div class="lane">
+          <div class="ln x86"><h5>Intel Xeon x86 <span id="x86load">100% מעומס ה-TP</span></h5><ul id="x86list"><li>TLS handshake + bulk crypto</li><li>IPS / AV signature matching</li><li>Policy · session state · App Control</li><li>ThreatCloud AI · ML inference</li><li>Threat Emulation dispatch · mgmt</li></ul></div>
+          <div class="ln dpu" id="dpulane" style="opacity:.35"><h5>BlueField-3 DPU <span id="dpuload">— לא מותקן</span></h5><ul id="dpulist"><li style="opacity:.5">Crypto engines 400G — TLS inline</li><li style="opacity:.5">RegEx / RXP engine — IPS/AV patterns</li><li style="opacity:.5">Hardware flow tables — steering</li><li style="opacity:.5">16× Arm A78 — phase 2: Lakera inference</li></ul></div>
+        </div>
+        <div class="gauges2">
+          <div class="g"><div class="l">Full TP + TLS</div><div class="v" id="fg1">~10 <small>Gbps</small></div></div>
+          <div class="g"><div class="l">Full TP</div><div class="v" id="fg2">25 <small>Gbps</small></div></div>
+          <div class="g"><div class="l">per RU · TP+TLS</div><div class="v" id="fg3">10 <small>vs FTN ~17 · PA ~18</small></div></div>
+          <div class="g"><div class="l">שדרוג</div><div class="v" id="fg4" style="font-size:16px;padding-top:5px">קופסה חדשה</div></div>
+        </div>
+        <div class="assume" style="color:rgba(255,255,255,.5);margin-top:8px"><b style="color:rgba(255,255,255,.7)">יעדים = הנחות תכנון</b>, לאימות במעבדה ב-<span class="en">PoC</span>: <span class="en">TP+TLS 35–50G</span> (מוצג 40), <span class="en">Full TP ~60G</span>. מבוסס על <span class="en">BF-3 crypto 400G</span> ו-<span class="en">RXP</span>; המגבלה החדשה תהיה <span class="en">policy/App</span> על <span class="en">x86</span> — לכן לא <span class="en">×10</span>.</div>
+      </div>
+      <div class="why2">
+        <div class="card white cmp">
+          <div class="ch"><span class="dotc"></span>איפה זה שם אותנו — <span class="en">TP + TLS · Gbps</span><div class="seg" id="cmpru"><button class="on" data-ru="1">per RU</button><button data-ru="0">per box</button></div></div>
+          <div class="hbars" id="hb1"></div>
+        </div>
+        <div class="card white cmp">
+          <div class="ch"><span class="dotc" style="background:var(--amber)"></span>מה זה עושה ל-<span class="en">TCO</span> — <span class="en">$K</span> ל-<span class="en">10 Gbps TP</span> · 3 שנים <span class="as">(מנורמל · הנחה)</span></div>
+          <div class="hbars" id="hb2"></div>
+        </div>
+        <div class="tconote"><b>השלכות <span class="en">TCO</span> ללקוח:</b> <span class="en">+$15K list</span> למודול (≈+35–40% על <span class="en">ASP</span>) · <span class="en">+75W</span> · 0 <span class="en">rack</span> · 0 הכשרה · אותו חוזה <span class="en">support</span>. החלופה: קופסה חדשה (<span class="en">Fortinet</span>) או <span class="en">4×9800 + Maestro</span> — ×4 <span class="en">rack</span>, חשמל ורישוי.</div>
+      </div>    <div class="thread" style="margin-top:10px">
+      <div class="k">×4<small>TP+TLS</small></div><div class="sep"></div>
+      <div class="t">לא ממציאים סיליקון, לא מחליפים <b>OS</b>, לא מחליפים קופסה. מעבירים שני שלבים לכרטיס ומשנים את המספר היחיד שמפריד בין <b>9800</b> ל-<b>DC</b>.</div>
+      <div class="next">הבא: <b>איך זה עובד — נתיב ה-packet</b></div>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+<!-- ═══════════ 9 · FEASIBILITY ═══════════ -->
+<!-- ═══════════ HOW IT WORKS · DPU PACKET PATH ═══════════ -->
+<section class="slide" data-ch="5" id="sHow">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>נתיב ה-packet עם Quantum Boost</h2></div>
+    <div class="tags"><span class="tag teal">Packet Path</span><span class="tag pink">Offload Boundary</span><span class="tag purple">Fast Path</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 5 · הפתרון</div>
+    <h1 class="title">הpacket נכנס לכרטיס לפני ה-<span class="en">x86</span>. הכרטיס מפענח, סורק ומחליט; <span class="hl">ה-x86 מטפל רק בהחלטות policy</span></h1>
+    <div class="how">
+      <div class="card white">
+        <div class="ch"><span class="dotc"></span>נתיב ה-<span class="en">packet</span> — <span class="en">Quantum 9800 + Boost</span> · <span class="en">TLS + Full TP</span> <span class="pill" style="margin-inline-start:auto;font-size:9.5px" id="pkstate">▶ מדגים</span></div>
+        <div class="flow" id="flow">
+          <div class="grp io"><div class="stn" data-i="0"><b>NIC</b><small>100G in</small></div></div>
+          <span class="farr">←</span>
+          <div class="grp dpu"><div class="gh">BlueField-3 DPU <span>כרטיס · PCIe Gen5</span></div>
+            <div class="stns">
+              <div class="stn" data-i="1"><b>Flow table</b><small>flow מוכר? → fast path</small><em>HW flow tables</em></div><span class="farr">←</span>
+              <div class="stn" data-i="2"><b>TLS Decrypt</b><small>handshake + bulk</small><em>crypto engines 400G</em></div><span class="farr">←</span>
+              <div class="stn" data-i="3"><b>Pattern match</b><small>IPS · AV · Bot signatures</small><em>RXP engine</em></div><span class="farr">←</span>
+              <div class="stn" data-i="4"><b>Verdict</b><small>clean / block / ask x86</small><em>Arm cores</em></div>
+            </div></div>
+          <span class="farr">←</span>
+          <div class="grp x86"><div class="gh">Intel Xeon x86 <span>נשאר · Gaia</span></div>
+            <div class="stns"><div class="stn" data-i="5"><b>Policy · App · ThreatCloud</b><small>rule base · App-ID · URL · AI</small><em>CoreXL</em></div></div></div>
+          <span class="farr">←</span>
+          <div class="grp dpu"><div class="gh">DPU</div><div class="stns"><div class="stn" data-i="6"><b>Re-encrypt</b><small>TLS out</small><em>crypto</em></div></div></div>
+          <span class="farr">←</span>
+          <div class="grp io"><div class="stn" data-i="7"><b>OUT</b><small>100G</small></div></div>
+          <div class="pk" id="pk"></div>
+          <div class="fast" id="fast"><span>Fast path — <span class="en">flow</span> שכבר קיבל <span class="en">verdict</span>: <b>לא מגיע ל-x86 בכלל</b></span></div>
+        </div>
+        <div class="hows">
+          <div class="hw"><div class="v">0%</div><div class="l"><span class="en">TLS</span> על <span class="en">x86</span> — הצפנה ופענוח נשארים בכרטיס. מפתחות לא יוצאים (<span class="en">FIPS boundary</span>)</div></div>
+          <div class="hw"><div class="v">~85%</div><div class="l">מהחתימות מתקמפלות ל-<span class="en">RXP</span> (יעד). מה שלא — חוזר ל-<span class="en">x86</span> כ-<span class="en">hybrid</span></div></div>
+          <div class="hw"><div class="v">×4</div><div class="l">ה-<span class="en">x86</span> מקבל <span class="en">metadata + verdict</span>, לא <span class="en">bytes</span>. המגבלה החדשה: <span class="en">policy/App</span> — לכן ×4, לא ×10</div></div>
+        </div>
+        <div class="ch" style="margin-top:12px"><span class="dotc" style="background:var(--amber)"></span>אותה טבלה משקף 7 — מי מריץ כל שלב, לפני ואחרי</div>
+        <div class="lanes cmpl">
+          <div class="lh corner"></div>
+          <div class="lh">L3/4 · NAT · Session</div><div class="lh">App · URL · User</div><div class="lh">TLS Decrypt</div><div class="lh">IPS · AV · Anti-Bot</div><div class="lh">Re-encrypt</div>
+          <div class="ln cp"><b>9800 היום</b><small>x86 + FW ASIC</small></div>
+          <div class="c asic">FW ASIC</div><div class="c cpu">x86</div><div class="c cpu">x86<small>אין crypto engine</small></div><div class="c cpu">x86<small>regex בתוכנה</small></div><div class="c cpu">x86</div>
+          <div class="ln cp"><b>9800 + Boost</b><small>+ BlueField-3</small></div>
+          <div class="c asic">FW ASIC</div><div class="c cpu">x86<small>נשאר</small></div><div class="c acc">DPU<small>crypto engines</small></div><div class="c acc mix">DPU + x86<small>RXP; hybrid למה שלא מתקמפל</small></div><div class="c acc">DPU<small>crypto</small></div>
+        </div>
+        <div class="leg" style="margin-top:5px"><span><i style="background:var(--teal)"></i>ASIC קבוע</span><span><i style="background:var(--amber)"></i>מנוע האצה — עכשיו גם אצלנו</span><span><i style="background:var(--primary)"></i>CPU — תוכנה</span></div>
+      </div>
+      <div class="side">
+        <div class="card g"><div class="ch"><span class="dotc" style="background:var(--green)"></span>מה עובר לכרטיס</div><ul class="mv">
+          <li><b>TLS</b> — <span class="en">ECDHE/RSA handshake + AES-GCM bulk</span> → <span class="en">inline crypto</span></li>
+          <li><b>IPS / AV / Anti-Bot pattern matching</b> — <span class="en">IPS DB → RXP compile</span></li>
+          <li><b>Flow steering</b> — טבלאות חומרה מחליטות מה חוזר ל-<span class="en">x86</span></li>
+          <li><b>Phase 2</b> — <span class="en">Lakera inference</span> על <span class="en">16× Arm A78</span></li></ul></div>
+        <div class="card"><div class="ch"><span class="dotc"></span>מה נשאר על <span class="en">x86</span></div><ul class="mv stay">
+          <li><b>Policy · session state · CoreXL</b> — לא נוגעים</li>
+          <li><b>App Control · URL · Identity</b>, <span class="en">ThreatCloud AI</span>, <span class="en">TE dispatch</span>, ניהול</li></ul></div>
+        <div class="card a"><div class="ch"><span class="dotc" style="background:var(--amber)"></span>ה-<span class="en">offload boundary</span> — הקושי האמיתי</div>
+          <p class="bnd">ה-<span class="en">API</span> בין <span class="en">CoreXL instance</span> לכרטיס: מה מקבל בחזרה <span class="en">verdict</span>, מה מקבל <span class="en">plaintext</span>, ומה קורה כשחתימה לא מתקמפלת. זה הפרויקט — לא הכרטיס.</p></div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:8px">
+      <div class="k">2 → 1<small>שלבים לכרטיס</small></div><div class="sep"></div>
+      <div class="t">בשקף 7 ראינו שאצל <b>Fortinet</b> ו-<b>PA</b> השלבים הכבדים רצים על סיליקון ייעודי, ואצלנו על <b>x86</b>. זה בדיוק מה שהכרטיס משנה: <b>TLS</b> ו-<b>pattern matching</b> יוצאים מה-x86, בלי לשנות <b>Gaia</b> או <b>policy</b>.</div>
+      <div class="next">הבא: <b>Feasibility</b></div>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+<section class="slide" data-ch="5" id="s9">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>Feasibility: מה משתנה ומה נשאר</h2></div>
+    <div class="tags"><span class="tag teal">HW</span><span class="tag pink">SW</span><span class="tag purple">18 Months</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 5 · הפתרון</div>
+    <h1 class="title">פרויקט <span class="hl">תוכנה ואינטגרציה</span>, לא פרויקט סיליקון. כ-$7M ו-18 חודשים, עם שער go/no-go בחודש 6</h1>
+    <div class="feas">
+      <div class="card t"><div class="ch"><span class="dotc" style="background:var(--teal)"></span>השלכות חומרה</div><ul>
+        <li><b>Form factor</b> — <span class="en">FHHL PCIe Gen5 x16</span>, <span class="en">slot</span> אחד מתוך ה-<span class="en">expansion slots</span> ב-<span class="en">9700/9800</span> בלבד <span class="pill warn">לאמת mech</span></li>
+        <li><b>Power</b> — <span class="num">~75W</span> נוסף; לוודא <span class="en">PSU headroom</span> ו-<span class="en">airflow</span> ב-<span class="en">1RU</span> <span class="pill warn">thermal sim</span></li>
+        <li><b>Data path</b> — <span class="en">zero-copy DMA</span>; יעד <span class="en">latency</span> ללא הרעה מ-<span class="num">1.85μs</span> בנתיב <span class="en">FW</span></li>
+        <li><b>Maestro</b> — <span class="en">SGM</span> עם מודול נתמך; <span class="en">Boost</span> ל-<span class="en">scale-up</span>, <span class="en">Maestro</span> ל-<span class="en">scale-out</span> — משלימים</li>
+        <li><b>BOM</b> — <span class="num">~$2.5K</span> לכרטיס (הנחה); <span class="en">GM</span> ~65% ב-<span class="en">list $15K</span></li>
+      </ul></div>
+      <div class="card a"><div class="ch"><span class="dotc" style="background:var(--amber)"></span>השלכות תוכנה</div><ul>
+        <li><b>Gaia driver + DOCA SDK</b> — נקודת מוצא: ה-<span class="en">containerized gateway</span> של <span class="en">AIFF</span> שכבר רץ על <span class="en">BF-3</span></li>
+        <li><b>Offload boundary</b> — ה-<span class="en">API</span> בין <span class="en">CoreXL instance</span> לכרטיס: מה מקבל בחזרה <span class="en">verdict</span>, מה מקבל <span class="en">plaintext</span>. זה הקושי האמיתי</li>
+        <li><b>Signature compiler</b> — <span class="en">IPS DB → RXP</span>; מדד הצלחה: % חתימות שמתקמפלות</li>
+        <li><b>FIPS 140-3 / CC</b> — מודול קריפטו על <span class="en">DPU</span>; להתחיל ב-<span class="en">M3</span>, לא ב-<span class="en">GA</span></li>
+        <li><b>SmartConsole</b> — <span class="en">zero change</span> ללקוח; <span class="en">status</span> של המודול ב-<span class="en">Gaia</span></li>
+      </ul></div>
+    </div>
+    <div class="alt">
+      <div class="o"><h5>ASIC משלנו <span>$300M+ · 5 שנים</span></h5><p>15 שנה אחרי <span class="en">Fortinet</span>. <span class="en">Hardware = 25%</span> מההכנסות שלנו. לא ה-<span class="en">DNA</span>, ולא הזמן.</p></div>
+      <div class="o"><h5>FPGA acceleration <span>$30–50M · 3 שנים</span></h5><p>פשרה סבירה — אבל צוות <span class="en">HDL</span>, <span class="en">timing closure</span>, ועדיין פער מול <span class="en">ASIC</span>. יתרון: שליטה מלאה.</p></div>
+      <div class="o pick"><h5>DPU (BlueField) <span>~$7M · 18 חודשים</span></h5><p>תוכנה בלבד על סיליקון קיים. <span class="en">Nvidia</span> משקיעה ב-<span class="en">BF-4</span> — אנחנו רוכבים על ה-<span class="en">roadmap</span>. יחסים קיימים מ-<span class="en">AIFF</span>.</p></div>
+    </div>
+    <div class="tl">
+      <div class="ms"><div class="q">Q1'27</div><div class="w">Kickoff · צוות 12<br>DOCA bring-up על 9800</div></div>
+      <div class="ms"><div class="q">Q3'27</div><div class="w">PoC · TLS offload<br>מדידת TP+TLS — go/no-go</div></div>
+      <div class="ms"><div class="q">Q4'27</div><div class="w">RXP · signature compiler<br>FIPS submission</div></div>
+      <div class="ms"><div class="q">Q1'28</div><div class="w">Beta · 3 design partners<br>DC / HQ עם TLS mandate</div></div>
+      <div class="ms ga"><div class="q">Q3'28</div><div class="w"><b>GA</b> · 9700/9800<br>upgrade SKU + attach SKU</div></div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">M6<small>go / no-go</small></div><div class="sep"></div>
+      <div class="t">ההחלטה האמיתית מתקבלת ב-<b>Q3'27</b>: אם <b>TLS offload</b> לבד לא מחזיר את <b>9800</b> ל-<b>25G+ תחת TLS</b>, עוצרים. מה שנבנה עד אז משרת את <b>AIFF</b>. זה מה שמאפשר לבקש תקציב היום.</div>
+      <div class="next">הבא: <b>Business Case</b></div>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+<!-- ═══════════ 10 · BUSINESS CASE ═══════════ -->
+<section class="slide" data-ch="5" id="s10">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>Business Case: השקעה ותשואה</h2></div>
+    <div class="tags"><span class="tag pink">$7.2M</span><span class="tag purple">3-Year</span><span class="tag teal">Interactive</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 5 · הפתרון · <span class="pill warn">כל הנחה ניתנת לשינוי — גררו</span></div>
+    <h1 class="title"><span class="num">$7.2M</span> השקעה · <span class="hl" id="hl3y">~$66M</span> הכנסות מצטברות ב-3 שנים מ-<span class="en">GA</span> · <span class="en">break-even</span> <span class="hl" id="hlbe">חודש 15</span></h1>
+    <div class="biz">
+      <div class="card">
+        <div class="ch"><span class="dotc"></span>ההנחות — שנו וראו</div>
+        <div class="sliders">
+          <div class="sl"><div class="slh"><span>מחיר מודול (<span class="en">list</span>)</span><b id="pv">$15K</b></div><input type="range" id="price" min="8" max="25" step="1" value="15"></div>
+          <div class="sl"><div class="slh"><span><span class="en">Attach rate</span> על <span class="en">9700/9800</span> חדשים, שנה 1 (+10 נק'/שנה)</span><b id="av">30%</b></div><input type="range" id="attach" min="10" max="60" step="5" value="30"></div>
+          <div class="sl"><div class="slh"><span>שדרוגי בסיס מותקן, שנה 1 (דוהה 75%/שנה)</span><b id="uv">400</b></div><input type="range" id="upg" min="0" max="1200" step="50" value="400"></div>
+          <div class="sl"><div class="slh"><span>עסקאות <span class="en">DC/HQ</span> נוספות בשנה (<span class="en">win-rate</span>) × <span class="en">$350K</span></span><b id="wv">25</b></div><input type="range" id="wins" min="0" max="80" step="5" value="25"></div>
+        </div>
+        <table class="invtb" style="margin-top:12px">
+          <tr><td>R&amp;D — 12 מהנדסים × 18 חודשים (<span class="en">DOCA, offload, QA</span>)</td><td class="n">$4.5M</td></tr>
+          <tr><td>HW eng · thermal/mech · <span class="en">FIPS/CC/EMC</span></td><td class="n">$1.2M</td></tr>
+          <tr><td><span class="en">Dev kits · lab · Nvidia NRE</span></td><td class="n">$0.8M</td></tr>
+          <tr><td><span class="en">GTM</span> — <span class="en">launch, enablement, channel</span></td><td class="n">$0.7M</td></tr>
+          <tr class="tot"><td>סה"כ השקעה (<span class="en">FY27–28</span>)</td><td class="n">$7.2M</td></tr>
+        </table>
+        <div class="assume"><b>הנחות בסיס:</b> משלוחי <span class="en">9700/9800</span> ≈ 1,500/שנה; <span class="en">GM</span> מודול 65%; <span class="en">GM</span> עסקה נוספת 60% (<span class="en">HW+subs</span>); <span class="en">win-rate</span> +10 נק' בעסקאות שבהן <span class="en">TP+TLS</span> הוא קריטריון. לא כולל <span class="en">retention</span> — מוצג כמדד נפרד.</div>
+      </div>
+      <div class="card white">
+        <div class="ch"><span class="dotc"></span>הכנסות לפי שנה מ-<span class="en">GA</span> · <span class="en">$M</span></div>
+        <div class="rev" id="rev"></div>
+        <div class="legend2"><span><i style="background:var(--primary)"></i>מודולים — <span class="en">attach + upgrade</span></span><span><i style="background:var(--purple)"></i>עסקאות <span class="en">DC/HQ</span> שלא היינו מנצחים</span></div>
+        <div class="kpis" style="margin-top:10px">
+          <div class="kpi"><div class="v" id="kunits">—</div><div class="l">מודולים ב-3 שנים</div></div>
+          <div class="kpi"><div class="v purple" id="kasp">+$15K</div><div class="l"><span class="en">ASP uplift</span> ל-<span class="en">9700/9800</span> עם מודול (≈+35–40%)</div></div>
+          <div class="kpi"><div class="v green" id="kgm">—</div><div class="l">רווח גולמי מצטבר · 3 שנים</div></div>
+          <div class="kpi"><div class="v amber" id="kbe">—</div><div class="l"><span class="en">break-even</span> מ-<span class="en">GA</span> (חודשים) — מודולים בלבד, <span class="en">ramp</span> ליניארי בשנה 1</div></div>
+        </div>
+        <div class="solve" style="margin-top:10px">
+          <div class="row"><div class="ic" style="background:var(--green)">R</div><div><h4>Retention — המדד שלא בגרף</h4><p>ה-<span class="en">HQ renewal</span> הוא איפה ש-<span class="en">Fortinet</span> אוכל אותנו ("למה לא 57% פחות?"). <span class="en">upgrade SKU</span> נותן ל-<span class="en">AM</span> תשובה בלי לדבר על מחיר: <b>×4 TLS על הקופסה שכבר קניתם</b>. כל נקודת <span class="en">churn</span> על בסיס <span class="en">HQ</span> = <span class="num">~$10M</span> <span class="en">ARR</span> (הנחה).</p></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k" id="thk">$66M<small>3 שנים</small></div><div class="sep"></div>
+      <div class="t">ה-<b>ROI</b> לא תלוי בהנחה אחת: גם ב-<b>attach 15%</b> ובלי עסקאות חדשות, המודולים לבד מחזירים את ההשקעה בתוך שנתיים. ומה שלא בגרף, <b>retention</b> ב-<b>HQ</b>, הוא הסיבה שזה דחוף.</div>
+      <div class="next">הבא: <b>Risks</b></div>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+<!-- ═══════════ 11 · RISKS ═══════════ -->
+<section class="slide" data-ch="5" id="s11">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>סיכונים ואיך מנהלים אותם</h2></div>
+    <div class="tags"><span class="tag pink">Technical</span><span class="tag purple">Commercial</span><span class="tag amber">Mitigation</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 5 · הפתרון</div>
+    <h1 class="title">שישה סיכונים: שניים הנדסיים אמיתיים, <span class="hl">ולכולם יש שער יציאה בחודש 6</span></h1>
+    <div class="risks">
+      <div class="rk"><div class="rh"><h4>Offload boundary — TP לא עולה כמצופה</h4><div class="sev"><i class="on"></i><i class="on"></i><i class="on"></i></div></div><p>אם ה-<span class="en">round-trip</span> בין <span class="en">CoreXL</span> לכרטיס אוכל את הרווח, או ש-<span class="en">policy/App</span> על <span class="en">x86</span> הופך ל-<span class="en">bottleneck</span> הבא — נגיע ל-<span class="num">20G</span>, לא <span class="num">40G</span>.</p><div class="mit"><b>Mitigation:</b> <span class="en">PoC TLS-only</span> ב-<span class="en">Q3'27</span> עם יעד מדוד (<span class="num">25G+</span> תחת <span class="en">TLS</span>) כ-<span class="en">go/no-go</span>. הקוד משרת את <span class="en">AIFF</span> גם אם עוצרים.</div></div>
+      <div class="rk"><div class="rh"><h4>כיסוי חתימות ב-RXP</h4><div class="sev"><i class="on"></i><i class="on"></i><i></i></div></div><p>לא כל חתימת <span class="en">IPS</span> מתקמפלת ל-<span class="en">regex engine</span>; <span class="en">stateful / multi-packet</span> נשארות ב-<span class="en">x86</span>. אם רק 60% עוברות — הרווח ב-<span class="en">IPS</span> קטן.</p><div class="mit"><b>Mitigation:</b> <span class="en">hybrid by design</span> — ה-<span class="en">TLS</span> נותן את רוב הרווח לבד; <span class="en">RXP</span> הוא <span class="en">upside</span>. מדד <span class="en">M9</span>: % חתימות מקומפלות.</div></div>
+      <div class="rk"><div class="rh"><h4>Power / thermal ב-1RU</h4><div class="sev a"><i class="on"></i><i class="on"></i><i></i></div></div><p><span class="num">~75W</span> נוסף. אם אין <span class="en">PSU headroom</span> או <span class="en">airflow</span> — נדרש <span class="en">SKU</span> חדש של 9800 במקום שדרוג בשטח.</p><div class="mit"><b>Mitigation:</b> <span class="en">thermal sim</span> ב-<span class="en">M1</span>; <span class="en">fallback</span>: <span class="en">Boost</span> כ-<span class="en">factory option</span> ב-<span class="en">Quantum Force</span> הבא + <span class="en">upgrade</span> רק ל-9800.</div></div>
+      <div class="rk"><div class="rh"><h4>תלות ב-Nvidia</h4><div class="sev a"><i class="on"></i><i class="on"></i><i></i></div></div><p>מחיר, אספקה, <span class="en">roadmap BF-4</span>, ותנאי <span class="en">DOCA</span> — ספק יחיד בנתיב הנתונים שלנו.</p><div class="mit"><b>Mitigation:</b> הסכם רב-שנתי במסגרת <span class="en">AIFF</span> הקיים; <span class="en">abstraction layer</span> ב-<span class="en">Gaia</span> שמאפשר <span class="en">Intel IPU / AMD Pensando</span> כחלופה ב-<span class="en">gen 2</span>.</div></div>
+      <div class="rk"><div class="rh"><h4>FIPS / CC re-certification</h4><div class="sev g"><i class="on"></i><i></i><i></i></div></div><p>קריפטו על מודול חדש = <span class="en">FIPS 140-3</span> מחדש. עיכוב = מאבדים את ה-<span class="en">Regulated</span> ל-<span class="en">GA</span>.</p><div class="mit"><b>Mitigation:</b> <span class="en">submission</span> ב-<span class="en">Q4'27</span>, לא אחרי <span class="en">GA</span>; <span class="en">BF-3</span> כבר עם <span class="en">FIPS-validated crypto</span> <span class="pill warn">לאמת</span>.</div></div>
+      <div class="rk"><div class="rh"><h4>Roadmap bandwidth · Maestro cannibalization</h4><div class="sev g"><i class="on"></i><i></i><i></i></div></div><p>12 מהנדסים מול <span class="en">Quantum Force</span>; ו-<span class="en">Sales</span> ישאל אם <span class="en">Boost</span> מחליף <span class="en">Maestro</span>.</p><div class="mit"><b>Mitigation:</b> צוות ייעודי, חלקו מ-<span class="en">AIFF</span>. מיצוב: <span class="en">Boost</span> = <span class="en">scale-up</span> בקופסה; <span class="en">Maestro</span> = <span class="en">scale-out</span>. <span class="en">SGM</span> עם <span class="en">Boost</span> = <span class="en">Maestro</span> חזק יותר.</div></div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">2 / 6<small>הנדסיים</small></div><div class="sep"></div>
+      <div class="t">הסיכונים ההנדסיים, <b>offload boundary</b> ו-<b>כיסוי חתימות</b>, נמדדים עד <b>Q3'27</b> לפני 60% מההשקעה. השאר הם סיכוני ניהול, ולכולם יש בעלים בחדר הזה.</div>
+      <div class="next">הבא: <b>The Ask</b></div>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+<!-- ═══════════ 12 · ASK ═══════════ -->
+<section class="slide" data-ch="6" id="s12">
+  <div class="topbar"><div class="brand"><img src="checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>מה אנחנו מבקשים מהחדר הזה</h2></div>
+    <div class="tags"><span class="tag pink">Roadmap</span><span class="tag purple">Budget</span><span class="tag teal">Design Partners</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">פרק 6 · ההחלטה</div>
+    <h1 class="title">שלוש החלטות עד סוף הרביע — ו-<span class="hl">שער יציאה</span> אחד ב-<span class="en">Q3'27</span></h1>
+    <div class="ask">
+      <div class="ak"><div class="who">PRODUCT & R&amp;D</div><h3>אישור <span class="en">Roadmap</span></h3><p><span class="en">Quantum Boost</span> כ-<span class="en">priority item</span> ל-<span class="en">FY27</span>; צוות ייעודי של 12, חלקו מ-<span class="en">AIFF</span>. <span class="en">Kickoff Q1'27</span>.</p>
+        <div class="row"><div class="b"><div class="v">Q1'27</div><div class="l">Kickoff</div></div><div class="b"><div class="v">Q3'27</div><div class="l">PoC · go/no-go</div></div><div class="b"><div class="v">Q3'28</div><div class="l">GA</div></div></div></div>
+      <div class="ak p"><div class="who">FINANCE & LEADERSHIP</div><h3>תקציב <span class="num">$7.2M</span></h3><p>ב-<span class="en">FY27–28</span>, משוחרר בשני שלבים: <span class="num">$2.9M</span> עד <span class="en">PoC</span>; <span class="num">$4.3M</span> אחרי <span class="en">go</span>. אם <span class="en">no-go</span> — ההשקעה משרתת את <span class="en">AIFF</span>.</p>
+        <div class="row"><div class="b"><div class="v">$2.9M</div><div class="l">שלב 1 · עד M6</div></div><div class="b"><div class="v">$4.3M</div><div class="l">שלב 2 · אחרי go</div></div><div class="b"><div class="v">~16 חו'</div><div class="l">break-even מ-GA</div></div></div></div>
+      <div class="ak t"><div class="who">SALES & CUSTOMER SUCCESS</div><h3>3 <span class="en">Design Partners</span></h3><p>לקוחות <span class="en">9800</span> קיימים עם <span class="en">TLS mandate</span> ובעיית <span class="en">throughput</span> מתועדת: בנק (<span class="en">DC</span>), <span class="en">telco</span>, גוף ממשלתי. <span class="en">Beta Q1'28</span>, בתמורה ל-<span class="en">case study</span>.</p>
+        <div class="row"><div class="b"><div class="v">3</div><div class="l">design partners</div></div><div class="b"><div class="v">Q1'28</div><div class="l">beta</div></div><div class="b"><div class="v">+Nvidia</div><div class="l">הרחבת הסכם AIFF</div></div></div></div>
+    </div>
+    <div class="dm">
+      <div class="h">תרחיש</div><div class="h y">מאשרים היום</div><div class="h n">דוחים / מחכים</div>
+      <div class="k">Data Center · 20% מהשוק</div><div class="y">נכנסים לקריטריון של הסגמנט עם <span class="en">9800 + Boost</span> ב-<span class="en">Q3'28</span>, בזמן ה-<span class="en">refresh</span></div><div class="n">נשארים ב-5%; <span class="en">PA / Fortinet</span> מחלקות $4.2B ב-2030</div>
+      <div class="k">HQ renewals</div><div class="y"><span class="en">upgrade SKU</span> — תשובה ל-"למה לא <span class="en">Fortinet</span>" בלי להנחות</div><div class="n">השחיקה ממשיכה — 8.3% → 7% → 6.5%</div>
+      <div class="k">AI security (phase 2)</div><div class="y">כרטיס בשטח = <span class="en">Lakera inline</span> בלי מס <span class="en">throughput</span>; קטגוריה משלנו</div><div class="n"><span class="en">PA AI Access Security</span> על <span class="en">NGFW</span> — הם כבר שם, על ה-<span class="en">CPU</span></div>
+      <div class="k">סיכון להשקעה</div><div class="y"><span class="num">$2.9M</span> עד שער ה-<span class="en">go/no-go</span>; קוד משותף עם <span class="en">AIFF</span></div><div class="n">אפס סיכון — ואפס תשובה ל-<span class="en">TP+TLS</span> ב-<span class="en">refresh</span> הזה</div>
+    </div>
+    <div class="bigask">
+      <div class="v">$7.2M<small>ב-2 שלבים</small></div>
+      <div class="t">הבקשה: <b>roadmap + $2.9M שלב ראשון + 3 design partners</b> — עד סוף הרביע.<br>מספר אחד מפריד בין <b>9800</b> לסגמנט שגדל הכי מהר. אנחנו כבר יודעים להריץ על <b>BlueField</b>. השאלה היחידה היא אם עושים את זה לפני ה-<b>refresh</b> או אחריו.</div>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
+</section>
+
+</div>
+
+<div class="navwrap">
+  <div class="nav">
+    <button id="prev" aria-label="קודם">‹</button>
+    <span class="count" id="count">1 / 15</span>
+    <button id="next" aria-label="הבא">›</button>
+  </div>
+  <div class="dots" id="dots"></div>
+</div>
+</div><!-- /stage -->
+
+<script>
+/* ───────── fit 1280×720 stage to viewport ───────── */
+(function(){const st=document.getElementById('stage');function fit(){const s=Math.min(innerWidth/1280,innerHeight/720);st.style.transform=`translate(-50%,-50%) scale(${s})`;}addEventListener('resize',fit);fit();})();
+
+/* ───────── navigation + story rail ───────── */
+const CH=['פתיח','המוצר','השוק','הבעיה','הארכיטקטורה','הפתרון','ההחלטה'];
+const slides=[...document.querySelectorAll('.slide')], total=slides.length; let cur=0;
+const progress=document.getElementById('progress'), count=document.getElementById('count');
+const prevBtn=document.getElementById('prev'), nextBtn=document.getElementById('next'), dotsWrap=document.getElementById('dots');
+slides.forEach((s,i)=>{const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>go(i);dotsWrap.appendChild(d);
+  const rail=s.querySelector('.rail'); if(rail){const c=+s.dataset.ch; rail.innerHTML=CH.slice(1).map((n,j)=>`<div class="st ${j+1<c?'done':j+1===c?'now':''}"><i>${j+1}</i>${n}</div>`).join('');}});
+const dots=[...dotsWrap.children];
+function go(i){if(i<0||i>=total)return;slides[cur].classList.remove('active');dots[cur].classList.remove('active');cur=i;
+  slides[cur].classList.add('active');dots[cur].classList.add('active');count.textContent=(cur+1)+' / '+total;
+  progress.style.width=((cur+1)/total*100)+'%';prevBtn.disabled=cur===0;nextBtn.disabled=cur===total-1;}
+nextBtn.onclick=()=>go(cur+1); prevBtn.onclick=()=>go(cur-1);
+document.addEventListener('keydown',e=>{const t=e.target.tagName; if(t==='INPUT')return;
+  if(e.key==='ArrowLeft'||e.key===' '||e.key==='PageDown'){go(cur+1);e.preventDefault();}
+  else if(e.key==='ArrowRight'||e.key==='PageUp'){go(cur-1);e.preventDefault();}
+  else if(e.key==='Home')go(0); else if(e.key==='End')go(total-1);});
+go(0);
+
+/* ───────── donuts ───────── */
+(function(){const C={cp:'#e40c5b',ft:'#c25700',pa:'#741984',cs:'#5a8f9e',ot:'#d9d4da'},NS='http://www.w3.org/2000/svg',R=15.9155;
+document.querySelectorAll('[data-donut]').forEach(el=>{const data=JSON.parse(el.dataset.donut),sw=9;const svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 42 42');
+let off=0;data.forEach(([k,p])=>{const c=document.createElementNS(NS,'circle');c.setAttribute('cx',21);c.setAttribute('cy',21);c.setAttribute('r',R);c.setAttribute('fill','none');
+c.setAttribute('stroke',C[k]);c.setAttribute('stroke-width',sw);c.setAttribute('stroke-dasharray',p+' '+(100-p));c.setAttribute('stroke-dashoffset',-off);svg.appendChild(c);off+=p;});el.prepend(svg);});})();
+
+/* ───────── WHAT-IS: traffic scene ───────── */
+const THREATS=[
+ {ic:'🚪',t:'ניסיון פריצה מהאינטרנט',s:'נחסם ברמת IP ופורט',need:0,by:'Firewall'},
+ {ic:'🎣',t:'לינק פישינג במייל',s:'אתר מזויף נחסם לפי קטגוריית URL',need:1,by:'URL Filtering'},
+ {ic:'🕳️',t:'אפליקציה אסורה ברשת',s:'Tor, Torrent: זיהוי לפי התנהגות, לא לפי פורט',need:1,by:'App Control'},
+ {ic:'📎',t:'קובץ נגוע במייל',s:'נסרק בארגז חול לפני הגעה למשתמש',need:2,by:'AV · Emulation'},
+ {ic:'🧨',t:'ניצול חולשה ידועה בשרת',s:'הבקשה נראית תקינה; התוכן מסגיר CVE',need:2,by:'IPS'},
+ {ic:'🤖',t:'מחשב נגוע מתקשר עם תוקף',s:'נחסם ביציאה; מונע תקשורת C2',need:2,by:'Anti-Bot'},
+ {ic:'🔒',t:'נוזקה מוסתרת בתוך HTTPS',s:'ללא פתיחת ההצפנה, השכבות הקודמות עיוורות',need:3,by:'TLS + AV/IPS'},
+ {ic:'🧠',t:'העלאת קוד מקור ל-ChatGPT',s:'זיהוי קוד בהעלאה. Prompt inspection: roadmap',need:3,by:'TLS + DLP'}];
+const CFGK=['l4','l7','tp','tls'], TPG=[400,67.7,25,10], SHPOS={0:0,1:2,2:3,3:3}; /* shield position (right→left) that catches each level */
+let cfg=0, stB=0, stP=0;
+const thWrap=document.getElementById('threats');
+function renderThreats(){thWrap.innerHTML=THREATS.map(th=>{const ok=cfg>=th.need;return `<div class="th ${ok?'ok':'miss'}"><div class="ic">${th.ic}</div><div class="tx">${th.t}<small>${th.s}</small></div><div class="res">${ok?'✓ נעצר':'✗ חודר'}<small>${ok?'':'דורש '}${th.by}</small></div></div>`;}).join('');}
+function setCfg(c){cfg=c;document.querySelectorAll('#cfgseg button').forEach(b=>b.classList.toggle('on',+b.dataset.c===c));
+ document.querySelectorAll('#gw .sh').forEach(s=>{const on=CFGK.indexOf(s.dataset.k)<=c;s.classList.toggle('on',on);s.classList.toggle('off',!on);});
+ document.querySelectorAll('#layers .ly').forEach(s=>{const on=CFGK.indexOf(s.dataset.k)<=c;s.classList.toggle('on',on);s.classList.toggle('off',!on);});
+ document.getElementById('stTp').textContent=(c===3?'~':'')+Math.round(TPG[c]); document.getElementById('stTpb').style.width=(TPG[c]/TPG[0]*100)+'%';
+ document.getElementById('stTpLabel').textContent=['Firewall Throughput','NGFW Throughput','Threat Prevention','Threat Prevention with TLS Inspection'][c];
+ renderThreats(); stB=0;stP=0;document.getElementById('stBlock').textContent=0;document.getElementById('stPass').textContent=0;}
+document.querySelectorAll('#cfgseg button').forEach(b=>b.onclick=()=>setCfg(+b.dataset.c));
+setCfg(0);
+/* packet animation: right (internet) → left (org). RTL: wire's right edge = x=W */
+(function(){const wire=document.getElementById('wire'); let i=0;
+ function spawn(){ if(!document.getElementById('sWhat').classList.contains('active')) return;
+  const W=wire.clientWidth; const th=THREATS[i%THREATS.length]; const good=(i%3===1); i++;
+  const el=document.createElement('div'); el.className='pk '+(good?'good':'bad'); el.style.left=(W-14)+'px'; wire.appendChild(el);
+  const blocked=!good && cfg>=th.need;
+  const gwX=W/2, stopX=blocked? gwX+75-SHPOS[Math.min(th.need,3)]*50 : 0;
+  const dist=(W-14)-stopX; const dur=blocked? 1400*(dist/(W-14)) : 1400;
+  const a=el.animate([{transform:'translateX(0)'},{transform:`translateX(${-dist}px)`}],{duration:dur,easing:'linear',fill:'forwards'});
+  a.onfinish=()=>{ if(blocked){el.classList.add('pop'); stB++; document.getElementById('stBlock').textContent=stB; setTimeout(()=>el.remove(),450);}
+   else { if(!good && cfg<th.need){stP++; document.getElementById('stPass').textContent=stP; el.style.boxShadow='0 0 14px #ff5c8a';} setTimeout(()=>el.remove(),200);} };}
+ setInterval(spawn,700);})();
+
+/* ───────── LINEUP: stairs + org-size slider ───────── */
+const MODELS=[
+ {m:'9100',fit:'סניף גדול / ארגון בינוני',tp:6.5,tls:2.96,fw:80,cores:8,cpu:'Core i3-13100E',ram:16,rammax:64,nic:1,lo:0,hi:500,mpu:13},
+ {m:'9200',fit:'קמפוס · ארגון בינוני',tp:8,tls:3.6,fw:80,cores:8,cpu:'Core i3-13100E',ram:16,rammax:64,nic:2,lo:500,hi:1000,mpu:8},
+ {m:'9300',fit:'מטה בינוני',tp:10.5,tls:5.1,fw:200,cores:16,cpu:'Core i5-13400E',ram:16,rammax:64,nic:1,lo:1000,hi:2500,mpu:4.2},
+ {m:'9400',fit:'מטה גדול · HQ',tp:14,tls:5.5,fw:200,cores:20,cpu:'Core i5-13500E',ram:32,rammax:64,nic:1,lo:2500,hi:5000,mpu:2.8},
+ {m:'9700',fit:'מטה גדול · קצה Data Center',tp:20,tls:9.6,fw:400,cores:32,cpu:'Xeon Silver 4314',ram:32,rammax:128,nic:2,lo:5000,hi:10000,mpu:2},
+ {m:'9800',fit:'Data Center · ארגון גלובלי',tp:25,tls:10.1,fw:400,cores:40,cpu:'Xeon Silver 4316',ram:32,rammax:128,nic:2,lo:10000,hi:1e9,mpu:2}];
+const stairs=document.getElementById('stairs'), org=document.getElementById('org');
+function thrFmt(lo,hi){if(lo===0)return'עד '+hi.toLocaleString();if(hi>=1e8)return lo.toLocaleString()+'+';return lo.toLocaleString()+'–'+hi.toLocaleString();}
+stairs.innerHTML=MODELS.map((d,i)=>`<div class="mdl" data-i="${i}"><div class="cap"><div class="m">${d.m}</div><div class="fit">${d.fit}</div></div><div class="bd"><div class="tp">${d.tp}<small>Gbps Threat Prevention</small></div><div class="sp thr"><span>משתמשים</span><b>${thrFmt(d.lo,d.hi)}</b></div><div class="sp"><span>TP+TLS</span><b>~${Math.round(d.tls)}G</b></div><div class="sp cpu"><span>ליבות CPU</span><b>${d.cores}</b></div><div class="sp"><span>מעבד</span><b class="en">${d.cpu}</b></div><div class="sp"><span>RAM</span><b>${d.ram} GB</b></div><div class="sp nic"><span>NIC slots</span><b>${d.nic}</b></div></div></div>`).join('');
+function orgUsers(v){return Math.round(Math.pow(10,2+v/100*2.1)/10)*10;} /* 0→100 users, 100→~12,500 users (9800 stays within capacity) */
+function lineup(){const u=orgUsers(+org.value); document.getElementById('orgv').textContent=u.toLocaleString()+' משתמשים';
+ const rec=MODELS.findIndex(d=>u>=d.lo&&u<d.hi);
+ [...stairs.children].forEach((el,i)=>{el.classList.toggle('rec',i===rec);el.classList.toggle('dim',i!==rec);});
+ const d=MODELS[rec];
+ document.getElementById('mxm').textContent=d.m;
+ document.getElementById('mxfw').textContent=d.fw+' Gbps'; document.getElementById('mxtp').textContent=d.tp+' Gbps'; document.getElementById('mxtls').textContent='~'+Math.round(d.tls)+' Gbps';
+ document.getElementById('mxr').textContent=Math.round(d.tls/d.fw*100)+'%';
+ const tp_est=Math.round(u*d.mpu/1000*10)/10;
+ const pct=Math.round(tp_est/d.tp*100);
+ const overflow=pct>100;
+ const headroom=Math.round((d.tp-tp_est)*10)/10;
+ const isMaestro=d.hi>=1e8;
+ let col,statusNote,headroomVal,headroomLbl;
+ if(overflow && isMaestro){
+  col='#c25700';
+  statusNote='היקף DC — ראה פרק Data Center';
+  headroomVal='DC'; headroomLbl='סוג לקוח';
+ } else if(overflow){
+  col='#e40c5b';
+  statusNote='עולה על תקרת הדגם';
+  headroomVal=`−${Math.round((tp_est-d.tp)*10)/10}`; headroomLbl='כושר פנוי';
+ } else {
+  col=pct>85?'#c25700':'#0a8a4b';
+  statusNote=`${pct}% מהתקרה בשימוש${pct>85?' ⚠ קרוב לגבול':''}`;
+  headroomVal=headroom; headroomLbl='כושר פנוי';
+ }
+ const tip=document.getElementById('sizetip');
+ tip.classList.add('vis');
+ tip.innerHTML=`<div class="tip-cols">
+  <div class="tip-col"><div class="tip-lbl">ביקוש משוער</div><div class="tip-val" style="color:${col}">${tp_est} <small>Gbps TP</small></div><div class="tip-sub">${u.toLocaleString()} users × ${d.mpu} Mbps</div></div>
+  <div class="tip-div"></div>
+  <div class="tip-col"><div class="tip-lbl">${headroomLbl}</div><div class="tip-val" style="color:${col}">${headroomVal} <small>${headroomLbl==='פתרון'?'units':'Gbps'}</small></div><div class="tip-sub">${statusNote}</div></div>
+ </div>`;
+}
+org.oninput=lineup; lineup();
+[...stairs.children].forEach(el=>el.onclick=()=>{const d=MODELS[+el.dataset.i];const mid=d.hi>=1e8?10500:Math.min(d.lo+(d.hi-d.lo)/2,15000)||150; org.value=Math.max(0,Math.min(100,(Math.log10(Math.max(mid,100))-2)/2.1*100)); lineup();});
+
+/* ───────── S3 market year slider ───────── */
+const SEG=[{n:'HQ',s0:22,c:.05,g:0,col:'#741984',sh:.10},{n:'Regulated',s0:14,c:.09,g:0,col:'#e40c5b',sh:.18},{n:'OT',s0:6,c:.11,g:0,col:'#290e23',sh:.15},
+           {n:'Branch',s0:30,c:.12,g:1,col:'#c25700',sh:.03},{n:'DC',s0:20,c:.10,g:1,col:'#5a8f9e',sh:.05},{n:'Cloud',s0:8,c:.17,g:1,col:'#0f8b8d',sh:.03}];
+/* ───────── S6: SWOT — technical vs commercial, tagged by competitor ───────── */
+(function(){
+ const A=['ft','pa','cs'];
+ const Q=[
+  {k:'S',t:'Strengths',s:'למה HQ ו-Regulated נשארים',items:[
+   {d:'t',v:['ft','cs'],h:'Efficacy 99%+',x:'top tier עם PA; FTN ~96%, Cisco ~91% (CyberRatings). ThreatCloud AI 300+ מקורות'},
+   {d:'t',v:['ft','pa'],h:'Latency 1.85μs · 100GbE ב-1RU',x:'FTN 4.8μs / 3RU · PA ~5μs / 5U. latency מוכר רק ב-OT / HFT'},
+   {d:'t',v:['pa','cs'],h:'HA — Maestro',x:'scale-out N+1 עד 300G NGTP בלי שלדה. PA — זוגות HA; Cisco — עד 16'},
+   {d:'t',v:A,h:'ניהול ואוטומציה — SmartConsole',x:'policy אחד לכל הסביבות; API + Terraform. Panorama / FortiManager / FMC — נפרדים'},
+   {d:'c',v:['pa'],h:'TCO אמצע — $22K',x:'חצי מ-PA ($43K) באותה efficacy (3yr)'},
+   {d:'c',v:['ft','pa','cs'],h:'Compliance כמנוף מסחרי',x:'FIPS + EAL4+ על כל הקו — מקצר RFP ב-Gov/Bank; מתחרים — דגמים נבחרים'},
+   {d:'c',v:A,h:'100% channel + בסיס מותקן',x:'renewals ב-HQ/Regulated — מנוע הכנסות יציב'}]},
+  {k:'W',t:'Weaknesses',s:'למה מפסידים בנפח',items:[
+   {d:'t',v:['ft','pa'],hinge:1,h:'Throughput per RU — TP 25G · TP+TLS ~10G',x:'הכל אחרי L4 על x86. per RU: 25 מול ~33 (FTN) / ~38 (PA). הקריטריון של DC — ומה ש-HQ בודק ב-renewal'},
+   {d:'t',v:['ft','pa'],h:'אין האצה ל-TP',x:'ASIC רק ל-L3/4; אין crypto / regex בחומרה. SPU / DPC — יש'},
+   {d:'t',v:['ft','pa'],h:'Conn/sec 715K',x:'מול 3M (FTN) / 3.6M (PA)'},
+   {d:'t',v:['ft'],h:'SD-WAN לא native',x:'FortiGate = גם SD-WAN; אצלנו תוספת'},
+   {d:'c',v:['ft'],h:'מחיר ו-TCO מול Fortinet',x:'$22K מול $14K (+57%); FTN אגרסיבית ב-renewals ו-volume'},
+   {d:'c',v:['ft'],h:'מודל רישוי — blades',x:'bundle מסובך (NGTP / NGTX / Harmony); FortiGuard — פשוט'},
+   {d:'c',v:['cs','pa'],h:'Support לא אחיד',x:'PeerSpot: משתנה מחוץ ל-Americas/EU. Cisco TAC — הסטנדרט'}]},
+  {k:'O',t:'Opportunities',s:'איפה יש חלון',items:[
+   {d:'t',v:['ft'],h:'DPU — סיליקון של מישהו אחר',x:'BlueField-3: crypto 400G, RegEx, flow tables — בלי ASIC R&D. AIFF כבר רץ עליו. PQC 2027+ → crypto offload הכרחי'},
+   {d:'t',v:['ft'],h:'Fortinet ASIC lock-in',x:'אצלם שדרוג TP = קופסה חדשה; אצלנו — כרטיס ל-slot קיים'},
+   {d:'t',v:['pa'],h:'AI על הקופסה בלי x86',x:'Lakera על Arm cores של DPU; Securing AI $21.9B. PA — AI DLP על ה-CPU'},
+   {d:'c',v:['ft','pa'],h:'Refresh wave 2025–27',x:'הבסיס מחליף עכשיו; שדרוג בשטח = בלי forklift, בלי מחיר קופסה'},
+   {d:'c',v:['ft'],h:'TCO לאורך מחזור',x:'x86 + כרטיס = אותה קופסה 5–7 שנים; ASIC = refresh לכל קפיצת TP'},
+   {d:'c',v:['pa'],h:'DC — $2.8B → $4.0B',x:'הקריטריון הנדסי, והמוצר (9700/9800) כבר שם'}]},
+  {k:'T',t:'Threats',s:'מה קורה אם לא נזוז',items:[
+   {d:'t',v:['ft','pa'],h:'המתחרים מעלים את הרף',x:'PA-7500 1.44T TP + AI Access Security; FTN SPU + AI סוגר פער efficacy'},
+   {d:'t',v:['pa','cs'],h:'"Perimeter is dead" — SASE',x:'Prisma Access, Umbrella לוקחים את קצה הקמפוס; hyperscalers ב-Cloud'},
+   {d:'t',v:A,h:'CVE-2026-50751',x:'auth bypass (06/2026) — פוגע בנרטיב efficacy'},
+   {d:'c',v:['ft'],h:'Mid-market erosion',x:'FTN לוקח renewals על מחיר + SD-WAN bundled'},
+   {d:'c',v:['ft','pa'],h:'כלכלת שותפים',x:'שותפים הולכים אחרי צמיחה: PA — deal size; FTN — volume / MSSP'},
+   {d:'c',v:['cs'],h:'Cisco + Splunk',x:'consolidation ב-Cisco shops; TAC ושירותים כמנוף'}]}]; const wrap=document.getElementById('swot2');
+ wrap.innerHTML=Q.map(q=>`<div class="q ${q.k}"><div class="qh"><b>${q.k}</b><div><h3>${q.t}</h3><small>${q.s}</small></div></div>
+   <div class="dims">${['t','c'].map(d=>`<div class="dim ${d}"><h5>${d==='t'?'🔧 טכני':'💼 מסחרי'}</h5>${q.items.filter(i=>i.d===d).map(i=>`<div class="it ${i.hinge?'hinge':''}" data-d="${i.d}" data-v="${i.v.join(' ')}"><span class="vs">${i.v.map(v=>`<i class="${v}"></i>`).join('')}</span><div><b>${i.h}</b><small>${i.x}</small></div></div>`).join('')}</div>`).join('')}</div></div>`).join('');
+ let dim='all', vs='all';
+ function apply(){wrap.querySelectorAll('.it').forEach(it=>{const ok=(dim==='all'||it.dataset.d===dim)&&(vs==='all'||it.dataset.v.split(' ').includes(vs)); it.classList.toggle('off',!ok);});
+  wrap.querySelectorAll('.dim').forEach(d=>d.classList.toggle('off',dim!=='all'&&!d.classList.contains(dim)));}
+ document.querySelectorAll('#swdim button').forEach(b=>b.onclick=()=>{dim=b.dataset.d;document.querySelectorAll('#swdim button').forEach(x=>x.classList.toggle('on',x===b));apply();});
+ document.querySelectorAll('#swvs button').forEach(b=>b.onclick=()=>{vs=b.dataset.v;document.querySelectorAll('#swvs button').forEach(x=>x.classList.toggle('on',x===b));apply();});
+ apply();})();
+
+/* ───────── S5: segment × criteria heatmap ───────── */
+(function(){
+ /* criteria: name, short header, CP status (ok / bad), evidence one-liner */
+ const CR=[
+  {k:'eff',n:'Efficacy',h:'זיהוי',st:'ok',ev:'99%+ (CyberRatings) — שווה ל-PA, מעל Fortinet ~96%'},
+  {k:'mgmt',n:'ניהול',h:'ניהול<small>SmartConsole</small>',st:'ok',ev:'policy אחד ל-on-prem, ענן ו-Maestro; multi-domain'},
+  {k:'comp',n:'Compliance',h:'Compliance<small>FIPS · EAL4+</small>',st:'ok',ev:'FIPS 140-2 + EAL4+ על כל הקו; מתחרים — דגמים נבחרים'},
+  {k:'lat',n:'Latency',h:'Latency<small>μs</small>',st:'ok',ev:'1.85μs מול 4.8 (Fortinet) / ~5 (PA) — רלוונטי רק ל-OT/HFT'},
+  {k:'tp',n:'Throughput תחת TP',h:'Throughput<small>תחת TP + TLS</small>',st:'bad',ev:'TP 25G מול 100G (FTN) / 189G (PA) per box · TP+TLS ~10G'},
+  {k:'tco',n:'מחיר · TCO',h:'מחיר<small>TCO 3yr</small>',st:'bad',ev:'$22K מול $14K Fortinet (10G tier) — +57%; SD-WAN לא bundled'},
+  {k:'sase',n:'SASE / Cloud',h:'SASE<small>cloud-native</small>',st:'bad',ev:'Harmony מול Prisma Access — פער בשלות; hyperscalers native'}];
+ /* weights 0–3 per segment, in CR order: eff, mgmt, comp, lat, tp, tco, sase */
+ const SG=[
+  {n:'Branch',d:'סניפים · SD-WAN',sz:'$4.1B → $6.5B · +12%/y',w:[1,2,0,0,1,3,3],win:['ft','Fortinet'],vd:'מכריעים <b>מחיר ו-SD-WAN</b> — ושניהם לא שלנו. קרב על מחיר מול ASIC זול — <b>לא זה שנרצה לנצח בו</b>.'},
+  {n:'DC',d:'Data Center · Hyperscale',sz:'$2.8B → $4.0B · +10%/y',star:1,w:[2,2,1,1,3,2,0],win:['mix','PA / Fortinet'],vd:'קריטריון מכריע <b>אחד</b> — והוא <b>הנדסי</b>. בכל השאר (זיהוי, ניהול) אנחנו טובים. <b>מספר אחד מפריד: 25G מול 100–189G.</b> ואותו מוצר — 9700/9800 — כבר עומד שם.'},
+  {n:'HQ',d:'מטה ארגוני · קמפוס',sz:'$3.0B → $3.7B · +5%/y',w:[3,3,1,0,2,2,1],win:['cp','Check Point'],vd:'מנצחים ב-<b>זיהוי וניהול</b> — שני המכריעים. הסיכון: ב-<b>renewal</b> בודקים גם TP+TLS, ושם המספר שלנו נמוך. הבסיס שלנו — והוא גדל הכי לאט.'},
+  {n:'Regulated',d:'בנקים · ממשלה · בריאות',sz:'$1.9B → $2.7B · +9%/y',w:[3,2,3,1,1,1,0],win:['cp','Check Point'],vd:'<b>Compliance</b> על כל הקו + זיהוי — שני המכריעים שלנו. הנתח הגבוה ביותר שלנו (~18%). לקוח שלא עובר ספק בקלות.'},
+  {n:'Cloud',d:'Firewall וירטואלי בענן',sz:'$1.1B → $2.1B · +17%/y',w:[1,2,1,0,1,2,3],win:['pa','Palo Alto'],vd:'מכריע <b>SASE / cloud-native</b>. זה <b>מוצר אחר</b> — CloudGuard ו-Harmony, לא ה-9000. לא הקרב של הקופסה הזו.'},
+  {n:'OT',d:'תעשייה · SCADA · תשתיות',sz:'$0.8B → $1.3B · +11%/y',w:[2,1,2,3,1,1,0],win:['cp','Check Point'],vd:'מכריע <b>Latency</b> — 1.85μs, ורק כאן זה מוכר. סגמנט קטן, ואנחנו חזקים בו (~15%).'}];
+ const hm=document.getElementById('hm'), det=document.getElementById('hmdet'); let sel=1;
+ hm.innerHTML=`<div></div>`+CR.map(c=>`<div class="ch1">${c.h}</div>`).join('')+SG.map((s,i)=>`<div class="rh ${s.star?'star':''}" data-i="${i}"><b>${s.n}</b><small>${s.d}</small></div>`+
+   CR.map((c,j)=>{const w=s.w[j];return `<div class="c w${w} ${w?c.st:''}" data-i="${i}" title="${c.n}">${w?(c.st==='ok'?'✓':'✗'):'–'}</div>`;}).join('')).join('');
+ function show(i){sel=i; const s=SG[i]; hm.classList.add('sel');
+  hm.querySelectorAll('.rh').forEach(r=>r.classList.toggle('on',+r.dataset.i===i)); hm.querySelectorAll('.c').forEach(c=>c.classList.toggle('rowon',+c.dataset.i===i));
+  const list=CR.map((c,j)=>({c,w:s.w[j]})).filter(x=>x.w>0).sort((a,b)=>b.w-a.w);
+  det.innerHTML=`<div class="hd"><h3>${s.n}${s.star?' <span style="color:var(--amber)">★</span>':''}<small>${s.d}</small></h3><span class="sz">${s.sz}</span></div>`+
+   list.map(x=>`<div class="dr w${x.w} ${x.c.st}"><div class="g">${x.c.st==='ok'?'✓':'✗'}</div><div class="n">${x.c.n}<small>${x.c.ev}</small></div><div class="wt">${[1,2,3].map(k=>`<i class="${k<=x.w?'f':''}"></i>`).join('')}</div></div>`).join('')+
+   `<div class="vd"><span class="wchip ${s.win[0]}">${s.win[1]}</span>${s.vd}</div>`;}
+ hm.addEventListener('click',e=>{const t=e.target.closest('[data-i]'); if(t) show(+t.dataset.i);}); show(sel);})();
+
+/* ───────── S6b: silicon types — ratings + attribute focus ───────── */
+(function(){
+ const ATTR=[
+  {n:'Throughput / RU',e:'<b>כמה Gbps של Threat Prevention יוצאים מ-1RU.</b> סיליקון ייעודי מעבד במקביל ובקצב הקו; CPU כללי עובר על כל בייט בתוכנה. זה הקריטריון של Data Center — וכאן אנחנו אחרונים.'},
+  {n:'גמישות',e:'<b>כמה מהר מוסיפים feature, engine או פרוטוקול חדש.</b> על x86 זה עדכון תוכנה; ב-ASIC הלוגיקה צרובה — feature חדש מחכה לדור חומרה הבא. DPU באמצע: ליבות Arm ניתנות לתכנות.'},
+  {n:'AI / ML',e:'<b>האם אפשר להריץ inference בנתיב הנתונים.</b> ThreatCloud AI ומודלי ML צריכים מעבד כללי או מאיצים — ASIC של 2005 מצוין ל-signatures, גרוע ל-inference. כאן ה-x86 שלנו הוא יתרון.'},
+  {n:'זמן ועלות פיתוח',e:'<b>מה עולה להגיע לשם.</b> x86 — קונים מ-Intel. ASIC — 3–5 שנים, $300M+, וצוות סיליקון שאין לנו. DPC — כרטיסים ייעודיים, דרך ביניים יקרה. DPU — קונים מ-Nvidia וכותבים תוכנה (DOCA) — כבר עשינו זאת ב-AIFF.'},
+  {n:'שדרוג אצל הלקוח',e:'<b>מה קורה כשהלקוח צריך יותר throughput.</b> x86 ו-ASIC — קופסה חדשה (forklift). DPC ו-DPU — מוסיפים כרטיס ל-slot קיים. זה מה שהופך את ה-9700/9800 המותקנים לנכס ולא לחוב.'}];
+ const R={cp:[2,5,4,5,2],ft:[5,2,1,1,1],pa:[4,3,3,2,4],dpu:[4,4,4,4,4]};
+ const grid=document.querySelector('#sSil .sil4');
+ grid.querySelectorAll('.sc').forEach(sc=>{const k=['cp','ft','pa','dpu'].find(c=>sc.classList.contains(c)); sc.querySelector('.rts').innerHTML=ATTR.map((a,i)=>{const v=R[k][i];return `<div class="rt" data-a="${i}"><span>${a.n}</span><div class="tr"><i class="${v<=2?'lo':v===3?'md':'hi'}" style="--w:${v*20}%"></i></div><b>${v}</b></div>`;}).join('');});
+ function focus(i){document.querySelectorAll('#attrs button').forEach(b=>b.classList.toggle('on',+b.dataset.a===i)); grid.classList.add('focus'); grid.querySelectorAll('.rt').forEach(r=>r.classList.toggle('on',+r.dataset.a===i)); document.getElementById('aexp').innerHTML=ATTR[i].e;}
+ document.querySelectorAll('#attrs button').forEach(b=>b.onclick=()=>focus(+b.dataset.a)); focus(0);})();
+
+/* ───────── BRIDGE: market by segment, 2026 vs 2030 (same SEG model as the next slide) ───────── */
+(function(){const s=document.getElementById('sBridge'), wrap=document.getElementById('segrows');
+ const DESC={HQ:'מטה ארגוני · קמפוס',Regulated:'בנקים · ממשלה · בריאות',OT:'תעשייה · SCADA · תשתיות',Branch:'סניפים · SD-WAN',DC:'Data Center · Hyperscale',Cloud:'Firewall וירטואלי בענן'};
+ const PROD={HQ:'<b>9300 · 9400</b>',Regulated:'<b>כל הקו</b><small>FIPS · EAL4+</small>',OT:'<b>9100–9400</b><small>latency 1.85μs</small>',Branch:'<b>9100 · 9200</b><small>+ Spark לקטנים</small>',DC:'<b>9700 · 9800</b><small>+ Maestro</small>',Cloud:'<b>CloudGuard</b><small>לא ה-9000</small>'};
+ const WIN={Branch:['ft','Fortinet'],DC:['mix','PA / Fortinet'],HQ:['cp','Check Point'],Regulated:['cp','Check Point'],Cloud:['pa','Palo Alto'],OT:['cp','Check Point']};
+ const AVG=7.7, MAX=22;
+ const rows=SEG.map(sg=>({n:sg.n,col:sg.col,c:sg.c,sh:sg.sh*100,v0:sg.s0/100*13.8,v1:sg.s0/100*13.8*Math.pow(1+sg.c,4)})).sort((a,b)=>b.v1-a.v1);
+ const max=rows[0].v1, t0=rows.reduce((a,r)=>a+r.v0,0), t1=rows.reduce((a,r)=>a+r.v1,0);
+ document.getElementById('mtot').innerHTML=`השוק: <b>$${t0.toFixed(1)}B</b> → <b>~$20B</b> <u>≈ +45%</u> עד 2030 · MarkWide 9.6% CAGR`;
+ wrap.insertAdjacentHTML('beforeend',rows.map((r,i)=>`<div class="sr ${r.n==='DC'?'star':''} ${r.sh<AVG?'weak':'strong'}"><div class="nm"><b>${r.n}</b><small>${DESC[r.n]}</small></div>
+   <div class="bars"><div class="b y0"><em>2026</em><i data-w="${r.v0/max*100}"></i><span>$${r.v0.toFixed(1)}B</span></div><div class="b y1"><em>2030</em><i data-w="${r.v1/max*100}" style="background:${r.col}"></i><span>$${r.v1.toFixed(1)}B <u>+${Math.round(r.c*100)}%</u></span></div></div>
+   <div class="shr ${i?'':'first'}" style="--w:${r.sh/MAX*100}%;--avg:${AVG/MAX*100}%"><div class="trk"><i data-w="${r.sh/MAX*100}"></i><em></em></div><b>${r.sh.toFixed(0)}%</b></div>
+   <div class="wn"><span class="wchip ${WIN[r.n][0]}">${WIN[r.n][1]}</span></div></div>`).join(''));
+ let shown=false; function run(){shown=true; wrap.querySelectorAll('i[data-w]').forEach((el,k)=>setTimeout(()=>el.style.width=el.dataset.w+'%',k*50));}
+ new MutationObserver(()=>{if(s.classList.contains('active')&&!shown)setTimeout(run,400);}).observe(s,{attributes:true});})();
+
+/* ───────── S6 simulator ───────── */
+const LV=['Firewall (lab)','NGFW Policy','Full Threat Prevention','Full TP + TLS Inspection'];
+const V={cp:[400,67.7,25,10],ft:[239,150,100,50],pa:[200,189,189,90]},RU={cp:1,ft:3,pa:5};
+let lv=0,ru=0;
+const tgs=[1,2,3].map(i=>document.getElementById('tg'+i));
+tgs.forEach((t,i)=>t.onclick=()=>{const l=i+1; lv = (lv>=l)? l-1 : l; sim();});
+document.querySelectorAll('#ruseg button').forEach(b=>b.onclick=()=>{ru=+b.dataset.ru;document.querySelectorAll('#ruseg button').forEach(x=>x.classList.toggle('on',x===b));sim();});
+function sim(){tgs.forEach((t,i)=>t.classList.toggle('on',lv>=i+1));
+ document.querySelectorAll('#lanes [data-lv]').forEach(s=>s.classList.toggle('off',lv<+s.dataset.lv));
+ document.getElementById('lvname').textContent=LV[lv];
+ const f=k=>V[k][lv]/(ru?RU[k]:1); const cp=f('cp'),ft=f('ft'),pa=f('pa'),mx=Math.max(cp,ft,pa,1);
+ const fmt=v=>(lv===3?'~':'')+(v<20?v.toFixed(v<10?1:0):Math.round(v));
+ document.getElementById('gcp').textContent=fmt(cp);document.getElementById('gft').textContent=fmt(ft);document.getElementById('gpa').textContent=fmt(pa);
+ document.getElementById('bcp').style.width=cp/mx*100+'%';document.getElementById('bft').style.width=ft/mx*100+'%';document.getElementById('bpa').style.width=pa/mx*100+'%';
+ document.getElementById('r1').textContent='×'+(ft/cp).toFixed(1);document.getElementById('r2').textContent='×'+(pa/cp).toFixed(1);
+ document.getElementById('r3').textContent=lv?('−'+Math.round((1-V.cp[lv]/V.cp[0])*100)+'%'):'—';
+ document.getElementById('gcp').style.color= lv>=2? 'var(--primary)':'var(--text)';}
+sim();
+
+/* ───────── S7 rules demo ───────── */
+const rules=document.getElementById('rules');
+rules.oninput=()=>{const n=+rules.value;document.getElementById('rulesv').textContent=n.toLocaleString();document.getElementById('cmpx').textContent=Math.ceil(Math.log2(n));};
+rules.oninput();
+
+/* ───────── S8 feature toggle ───────── */
+const fb0=document.getElementById('fb0'),fb1=document.getElementById('fb1');
+function feat(on){fb0.classList.toggle('on',!on);fb1.classList.toggle('on',on);
+ document.querySelectorAll('#fchips .ch2[data-mv]').forEach(c=>{c.className='ch2 '+(on?'dpu move':'cpu');});
+ const x=document.getElementById('x86list'),d=document.getElementById('dpulist'),dl=document.getElementById('dpulane');
+ dl.style.opacity=on?1:.35; [...d.children].forEach(li=>li.style.opacity=on?1:.5);
+ x.children[0].style.textDecoration=on?'line-through':''; x.children[1].style.textDecoration=on?'line-through':'';
+ x.children[0].style.opacity=on?.45:1; x.children[1].style.opacity=on?.45:1;
+ document.getElementById('x86load').textContent=on?'policy · App · AI בלבד':'100% מעומס ה-TP';
+ document.getElementById('dpuload').textContent=on?'TLS + patterns · inline':'— לא מותקן';
+ document.getElementById('fg1').innerHTML=on?'~40 <small>Gbps · יעד</small>':'~10 <small>Gbps</small>';
+ document.getElementById('fg2').innerHTML=on?'~60 <small>Gbps · יעד</small>':'25 <small>Gbps</small>';
+ document.getElementById('fg3').innerHTML=on?'40 <small>vs FTN ~17 · PA ~18</small>':'10 <small>vs FTN ~17 · PA ~18</small>';
+ document.getElementById('fg4').textContent=on?'כרטיס · אותה קופסה':'קופסה חדשה';
+ ['fg1','fg2','fg3'].forEach(id=>document.getElementById(id).style.color=on?'#6fe3a1':'#fff');}
+/* competitor charts on the feature slide */
+let cmpRU=1, cmpOn=false;
+const CMP1={ru:[['cp0','9800 היום','1RU',10],['cpb','9800 + Boost','1RU · יעד',40],['ft','Fortinet 6500F','3RU · ~50G ÷ 3',17],['pa','Palo Alto PA-5450','5U · ~90G ÷ 5',18]],
+            box:[['cp0','9800 היום','1RU',10],['cpb','9800 + Boost','1RU · יעד',40],['ft','Fortinet 6500F','3RU',50],['pa','Palo Alto PA-5450','5U',90]]};
+const CMP2=[['cp0','9800 היום','$22K ÷ 1',22],['cpb','9800 + Boost','($22K + $15K) ÷ 4',9.3],['ft','Fortinet','10G tier',14],['pa','Palo Alto','10G tier',43]];
+function hbars(el,rows,unit){const mx=Math.max(...rows.map(r=>r[3]));
+ el.innerHTML=rows.map(r=>`<div class="hb ${r[0]}"><div class="n">${r[1]}<small>${r[2]}</small></div><div class="tr"><i data-w="${r[3]/mx*100}" style="width:0"></i></div><div class="v">${unit==='$'?'$':''}${r[3]%1?r[3].toFixed(1):r[3]}${unit==='$'?'K':''}${r[0]==='cpb'&&!cmpOn?'<small>יעד</small>':''}</div></div>`).join('');
+ requestAnimationFrame(()=>el.querySelectorAll('i[data-w]').forEach(i=>i.style.width=i.dataset.w+'%'));}
+function cmpDraw(){hbars(document.getElementById('hb1'),cmpRU?CMP1.ru:CMP1.box,'');hbars(document.getElementById('hb2'),CMP2,'$');
+ document.getElementById('hb1').classList.toggle('on',cmpOn);document.getElementById('hb2').classList.toggle('on',cmpOn);}
+document.querySelectorAll('#cmpru button').forEach(b=>b.onclick=()=>{cmpRU=+b.dataset.ru;document.querySelectorAll('#cmpru button').forEach(x=>x.classList.toggle('on',x===b));cmpDraw();});
+const feat0=feat; feat=function(on){feat0(on);cmpOn=on;cmpDraw();};
+fb0.onclick=()=>feat(false); fb1.onclick=()=>feat(true); feat(false);
+/* ───────── sHow: packet animation along the DPU path ───────── */
+(function(){const s=document.getElementById('sHow'),flow=document.getElementById('flow'),pk=document.getElementById('pk'),st=document.getElementById('pkstate');
+ const stns=[...flow.querySelectorAll('.stn')].sort((a,b)=>+a.dataset.i-+b.dataset.i);
+ // two scripted passes: full path (new flow) then fast path (known flow skips x86)
+ const PASS=[{seq:[0,1,2,3,4,5,6,7],label:'▶ flow חדש — נתיב מלא'},{seq:[0,1,7],label:'▶ flow מוכר — fast path, בלי x86'}];
+ let timer=null,p=0,k=0;
+ function moveTo(i){const r=stns[i].getBoundingClientRect(),f=flow.getBoundingClientRect(),sc=r.width/stns[i].offsetWidth;
+  pk.style.left=((r.left-f.left)/sc+stns[i].offsetWidth/2-9)+'px'; pk.style.top=((r.top-f.top)/sc-10)+'px';
+  stns.forEach((e,j)=>e.classList.toggle('lit',j===i)); pk.className='pk'+(i>=2&&i<=4||i===6?' tls':i===5?' x':'');}
+ function step(){const seq=PASS[p].seq; st.textContent=PASS[p].label; moveTo(seq[k]); k++; if(k>=seq.length){k=0;p=(p+1)%PASS.length;timer=setTimeout(step,1400);} else timer=setTimeout(step,k===1?600:800);}
+ function start(){stop();p=0;k=0;step();} function stop(){clearTimeout(timer);timer=null;}
+ new MutationObserver(()=>{s.classList.contains('active')?setTimeout(start,300):stop();}).observe(s,{attributes:true});
+ flow.onclick=()=>{timer?stop():start();};})();
+
+/* auto-demo when slide 8 becomes active first time */
+let f8shown=false; const s8=document.getElementById('s8'); const obs=new MutationObserver(()=>{if(s8.classList.contains('active')&&!f8shown){f8shown=true;setTimeout(()=>feat(true),1400);}}); obs.observe(s8,{attributes:true});
+
+/* ───────── S10 business model ───────── */
+const P=document.getElementById('price'),A=document.getElementById('attach'),U=document.getElementById('upg'),W=document.getElementById('wins');
+function biz(){const price=+P.value,att=+A.value/100,upg=+U.value,wins=+W.value,SHIP=1500,DEAL=.35,INV=7.2;
+ document.getElementById('pv').textContent='$'+price+'K';document.getElementById('av').textContent=Math.round(att*100)+'%';document.getElementById('uv').textContent=upg;document.getElementById('wv').textContent=wins;
+ let units=0,hw=[],wn=[],tot=0,gm=0;
+ for(let y=0;y<3;y++){const u=SHIP*Math.min(att+.10*y,.9)+upg*Math.pow(.75,y);units+=u;const h=u*price/1000,w=wins*DEAL;hw.push(h);wn.push(w);tot+=h+w;gm+=h*.65+w*.60;}
+ const mx=Math.max(...hw.map((h,i)=>h+wn[i]),1);
+ document.getElementById('rev').innerHTML=hw.map((h,i)=>`<div class="yr"><div class="tv">$${(h+wn[i]).toFixed(1)}M</div><div class="col" style="height:${(h+wn[i])/mx*78}%"><i class="hw" style="height:${h/(h+wn[i])*100}%"></i><i class="win" style="height:${wn[i]/(h+wn[i])*100}%"></i></div><div class="yl">שנה ${i+1}</div></div>`).join('');
+ /* break-even: module GM only (conservative), linear ramp over first 12 months */
+ let cum=0,be=99; for(let m=1;m<=60;m++){const y=Math.min(Math.floor((m-1)/12),2); const rate=hw[y]*.65/12*(m<=12?m/12:1); cum+=rate; if(cum>=INV){be=m;break;}}
+ document.getElementById('kunits').textContent=Math.round(units).toLocaleString();document.getElementById('kasp').textContent='+$'+price+'K';
+ document.getElementById('kgm').textContent='$'+gm.toFixed(0)+'M';document.getElementById('kbe').textContent=be>60?'>60':be;
+ document.getElementById('hl3y').textContent='~$'+tot.toFixed(0)+'M';document.getElementById('hlbe').textContent=be>60?'>60 חודשים':'חודש '+be;
+ document.getElementById('thk').innerHTML='$'+tot.toFixed(0)+'M<small>3 שנים</small>';}
+[P,A,U,W].forEach(s=>s.oninput=biz); biz();
+</script>
+</body>
+</html>
