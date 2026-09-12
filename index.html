@@ -680,24 +680,43 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 /* ── 4a: vendor share momentum ── */
 .mktbar{display:inline-flex;align-items:center;gap:8px;background:var(--dark);color:#fff;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:600;margin-bottom:10px;align-self:flex-start;}
 .mktbar b{font-family:var(--font-num);direction:ltr;font-size:16px;font-weight:800;} .mktbar u{text-decoration:none;color:var(--pink-soft);font-family:var(--font-num);font-weight:800;font-size:16px;direction:ltr;}
-.racewrap{flex:1;display:grid;grid-template-columns:1fr 330px;gap:24px;min-height:0;align-items:stretch;}
-.race{display:flex;flex-direction:column;justify-content:center;gap:18px;padding-inline-end:6px;}
-.rr{display:grid;grid-template-columns:150px 1fr 60px 106px;align-items:center;gap:16px;}
-.rr .rn{font-size:16px;font-weight:800;display:flex;align-items:center;gap:9px;}
-.rr .rn i{width:13px;height:13px;border-radius:50%;flex-shrink:0;}
-.rr.pa .rn i{background:var(--pa);} .rr.ft .rn i{background:var(--ft);} .rr.cs .rn i{background:var(--cs);} .rr.cp .rn i{background:var(--cp);}
-.rr .trk{height:26px;background:var(--gray);border-radius:7px;overflow:hidden;position:relative;}
-.rr .trk b{position:absolute;inset-inline-end:0;top:0;height:100%;border-radius:7px;}
-.rr.pa .trk b{background:var(--pa);} .rr.ft .trk b{background:var(--ft);} .rr.cs .trk b{background:var(--cs);} .rr.cp .trk b{background:var(--cp);}
-.rr .pct{font-family:var(--font-num);font-size:24px;font-weight:800;direction:ltr;text-align:start;}
-.rr .mo{font-family:var(--font-num);font-weight:800;font-size:14px;direction:ltr;text-align:center;padding:4px 6px;border-radius:13px;white-space:nowrap;}
+.bubwrap{flex:1;display:grid;grid-template-columns:1fr 300px;gap:22px;min-height:0;align-items:stretch;}
+.bubplot{position:relative;background:linear-gradient(90deg,#fbe3ea 0%,#fbe3ea 22%,#f7f5f6 42%,#f7f5f6 58%,#e6f5ec 78%,#e6f5ec 100%);border:1px solid var(--border);border-radius:14px;overflow:hidden;direction:ltr;}
+.bubplot .axisline{position:absolute;left:5%;right:5%;top:53%;height:2px;background:repeating-linear-gradient(90deg,#cbbfc7 0 7px,transparent 7px 15px);}
+.bubplot .zone{position:absolute;top:12px;font-size:12.5px;font-weight:800;letter-spacing:.03em;}
+.bubplot .zone.lose{left:16px;color:var(--primary-dark);} .bubplot .zone.gain{right:16px;color:var(--green);}
+.bubplot .axtip{position:absolute;bottom:10px;font-size:10.5px;color:var(--light);font-weight:600;direction:ltr;}
+.bubplot .axtip.l{left:16px;} .bubplot .axtip.r{right:16px;}
+.bub{position:absolute;top:53%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:5px;width:150px;}
+.bub .nm{font-size:12.5px;font-weight:800;color:var(--text);white-space:nowrap;}
+.bub .c{width:var(--d);height:var(--d);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.18);}
+.bub.pa .c{background:var(--pa);} .bub.ft .c{background:var(--ft);} .bub.cs .c{background:var(--cs);}
+.bub.cp .c{background:var(--cp);box-shadow:0 0 0 4px #fff,0 0 0 7px var(--primary),0 8px 20px rgba(228,12,91,.35);}
+.bub .c .pc{font-family:var(--font-num);font-weight:800;line-height:1;direction:ltr;font-size:calc(var(--d) * .28);}
+.bub .c .rv{font-family:var(--font-num);font-weight:600;opacity:.9;direction:ltr;font-size:11px;margin-top:2px;}
+.bub .mo{font-family:var(--font-num);font-weight:800;font-size:13px;direction:ltr;padding:3px 9px;border-radius:12px;white-space:nowrap;}
 .mo.up{background:#e6f5ec;color:var(--green);} .mo.flat{background:#fff1e6;color:var(--amber);} .mo.down{background:#fde6ee;color:var(--primary-dark);}
-.rr.cp{background:#fff5f8;border:1.5px solid var(--primary);border-radius:10px;padding:7px 12px;margin:0 -12px;}
 .racecard{background:var(--dark);color:#fff;border-radius:14px;padding:22px 24px;display:flex;flex-direction:column;justify-content:center;gap:8px;}
 .racecard .big{font-family:var(--font-num);font-size:48px;font-weight:800;direction:ltr;line-height:1;color:#fff;}
 .racecard .big s{text-decoration:none;color:var(--pink-soft);margin:0 4px;}
 .racecard .dn{align-self:flex-start;background:rgba(228,12,91,.25);color:#ffb3cd;font-family:var(--font-num);font-weight:800;font-size:15px;padding:4px 12px;border-radius:13px;direction:ltr;margin:2px 0 4px;}
 .racecard .cap{font-size:13px;line-height:1.55;color:rgba(255,255,255,.82);} .racecard .cap b{color:#fff;}
+.racecard.trend{gap:11px;padding:18px 18px;justify-content:center;}
+.racecard .thd{font-size:14px;font-weight:800;color:#fff;letter-spacing:.02em;}
+.donuts{display:flex;justify-content:space-between;gap:8px;}
+.dn2{display:flex;flex-direction:column;align-items:center;gap:7px;flex:1;}
+.dn2 .ring{width:76px;height:76px;border-radius:50%;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.dn2 .ring::after{content:'';position:absolute;width:46px;height:46px;border-radius:50%;background:var(--dark);}
+.dn2 .ring em{position:relative;z-index:1;font-style:normal;font-size:8.5px;font-weight:800;color:var(--pink-soft);letter-spacing:.06em;line-height:1;}
+.dn2 .ring span{position:relative;z-index:1;font-family:var(--font-num);font-weight:800;font-size:15px;color:#fff;direction:ltr;line-height:1.1;}
+.dn2 .ring.y20{background:conic-gradient(var(--cp) 0 8.3%,var(--pa) 8.3% 22.8%,var(--ft) 22.8% 39.3%,var(--cs) 39.3% 52.8%,#6b5b66 52.8% 100%);}
+.dn2 .ring.y26{background:conic-gradient(var(--cp) 0 7.7%,var(--pa) 7.7% 27.2%,var(--ft) 27.2% 46.2%,var(--cs) 46.2% 59.2%,#6b5b66 59.2% 100%);}
+.dn2 .ring.y30{background:conic-gradient(var(--cp) 0 6.5%,var(--pa) 6.5% 30.5%,var(--ft) 30.5% 52.5%,var(--cs) 52.5% 64.5%,#6b5b66 64.5% 100%);}
+.dn2 .yl{font-size:12.5px;font-weight:800;color:#fff;text-align:center;line-height:1.15;} .dn2 .yl small{display:block;font-size:9.5px;font-weight:600;color:rgba(255,255,255,.6);}
+.dleg{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:10px;color:rgba(255,255,255,.8);font-weight:600;}
+.dleg span{display:inline-flex;align-items:center;gap:4px;} .dleg span::before{content:'';width:8px;height:8px;border-radius:50%;}
+.dleg .cp::before{background:var(--cp);} .dleg .pa::before{background:var(--pa);} .dleg .ft::before{background:var(--ft);} .dleg .cs::before{background:var(--cs);} .dleg .ot::before{background:#6b5b66;}
+.tcap{font-size:12.5px;line-height:1.55;color:rgba(255,255,255,.85);} .tcap b{color:#fff;}
 .bridge .tot{font-size:14px;color:var(--mid);font-weight:600;} .bridge .tot b{font-family:var(--font-num);color:var(--text);font-size:19px;direction:ltr;display:inline-block;} .bridge .tot em{font-style:normal;color:var(--primary);font-weight:800;font-family:var(--font-num);direction:ltr;display:inline-block;margin-inline-start:6px;}
 .bridge{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;}
 .bridge .two{display:flex;gap:40px;width:100%;max-width:1000px;}
@@ -885,29 +904,39 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
   <div class="rail"></div>
   <div class="body">
     <div class="eyebrow">פרק 2 · השוק</div>
-    <h1 class="title">אנחנו ה-<span class="en">vendor</span> היחיד שנתח השוק שלו <span class="hl">יורד</span> — בזמן ש-<span class="en">Palo Alto</span> ו-<span class="en">Fortinet</span> מזנקים</h1>
+    <h1 class="title"><span class="en">Check Point</span> היחיד ש<span class="hl">מאבד נתח שוק</span>, בזמן ש-<span class="en">Palo Alto</span> ו-<span class="en">Fortinet</span> מזנקים</h1>
     <div class="mktbar">השוק: <b>$13.8B</b> → <b>~$20B</b> <u>+45%</u> עד 2030</div>
-    <div class="racewrap">
-      <div class="race">
-        <div class="rr pa"><div class="rn"><i></i>Palo Alto</div><div class="trk"><b style="width:100%"></b></div><div class="pct">19.5%</div><div class="mo up">↑↑ +34%</div></div>
-        <div class="rr ft"><div class="rn"><i></i>Fortinet</div><div class="trk"><b style="width:97%"></b></div><div class="pct">19%</div><div class="mo up">↑ +16%</div></div>
-        <div class="rr cs"><div class="rn"><i></i>Cisco</div><div class="trk"><b style="width:67%"></b></div><div class="pct">13%</div><div class="mo flat">→ flat</div></div>
-        <div class="rr cp"><div class="rn"><i></i>Check Point</div><div class="trk"><b style="width:39%"></b></div><div class="pct">7.7%</div><div class="mo down">↓ −14%</div></div>
+    <div class="bubwrap">
+      <div class="bubplot">
+        <div class="zone lose">מאבד נתח שוק</div>
+        <div class="zone gain">מזנק</div>
+        <div class="axisline"></div>
+        <div class="axtip l">ציר: שינוי בנתח מאז 2020</div>
+        <div class="axtip r">גודל העיגול = נתח שוק</div>
+        <div class="bub cp" style="left:16%;--d:88px"><div class="nm">Check Point</div><div class="c"><span class="pc">7.7%</span><span class="rv">$1.1B</span></div><div class="mo down">↓ −7%</div></div>
+        <div class="bub cs" style="left:35%;--d:114px"><div class="nm">Cisco</div><div class="c"><span class="pc">13%</span><span class="rv">$1.8B</span></div><div class="mo flat">→ יציב</div></div>
+        <div class="bub ft" style="left:56%;--d:138px"><div class="nm">Fortinet</div><div class="c"><span class="pc">19%</span><span class="rv">$2.6B</span></div><div class="mo up">↑ +16%</div></div>
+        <div class="bub pa" style="left:80%;--d:140px"><div class="nm">Palo Alto</div><div class="c"><span class="pc">19.5%</span><span class="rv">$2.7B</span></div><div class="mo up">↑↑ +34%</div></div>
       </div>
-      <div class="racecard">
-        <div class="big">8.3% <s>→</s> 7.0%</div>
-        <div class="dn">−14% מאז 2020</div>
-        <div class="cap">ארבעת המובילים = <b>~59%</b> מהשוק; היתר מפוצל. אנחנו עדיין <b>מספר 4</b> — אבל שלושת המובילים מזנקים דווקא ב<b>סגמנטים שגדלים מהר</b>. זו לא בעיית מוצר בודדת אלא <b>שאלה של איפה משחקים</b>.</div>
+      <div class="racecard trend">
+        <div class="thd">חלוקת השוק לאורך זמן</div>
+        <div class="donuts">
+          <div class="dn2"><div class="ring y20"><em>CP</em><span>8.3%</span></div><div class="yl">2020<small>אז</small></div></div>
+          <div class="dn2"><div class="ring y26"><em>CP</em><span>7.7%</span></div><div class="yl">2026<small>היום</small></div></div>
+          <div class="dn2"><div class="ring y30"><em>CP</em><span>6.5%</span></div><div class="yl">2030<small>תחזית</small></div></div>
+        </div>
+        <div class="dleg"><span class="cp">Check Point</span><span class="pa">Palo Alto</span><span class="ft">Fortinet</span><span class="cs">Cisco</span><span class="ot">אחרים</span></div>
+        <div class="tcap">הפרוסה של <b>Check Point</b> מצטמצמת משנה לשנה, בעוד <b>Palo Alto</b> ו-<b>Fortinet</b> תופסים נתח גדל.</div>
       </div>
     </div>
     <div class="thread" style="margin-top:10px">
-      <div class="k">#4<small>ויורד</small></div><div class="sep"></div>
-      <div class="t">מי שמזנק — מזנק בדיוק בסגמנטים שגדלים מהר. השאלה הבאה: <b>איפה בדיוק הצמיחה, ואיפה אנחנו עומדים בכל סגמנט</b>.</div>
-      <div class="next">הבא: <b>איפה הצמיחה</b></div>
+      <div class="k">−22%<small>בתחזית עד 2030</small></div><div class="sep"></div>
+      <div class="t">המומנטום נגדנו, וללא שינוי הנתח ממשיך לרדת. כל הצמיחה מרוכזת בסגמנטים שבהם <b>Check Point</b> הכי חלש.</div>
     </div>
     <div class="src" style="margin-top:6px">
-      <span class="t">מקורות</span> IDC Security Appliance Tracker · Gartner 07/2026 · MarkWide CAGR 9.6% · נתח CP 8.3%→7.0% מאז 2020 — אומדן מכויל
+      <span class="t">מקורות</span> IDC Security Appliance Tracker (units, 2024) · Gartner 07/2026 · MarkWide CAGR 9.6%
     </div>
+    <div class="assume"><b>הנחות:</b> נתח 2026 לפי IDC/Gartner. נתחי 2020 ו-2030 הם אומדן ותחזית להמשך המגמה הנוכחית (2030 = תרחיש ללא שינוי אסטרטגי). מומנטום העיגולים = שינוי יחסי בנתח 2020→2026 (לא בהכנסות). ערכי ה-$ לכל vendor = נתח × גודל השוק ($13.8B), להמחשה.
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
   <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>

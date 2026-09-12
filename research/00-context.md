@@ -33,6 +33,8 @@ Check Point Software Technologies | Tel Aviv, Hybrid
 ### ה-Assignment (משימת בית)
 קובץ: `Senior_PM_Assignment_9000_Series.pdf`
 
+> **הקובץ הראשי של המצגת:** `index.html` (שורש הפרויקט) — Session 1, מחובר ל-Vercel. הקבצים הישנים מפנים אליו.
+
 | חלק | תוכן | קהל | שפה | זמן |
 |---|---|---|---|---|
 | 1. Market Overview | מצב השוק, דרישות קונה | — | — | — |

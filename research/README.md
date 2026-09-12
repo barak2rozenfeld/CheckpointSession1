@@ -1,6 +1,9 @@
 # Check Point Senior PM Assignment — Research Library
 > תיק מחקר לAssignment: Senior Product Manager – Hardware Platforms, Security Gateway Appliances
 
+> **הקובץ הראשי (deck):** `index.html` בשורש הפרויקט — Session 1. זהו הקובץ שמוגש ומתפרסם ב-Vercel.
+> קבצים ישנים (`session1.html`, `Session1-new.html`) מפנים אליו אוטומטית.
+
 ## מפת הקבצים
 
 | קובץ | נושא | סטטוס |
