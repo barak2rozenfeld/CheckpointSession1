@@ -10,7 +10,7 @@
 |---|---|---|
 | `01-market-overview.md` | מחקר שוק — גודל, מגמות, דרישות קונה | ✅ מוכן |
 | `02-competitive-analysis.md` | ניתוח מתחרים — Fortinet, Palo Alto, Cisco | ✅ מוכן |
-| `03-feature-proposal.md` | הצעת Feature + Business Case | 🔜 בתכנון |
+| `03-feature-proposal.md` | הצעת Feature — לפני/אחרי, חלופות שנשקלו, כלל מיצוב | ✅ מוכן |
 | `04-session1-hebrew.md` | Session 1 — Talking points עברית (exec) | 🔜 בתכנון |
 | `05-session2-english.md` | Session 2 — Talking points אנגלית (לקוח) | 🔜 בתכנון |
 
