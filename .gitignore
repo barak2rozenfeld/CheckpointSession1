@@ -7,3 +7,6 @@ Thumbs.db
 
 # local preview server
 .serve.js
+
+# temporary/debug working files (agent scratch: CDP scripts, screenshots, splices)
+/_*

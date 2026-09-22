@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum 9000 · Session 2 | Barak Rozenfeld</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&family=Barlow+Semi+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#e40c5b; --primary-dark:#b70d4e; --pink-soft:#ff7ba8;
+  --purple:#741984; --dark:#290e23; --dark-2:#1a0916;
+  --white:#fff; --off:#f7f5f6; --gray:#f0eef0; --border:#e4e4e4;
+  --text:#1a1a1a; --mid:#555; --light:#8a8a8a;
+  --green:#0a8a4b; --amber:#c25700; --steel:#5a8f9e; --teal:#0f8b8d;
+  --cp:#e40c5b; --ft:#c25700; --pa:#741984; --cs:#5a8f9e; --ot:#d9d4da;
+  --font:'Heebo','Segoe UI',Arial,sans-serif;
+  --font-num:'Barlow Semi Condensed','Heebo',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;background:#0d0510;font-family:var(--font);color:var(--text);}
+.num{font-family:var(--font-num);font-weight:700;}
+b{font-weight:700;}
+button{font-family:inherit;}
+
+/* ── stage: fixed 1280×720 design, scaled to fit any screen ── */
+.stage{position:fixed;left:50%;top:50%;width:1280px;height:720px;transform-origin:center;transform:translate(-50%,-50%);box-shadow:0 0 80px rgba(0,0,0,.6);}
+.deck{position:relative;width:1280px;height:720px;overflow:hidden;}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateX(-40px);
+  transition:opacity .45s ease,transform .45s ease,visibility .45s;background:var(--white);}
+.slide.active{opacity:1;visibility:visible;transform:translateX(0);z-index:2;}
+
+/* ── chrome ── */
+.topbar{background:var(--dark);padding:12px 56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.topbar .brand{display:flex;align-items:center;gap:16px;}
+.topbar .brand img{height:22px;}
+.topbar .brand .sep{width:1px;height:22px;background:rgba(255,255,255,.2);}
+.topbar .brand h2{color:#fff;font-size:16px;font-weight:700;}
+.tags{display:flex;gap:8px;}
+.tag{padding:3px 10px;border-radius:3px;font-size:10.5px;font-weight:700;letter-spacing:.04em;}
+.tag.pink{background:rgba(228,12,91,.18);color:var(--pink-soft);}
+.tag.purple{background:rgba(116,25,132,.3);color:#c98fd6;}
+.tag.amber{background:rgba(194,87,0,.22);color:#e08a3c;}
+.tag.teal{background:rgba(15,139,141,.25);color:#7fd6d8;}
+.tag.gray{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+
+.rail{background:var(--dark-2);padding:0 56px;display:flex;gap:0;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.06);}
+.rail .st{flex:1;padding:7px 0 6px;font-size:11px;color:rgba(255,255,255,.35);font-weight:600;display:flex;align-items:center;gap:8px;position:relative;}
+.rail .st i{display:inline-flex;width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.08);font-size:9.5px;font-style:normal;align-items:center;justify-content:center;font-family:var(--font-num);}
+.rail .st.done{color:rgba(255,255,255,.6);} .rail .st.done i{background:rgba(228,12,91,.35);}
+.rail .st.now{color:#fff;} .rail .st.now i{background:var(--primary);}
+.rail .st.now::after{content:'';position:absolute;bottom:-1px;left:0;width:calc(100% - 14px);height:2px;background:var(--primary);}
+.rail .st.ax{flex:0 0 auto;padding-left:18px;margin-left:auto;color:rgba(255,255,255,.3);} .rail .st.ax i{background:rgba(255,255,255,.05);} .rail .st.ax.now{color:#fff;} .rail .st.ax.now i{background:var(--purple);} .rail .st.ax.now::after{background:var(--purple);left:18px;}
+
+.tristripe{display:flex;flex-shrink:0;}
+.tristripe .a{flex:3;height:4px;background:var(--primary);}
+.tristripe .b{flex:1;height:4px;background:var(--purple);}
+.tristripe .c{flex:1;height:4px;background:var(--dark);}
+
+.body{flex:1;padding:16px 56px 10px;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
+.footer{flex-shrink:0;background:var(--off);padding:8px 56px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);}
+.footer .c{color:var(--light);font-size:10.5px;}
+.footer .n{color:var(--primary);font-size:10.5px;font-weight:700;}
+
+.eyebrow{color:var(--primary);font-size:11px;font-weight:800;letter-spacing:.12em;margin-bottom:4px;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+h1.title{font-size:24px;font-weight:800;color:var(--text);line-height:1.2;margin-bottom:10px;}
+h1.title .hl{color:var(--primary);}
+.pill{display:inline-block;padding:1px 8px;border-radius:10px;font-size:9.5px;font-weight:700;background:var(--gray);color:var(--mid);vertical-align:middle;letter-spacing:0;text-transform:none;}
+.pill.warn{background:#fff1e6;color:var(--amber);}
+.pill.ok{background:#e6f5ec;color:var(--green);}
+.pill.pink{background:#fde6ee;color:var(--primary-dark);}
+
+/* thread: punchline */
+.thread{margin-top:auto;display:flex;align-items:center;gap:12px;background:var(--dark);color:#fff;padding:9px 16px;border-radius:7px;flex-shrink:0;}
+.thread .k{font-family:var(--font-num);font-size:22px;font-weight:800;color:var(--pink-soft);line-height:1;white-space:nowrap;}
+.thread .k small{display:block;font-family:var(--font);font-size:9.5px;color:rgba(255,255,255,.5);font-weight:500;}
+.thread .sep{width:1px;height:28px;background:rgba(255,255,255,.18);}
+.thread .t{font-size:13px;line-height:1.4;}
+.thread .t b{color:var(--pink-soft);}
+
+/* sources & assumptions */
+.src{border-top:1px solid #e8e3e7;padding:4px 2px 0;font-size:10px;color:var(--light);line-height:1.5;margin-top:6px;}
+.src .t{display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:.12em;color:#fff;background:var(--primary-dark);border-radius:4px;padding:1px 6px;margin-right:6px;vertical-align:middle;text-transform:uppercase;}
+.src a{color:var(--primary-dark);text-decoration:underline dotted;font-weight:700;}
+.src a:hover{text-decoration:underline solid;}
+.src b{color:var(--mid);}
+.src.box{background:var(--off);border:1px solid var(--border);border-radius:8px;padding:8px 12px;}
+
+/* layout helpers */
+.card{background:var(--off);border:1px solid var(--border);border-radius:8px;padding:12px 14px;min-height:0;display:flex;flex-direction:column;}
+.card.white{background:#fff;}
+.card.dark{background:var(--dark);border-color:var(--dark);color:#fff;}
+.card .ch{font-size:11px;font-weight:800;color:var(--mid);letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:8px;text-transform:uppercase;}
+.card.dark .ch{color:rgba(255,255,255,.6);}
+.ch .dotc{width:8px;height:8px;border-radius:50%;background:var(--primary);}
+.kpis{display:flex;gap:10px;}
+.kpi{flex:1;background:#fff;border:1px solid var(--border);border-radius:7px;padding:9px 11px;}
+.kpi .v{font-family:var(--font-num);font-size:26px;font-weight:800;color:var(--primary);line-height:1;}
+.kpi .v.dark{color:var(--text);} .kpi .v.green{color:var(--green);} .kpi .v.amber{color:var(--amber);} .kpi .v.purple{color:var(--purple);}
+.kpi .l{font-size:10.5px;color:var(--mid);margin-top:4px;line-height:1.3;}
+.seg{display:inline-flex;border:1.5px solid var(--border);border-radius:20px;overflow:hidden;background:#fff;}
+.seg button{border:none;background:none;padding:6px 13px;font-size:12px;font-weight:700;color:var(--mid);cursor:pointer;transition:all .2s;}
+.seg button.on{background:var(--dark);color:#fff;}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:#e2dde0;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--primary);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);}
+.sl{display:flex;flex-direction:column;gap:3px;}
+.sl .slh{display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:var(--mid);}
+.sl .slh b{font-family:var(--font-num);color:var(--text);font-size:13px;}
+.bar{display:flex;align-items:center;gap:8px;margin:5px 0;}
+.bar .lb{font-size:11.5px;font-weight:600;color:var(--mid);min-width:120px;}
+.bar .trk{flex:1;height:14px;background:#e9e5e8;border-radius:4px;overflow:hidden;position:relative;}
+.bar .fil{height:100%;width:0;border-radius:4px;transition:width .9s cubic-bezier(.2,.8,.2,1);background:var(--primary);}
+.slide.active .bar .fil{width:var(--w);}
+.bar .v{font-family:var(--font-num);font-size:13.5px;font-weight:800;min-width:60px;text-align:left;}
+.bar.cp .fil{background:var(--cp);} .bar.ft .fil{background:var(--ft);} .bar.pa .fil{background:var(--pa);} .bar.cs .fil{background:var(--cs);}
+.solve{display:flex;flex-direction:column;gap:8px;}
+.solve .row{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--border);border-radius:7px;padding:9px 11px;}
+.solve .row .ic{width:34px;height:34px;border-radius:7px;background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-weight:800;font-size:13px;flex-shrink:0;}
+.solve .row .ic.g{background:var(--green);} .solve .row .ic.p{background:var(--purple);} .solve .row .ic.t{background:var(--teal);} .solve .row .ic.a{background:var(--amber);}
+.solve .row h4{font-size:13px;font-weight:800;margin-bottom:2px;}
+.solve .row p{font-size:11.5px;color:var(--mid);line-height:1.4;}
+.solve .row p b{color:var(--text);}
+.wchip{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10.5px;font-weight:800;color:#fff;}
+.wchip.cp{background:var(--cp);} .wchip.ft{background:var(--ft);} .wchip.pa{background:var(--pa);} .wchip.cs{background:var(--cs);}
+
+/* hero */
+.hero{background:radial-gradient(1200px 600px at 80% 20%,rgba(228,12,91,.35),transparent 60%),radial-gradient(900px 500px at 10% 90%,rgba(116,25,132,.45),transparent 60%),var(--dark-2);color:#fff;justify-content:center;padding:0 90px;}
+.hero .logo{height:40px;width:auto;align-self:flex-start;margin-bottom:28px;background:#fff;padding:7px 12px;border-radius:6px;}
+.hero .eyebrow{color:var(--pink-soft);}
+.hero h1{font-size:62px;font-weight:900;line-height:1.06;margin:6px 0 12px;}
+.hero h1 .hl{color:var(--pink-soft);}
+.hero .sub{font-size:22px;color:rgba(255,255,255,.75);font-weight:400;margin-bottom:38px;}
+.hero .sub b{color:#fff;font-weight:700;}
+.hero .meta{display:flex;gap:44px;}
+.hero .meta .lbl{font-size:10.5px;color:rgba(255,255,255,.45);letter-spacing:.1em;font-weight:700;text-transform:uppercase;}
+.hero .meta .val{font-size:15px;font-weight:600;margin-top:2px;}
+.hero .hint{position:absolute;bottom:26px;left:90px;font-size:11px;color:rgba(255,255,255,.4);}
+
+/* nav */
+.navwrap{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:18px;z-index:50;}
+.nav{display:flex;align-items:center;gap:10px;}
+.nav button{width:26px;height:26px;border-radius:50%;border:none;cursor:pointer;background:var(--primary);color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.nav button:hover{background:var(--primary-dark);} .nav button:disabled{background:#cfc7cc;cursor:default;}
+.nav .count{font-family:var(--font-num);font-size:12px;color:var(--mid);font-weight:600;min-width:40px;text-align:center;}
+.dots{display:flex;gap:6px;align-items:center;}
+.dots .dot{width:7px;height:7px;border-radius:50%;background:#cfc7cc;cursor:pointer;transition:all .2s;}
+.dots .dot.ax{width:5px;height:5px;background:#e0d6dd;}
+.dots .dot.active{background:var(--primary);width:20px;height:7px;border-radius:4px;}
+.dots .gap{width:1px;height:12px;background:#cfc7cc;margin:0 4px;}
+.progress{position:absolute;top:0;left:0;height:3px;background:var(--primary);z-index:60;transition:width .4s ease;}
+
+/* ═══ S2 · encrypted grid ═══ */
+.s2grid{display:grid;grid-template-columns:1fr 390px;gap:14px;flex:1;min-height:0;}
+.scene{background:var(--dark);border-radius:12px;padding:14px 18px;color:#fff;position:relative;display:flex;flex-direction:column;min-height:0;}
+.scene .shd{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
+.scene .shd .lbl{font-size:12px;font-weight:700;color:rgba(255,255,255,.7);}
+.scene .seg{border-color:rgba(255,255,255,.2);background:transparent;} .scene .seg button{color:rgba(255,255,255,.7);} .scene .seg button.on{background:var(--primary);color:#fff;}
+.scene .stat{margin-left:auto;font-size:12.5px;color:rgba(255,255,255,.7);} .scene .stat b{font-family:var(--font-num);color:#fff;font-size:20px;}
+.encgrid{display:grid;grid-template-columns:repeat(20,1fr);gap:5px;flex:1;min-height:0;align-content:center;}
+.encgrid .tl{aspect-ratio:1;border-radius:5px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .45s;position:relative;color:rgba(255,255,255,.35);}
+.encgrid .tl.enc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);}
+.encgrid .tl.enc::after{content:'🔒';font-size:11px;opacity:.55;}
+.encgrid .tl.thr.clear{background:var(--primary);color:#fff;box-shadow:0 0 10px rgba(228,12,91,.6);} .encgrid .tl.thr.clear::after{content:'⚠';font-size:12px;}
+.encgrid.on .tl.enc{background:rgba(111,227,161,.16);border-color:rgba(111,227,161,.35);} .encgrid.on .tl.enc::after{content:'';}
+.encgrid.on .tl.thr{background:var(--primary);border-color:var(--primary);box-shadow:0 0 10px rgba(228,12,91,.6);animation:popin .4s ease backwards;} .encgrid.on .tl.thr::after{content:'⚠';font-size:12px;color:#fff;opacity:1;}
+@keyframes popin{0%{transform:scale(.4)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+.scene .leg{display:flex;gap:16px;margin-top:10px;font-size:11px;color:rgba(255,255,255,.65);font-weight:600;flex-wrap:wrap;}
+.scene .leg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:5px;}
+.scene .note{margin-top:8px;font-size:12px;color:rgba(255,255,255,.75);line-height:1.45;background:rgba(255,255,255,.06);border-radius:7px;padding:8px 12px;} .scene .note b{color:#fff;}
+.why{display:flex;flex-direction:column;gap:8px;min-height:0;}
+.why .w{background:#fff;border:1px solid var(--border);border-radius:9px;padding:10px 13px;display:flex;gap:12px;align-items:flex-start;border-left:5px solid var(--primary);}
+.why .w.p{border-left-color:var(--purple);} .why .w.t{border-left-color:var(--teal);}
+.why .w .v{font-family:var(--font-num);font-size:34px;font-weight:800;line-height:1;color:var(--primary);min-width:74px;}
+.why .w.p .v{color:var(--purple);} .why .w.t .v{color:var(--teal);font-size:26px;}
+.why .w h4{font-size:13px;font-weight:800;line-height:1.25;} .why .w p{font-size:11.5px;color:var(--mid);line-height:1.42;margin-top:3px;} .why .w p b{color:var(--text);}
+
+/* ═══ S3 · dilemma scene ═══ */
+.s3grid{display:grid;grid-template-columns:1fr 380px;gap:14px;flex:1;min-height:0;}
+.lane3{display:grid;grid-template-columns:140px 1fr 140px;gap:0;align-items:center;flex:1;position:relative;}
+.scene .end{border-radius:10px;padding:10px 8px;text-align:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);}
+.scene .end h4{font-size:13px;font-weight:800;margin-bottom:4px;}
+.scene .end .ico{font-size:26px;line-height:1;margin-bottom:4px;}
+.scene .end p{font-size:10.5px;color:rgba(255,255,255,.65);line-height:1.4;}
+.scene .end.org{background:rgba(10,138,75,.18);border-color:rgba(10,138,75,.5);}
+.scene .end.net{background:rgba(228,12,91,.14);border-color:rgba(228,12,91,.45);}
+.scene .wire{position:relative;height:150px;margin:0 8px;}
+.scene .wire .line{position:absolute;top:50%;left:0;right:0;height:3px;background:rgba(255,255,255,.18);transform:translateY(-50%);}
+.scene .gw{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:220px;display:flex;gap:4px;padding:8px;border-radius:12px;background:#0d0510;border:2px solid var(--primary);box-shadow:0 0 30px rgba(228,12,91,.35);z-index:3;}
+.scene .gw .sh{flex:1;height:112px;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:9.5px;font-weight:800;text-align:center;line-height:1.15;transition:all .35s;color:#fff;padding:2px;}
+.scene .gw .sh small{font-size:8px;font-weight:600;opacity:.75;}
+.scene .gw .sh.tp{flex:1.45;} .scene .gw .sh.tp .lbl2{font-size:9px;}
+.scene .gw .sh.off{background:rgba(255,255,255,.06);color:rgba(255,255,255,.3);}
+.scene .gw .sh.l4.on{background:var(--teal);} .scene .gw .sh.l7.on{background:#8a5a9a;} .scene .gw .sh.tp.on{background:var(--primary);} .scene .gw .sh.tls.on{background:var(--amber);}
+.scene .gwlbl{position:absolute;left:50%;top:calc(50% + 68px);transform:translateX(-50%);font-size:11px;font-weight:800;white-space:nowrap;color:var(--pink-soft);z-index:3;}
+.scene .pk{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;margin-top:-7px;z-index:4;}
+.scene .pk.good{background:#6fe3a1;box-shadow:0 0 8px #6fe3a1;} .scene .pk.bad{background:#ff5c8a;box-shadow:0 0 8px #ff5c8a;}
+.scene .pk.pop{animation:pop .45s forwards;} @keyframes pop{0%{transform:scale(1)}60%{transform:scale(1.9);opacity:.9}100%{transform:scale(0);opacity:0}}
+.scene .cfgbar{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap;}
+.scene .cfgbar .lbl{font-size:11px;color:rgba(255,255,255,.55);font-weight:700;}
+.scene .cfgbar .seg button small{display:block;font-size:8.5px;font-weight:400;opacity:.7;line-height:1.2;}
+.tpg{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:5px 10px;position:relative;min-width:230px;margin-left:auto;}
+.tpg .l{font-size:10.5px;color:rgba(255,255,255,.6);font-weight:700;} .tpg b{font-family:var(--font-num);font-size:22px;font-weight:800;color:var(--pink-soft);line-height:1;} .tpg .u{font-size:10px;color:rgba(255,255,255,.5);}
+.tpg .tr{position:absolute;left:8px;right:8px;bottom:2px;height:3px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden;} .tpg .tr i{display:block;height:100%;background:var(--pink-soft);transition:width .6s cubic-bezier(.2,.8,.2,1);}
+.layers{display:flex;gap:6px;margin-top:8px;}
+.layers .ly{flex:1;border-radius:8px;padding:7px 9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);transition:all .3s;}
+.layers .ly .n{font-family:var(--font-num);font-size:13px;font-weight:800;padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,.15);margin-bottom:3px;} .layers .ly .t{font-size:10.5px;font-weight:700;color:var(--pink-soft);} .layers .ly .d{font-size:9.5px;color:rgba(255,255,255,.55);line-height:1.4;margin-top:3px;}
+.layers .ly.on{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.35);} .layers .ly.off{opacity:.4;}
+.fork{display:flex;flex-direction:column;gap:8px;min-height:0;}
+.fk{background:#fff;border:1px solid var(--border);border-radius:9px;padding:10px 13px;border-left:5px solid var(--primary);flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;}
+.fk.b{border-left-color:var(--amber);} .fk.c{border-left-color:var(--light);background:var(--off);}
+.fk h4{font-size:13.5px;font-weight:800;display:flex;align-items:center;gap:8px;} .fk h4 .no{width:22px;height:22px;border-radius:6px;background:var(--primary);color:#fff;font-family:var(--font-num);font-size:12px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.fk.b h4 .no{background:var(--amber);} .fk.c h4 .no{background:var(--light);}
+.fk .chain{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px;font-size:11px;font-weight:700;color:var(--mid);}
+.fk .chain span{background:var(--gray);border-radius:5px;padding:3px 8px;} .fk .chain span.hot{background:#fde6ee;color:var(--primary-dark);} .fk .chain span.hot b{font-family:var(--font-num);font-size:13px;color:var(--primary);}
+.fk .chain em{font-style:normal;color:var(--light);}
+.fk p{font-size:11.5px;color:var(--mid);line-height:1.42;margin-top:5px;} .fk p b{color:var(--text);}
+
+/* ═══ S4 · platform ═══ */
+.s4grid{display:grid;grid-template-columns:1fr 360px;gap:14px;flex:1;min-height:0;}
+.stairs{display:flex;align-items:stretch;gap:8px;flex:1;padding:6px 2px 0;min-height:0;}
+.stairs .mdl{flex:1;display:flex;flex-direction:column;border-radius:9px;background:#fff;border:1.5px solid var(--border);transition:all .3s;cursor:pointer;overflow:hidden;}
+.stairs .mdl .cap{background:var(--dark);color:#fff;padding:8px 8px 6px;text-align:center;flex-shrink:0;}
+.stairs .mdl .cap .m{font-family:var(--font-num);font-size:22px;font-weight:800;line-height:1;}
+.stairs .mdl .cap .fit{font-size:9.5px;color:rgba(255,255,255,.65);margin-top:3px;line-height:1.25;min-height:24px;}
+.stairs .mdl .bd{padding:8px 8px 6px;display:flex;flex-direction:column;gap:5px;flex:1;}
+.stairs .mdl .tp{font-family:var(--font-num);font-size:26px;font-weight:800;color:var(--primary);text-align:center;line-height:1;} .stairs .mdl .tp small{display:block;font-family:var(--font);font-size:9px;color:var(--light);font-weight:600;margin-top:2px;}
+.stairs .mdl .sp{font-size:10.5px;color:var(--mid);display:flex;justify-content:space-between;border-top:1px dashed var(--border);padding-top:4px;} .stairs .mdl .sp b{font-family:var(--font-num);color:var(--text);}
+.stairs .mdl.on{border-color:var(--primary);box-shadow:0 8px 24px rgba(228,12,91,.22);transform:translateY(-4px);} .stairs .mdl.on .cap{background:var(--primary);}
+.stairs .mdl:hover{border-color:var(--pink-soft);}
+.mdet{background:var(--dark);color:#fff;border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:18px;margin-top:8px;font-size:11px;}
+.mdet .m{font-family:var(--font-num);font-size:20px;font-weight:800;color:var(--pink-soft);}
+.mdet .d{display:flex;flex-direction:column;} .mdet .d b{font-family:var(--font-num);font-size:15px;} .mdet .d small{font-size:9.5px;color:rgba(255,255,255,.55);font-weight:600;}
+.same-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.same-pills span{font-size:11px;font-weight:700;background:#fff;border:1px solid var(--border);border-radius:14px;padding:3px 10px;color:var(--mid);} .same-pills span b{color:var(--text);}
+
+/* ═══ S5 · prevention ═══ */
+.s5grid{display:grid;grid-template-columns:1fr 380px;gap:14px;flex:1;min-height:0;}
+.eff{display:flex;flex-direction:column;gap:14px;margin-top:6px;flex:1;justify-content:center;}
+.eff .er{display:grid;grid-template-columns:118px 1fr 74px 132px;align-items:center;gap:10px;}
+.eff .er .n{font-size:13px;font-weight:800;color:var(--mid);} .eff .er.cp .n{color:var(--primary-dark);}
+.eff .er .trk{height:28px;background:#ece8eb;border-radius:6px;overflow:hidden;position:relative;}
+.eff .er .trk i{position:absolute;left:0;top:0;height:100%;width:0;border-radius:5px;transition:width 1s cubic-bezier(.2,.8,.2,1);}
+.eff .er.cp .trk i{background:var(--cp);} .eff .er.pa .trk i{background:var(--pa);} .eff .er.ft .trk i{background:var(--ft);} .eff .er.cs .trk i{background:var(--cs);}
+.slide.active .eff .er .trk i{width:var(--w);}
+.eff .er .v{font-family:var(--font-num);font-size:19px;font-weight:800;}
+.eff .er .ms{font-size:10.5px;color:var(--mid);font-weight:600;line-height:1.2;text-align:right;} .eff .er .ms b{font-family:var(--font-num);font-size:19px;color:var(--text);display:block;}
+.eff .er.cp .ms b{color:var(--green);} .eff .er.cs .ms b,.eff .er.ft .ms b{color:var(--primary);}
+.effax{display:grid;grid-template-columns:118px 1fr 74px 132px;gap:10px;font-size:9.5px;color:var(--light);font-weight:700;margin-top:2px;} .effax span:nth-child(2){display:flex;justify-content:space-between;} .effax span:last-child{text-align:right;}
+.tcl{display:flex;flex-direction:column;gap:8px;min-height:0;}
+.tcl .card{flex:1;} .tcl .card h4{font-size:14px;font-weight:800;margin-bottom:4px;} .tcl .card p{font-size:11.5px;color:var(--mid);line-height:1.45;} .tcl .card p b{color:var(--text);}
+.tcl .loop{display:flex;align-items:center;gap:5px;margin-top:8px;font-size:10px;font-weight:700;color:var(--mid);flex-wrap:wrap;}
+.tcl .loop span{background:#fff;border:1px solid var(--border);border-radius:5px;padding:3px 6px;font-size:9.5px;} .tcl .loop span.me{background:var(--primary);color:#fff;border-color:var(--primary);}
+.tcl .loop em{font-style:normal;color:var(--light);}
+
+/* ═══ S6 · consolidation ═══ */
+.s6grid{display:grid;grid-template-columns:1fr 340px;gap:14px;flex:1;min-height:0;}
+.cons{flex:1;position:relative;min-height:0;display:flex;align-items:center;justify-content:center;}
+.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;width:100%;transition:all .5s;}
+.tool{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:10px 10px;text-align:center;transition:all .5s;position:relative;}
+.tool .ic{font-size:22px;line-height:1;margin-bottom:4px;} .tool b{display:block;font-size:12px;} .tool small{display:block;font-size:9.5px;color:rgba(255,255,255,.55);margin-top:2px;line-height:1.3;}
+.tool .gapm{position:absolute;right:-13px;top:50%;transform:translateY(-50%);width:14px;height:14px;border-radius:50%;background:var(--primary);color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 0 8px rgba(228,12,91,.7);transition:opacity .4s;}
+.tool.glue{background:rgba(255,255,255,.08);border:1.5px dashed rgba(255,255,255,.3);} .tool.glue b{color:var(--pink-soft);}
+.uni{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;transform:scale(.92);transition:all .5s;pointer-events:none;}
+.uni .uhd{background:var(--primary);border-radius:10px 10px 0 0;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:800;} .uni .uhd small{font-weight:600;opacity:.85;font-size:10.5px;}
+.uni .ubd{flex:1;border:2px solid var(--primary);border-top:none;border-radius:0 0 10px 10px;padding:12px 14px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;align-content:center;background:rgba(228,12,91,.08);}
+.uni .ubd .blade{background:rgba(255,255,255,.1);border-radius:7px;padding:8px 8px;text-align:center;font-size:11px;font-weight:700;} .uni .ubd .blade small{display:block;font-size:9px;color:rgba(255,255,255,.55);font-weight:600;margin-top:1px;}
+.uni .ufo{margin-top:8px;display:flex;gap:8px;} .uni .ufo span{flex:1;background:rgba(255,255,255,.08);border-radius:7px;padding:6px 8px;font-size:10.5px;text-align:center;font-weight:700;color:#c8f0d6;}
+.cons.on .tools{opacity:0;transform:scale(.9);pointer-events:none;} .cons.on .uni{opacity:1;transform:scale(1);pointer-events:auto;}
+.cons .gaps{position:absolute;top:-2px;right:0;font-size:11px;font-weight:800;color:var(--pink-soft);transition:opacity .4s;} .cons.on .gaps{opacity:0;}
+.ben{display:flex;flex-direction:column;gap:8px;min-height:0;}
+.ben .card{flex:1;justify-content:center;} .ben .card h4{font-size:13.5px;font-weight:800;margin-bottom:3px;display:flex;align-items:center;gap:8px;} .ben .card p{font-size:11.5px;color:var(--mid);line-height:1.45;} .ben .card p b{color:var(--text);}
+.ben .card .big{font-family:var(--font-num);font-size:30px;font-weight:800;color:var(--primary);line-height:1;}
+
+/* ═══ S7 · chassis before / after ═══ */
+.feat{display:flex;flex-direction:column;flex:1;min-height:0;}
+.box9800{background:var(--dark);border-radius:10px;padding:12px 16px;color:#fff;position:relative;flex:1;display:flex;flex-direction:column;min-height:0;}
+.box9800 .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px;color:rgba(255,255,255,.6);font-weight:700;}
+.chass{display:flex;flex-direction:column;gap:6px;flex:1;min-height:0;}
+.crow{flex:1;display:flex;flex-direction:column;gap:6px;border-radius:9px;padding:7px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.13);min-height:0;}
+.crow.aft{background:rgba(10,138,75,.12);border-color:rgba(111,227,161,.45);}
+.crow .clbl{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:700;color:rgba(255,255,255,.65);}
+.crow .clbl em{font-style:normal;font-size:10px;font-weight:800;color:#fff;background:rgba(255,255,255,.18);border-radius:4px;padding:1px 7px;text-transform:uppercase;}
+.crow.aft .clbl em{background:var(--green);}
+.crow .clbl b{margin-left:auto;font-family:var(--font-num);font-size:16px;color:#fff;}
+.crow.aft .clbl b{color:#6fe3a1;}
+.crow .clbl b small{font-size:10px;font-weight:600;color:rgba(255,255,255,.5);}
+.cparts{display:flex;align-items:stretch;gap:6px;flex:1;}
+.cb{flex:1;display:flex;flex-direction:column;border-radius:8px;padding:6px 9px;background:rgba(255,255,255,.1);min-width:0;}
+.cb b{font-size:15px;font-weight:800;line-height:1.15;}
+.cb small{display:block;font-size:10.5px;font-weight:600;opacity:.75;margin:2px 0 4px;}
+.cb ul{list-style:none;margin-top:auto;}
+.cb li{font-size:11px;font-weight:700;line-height:1.26;padding-left:10px;position:relative;}
+.cb li::before{content:'';position:absolute;left:0;top:6px;width:5px;height:5px;border-radius:1px;background:currentColor;opacity:.7;}
+.cb.nic{background:rgba(255,255,255,.12);} .cb.sil{background:var(--teal);} .cb.cpu{background:var(--primary);} .cb.dpu{background:var(--green);}
+.cb.empty{background:transparent;border:1.5px dashed rgba(255,255,255,.3);color:rgba(255,255,255,.45);}
+.cb.same{opacity:.42;} .cb.nw{box-shadow:0 0 0 2px #6fe3a1;}
+.car{display:flex;align-items:center;color:rgba(255,255,255,.4);font-size:16px;flex-shrink:0;}
+.cmove{display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(111,227,161,.14);border:1px dashed rgba(111,227,161,.5);border-radius:7px;padding:5px 12px;font-size:12px;font-weight:700;color:#c8f0d6;}
+.cmove b{color:#6fe3a1;} .cmove .from{color:#ff9dbd;text-decoration:line-through;text-decoration-thickness:1.5px;} .cmove .ar{margin:0 10px;color:#6fe3a1;font-weight:800;}
+#s7.active .crow.aft .cb.nw{animation:landIn .7s ease .4s backwards;}
+/* S7 sizing: two chassis rows + the move strip + gauges must share ~300px */
+#s7 h1.title{margin-bottom:6px;} #s7 .box9800{padding:10px 16px;} #s7 .box9800 .hd{margin-bottom:6px;}
+#s7 .crow{padding:5px 12px;gap:4px;} #s7 .crow .clbl{font-size:11px;} #s7 .crow .clbl b{font-size:15px;}
+#s7 .cb{padding:5px 9px;} #s7 .cb b{font-size:14px;} #s7 .cb small{font-size:10px;margin:1px 0 3px;} #s7 .cb li{font-size:10.5px;line-height:1.22;}
+#s7 .cmove{padding:3px 12px;font-size:11.5px;}
+#s7 .gauges2{margin-top:7px;padding-top:7px;} #s7 .gauges2 .g{padding:5px 10px;} #s7 .gauges2 .g .v{font-size:22px;}
+#s7 .thread{margin-top:8px!important;}
+@keyframes landIn{0%{transform:translateY(-16px);opacity:0}60%{opacity:1}100%{transform:none;opacity:1}}
+.gauges2{display:flex;gap:9px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.14);flex:0 0 auto;}
+.gauges2 .g{flex:1;background:rgba(255,255,255,.06);border-radius:7px;padding:6px 10px;}
+.gauges2 .g .l{font-size:10px;color:rgba(255,255,255,.6);font-weight:700;}
+.gauges2 .g .v{font-family:var(--font-num);font-size:24px;font-weight:800;line-height:1.05;display:flex;align-items:baseline;gap:2px;}
+.gauges2 .g .v s{font-size:15px;font-weight:700;color:rgba(255,255,255,.42);}
+.gauges2 .g .v em{font-style:normal;font-size:14px;color:rgba(255,255,255,.45);margin:0 4px;}
+.gauges2 .g .v u{text-decoration:none;color:#6fe3a1;}
+.gauges2 .g .n{font-size:9.4px;font-weight:600;color:rgba(255,255,255,.5);margin-top:1px;}
+
+/* ═══ S8 · capacity on demand ═══ */
+.s8grid{display:grid;grid-template-columns:1.45fr 360px;gap:12px;flex:1;min-height:0;}
+.cod{background:var(--dark);border-radius:12px;padding:10px 14px 8px;color:#fff;display:flex;flex-direction:column;min-height:0;}
+.cod .dh{display:flex;align-items:center;gap:12px;font-size:12px;color:rgba(255,255,255,.7);font-weight:700;margin-bottom:4px;flex-wrap:wrap;}
+.cod .dh b{color:#fff;} .cod .dh .sl{flex:1;min-width:180px;max-width:280px;}
+.cod .dh .sl .slh{color:rgba(255,255,255,.55);} .cod .dh .sl .slh b{color:var(--pink-soft);font-size:16px;}
+.codchart{flex:1;min-height:0;} .codchart svg{display:block;width:100%;height:100%;overflow:visible;}
+.codchart .gl{stroke:rgba(255,255,255,.1);stroke-width:1;}
+.codchart .gt{font-family:var(--font-num);font-size:10px;fill:rgba(255,255,255,.4);font-weight:600;}
+.codchart .ax{font-size:10px;fill:rgba(255,255,255,.45);font-weight:700;}
+.codchart .ceil0{stroke:#cfc7cc;stroke-width:1.4;stroke-dasharray:4 3;opacity:.7;}
+.codchart .ceil1{stroke:#6fe3a1;stroke-width:1.6;stroke-dasharray:5 3;}
+.codchart .dem{fill:none;stroke:var(--pink-soft);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;}
+.codchart .step{fill:none;stroke:#6fe3a1;stroke-width:2.4;stroke-linejoin:round;}
+.codchart .dot{stroke:#fff;stroke-width:2;}
+.codchart .mark{fill:var(--pink-soft);font-family:var(--font-num);font-size:11px;font-weight:800;}
+.codleg{display:flex;gap:12px;flex-wrap:wrap;font-size:10px;color:rgba(255,255,255,.6);font-weight:600;margin-top:4px;}
+.codleg i{display:inline-block;width:16px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px;}
+.paths{display:flex;flex-direction:column;gap:7px;min-height:0;}
+.pathc{background:#fff;border:1px solid var(--border);border-radius:9px;padding:8px 12px;border-left:5px solid var(--light);display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;}
+.pathc.bad{border-left-color:var(--amber);} .pathc.worse{border-left-color:var(--primary);} .pathc.good{border-left-color:var(--green);background:#f4fbf7;border-color:rgba(10,138,75,.35);}
+.pathc .ph{display:flex;align-items:baseline;gap:8px;margin-bottom:2px;}
+.pathc .ph h4{font-size:13px;font-weight:800;} .pathc .ph .cash{margin-left:auto;font-family:var(--font-num);font-size:22px;font-weight:800;line-height:1;}
+.pathc.bad .ph .cash{color:var(--amber);} .pathc.worse .ph .cash{color:var(--primary);} .pathc.good .ph .cash{color:var(--green);}
+.pathc .ph .cash small{font-family:var(--font);font-size:9px;font-weight:700;color:var(--light);margin-left:3px;}
+.pathc p{font-size:11px;color:var(--mid);line-height:1.38;} .pathc p b{color:var(--text);}
+.pathc .when{font-size:10px;font-weight:700;color:var(--light);margin-top:3px;} .pathc.good .when{color:var(--green);}
+.s8more{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:11px;color:var(--mid);font-weight:600;}
+.s8more .lbl{font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--light);}
+.s8more span.p{background:#fff;border:1px solid var(--border);border-radius:12px;padding:3px 9px;font-weight:700;} .s8more span.p b{color:var(--text);}
+#s8 h1.title{margin-bottom:6px;} #s8 .thread{margin-top:6px!important;}
+.tl{display:flex;align-items:stretch;gap:0;position:relative;flex-shrink:0;}
+.tl .ms{flex:1;text-align:center;position:relative;padding-top:18px;cursor:pointer;}
+.tl .ms::before{content:'';position:absolute;top:7px;left:0;right:0;height:3px;background:#e2dde0;}
+.tl .ms:first-child::before{left:50%;} .tl .ms:last-child::before{right:50%;}
+.tl .ms::after{content:'';position:absolute;top:1px;left:50%;transform:translateX(-50%);width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid #cfc7cc;transition:all .3s;}
+.tl .ms.lit::after{background:var(--primary);border-color:var(--primary);} .tl .ms.lit::before{background:var(--primary);}
+.tl .ms .q{font-family:var(--font-num);font-size:14px;font-weight:800;color:var(--light);} .tl .ms.lit .q{color:var(--primary);}
+.tl .ms .w{font-size:11px;color:var(--mid);line-height:1.3;font-weight:600;}
+.vs2{display:grid;grid-template-rows:1fr 1fr;gap:8px;min-height:0;}
+.vs2 .card h4{font-size:13.5px;font-weight:800;margin-bottom:5px;display:flex;align-items:center;gap:8px;}
+.vs2 .card ul{list-style:none;display:flex;flex-direction:column;gap:4px;} .vs2 .card li{font-size:11.5px;color:var(--mid);line-height:1.4;padding-left:14px;position:relative;} .vs2 .card li b{color:var(--text);}
+.vs2 .card li::before{content:'';position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:2px;background:var(--light);}
+.vs2 .card.me{border:2px solid var(--primary);background:#fff8fa;} .vs2 .card.me li::before{background:var(--primary);}
+
+/* ═══ S9 · proof ═══ */
+.s9grid{display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:12px;flex:1;min-height:0;}
+.anc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;border-top:5px solid var(--primary);min-height:0;}
+.anc.g{border-top-color:var(--green);} .anc.t{border-top-color:var(--teal);}
+.anc .k{font-size:9.5px;letter-spacing:.12em;font-weight:800;color:var(--light);text-transform:uppercase;}
+.anc .big{font-family:var(--font-num);font-size:52px;font-weight:800;line-height:1;color:var(--primary);} .anc.g .big{color:var(--green);} .anc.t .big{color:var(--teal);font-size:36px;line-height:1.1;}
+.anc h3{font-size:15px;font-weight:800;line-height:1.2;} .anc p{font-size:11.5px;color:var(--mid);line-height:1.45;} .anc p b{color:var(--text);}
+.anc .mini{display:flex;flex-direction:column;gap:4px;margin-top:auto;}
+.anc .mini .mr{display:grid;grid-template-columns:70px 1fr 40px;align-items:center;gap:7px;font-size:10.5px;font-weight:700;color:var(--mid);}
+.anc .mini .mr .t{height:9px;background:#ece8eb;border-radius:5px;overflow:hidden;} .anc .mini .mr .t i{display:block;height:100%;width:0;transition:width 1s cubic-bezier(.2,.8,.2,1);}
+.slide.active .anc .mini .mr .t i{width:var(--w);}
+.anc .mini .mr.cp .t i{background:var(--cp);} .anc .mini .mr.pa .t i{background:var(--pa);} .anc .mini .mr.ft .t i{background:var(--ft);} .anc .mini .mr.cs .t i{background:var(--cs);}
+.anc .mini .mr b{font-family:var(--font-num);text-align:right;color:var(--text);}
+.anc .chk{display:flex;flex-direction:column;gap:5px;margin-top:auto;} .anc .chk span{font-size:11px;font-weight:700;color:var(--mid);display:flex;gap:6px;align-items:flex-start;} .anc .chk span::before{content:'✓';color:var(--green);font-weight:900;}
+.anc .ch{display:flex;align-items:center;gap:8px;margin-bottom:4px;} .anc .ch .seg{margin-left:auto;} .anc .ch .seg button{font-size:10px;padding:3px 9px;}
+.hbars{display:flex;flex-direction:column;gap:14px;flex:1;justify-content:center;}
+.hbars .hb{display:grid;grid-template-columns:130px 1fr 66px;align-items:center;gap:8px;font-size:11.5px;}
+.hbars .hb .n{font-weight:800;color:var(--mid);line-height:1.15;} .hbars .hb .n small{display:block;font-size:9px;font-weight:600;color:var(--light);}
+.hbars .hb .tr{height:26px;background:#f0ecef;border-radius:5px;position:relative;}
+.hbars .hb .tr i{position:absolute;left:0;top:0;height:100%;border-radius:4px;transition:width .8s cubic-bezier(.2,.8,.2,1);}
+.hbars .hb .v{font-family:var(--font-num);font-weight:800;font-size:17px;text-align:right;display:flex;align-items:baseline;justify-content:flex-end;gap:3px;} .hbars .hb .v small{font-family:var(--font);font-size:8.5px;font-weight:700;color:var(--amber);}
+.hbars .hb.cp0 i{background:#c9bfc6;} .hbars .hb.ft i{background:var(--ft);} .hbars .hb.pa i{background:var(--pa);} .hbars .hb.cp i{background:var(--cp);}
+.hbars .hb.cpb i{background:repeating-linear-gradient(45deg,rgba(228,12,91,.9) 0 7px,rgba(228,12,91,.4) 7px 14px);}
+.hbars .hb.cpb .v,.hbars .hb.cp .v{color:var(--primary);} .hbars .hb.cpb .n,.hbars .hb.cp .n{color:var(--primary-dark);}
+.tconote{background:#fff7ea;border:1px solid #f1d9a8;border-radius:7px;padding:7px 10px;font-size:10.5px;line-height:1.4;color:var(--mid);margin-top:6px;} .tconote b{color:var(--text);}
+
+/* ═══ S10 · CTA ═══ */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.stp{background:#fff;border:1px solid var(--border);border-radius:9px;padding:12px 14px;border-top:5px solid var(--primary);}
+.stp.p{border-top-color:var(--purple);} .stp.t{border-top-color:var(--teal);}
+.stp .wk{font-size:10px;letter-spacing:.1em;color:var(--light);font-weight:800;text-transform:uppercase;}
+.stp h3{font-size:15px;font-weight:800;margin:3px 0 5px;}
+.stp p{font-size:11.5px;color:var(--mid);line-height:1.42;} .stp p b{color:var(--text);}
+.stp .row{display:flex;gap:6px;margin-top:8px;}
+.stp .row .b{flex:1;background:var(--off);border-radius:5px;padding:6px 7px;text-align:center;}
+.stp .row .b .v{font-family:var(--font-num);font-size:15px;font-weight:800;} .stp .row .b .l{font-size:9.5px;color:var(--light);}
+.dm{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;font-size:11.5px;}
+.dm div{padding:7px 12px;border-bottom:1px solid var(--border);line-height:1.4;}
+.dm .h{background:var(--dark);color:#fff;font-weight:800;} .dm .h.y{background:var(--green);} .dm .h.n{background:var(--purple);}
+.dm .y{background:#f0f9f4;} .dm .n{background:#f6eef8;}
+.dm div:nth-last-child(-n+2){border-bottom:none;}
+.bigask{display:flex;align-items:center;gap:18px;background:var(--dark);color:#fff;border-radius:10px;padding:12px 20px;margin-top:10px;}
+.bigask .v{font-family:var(--font-num);font-size:40px;font-weight:800;color:var(--pink-soft);line-height:1;} .bigask .v small{display:block;font-family:var(--font);font-size:10px;color:rgba(255,255,255,.5);font-weight:500;}
+.bigask .t{font-size:14px;line-height:1.45;} .bigask .t b{color:var(--pink-soft);}
+.apx{display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap;}
+.apx .lbl{font-size:10.5px;font-weight:800;color:var(--light);letter-spacing:.06em;text-transform:uppercase;margin-right:4px;}
+.apx button{border:1px solid var(--border);background:#fff;border-radius:14px;padding:4px 11px;font-size:11px;font-weight:700;color:var(--mid);cursor:pointer;transition:all .2s;}
+.apx button:hover{border-color:var(--purple);color:var(--purple);background:#f6eef8;}
+.apx button b{font-family:var(--font-num);color:var(--purple);margin-right:4px;}
+
+/* ═══ appendix ═══ */
+.back{margin-left:auto;font-size:10.5px;font-weight:700;color:rgba(255,255,255,.55);cursor:pointer;background:rgba(255,255,255,.08);border:none;border-radius:12px;padding:3px 10px;} .back:hover{color:#fff;background:rgba(255,255,255,.16);}
+table.tb{width:100%;border-collapse:collapse;font-size:12px;}
+table.tb th{font-size:10px;letter-spacing:.06em;color:var(--light);text-align:left;padding:6px 10px;border-bottom:2px solid var(--border);font-weight:800;text-transform:uppercase;}
+table.tb td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle;line-height:1.35;}
+table.tb td:first-child{font-weight:800;color:var(--mid);}
+#a1 table.tb td{padding:12px 10px;font-size:12.5px;} #a1 table.tb .n{font-size:14px;}
+table.tb .n{font-family:var(--font-num);font-weight:800;white-space:nowrap;font-size:13px;}
+table.tb td.win{background:#f0f9f4;} table.tb td.lose{background:#fff5f8;} table.tb td.tgt{background:#fff7ea;}
+table.tb small{display:block;font-size:9.5px;color:var(--light);font-weight:600;}
+.a2{display:grid;grid-template-columns:1fr 1fr 1fr 1.15fr;gap:10px;flex:1;min-height:0;}
+.lad{background:#fff;border:1px solid var(--border);border-radius:9px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;border-top:4px solid var(--steel);}
+.lad.b{border-top-color:#8a5a9a;} .lad.c{border-top-color:var(--primary);} .lad.d{border-top-color:var(--primary);background:#fff8fa;border:2px solid var(--primary);}
+.lad .k{font-size:9.5px;letter-spacing:.1em;font-weight:800;color:var(--light);text-transform:uppercase;}
+.lad h3{font-size:16px;font-weight:800;line-height:1.15;} .lad .big{font-family:var(--font-num);font-size:46px;font-weight:800;line-height:1;color:var(--text);margin:4px 0;} .lad.d .big{color:var(--primary);}
+.lad .big small{font-family:var(--font);font-size:11px;font-weight:700;color:var(--mid);margin-left:4px;}
+.lad p{font-size:12.5px;color:var(--mid);line-height:1.5;} .lad p b{color:var(--text);}
+.lad .q{margin-top:auto;background:var(--off);border:1px solid var(--border);border-radius:7px;padding:8px 10px;font-size:11.5px;line-height:1.45;color:var(--mid);} .lad .q b{color:var(--text);display:block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;} .lad.d .q{background:#fff;}
+.lad .tag2{margin-top:8px;font-size:10px;font-weight:800;padding:3px 8px;border-radius:5px;background:var(--gray);color:var(--mid);align-self:flex-start;} .lad.d .tag2{background:var(--primary);color:#fff;}
+.a3wrap{display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;}
+.a3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;flex:1;min-height:0;}
+.a3tl{margin-top:12px;margin-bottom:4px;} .a3tl .ms{cursor:default;} .a3tl .ms .w{font-size:11px;}
+.ph{background:#fff;border:1px solid var(--border);border-radius:9px;padding:12px 14px;position:relative;display:flex;flex-direction:column;justify-content:center;}
+.ph .no{width:28px;height:28px;border-radius:8px;background:var(--dark);color:#fff;font-family:var(--font-num);font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:6px;}
+.ph h3{font-size:15px;font-weight:800;margin-bottom:4px;} .ph p{font-size:12.5px;color:var(--mid);line-height:1.5;} .ph p b{color:var(--text);}
+.ph ul{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:4px;} .ph li{font-size:12px;color:var(--mid);padding-left:12px;position:relative;line-height:1.4;} .ph li::before{content:'';position:absolute;left:0;top:6px;width:5px;height:5px;border-radius:50%;background:var(--primary);}
+.stay{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.stay span{font-size:11.5px;font-weight:700;background:#fff;border:1px solid var(--border);border-radius:14px;padding:4px 11px;color:var(--mid);} .stay span b{color:var(--green);}
+.a4{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;flex:1;min-height:0;}
+.a4 .hbars .hb .tr{height:30px;} .a4 .hbars{gap:18px;} .a4 .solve .row .ic{width:42px;height:42px;font-size:14px;}
+.a4 .solve,.a5 .solve,.a6 .solve{min-height:0;} .a4 .solve .row,.a5 .solve .row,.a6 .solve .row{flex:1;align-items:center;} .a4 .solve .row p,.a5 .solve .row p,.a6 .solve .row p{font-size:12.5px;line-height:1.5;} .a4 .solve .row h4,.a5 .solve .row h4,.a6 .solve .row h4{font-size:14px;}
+.a5{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0;}
+.a5 .layer{flex:1;justify-content:center;gap:12px;} .a5 .layer .lr{padding:16px 16px;font-size:13.5px;} .a5 .layer .lr small{font-size:11.5px;line-height:1.4;}
+.a6 .tl{margin:auto 0;} .a6 .tl .ms .q{font-size:16px;} .a6 .tl .ms .w{font-size:12px;} .a6 .tl .ms{cursor:default;} .a6 .tconote{font-size:12px;}
+.layer{display:flex;flex-direction:column;gap:6px;}
+.layer .lr{border-radius:8px;padding:9px 12px;display:flex;align-items:center;gap:12px;font-size:12px;font-weight:700;}
+.layer .lr small{font-weight:600;opacity:.8;font-size:10.5px;display:block;margin-top:1px;}
+.layer .lr.sw{background:var(--primary);color:#fff;} .layer .lr.abs{background:var(--dark);color:#fff;border:2px dashed var(--pink-soft);} .layer .lr.hw{background:var(--gray);color:var(--text);}
+.layer .lr .tg3{display:flex;gap:6px;margin-left:auto;} .layer .lr .tg3 span{font-size:10px;font-weight:800;padding:3px 8px;border-radius:5px;background:#fff;border:1px solid var(--border);color:var(--mid);} .layer .lr .tg3 span.now{background:var(--teal);color:#fff;border-color:var(--teal);}
+.a6{display:grid;grid-template-columns:1fr 380px;gap:14px;flex:1;min-height:0;}
+.a7{display:grid;grid-template-columns:1.15fr 1fr;gap:14px;flex:1;min-height:0;}
+.a7 .col{display:flex;flex-direction:column;gap:10px;min-height:0;} .a7 .col > *{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;}
+.a7 .colh{flex:0 0 auto;font-size:10.5px;font-weight:800;letter-spacing:.08em;color:var(--light);text-transform:uppercase;display:block;}
+.cert{background:#fff;border:1px solid var(--border);border-radius:9px;padding:12px 16px;border-left:5px solid var(--teal);}
+.cert h3{font-size:12px;font-weight:800;color:var(--light);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;} .cert .big{font-family:var(--font-num);font-size:26px;font-weight:800;color:var(--teal);line-height:1.1;margin-bottom:4px;} .cert p{font-size:12.5px;color:var(--mid);line-height:1.5;} .cert p b{color:var(--text);}
+.vert .v{background:var(--off);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:12.5px;color:var(--mid);line-height:1.5;} .vert .v b{display:block;color:var(--text);font-size:14px;margin-bottom:3px;}
+
+@media print{
+  @page{size:1280px 720px;margin:0;}
+  html,body{overflow:visible;height:auto;} .deck{height:auto;} .stage{position:static;transform:none!important;box-shadow:none;}
+  .slide{position:relative;opacity:1!important;visibility:visible!important;transform:none!important;width:1280px;height:720px;page-break-after:always;}
+  .bar .fil{width:var(--w)!important;}
+  .nav,.dots,.progress,.hero .hint{display:none!important;}
+}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+<!-- ═══════════ 1 · HERO ═══════════ -->
+<section class="slide hero active" data-ch="0" id="s1">
+  <img src="../checkpoint-logo.PNG" alt="Check Point" class="logo">
+  <div class="eyebrow">Quantum 9000 for the Enterprise · September 2026</div>
+  <h1>See Everything.<br><span class="hl">Slow Nothing.</span></h1>
+  <div class="sub">Full threat prevention on <b>every</b> encrypted session, on a platform that <b>keeps growing</b> after you buy it.</div>
+  <div class="meta">
+    <div><div class="lbl">Presented by</div><div class="val">Barak Rozenfeld · Senior Product Manager</div></div>
+    <div><div class="lbl">For</div><div class="val">CISO and security leadership</div></div>
+    <div><div class="lbl">Duration</div><div class="val">15 minutes + Q&amp;A</div></div>
+  </div>
+  <div class="hint">← → to navigate · F11 for full screen · every slide is interactive, click the controls</div>
+</section>
+
+<!-- ═══════════ 2 · THE NEW THREAT REALITY ═══════════ -->
+<section class="slide" data-ch="1" id="s2">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>The new threat reality</h2></div>
+    <div class="tags"><span class="tag pink">Encrypted by default</span><span class="tag amber">AI-scale attacks</span><span class="tag purple">Interactive</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">Why now</div>
+    <h1 class="title">The threats you care about are hiding <span class="hl">where you can't look</span>.</h1>
+    <div class="s2grid">
+      <div class="scene">
+        <div class="shd">
+          <span class="lbl">100 sessions crossing your perimeter right now</span>
+          <div class="seg" id="encseg"><button class="on" data-c="0">TLS inspection off</button><button data-c="1">TLS inspection on</button></div>
+          <span class="stat">Threats you can see: <b id="encv">1</b> / 8</span>
+        </div>
+        <div class="encgrid" id="encgrid"></div>
+        <div class="leg"><span><i style="background:rgba(255,255,255,.14)"></i>Clear text (5)</span><span><i style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.3)"></i>Encrypted, opaque to the gateway (95)</span><span><i style="background:var(--primary)"></i>Threat</span></div>
+        <div class="note" id="encnote">Without TLS inspection, <b>7 of the 8 threats</b> in this traffic pass through as opaque encrypted sessions. Your IPS, antivirus and sandbox never see the payload.</div>
+      </div>
+      <div class="why">
+        <div class="w"><div class="v">95%</div><div><h4>Of web traffic is encrypted by default</h4><p>TLS is no longer a choice your users make. It is the default for <b>every SaaS app, every browser, every API</b>. The perimeter that inspects only clear text inspects almost nothing.</p></div></div>
+        <div class="w p"><div class="v">86%</div><div><h4>Of threats now arrive over encrypted channels</h4><p>Attackers moved with the traffic. Malware delivery, phishing kits and C2 callbacks ride inside TLS <b>because that is where the inspection gap is</b>.</p></div></div>
+        <div class="w t"><div class="v">AI</div><div><h4>Attacks are cheaper, faster, and wider</h4><p>Generative tooling lowered the cost of a convincing lure or a new variant to near zero, while hybrid work and SaaS <b>widened the surface</b> you have to defend.</p></div></div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">7 / 8<small>threats hidden</small></div><div class="sep"></div>
+      <div class="t">You can't protect what you can't see. <b>Visibility into encrypted traffic is the precondition for every other control you own.</b></div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> <a href="https://transparencyreport.google.com/https/overview" target="_blank">Google Transparency Report, HTTPS encryption on the web</a> · <a href="https://www.zscaler.com/blogs/security-research/2023-threatlabz-state-encrypted-attacks-report" target="_blank">Zscaler ThreatLabz, State of Encrypted Attacks</a> · <b>Assumptions:</b> 95% is Chrome page-load share measured by Google, used as a proxy for enterprise web traffic · 86% is the share of blocked threats delivered over TLS/SSL in the Zscaler cloud for the cited cycle · the 100-session grid is an illustration built from those two ratios, not a customer measurement · the AI trend is a qualitative statement from vendor threat reports, not a benchmarked number
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ 3 · THE CISO'S DILEMMA ═══════════ -->
+<section class="slide" data-ch="1" id="s3">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>The CISO's dilemma</h2></div>
+    <div class="tags"><span class="tag pink">Security vs speed</span><span class="tag teal">Live demo</span><span class="tag purple">Interactive</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">The trade-off you live with today</div>
+    <h1 class="title">Two bad choices. <span class="hl">Every day.</span></h1>
+    <div class="s3grid">
+      <div class="scene">
+        <div class="lane3">
+          <div class="end net"><div class="ico">🌐</div><h4>The internet</h4><p>Customers, partners, SaaS. And in between: phishing, malware, intruders</p></div>
+          <div class="wire" id="wire">
+            <div class="line"></div>
+            <div class="gw" id="gw">
+              <div class="sh l4 on" data-k="l4">L3/4<small>addresses, ports</small></div>
+              <div class="sh tls off" data-k="tls">TLS<small>decrypt</small></div>
+              <div class="sh l7 off" data-k="l7">L7<small>app, URL</small></div>
+              <div class="sh tp off" data-k="tp"><span class="lbl2">Threat<br>Prevention</span><small>IPS · AV · Anti-Bot</small></div>
+            </div>
+            <div class="gwlbl">A typical enterprise gateway</div>
+          </div>
+          <div class="end org"><div class="ico">🏢</div><h4>Your business</h4><p>Servers, data, users, revenue</p></div>
+        </div>
+        <div class="cfgbar">
+          <span class="lbl">Turn on inspection, step by step:</span>
+          <div class="seg" id="cfgseg"><button class="on" data-c="0">Firewall</button><button data-c="1">App Control<small>App + URL filtering</small></button><button data-c="2">Threat Prevention</button><button data-c="3">TLS Inspection</button></div>
+          <div class="tpg"><span class="l" id="stTpLabel">Firewall throughput</span><b id="stTp">400</b><span class="u">Gbps</span><div class="tr"><i id="stTpb" style="width:100%"></i></div></div>
+        </div>
+        <div class="layers" id="layers">
+          <div class="ly on"  data-k="l4"><div class="n">Firewall</div><div class="t">Who talks to whom</div><div class="d">Reads the envelope: IP and port. Never opens the letter.</div></div>
+          <div class="ly off" data-k="l7"><div class="n">App Control</div><div class="t">Which app, which user</div><div class="d">Identifies the application and the site, not just the port.</div></div>
+          <div class="ly off" data-k="tp"><div class="n">Threat Prevention</div><div class="t">What is inside</div><div class="d">Scans the content itself: exploits, infected files, bot callbacks.</div></div>
+          <div class="ly off" data-k="tls"><div class="n">TLS Inspection</div><div class="t">Opens the encryption</div><div class="d">Without it, the two previous layers are blind to 95% of traffic.</div></div>
+        </div>
+      </div>
+      <div class="fork">
+        <div class="fk"><h4><span class="no">A</span>Inspect everything</h4>
+          <div class="chain"><span>Turn TLS inspection on</span><em>→</em><span class="hot">Throughput <b>25 → ~10</b> Gbps</span><em>→</em><span>Users feel it</span><em>→</em><span>The business pushes back</span></div>
+          <p>A 9800-class box keeps <b>2.5% of its headline number</b> once every engine is on. Most teams quietly scope TLS inspection down to a subset of traffic.</p></div>
+        <div class="fk b"><h4><span class="no">B</span>Stay fast</h4>
+          <div class="chain"><span>Leave TLS inspection off</span><em>→</em><span class="hot">Blind to <b>95%</b> of sessions</span><em>→</em><span>Detect after the fact</span></div>
+          <p>Performance stays green on the dashboard. <b>7 of 8 threats</b> in the previous slide walk in as opaque sessions.</p></div>
+        <div class="fk c"><h4><span class="no">C</span>The hardware trap</h4>
+          <p>Size for full inspection and you <b>over-provision</b> CapEx you may never use. Size for today and the next requirement means a <b>forklift upgrade</b>: new box, new migration, new budget cycle. Neither is how capacity should work.</p></div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">2.5%<small>of the headline</small></div><div class="sep"></div>
+      <div class="t">Today, security is a tax on your business. <b>It should not be.</b></div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank">Check Point Appliance Comparison Chart 2026</a> · Google Transparency Report · <b>Assumptions:</b> the ladder uses the Quantum 9800 as the example: Firewall 400 Gbps is a lab figure (RFC 2544, 1518B packets), App Control 67.7 and Threat Prevention 25 Gbps are Enterprise Testing Conditions, TP + TLS ~10 Gbps is Check Point data and not an RFP number · the same shape applies to any x86-based gateway, only the absolute numbers change · "95% of sessions" reuses the encrypted-traffic proxy from the previous slide · packets are illustrative
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ 4 · MEET QUANTUM 9000 ═══════════ -->
+<section class="slide" data-ch="2" id="s4">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>Meet Quantum 9000</h2></div>
+    <div class="tags"><span class="tag pink">Quantum 9000</span><span class="tag purple">6 models</span><span class="tag teal">1RU</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">The platform</div>
+    <h1 class="title">One box. Prevention-first. <span class="hl">Fully managed.</span></h1>
+    <div class="s4grid">
+      <div class="card">
+        <div class="ch"><span class="dotc"></span>Six sizes, one software. Click a model</div>
+        <div class="stairs" id="stairs"></div>
+        <div class="mdet" id="mdet"></div>
+        <div class="same-pills"><span>Same <b>GAiA OS</b></span><span>Same <b>SmartConsole</b></span><span>Same <b>Software Blades</b></span><span><b>1RU</b> across the line</span><span><b>FIPS 140-2 · CC EAL4+</b></span><span>Maestro clustering to <b>300 Gbps</b></span></div>
+      </div>
+      <div class="solve">
+        <div class="row"><div class="ic">1RU</div><div><h4>Data-center performance in one rack unit</h4><p>Up to <b>25 Gbps of full Threat Prevention</b> and <b>1.85 μs latency</b> in a single 1RU. Competing boxes at this tier are 3RU to 5U.</p></div></div>
+        <div class="row"><div class="ic g">AI</div><div><h4>Prevention-first, powered by ThreatCloud AI</h4><p>Blocks in-line, rather than alerting after the fact. Every attack stopped anywhere in the install base becomes a protection for you within minutes.</p></div></div>
+        <div class="row"><div class="ic p">1</div><div><h4>One console for policy, logs and threat intel</h4><p><b>SmartConsole</b> manages this box, your branches, your cloud gateways and your Maestro cluster from the same rule base.</p></div></div>
+        <div class="row"><div class="ic t">↗</div><div><h4>Grows with you</h4><p>Six models share one software image. Scale out with <b>Maestro</b> to 300 Gbps, and, as the next slides show, scale up inside the box you already own.</p></div></div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">6<small>models</small></div><div class="sep"></div>
+      <div class="t">One platform, six sizes, one console. <b>From a large branch to the data-center edge, the same box with more compute.</b></div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank">Appliance Comparison Chart 2026</a> · <a href="https://www.checkpoint.com/quantum/quantum-9000-series/" target="_blank">Quantum 9000 Series page</a> · <a href="https://www.checkpoint.com/infinity/threatcloud-ai/" target="_blank">ThreatCloud AI</a> · <b>Assumptions:</b> Threat Prevention = Enterprise Testing Conditions, Firewall = lab · latency 1.85 μs is the datasheet figure for 9400/9700/9800 · "users" per model is a sizing estimate at ~1 to 2 Mbps per user and 70% load, not a Check Point figure · FIPS 140-2 and EAL4+ per current certifications, FIPS 140-3 status to be confirmed with the compliance team
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ 5 · D1 · PREVENTION ═══════════ -->
+<section class="slide" data-ch="3" id="s5">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>Differentiator 1 · Best-in-class prevention</h2></div>
+    <div class="tags"><span class="tag pink">99%+ block rate</span><span class="tag teal">Third-party tested</span><span class="tag purple">Interactive</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">Differentiator 1 / 3</div>
+    <h1 class="title">You catch <span class="hl">what others miss</span>.</h1>
+    <div class="s5grid">
+      <div class="card">
+        <div class="ch"><span class="dotc"></span>Independent block rate, and what the gap means on your perimeter</div>
+        <div class="sl"><div class="slh"><span>Attacks reaching your perimeter per day</span><b id="atkv">10,000</b></div><input type="range" id="atk" min="0" max="100" step="1" value="50"></div>
+        <div class="effax"><span></span><span><span>Block rate</span><span>100%</span></span><span></span><span>Missed per day</span></div>
+        <div class="eff" id="eff"></div>
+        <div class="tconote" style="margin-top:auto">A <b>3-point gap in block rate</b> reads like rounding. On a real perimeter it is <b>three to four times the number of attacks</b> that get through, every single day. Prevention efficacy is the one number that compounds.</div>
+      </div>
+      <div class="tcl">
+        <div class="card white"><h4>ThreatCloud AI: the whole install base defends you</h4><p>Telemetry from tens of thousands of gateways, 300+ intelligence feeds, and AI engines that turn an attack blocked in one place into a <b>protection pushed to every gateway</b>. You benefit from every customer who was attacked before you.</p>
+          <div class="loop"><span>Attack seen anywhere</span><em>→</em><span>AI verdict</span><em>→</em><span class="me">Protection on your 9000</span><em>→</em><span>Blocked in-line</span></div></div>
+        <div class="card white"><h4>Prevention-first, not detect-and-hope</h4><p>The default posture is <b>block</b>: exploits, infected files, C2 callbacks and zero-day files are stopped before they reach the user, not flagged for the SOC to chase. Fewer alerts, fewer incidents, fewer 2 a.m. calls.</p></div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">99%+<small>block rate</small></div><div class="sep"></div>
+      <div class="t">Measurable risk reduction, <b>validated by third parties</b>, not by our own marketing.</div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> <a href="https://cyberratings.org/research/" target="_blank">CyberRatings, Enterprise Firewall comparative test</a> · <a href="https://www.checkpoint.com/infinity/threatcloud-ai/" target="_blank">Check Point ThreatCloud AI</a> · <b>Assumptions:</b> block rates are rounded from the cited test cycle (Check Point and Palo Alto 99%+, Fortinet ~96%, Cisco ~91%), shown as 99 / 99 / 96 / 91 for the calculation · "attacks per day" is a slider for illustration, not a measurement of your environment · "prevention-first" is a posture claim, not a benchmarked number · 300+ feeds per the ThreatCloud AI page
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ 6 · D2 · UNIFIED PLATFORM ═══════════ -->
+<section class="slide" data-ch="3" id="s6">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>Differentiator 2 · One unified platform</h2></div>
+    <div class="tags"><span class="tag pink">SmartConsole</span><span class="tag teal">Consolidation</span><span class="tag purple">Interactive</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">Differentiator 2 / 3</div>
+    <h1 class="title">Fewer tools. <span class="hl">Fewer blind spots.</span></h1>
+    <div class="s6grid">
+      <div class="scene">
+        <div class="shd">
+          <span class="lbl">A typical perimeter stack</span>
+          <div class="seg" id="conseg"><button class="on" data-c="0">7 point products</button><button data-c="1">One Quantum platform</button></div>
+          <span class="stat" id="constat"><b>6</b> hand-offs between tools</span>
+        </div>
+        <div class="cons" id="cons">
+          <div class="tools">
+            <div class="tool"><div class="ic">🧱</div><b>Firewall</b><small>Vendor A · own console</small><div class="gapm">!</div></div>
+            <div class="tool"><div class="ic">🛡️</div><b>IPS</b><small>Vendor B · separate signatures</small><div class="gapm">!</div></div>
+            <div class="tool"><div class="ic">🌐</div><b>URL filter · proxy</b><small>Vendor C · separate policy</small><div class="gapm">!</div></div>
+            <div class="tool"><div class="ic">📦</div><b>Sandbox</b><small>Vendor D · own logs</small></div>
+            <div class="tool"><div class="ic">🔑</div><b>Remote access VPN</b><small>Vendor E · own identity</small><div class="gapm">!</div></div>
+            <div class="tool"><div class="ic">☁️</div><b>Cloud firewall</b><small>Per cloud · per console</small><div class="gapm">!</div></div>
+            <div class="tool"><div class="ic">📱</div><b>Mobile · endpoint</b><small>Vendor F · own agent</small><div class="gapm">!</div></div>
+            <div class="tool glue"><div class="ic">🧩</div><b>The glue</b><small>Scripts, SIEM rules, people</small></div>
+          </div>
+          <div class="uni">
+            <div class="uhd"><span>SmartConsole · one policy, one log view, one threat-intel feed</span><small>network · cloud · users</small></div>
+            <div class="ubd">
+              <div class="blade">Firewall<small>L3/4 · NAT</small></div><div class="blade">IPS<small>same rule base</small></div><div class="blade">App Control · URL<small>same rule base</small></div><div class="blade">Threat Emulation<small>sandbox, in-line</small></div>
+              <div class="blade">Anti-Bot · AV<small>ThreatCloud AI</small></div><div class="blade">Remote access<small>same identity</small></div><div class="blade">CloudGuard<small>same console</small></div><div class="blade">Harmony<small>users · mobile</small></div>
+            </div>
+            <div class="ufo"><span>One object model</span><span>One audit trail</span><span>One vendor to hold accountable</span><span>One team can run it</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="ben">
+        <div class="card white"><h4><span class="big">75%</span> of organizations are consolidating security vendors</h4><p>The move is already under way in your peer group. The question is whether the platform you consolidate onto was <b>built as one</b> or stitched together by acquisition.</p></div>
+        <div class="card white"><h4>Gaps live between products</h4><p>Every hand-off between tools is a place where a policy is missing, a log is not correlated, or an identity does not match. <b>One rule base for network, cloud and users</b> closes them by design.</p></div>
+        <div class="card white"><h4>Lower run cost</h4><p>Fewer consoles to learn, fewer licenses to true-up, fewer integrations to maintain. Your team spends time on <b>risk, not plumbing</b>.</p></div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">7 → 1<small>consoles</small></div><div class="sep"></div>
+      <div class="t">Consolidation is not just cheaper. <b>It is safer.</b></div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> <a href="https://www.gartner.com/en/newsroom/press-releases/2022-09-12-gartner-survey-shows-seventy-five-percent-of-organizations-are-pursuing-security-vendor-consolidation-in-2022" target="_blank">Gartner, security vendor consolidation survey (75%, 2022)</a> · <a href="https://www.checkpoint.com/quantum/unified-cyber-security-platform/" target="_blank">Check Point Infinity / SmartConsole</a> · <b>Assumptions:</b> the seven-product stack is an illustrative composite, your count may differ · "hand-offs" = product boundaries in the illustration · consolidation benefits are qualitative, no cost saving is claimed as a number · 75% is the Gartner 2022 survey result, up from 29% in 2020
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ 7 · D3 · FUTURE-PROOF (THE FEATURE) ═══════════ -->
+<section class="slide" data-ch="3" id="s7">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>Differentiator 3 · Future-proof by design</h2></div>
+    <div class="tags"><span class="tag teal">BlueField-3 DPU</span><span class="tag pink">Field upgrade</span><span class="tag amber">Roadmap</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">Differentiator 3 / 3 · The feature <span class="pill warn">Roadmap proposal</span></div>
+    <h1 class="title">×4 performance. Same box. <span class="hl">Just add a card.</span></h1>
+    <div class="feat">
+      <div class="box9800">
+        <div class="hd"><span>Quantum 9700 / 9800 · 1RU · four parts inside the box</span><span style="color:#6fe3a1">The card drops into the empty slot. GAiA, your policy and SmartConsole do not change</span></div>
+        <div class="chass">
+          <div class="crow">
+            <div class="clbl"><em>Today</em><span>The 9800 as it ships</span><b>~10 <small>Gbps full TP + TLS</small></b></div>
+            <div class="cparts">
+              <div class="cb nic"><b>NIC</b><small>2×100G</small><ul><li>Traffic in</li><li>Traffic out</li></ul></div>
+              <span class="car">→</span>
+              <div class="cb sil"><b>Firewall ASIC</b><small>fixed on the board</small><ul><li>Firewall L3/4</li><li>session · NAT</li></ul></div>
+              <span class="car">→</span>
+              <div class="cb cpu"><b>Intel Xeon</b><small>x86 · GAiA · everything else</small><ul><li>TLS decrypt / re-encrypt</li><li>IPS · AV · Anti-Bot</li><li>Policy · App · ThreatCloud</li></ul></div>
+              <span class="car">→</span>
+              <div class="cb empty"><b>PCIe slot</b><small>Gen5 x16</small><ul><li>Empty today</li><li>This is where the card goes</li></ul></div>
+            </div>
+          </div>
+          <div class="cmove"><span class="from">TLS + IPS/AV on the x86</span><span class="ar">→</span><b>move to the card</b> · NIC, ASIC and your policy stay exactly where they are</div>
+          <div class="crow aft">
+            <div class="clbl"><em>Next · with the card</em><span>Same box + an NVIDIA BlueField-3 DPU in the slot</span><b>~40 <small>Gbps · PoC target</small></b></div>
+            <div class="cparts">
+              <div class="cb nic same"><b>NIC</b><small>2×100G</small><ul><li>Unchanged</li></ul></div>
+              <span class="car">→</span>
+              <div class="cb sil same"><b>Firewall ASIC</b><small>fixed on the board</small><ul><li>Unchanged</li></ul></div>
+              <span class="car">→</span>
+              <div class="cb cpu"><b>Intel Xeon</b><small>x86 · GAiA · stays</small><ul><li>Policy · App · URL</li><li>ThreatCloud AI</li></ul></div>
+              <span class="car">→</span>
+              <div class="cb dpu nw"><b>BlueField-3</b><small>dedicated silicon · NVIDIA</small><ul><li>TLS decrypt / re-encrypt</li><li>IPS · AV · Anti-Bot</li></ul></div>
+            </div>
+          </div>
+        </div>
+        <div class="gauges2">
+          <div class="g"><div class="l">Full TP + TLS</div><div class="v"><s>10</s><em>→</em><u>~40</u></div><div class="n">Gbps · PoC target</div></div>
+          <div class="g"><div class="l">Full Threat Prevention</div><div class="v"><s>25</s><em>→</em><u>~60</u></div><div class="n">Gbps · target</div></div>
+          <div class="g"><div class="l">TP + TLS per rack unit</div><div class="v"><s>10</s><em>→</em><u>40</u></div><div class="n">vs Fortinet ~17 · Palo Alto ~18</div></div>
+          <div class="g"><div class="l">Your upgrade path</div><div class="v" style="font-size:14px;white-space:nowrap"><s>new box</s><em>→</em><u>a card</u></div><div class="n">same 1RU · same support contract</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">×4<small>TP + TLS</small></div><div class="sep"></div>
+      <div class="t">A field upgrade, not a forklift. <b>Full inspection on all of your encrypted traffic, in the rack unit you already own.</b></div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> <a href="https://docs.nvidia.com/networking/display/bluefield3dpu" target="_blank">NVIDIA BlueField-3 datasheet</a> · <a href="https://www.checkpoint.com/press-releases/check-point-redefines-ai-security-for-enterprises-with-ai-cloud-protect-powered-by-nvidia-bluefield/" target="_blank">Check Point AI Factory Firewall on BlueField (PR)</a> · Check Point Appliance Comparison Chart 2026 · FortiGate 6500F and PA-5450 datasheets · <b>Assumptions:</b> the card is a <b>roadmap proposal, not a shipping SKU</b> · "~40" and "~60" are lab-validation targets for a PoC (TP + TLS range 35 to 50), not measured numbers · ×4 and not ×10 because policy and App Control stay on the x86 · competitor TLS throughput is estimated at ~50% of their Threat Prevention figure and normalized per rack unit (6500F = 3RU, PA-5450 = 5U) · the four parts are a schematic of the product, not a board diagram
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ 8 · THE TWIST · CAPACITY ON DEMAND ═══════════ -->
+<section class="slide" data-ch="3" id="s8">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>Buy once, keeps growing</h2></div>
+    <div class="tags"><span class="tag pink">Capacity on demand</span><span class="tag teal">The hardware trap, answered</span><span class="tag amber">Roadmap</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">The answer to the hardware trap <span class="pill warn">Roadmap</span></div>
+    <h1 class="title">Buy once. <span class="hl">Grow when you need it.</span></h1>
+    <div class="s8grid">
+      <div class="cod">
+        <div class="dh">
+          <span>Inspected load vs the box you own. <b>Move the growth rate.</b></span>
+          <div class="sl"><div class="slh"><span>Encrypted-traffic growth</span><b id="codg">25% / yr</b></div><input type="range" id="codsl" min="15" max="50" step="1" value="25"></div>
+        </div>
+        <div class="codchart" id="codchart"></div>
+        <div class="codleg">
+          <span><i style="background:var(--pink-soft)"></i>Demand (starts at 8 Gbps TP+TLS)</span>
+          <span><i style="background:#cfc7cc;height:0;border-top:2px dashed #cfc7cc;width:18px"></i>9800 ceiling today · 10G</span>
+          <span><i style="background:#6fe3a1"></i>Ceiling with the card · ~40G</span>
+        </div>
+      </div>
+      <div class="paths">
+        <div class="pathc bad"><div class="ph"><h4>Over-provision</h4><span class="cash" id="cA">$88K</span></div>
+          <p>Buy <b>4× the 9800 on day 0</b> (Maestro-class stack) so you never hit the wall. CapEx sits idle until the traffic arrives. <b>4RU</b> from day one.</p>
+          <div class="when">Paid in full, year 0</div></div>
+        <div class="pathc worse"><div class="ph"><h4>Forklift</h4><span class="cash" id="cB">$110K</span></div>
+          <p>Buy the 9800 for today. When you hit 10G, <b>replace it with a 4-box stack</b> and run a migration. You still pay for ×4, plus the first box, plus the cutover.</p>
+          <div class="when" id="cBw">Hits the wall in year 2</div></div>
+        <div class="pathc good"><div class="ph"><h4>Capacity on demand</h4><span class="cash" id="cC">$37K<small>target</small></span></div>
+          <p>Buy the 9800 for today. When you hit 10G, <b>drop in a card</b>. Same 1RU, same GAiA, same support contract. Ceiling jumps to ~40G.</p>
+          <div class="when" id="cCw">$22K year 0 · ~$15K when you need it</div></div>
+      </div>
+    </div>
+    <div class="s8more"><span class="lbl">And the same slot also carries</span><span class="p"><b>Post-quantum crypto</b> as a firmware update</span><span class="p"><b>On-box AI</b> on the DPU's 16 Arm cores</span><span class="p">Neither taxes the CPU that runs your policy</span></div>
+    <div class="thread" style="margin-top:8px">
+      <div class="k">$37K<small>vs $88K idle</small></div><div class="sep"></div>
+      <div class="t">Investment protection. <b>Cloud-like elasticity, on hardware you own.</b></div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> Check Point Appliance Comparison Chart 2026 (9800 TP+TLS ~10 Gbps) · Decryption Digest TCO, June 2026 ($22K, 10G tier, 3-year) · NVIDIA BlueField-3 datasheet · NIST PQC FIPS 203/204/205 · Check Point AI Factory Firewall PR · <b>Assumptions:</b> demand starts at 8 Gbps (80% of the 9800 TLS ceiling) and compounds at the slider rate, an illustration, not a forecast of your traffic · ×4 (~40 Gbps) and the ~$15K card price are <b>PoC targets, not quotes</b> · over-provision = 4× $22K on day 0, the Maestro-equivalent stack that matches ×4 in 4RU · forklift = $22K today + that same 4-box stack in the first year demand exceeds 10G, migration cost not priced · Capacity-on-demand = $22K + ~$15K in that same year · the card, post-quantum crypto and on-box AI are <b>roadmap, not shipping features</b>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ 9 · PROOF ═══════════ -->
+<section class="slide" data-ch="4" id="s9">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>Proof</h2></div>
+    <div class="tags"><span class="tag teal">Third-party tested</span><span class="tag pink">TCO</span><span class="tag purple">Interactive</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">Don't take my word for it</div>
+    <h1 class="title">Validated. Deployed. <span class="hl">Proven.</span></h1>
+    <div class="s9grid">
+      <div class="anc">
+        <div class="k">Validated</div>
+        <div class="big">99%+</div>
+        <h3>Independent block rate, top tier</h3>
+        <p>CyberRatings puts Check Point at 99%+ with Palo Alto, ahead of Fortinet (~96%) and Cisco (~91%). <b>Same efficacy as the most expensive option.</b></p>
+        <div class="mini">
+          <div class="mr cp"><span>Check Point</span><div class="t"><i style="--w:99%"></i></div><b>99%+</b></div>
+          <div class="mr pa"><span>Palo Alto</span><div class="t"><i style="--w:99%"></i></div><b>99%+</b></div>
+          <div class="mr ft"><span>Fortinet</span><div class="t"><i style="--w:96%"></i></div><b>~96%</b></div>
+          <div class="mr cs"><span>Cisco</span><div class="t"><i style="--w:91%"></i></div><b>~91%</b></div>
+        </div>
+      </div>
+      <div class="anc g">
+        <div class="ch"><div class="k">Proven economics</div><div class="seg" id="tcoseg"><button class="on" data-m="0">3-year TCO today</button><button data-m="1">Per 10G TP + TLS, with the card</button></div></div>
+        <h3 id="tcoh">3-year TCO, 10 Gbps Threat Prevention tier</h3>
+        <div class="hbars" id="tco"></div>
+        <div class="tconote" id="tconote">Half of Palo Alto's TCO at the same block rate. Fortinet is cheaper per box, and buys you a lower block rate and a fixed ASIC. <b>Toggle to see the per-Gbps picture once the card is in.</b></div>
+      </div>
+      <div class="anc t">
+        <div class="k">Deployed</div>
+        <div class="big">In production</div>
+        <h3>The silicon is not a science project</h3>
+        <p>Check Point's <b>AI Factory Firewall</b> already runs on NVIDIA BlueField-3 today, protecting AI clusters in production. The card proposed for your 9800 puts that same proven silicon into the perimeter.</p>
+        <div class="chk"><span>Same DPU family, same NVIDIA partnership</span><span>Check Point software already ships on BlueField</span><span>GA since July 2026, air-gapped deployments supported</span></div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">3<small>proof points</small></div><div class="sep"></div>
+      <div class="t">Third-party validated. Silicon already in production. <b>Half the TCO of the alternative with the same efficacy.</b></div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> <a href="https://cyberratings.org/research/" target="_blank">CyberRatings, Enterprise Firewall</a> · Decryption Digest TCO analysis, June 2026 · <a href="https://www.checkpoint.com/press-releases/check-point-redefines-ai-security-for-enterprises-with-ai-cloud-protect-powered-by-nvidia-bluefield/" target="_blank">Check Point AI Factory Firewall PR</a> · <b>Assumptions:</b> TCO = hardware list price + 3-year subscription at the 10 Gbps Threat Prevention tier, an analyst estimate (Check Point ~$22K, Fortinet ~$14K, Palo Alto ~$43K) · the per-10G view divides ($22K + ~$15K estimated card price) by the ×4 target, a <b>target, not a quote</b> · AI Factory Firewall is a different product on the same silicon family, its production status proves the silicon, not the perimeter card
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ 10 · CTA ═══════════ -->
+<section class="slide" data-ch="5" id="s10">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>Your next step</h2></div>
+    <div class="tags"><span class="tag pink">30-day POC</span><span class="tag teal">Design partner</span><span class="tag purple">Appendix ready</span></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">Your next step</div>
+    <h1 class="title">Prove it on your traffic. <span class="hl">30 days.</span></h1>
+    <div class="steps">
+      <div class="stp"><div class="wk">Week 1</div><h3>Baseline your reality</h3><p>A Quantum 9800 in monitor mode on a span of your real traffic. We measure your <b>encrypted share, threat mix and true inspection load</b>, not a lab profile.</p>
+        <div class="row"><div class="b"><div class="v">1RU</div><div class="l">in your rack</div></div><div class="b"><div class="v">0</div><div class="l">policy changes</div></div></div></div>
+      <div class="stp p"><div class="wk">Weeks 2 to 3</div><h3>Full inspection, full TLS</h3><p>Every engine on, TLS inspection on, <b>on your traffic</b>. You see block rate, throughput and latency side by side with what you run today.</p>
+        <div class="row"><div class="b"><div class="v">100%</div><div class="l">TLS inspected</div></div><div class="b"><div class="v">99%+</div><div class="l">block rate to verify</div></div></div></div>
+      <div class="stp t"><div class="wk">Week 4</div><h3>Map your 3-year path</h3><p>Sizing today, Maestro scale-out when you need it, and a seat in the <b>DPU design-partner program</b>: early access to the card, your requirements in the design.</p>
+        <div class="row"><div class="b"><div class="v">3 yr</div><div class="l">upgrade path</div></div><div class="b"><div class="v">×4</div><div class="l">target, in the same box</div></div></div></div>
+    </div>
+    <div class="dm">
+      <div class="h y">What you get</div><div class="h n">What we ask</div>
+      <div class="y">Your own numbers on your own traffic: encrypted share, block rate, throughput with everything on</div><div class="n">A span port or a tap, and one network engineer for a half-day of setup</div>
+      <div class="y">A 3-year capacity plan on the hardware you evaluate, with the card path priced as an option</div><div class="n">A 45-minute readout with your security and network leads at the end of week 4</div>
+      <div class="y">Early access to the DPU card and a voice in what ships</div><div class="n">Design-partner feedback on one PoC build, under NDA</div>
+    </div>
+    <div class="bigask">
+      <div class="v">30<small>days</small></div>
+      <div class="t">You keep the box. <b>We'll show you how far it goes.</b><br>If the numbers on your traffic do not beat what you run today, you have lost a span port for a month. If they do, you have your next three years of perimeter planned.</div>
+    </div>
+    <div class="apx"><span class="lbl">Ready if asked</span><button data-go="10"><b>A1</b>vs Fortinet / Palo Alto</button><button data-go="11"><b>A2</b>Prove the TLS numbers</button><button data-go="12"><b>A3</b>Migration</button><button data-go="13"><b>A4</b>Aren't you more expensive?</button><button data-go="14"><b>A5</b>NVIDIA lock-in?</button><button data-go="15"><b>A6</b>When is the card available?</button><button data-go="16"><b>A7</b>Compliance</button></div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> Quantum 9000 Series page · Check Point Appliance Comparison Chart 2026 · internal roadmap proposal (Session 1) · <b>Assumptions:</b> the 30-day plan is a standard POC scope, timing depends on your change windows · the design-partner program is a <b>proposed FY27 program</b>, not a published offer · ×4 is the PoC target from the previous slides, not a commitment · 99%+ is the CyberRatings figure to be re-verified on your traffic
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ A1 · vs FORTINET / PALO ALTO ═══════════ -->
+<section class="slide" data-ch="6" id="a1">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>A1 · "How are you different from Fortinet or Palo Alto?"</h2></div>
+    <div class="tags"><span class="tag gray">Appendix</span><span class="tag pink">Head-to-head</span><button class="back" data-go="9">← back to next step</button></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">Appendix · ready if asked</div>
+    <h1 class="title">Same tier on efficacy. <span class="hl">Ahead on density, latency and management.</span></h1>
+    <div class="card white" style="flex:0 0 auto">
+      <table class="tb">
+        <thead><tr><th>Per box, normalized where noted</th><th>Check Point 9800</th><th>Check Point 9800 + DPU card</th><th>Fortinet FortiGate 6500F</th><th>Palo Alto PA-5450</th></tr></thead>
+        <tbody>
+          <tr><td>Form factor</td><td class="n win">1RU</td><td class="n win">1RU</td><td class="n">3RU</td><td class="n">5U</td></tr>
+          <tr><td>Full TP + TLS, per rack unit<small>the number the rack pays for</small></td><td class="n lose">~10 Gbps</td><td class="n tgt">~40 Gbps <small>PoC target</small></td><td class="n">~17 Gbps <small>~50G ÷ 3</small></td><td class="n">~18 Gbps <small>~90G ÷ 5</small></td></tr>
+          <tr><td>Independent block rate<small>CyberRatings</small></td><td class="n win">99%+</td><td class="n win">99%+</td><td class="n lose">~96%</td><td class="n win">99%+</td></tr>
+          <tr><td>Latency<small>matters for trading, OT, real-time; not for web or ERP</small></td><td class="n win">1.85 μs</td><td class="n win">1.85 μs</td><td class="n">4.8 μs</td><td class="n">~5 μs</td></tr>
+          <tr><td>Management</td><td class="win">SmartConsole: one console, all domains</td><td class="win">Unchanged</td><td>FortiManager + FortiAnalyzer</td><td>Panorama + Cortex</td></tr>
+          <tr><td>Compliance</td><td class="win">FIPS 140-2 · EAL4+ on every model</td><td class="win">Unchanged, keys stay in the FIPS boundary</td><td>Selected models</td><td>Selected models</td></tr>
+          <tr><td>Upgrade path when you need more</td><td>Maestro scale-out</td><td class="win">A card in the slot, or Maestro</td><td class="lose">New box (fixed SPU ASIC)</td><td class="lose">New chassis or DPC cards</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">1RU<small>vs 3RU · 5U</small></div><div class="sep"></div>
+      <div class="t">Per box, Fortinet and Palo Alto post bigger Threat Prevention numbers in bigger boxes. <b>Per rack unit with TLS on, the 9800 with the card leads, at a higher block rate than Fortinet.</b></div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> Check Point Appliance Comparison Chart 2026 · FortiGate 6500F datasheet · PA-5450 datasheet · CyberRatings · <b>Assumptions:</b> this is <b>not apples-to-apples on form factor</b> (1RU vs 3RU vs 5U), so throughput is normalized per rack unit and stated per box in the sub-labels · competitor TP + TLS is estimated at ~50% of their published Threat Prevention (6500F 100G, PA-5450 189G), Check Point's own TLS figure is used as published · "+ DPU" values are PoC targets · latency is a datasheet figure and a selling point only for latency-sensitive verticals
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ A2 · PROVE THE TLS PERFORMANCE ═══════════ -->
+<section class="slide" data-ch="6" id="a2">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>A2 · "Prove the TLS performance."</h2></div>
+    <div class="tags"><span class="tag gray">Appendix</span><span class="tag teal">Methodology</span><button class="back" data-go="9">← back to next step</button></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">Appendix · ready if asked</div>
+    <h1 class="title">Four numbers on every datasheet. <span class="hl">Only the fourth one is your reality.</span></h1>
+    <div class="a2">
+      <div class="lad"><div class="k">1 · Firewall</div><h3>Forwarding only</h3><div class="big">400<small>Gbps</small></div><p>L3/4 only, no inspection, <b>lab conditions</b> (RFC 2544, 1518-byte packets). The marketing number. Never your production number.</p><div class="q"><b>Ask the vendor:</b> which packet size, which RFC, and was any inspection engine on?</div><div class="tag2">Lab</div></div>
+      <div class="lad b"><div class="k">2 · App Control</div><h3>App + URL, no threat engines</h3><div class="big">67.7<small>Gbps</small></div><p>Application and URL identification on an enterprise traffic mix. Closer to reality, still without the engines that stop attacks.</p><div class="q"><b>Ask the vendor:</b> does your "NGFW" figure include IPS, or only application and URL identification?</div><div class="tag2">Enterprise Testing Conditions</div></div>
+      <div class="lad c"><div class="k">3 · Threat Prevention</div><h3>Every engine on</h3><div class="big">25<small>Gbps</small></div><p>IPS, AV, Anti-Bot, App Control, URL, on a realistic mix. <b>The RFP number.</b> Ask every vendor for this one, and ask under which conditions.</p><div class="q"><b>Ask the vendor:</b> enterprise traffic mix or lab? Which engines were on, with which signature set?</div><div class="tag2">Enterprise Testing Conditions</div></div>
+      <div class="lad d"><div class="k">4 · TP + TLS inspection</div><h3>Every engine on, encryption opened</h3><div class="big">~10<small>Gbps</small></div><p>The only number that matches a perimeter with 95% encrypted traffic. <b>Most vendors do not publish it.</b> We do, and we will run it live in your POC.</p><div class="q"><b>Ask the vendor:</b> what is your Threat Prevention throughput with TLS inspection on, and will you run it on my traffic?</div><div class="tag2">The honest number · run it on your traffic</div></div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">4th<small>number</small></div><div class="sep"></div>
+      <div class="t">Ask any vendor for Threat Prevention <b>with TLS inspection</b>, under enterprise conditions. Then ask them to run it on your traffic. We will.</div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank">Check Point Appliance Comparison Chart 2026 (9800)</a> · RFC 2544 / RFC 3511 test methodology · <b>Assumptions:</b> all four figures are for the Quantum 9800 · Firewall is lab, App Control and Threat Prevention are Enterprise Testing Conditions, TP + TLS is Check Point data and not an RFP figure · your result depends on your cipher mix, object sizes and policy size, which is exactly why the POC exists
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ A3 · MIGRATION ═══════════ -->
+<section class="slide" data-ch="6" id="a3">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>A3 · "What about migration to my existing stack?"</h2></div>
+    <div class="tags"><span class="tag gray">Appendix</span><span class="tag purple">Zero rip-and-replace</span><button class="back" data-go="9">← back to next step</button></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">Appendix · ready if asked</div>
+    <h1 class="title">No rip-and-replace. <span class="hl">Phased, reversible, and the card is additive.</span></h1>
+    <div class="a3wrap">
+    <div class="a3">
+      <div class="ph"><div class="no">1</div><h3>Import and mirror</h3><p>Your existing rule base is imported into SmartConsole with Check Point's migration tooling. The 9800 sits in <b>monitor mode</b> on a span, logging what it would have done.</p><ul><li>No traffic impact</li><li>Policy gaps surface before cutover</li><li>Typical duration: 1 to 2 weeks</li></ul></div>
+      <div class="ph"><div class="no">2</div><h3>Run in parallel</h3><p>Inline for a low-risk segment first, with your current gateway still in the path. <b>Compare logs side by side</b>, tune, and widen the scope segment by segment.</p><ul><li>Rollback is a routing change</li><li>SOC learns one console while the old one still runs</li><li>Typical duration: 2 to 4 weeks</li></ul></div>
+      <div class="ph"><div class="no">3</div><h3>Cut over, then grow in place</h3><p>Final cutover per site during your change window. From here on, capacity growth is <b>Maestro scale-out or the DPU card</b>: same GAiA, same policy, same console.</p><ul><li>Cloud and branch gateways join the same rule base</li><li>The card does not touch NIC, ASIC or policy</li><li>Same support contract</li></ul></div>
+    </div>
+    <div class="card white" style="flex:0 0 auto">
+      <div class="ch"><span class="dotc"></span>A typical HQ perimeter cutover, end to end</div>
+      <div class="tl a3tl">
+        <div class="ms lit"><div class="q">Week 0</div><div class="w">9800 racked, span port,<br>rule base imported</div></div>
+        <div class="ms lit"><div class="q">Week 2</div><div class="w">Mirror report:<br>policy gaps closed</div></div>
+        <div class="ms lit"><div class="q">Week 3</div><div class="w">Inline on first<br>low-risk segment</div></div>
+        <div class="ms lit"><div class="q">Week 6</div><div class="w">All segments in parallel,<br>logs compared</div></div>
+        <div class="ms lit"><div class="q">Week 8</div><div class="w">Cutover in your change window,<br>old gateway kept for rollback</div></div>
+      </div>
+    </div>
+    <div class="stay"><span>Stays as is: <b>your addressing</b></span><span>Stays as is: <b>your identity source (AD, SAML)</b></span><span>Stays as is: <b>your SIEM feed</b> (syslog, CEF, API)</span><span>Stays as is: <b>your change process</b></span><span>Changes: <b>one console instead of several</b></span></div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">3<small>phases</small></div><div class="sep"></div>
+      <div class="t">Every phase is reversible and runs next to what you have. <b>The DPU card is additive: nothing you deployed in phases 1 to 3 changes when it arrives.</b></div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> Check Point SmartConsole and GAiA admin guides · Check Point migration tooling documentation · internal roadmap proposal (card architecture) · <b>Assumptions:</b> phase durations are typical ranges for an enterprise HQ perimeter and depend on rule-base size and change windows · "reversible" assumes the existing gateway stays racked through phase 2 · the card's additive nature is a design property of the proposal, to be confirmed in the PoC
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ A4 · TCO ═══════════ -->
+<section class="slide" data-ch="6" id="a4">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>A4 · "Aren't you more expensive than Fortinet?"</h2></div>
+    <div class="tags"><span class="tag gray">Appendix</span><span class="tag pink">TCO</span><button class="back" data-go="9">← back to next step</button></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">Appendix · ready if asked</div>
+    <h1 class="title">Per box, yes. <span class="hl">Per gigabit actually inspected, no.</span></h1>
+    <div class="a4">
+      <div class="card white">
+        <div class="ch"><span class="dotc"></span>3-year TCO at the 10 Gbps Threat Prevention tier, and per 10G of TP + TLS</div>
+        <div class="hbars" id="a4bars">
+          <div class="hb ft"><div class="n">Fortinet<small>3-yr TCO, 10G tier</small></div><div class="tr"><i style="width:0" data-w="32.5"></i></div><div class="v">$14K</div></div>
+          <div class="hb cp"><div class="n">Check Point 9800<small>3-yr TCO, 10G tier</small></div><div class="tr"><i style="width:0" data-w="51.2"></i></div><div class="v">$22K</div></div>
+          <div class="hb pa"><div class="n">Palo Alto<small>3-yr TCO, 10G tier</small></div><div class="tr"><i style="width:0" data-w="100"></i></div><div class="v">$43K</div></div>
+          <div class="hb cpb"><div class="n">9800 + DPU card<small>per 10G of TP + TLS · ($22K + ~$15K) ÷ 4</small></div><div class="tr"><i style="width:0" data-w="21.6"></i></div><div class="v">$9.3K<small>target</small></div></div>
+        </div>
+      </div>
+      <div class="solve">
+        <div class="row"><div class="ic a">57%</div><div><h4>The honest part</h4><p>At the same 10G tier, Fortinet's 3-year TCO is <b>~57% lower</b> than the 9800. If price per box is the only criterion, Fortinet wins that spreadsheet.</p></div></div>
+        <div class="row"><div class="ic g">×4</div><div><h4>What the spreadsheet misses</h4><p>The number you pay for is <b>gigabits inspected with TLS on</b>. With the card, one 1RU does the TLS-inspected work of four, in the same rack, on the same contract: <b>~$9.3K per 10G</b>, below Fortinet's per-box price.</p></div></div>
+        <div class="row"><div class="ic p">1</div><div><h4>The cost that is not on the datasheet</h4><p>Fewer consoles, fewer point products to license, fewer people to run them, and a <b>99%+ block rate instead of ~96%</b>: the cost of the breaches that 3-point gap lets through does not appear in any vendor's TCO.</p></div></div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">$9.3K<small>per 10G · target</small></div><div class="sep"></div>
+      <div class="t">Fortinet is cheaper per box. <b>Per gigabit of encrypted traffic you actually inspect, the 9800 with the card is cheaper than both, at a higher block rate.</b></div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> Decryption Digest TCO analysis, June 2026 (Fortinet ~$14K · Check Point ~$22K · Palo Alto ~$43K, hardware list + 3-year subscription) · CyberRatings · <b>Assumptions:</b> all TCO figures are <b>analyst estimates</b>, your quote will differ · the per-10G figure assumes a ~$15K card list price and the ×4 PoC target, both unconfirmed · consolidation savings are qualitative, no headcount figure is claimed · breach cost is not quantified here
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ A5 · NVIDIA LOCK-IN ═══════════ -->
+<section class="slide" data-ch="6" id="a5">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>A5 · "Aren't you locking me into NVIDIA?"</h2></div>
+    <div class="tags"><span class="tag gray">Appendix</span><span class="tag teal">Silicon-agnostic</span><button class="back" data-go="9">← back to next step</button></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">Appendix · ready if asked</div>
+    <h1 class="title">The software is ours. <span class="hl">The silicon is a slot.</span></h1>
+    <div class="a5">
+      <div class="card">
+        <div class="ch"><span class="dotc"></span>How the card plugs in</div>
+        <div class="layer">
+          <div class="lr sw">GAiA · Software Blades · your policy<small>Unchanged. Written and owned by Check Point.</small></div>
+          <div class="lr abs">Offload abstraction layer<small>One interface: "decrypt this, match these patterns, return a verdict". The blades never talk to the chip directly.</small></div>
+          <div class="lr hw">Accelerator card in the PCIe slot<small>Generation 1 targets BlueField-3. The interface is designed to be re-targeted.</small><div class="tg3"><span class="now">NVIDIA BlueField-3</span><span>Intel IPU</span><span>AMD Pensando</span></div></div>
+        </div>
+      </div>
+      <div class="solve">
+        <div class="row"><div class="ic">1</div><div><h4>You buy a Check Point product, not an NVIDIA one</h4><p>Support, updates, signatures and policy come from Check Point. The DPU is a component, like the Intel CPU or the NIC already in the box.</p></div></div>
+        <div class="row"><div class="ic t">2</div><div><h4>The abstraction layer is the design decision</h4><p>Generation 2 of the card can target <b>Intel IPU or AMD Pensando</b> without touching GAiA or your policy. Multi-sourcing is designed in from day one, because it protects Check Point as much as it protects you.</p></div></div>
+        <div class="row"><div class="ic g">3</div><div><h4>No card, no problem</h4><p>The 9800 runs at its published numbers without the card. The slot is <b>upside</b>, never a dependency. Maestro scale-out remains available regardless.</p></div></div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">1 API<small>3 silicon options</small></div><div class="sep"></div>
+      <div class="t">The lock-in you should worry about is a security engine <b>burned into a vendor's own ASIC</b>. A card behind an abstraction layer is the opposite of that.</div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> NVIDIA BlueField-3 datasheet and DOCA SDK · Intel IPU E2100 and AMD Pensando product pages · internal roadmap proposal (Session 1, architecture) · <b>Assumptions:</b> the abstraction layer and the generation-2 re-targeting are <b>design intent in a roadmap proposal</b>, not shipped software · vendor-specific engines (for example the RegEx engine) may need per-silicon back-ends, which is what the abstraction layer is for · no second-source commitment is implied
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ A6 · AVAILABILITY ═══════════ -->
+<section class="slide" data-ch="6" id="a6">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>A6 · "Is the card available? When?"</h2></div>
+    <div class="tags"><span class="tag gray">Appendix</span><span class="tag amber">Honest roadmap</span><button class="back" data-go="9">← back to next step</button></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">Appendix · ready if asked <span class="pill warn">Roadmap proposal</span></div>
+    <h1 class="title">Not today. <span class="hl">And you should buy the 9000 anyway.</span></h1>
+    <div class="a6">
+      <div class="card">
+        <div class="ch"><span class="dotc"></span>The proposed path, with its gates</div>
+        <div class="tl" style="margin-top:14px">
+          <div class="ms lit"><div class="q">Now</div><div class="w">Quantum 9000 ships today,<br>at its published numbers</div></div>
+          <div class="ms lit"><div class="q">Q1 '27</div><div class="w">Program kickoff,<br>design partners named</div></div>
+          <div class="ms"><div class="q">Q3 '27</div><div class="w">PoC gate: TLS offload<br>validated in the lab</div></div>
+          <div class="ms"><div class="q">Q1 '28</div><div class="w">Beta with 3 design partners,<br>on their traffic</div></div>
+          <div class="ms"><div class="q">Q3 '28</div><div class="w">General availability,<br>orderable card SKU</div></div>
+        </div>
+        <div class="tconote" style="margin-top:auto">Every date after the first is <b>a proposal with a gate in front of it</b>. If the PoC does not hit the target range, the program does not proceed, and nothing about the 9000 you bought changes.</div>
+      </div>
+      <div class="solve">
+        <div class="row"><div class="ic g">✓</div><div><h4>What you get today, no asterisk</h4><p>99%+ block rate, 1RU, SmartConsole, ThreatCloud AI, Maestro scale-out. <b>The 9000 you buy today is already the top tier</b> in independent testing.</p></div></div>
+        <div class="row"><div class="ic a">→</div><div><h4>What the card adds, when it comes</h4><p>×4 TLS-inspected throughput in the box you already own. <b>Upside</b>, priced as an option, on your timeline, not a reason to wait.</p></div></div>
+        <div class="row"><div class="ic p">3</div><div><h4>Why the design-partner seat matters</h4><p>Three partners shape the requirements, get beta hardware first and a case-study relationship with Check Point. <b>Your traffic profile becomes a design input.</b></p></div></div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">FY27<small>kickoff · gated</small></div><div class="sep"></div>
+      <div class="t">The 9000 you buy today is already best in class. <b>The card is upside you help shape, not a promise you wait for.</b></div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> Internal roadmap proposal (Session 1: kickoff Q1 '27, PoC Q3 '27, beta Q1 '28, GA Q3 '28) · Check Point Appliance Comparison Chart 2026 · CyberRatings · <b>Assumptions:</b> all dates are <b>a proposal pending internal approval</b>, not a committed roadmap and not a purchase condition · the PoC gate is defined as TP + TLS in the 35 to 50 Gbps range on a 9800 · design-partner count (3) is the proposed program size
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+<!-- ═══════════ A7 · COMPLIANCE ═══════════ -->
+<section class="slide" data-ch="6" id="a7">
+  <div class="topbar"><div class="brand"><img src="../checkpoint-logo.PNG" alt="CP"><span class="sep"></span><h2>A7 · "Compliance and certifications?"</h2></div>
+    <div class="tags"><span class="tag gray">Appendix</span><span class="tag teal">FIPS · Common Criteria</span><button class="back" data-go="9">← back to next step</button></div></div>
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">Appendix · ready if asked</div>
+    <h1 class="title">Certified on every model, <span class="hl">not on a selected few.</span></h1>
+    <div class="a7">
+      <div class="col">
+        <span class="colh">What is certified</span>
+        <div class="cert"><h3>Cryptographic module</h3><div class="big">FIPS 140-2</div><p>Validated crypto across the Quantum line, <b>every model, not selected SKUs</b>. With the DPU card, private keys stay inside the module's FIPS boundary: the card decrypts, the keys never leave.</p></div>
+        <div class="cert"><h3>Security assurance</h3><div class="big">Common Criteria EAL4+</div><p>Evaluated to EAL4+ across the line. In practice this <b>shortens the qualification step</b> in government, defense and banking tenders, where competitors qualify only specific models.</p></div>
+        <div class="cert"><h3>Operational posture</h3><div class="big">Audit-ready by design</div><p>One rule base, one audit trail and one log format across network, cloud and users. <b>Fewer systems of record</b> means fewer findings and faster evidence for auditors.</p></div>
+      </div>
+      <div class="col vert">
+        <span class="colh">What it means in your vertical</span>
+        <div class="v"><b>Financial services</b>PCI-DSS segmentation and logging, encrypted-traffic inspection with key custody inside a validated module, latency headroom for trading environments.</div>
+        <div class="v"><b>Healthcare</b>HIPAA-aligned access control and logging, Threat Emulation for file-borne malware, one console across hospital sites and cloud EHR.</div>
+        <div class="v"><b>Public sector and critical infrastructure</b>FIPS and Common Criteria as procurement baselines, air-gapped deployment supported, OT-grade latency (1.85 μs) for control networks.</div>
+      </div>
+    </div>
+    <div class="thread" style="margin-top:10px">
+      <div class="k">All<small>models certified</small></div><div class="sep"></div>
+      <div class="t">Regulated buyers have chosen Check Point for decades for one reason: <b>the certification is on the whole line, so the model you size is the model that qualifies.</b></div>
+    </div>
+    <div class="src box" style="margin-top:6px">
+      <span class="t">Sources &amp; assumptions</span> <a href="https://csrc.nist.gov/projects/cryptographic-module-validation-program" target="_blank">NIST CMVP</a> · <a href="https://www.commoncriteriaportal.org" target="_blank">Common Criteria portal</a> · Check Point certifications page · <b>Assumptions:</b> "every model" reflects the current Quantum line certifications per research, <b>FIPS 140-3 transition status must be confirmed with Check Point's compliance team before this slide is used with a customer</b> · key custody inside the FIPS boundary on the DPU is a design assumption of the proposal, to be validated · vertical mappings are illustrative, not legal advice
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
+</div>
+
+<div class="navwrap">
+  <div class="nav">
+    <button id="prev" aria-label="Previous">‹</button>
+    <span class="count" id="count">1 / 17</span>
+    <button id="next" aria-label="Next">›</button>
+  </div>
+  <div class="dots" id="dots"></div>
+</div>
+</div><!-- /stage -->
+
+<script>
+/* ───────── fit 1280×720 stage to viewport ───────── */
+(function(){const st=document.getElementById('stage');if(!st)return;function fit(){const s=Math.min(innerWidth/1280,innerHeight/720);st.style.transform=`translate(-50%,-50%) scale(${s})`;}addEventListener('resize',fit);fit();})();
+
+/* ───────── navigation + story rail ───────── */
+const CH=['Hero','Why now','The platform','Differentiators','Proof','Next step','Appendix'];
+const MAIN=10; /* slides 0..9 are the 15-minute deck, 10..16 are the appendix */
+const slides=[...document.querySelectorAll('.slide')], total=slides.length; let cur=0;
+const progress=document.getElementById('progress'), count=document.getElementById('count');
+const prevBtn=document.getElementById('prev'), nextBtn=document.getElementById('next'), dotsWrap=document.getElementById('dots');
+slides.forEach((s,i)=>{if(i===MAIN){const g=document.createElement('div');g.className='gap';dotsWrap.appendChild(g);}
+  const d=document.createElement('div');d.className='dot'+(i>=MAIN?' ax':'')+(i===0?' active':'');d.title=i>=MAIN?'A'+(i-MAIN+1):String(i+1);d.onclick=()=>go(i);dotsWrap.appendChild(d);
+  const rail=s.querySelector('.rail'); if(rail){const c=+s.dataset.ch;
+    rail.innerHTML=CH.slice(1,6).map((n,j)=>`<div class="st ${j+1<c?'done':j+1===c?'now':''}"><i>${j+1}</i>${n}</div>`).join('')
+      +`<div class="st ax ${c===6?'now':''}"><i>A</i>${CH[6]}</div>`;}});
+const dots=[...dotsWrap.querySelectorAll('.dot')];
+function go(i){if(i<0||i>=total)return;slides[cur].classList.remove('active');dots[cur].classList.remove('active');cur=i;
+  slides[cur].classList.add('active');dots[cur].classList.add('active');
+  count.textContent=(cur<MAIN?(cur+1)+' / '+MAIN:'A'+(cur-MAIN+1)+' / 7');
+  progress.style.width=((cur+1)/total*100)+'%';prevBtn.disabled=cur===0;nextBtn.disabled=cur===total-1;
+  try{history.replaceState(null,'','#'+cur);}catch(e){}}
+nextBtn.onclick=()=>go(cur+1); prevBtn.onclick=()=>go(cur-1);
+document.addEventListener('keydown',e=>{const t=e.target.tagName; if(t==='INPUT')return;
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){go(cur+1);e.preventDefault();}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){go(cur-1);e.preventDefault();}
+  else if(e.key==='Home')go(0); else if(e.key==='End')go(MAIN-1); else if(e.key==='a'||e.key==='A')go(MAIN);});
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.go)));
+(function(){const h=parseInt((location.hash||'').slice(1),10); go(isNaN(h)?0:Math.max(0,Math.min(total-1,h)));})();
+
+/* ───────── S2: 100 sessions, TLS inspection off / on ───────── */
+(function(){const grid=document.getElementById('encgrid'); if(!grid) return;
+ const CLEAR=[7,23,41,66,88], THR=[3,15,23,34,52,61,77,95]; /* 95 encrypted, 8 threats, 7 of them inside TLS */
+ grid.innerHTML=Array.from({length:100},(_,i)=>`<div class="tl${CLEAR.includes(i)?' clear':' enc'}${THR.includes(i)?' thr':''}"></div>`).join('');
+ const v=document.getElementById('encv'), note=document.getElementById('encnote');
+ function set(c){grid.classList.toggle('on',c===1);
+  document.querySelectorAll('#encseg button').forEach(b=>b.classList.toggle('on',+b.dataset.c===c));
+  v.textContent=c?8:1;
+  note.innerHTML=c?'With TLS inspection on, all <b>8 of 8 threats</b> are visible to IPS, antivirus and sandbox. The traffic did not change. Your visibility did.'
+   :'Without TLS inspection, <b>7 of the 8 threats</b> in this traffic pass through as opaque encrypted sessions. Your IPS, antivirus and sandbox never see the payload.';}
+ document.querySelectorAll('#encseg button').forEach(b=>b.onclick=()=>set(+b.dataset.c)); set(0);})();
+
+/* ───────── S3: gateway scene, inspection ladder + packets ───────── */
+(function(){const s=document.getElementById('s3'), wire=document.getElementById('wire'); if(!s||!wire) return;
+ const CFGK=['l4','l7','tp','tls'], TPG=[400,67.7,25,10.1], SHPOS={0:0,1:2,2:3,3:3};
+ const LBL=['Firewall throughput','App Control throughput','Threat Prevention','Threat Prevention + TLS inspection'];
+ let cfg=0;
+ function setCfg(c){cfg=c;document.querySelectorAll('#cfgseg button').forEach(b=>b.classList.toggle('on',+b.dataset.c===c));
+  document.querySelectorAll('#gw .sh').forEach(x=>{const on=CFGK.indexOf(x.dataset.k)<=c;x.classList.toggle('on',on);x.classList.toggle('off',!on);});
+  document.querySelectorAll('#layers .ly').forEach(x=>{const on=CFGK.indexOf(x.dataset.k)<=c;x.classList.toggle('on',on);x.classList.toggle('off',!on);});
+  document.getElementById('stTp').textContent=(c===3?'~':'')+Math.round(TPG[c]); document.getElementById('stTpb').style.width=Math.max(2,TPG[c]/TPG[0]*100)+'%';
+  document.getElementById('stTpLabel').textContent=LBL[c];}
+ document.querySelectorAll('#cfgseg button').forEach(b=>b.onclick=()=>setCfg(+b.dataset.c)); setCfg(0);
+ /* packets: left (internet) → right (business). need = inspection level that catches it */
+ const NEED=[0,1,2,2,3,3,1,3]; let i=0;
+ function spawn(){ if(!s.classList.contains('active')) return;
+  const W=wire.clientWidth; if(!W) return; const need=NEED[i%NEED.length]; const good=(i%3===1); i++;
+  const el=document.createElement('div'); el.className='pk '+(good?'good':'bad'); el.style.left='0px'; wire.appendChild(el);
+  const blocked=!good && cfg>=need;
+  const gwX=W/2, stopX=blocked? gwX-82+SHPOS[Math.min(need,3)]*54 : W-14;
+  const dur=blocked? 1400*(stopX/(W-14)) : 1400;
+  const a=el.animate([{transform:'translateX(0)'},{transform:`translateX(${stopX}px)`}],{duration:dur,easing:'linear',fill:'forwards'});
+  a.onfinish=()=>{ if(blocked){el.classList.add('pop'); setTimeout(()=>el.remove(),450);}
+   else { if(!good) el.style.boxShadow='0 0 14px #ff5c8a'; setTimeout(()=>el.remove(),200);} };}
+ setInterval(spawn,700);})();
+
+/* ───────── S4: six models ───────── */
+(function(){const st=document.getElementById('stairs'), det=document.getElementById('mdet'); if(!st||!det) return;
+ const M=[
+  {m:'9100',fit:'Large branch, mid-size site',tp:6.5,tls:2.96,fw:55,lat:'10 μs',cps:'190K',users:'up to 500'},
+  {m:'9200',fit:'Campus, mid-size enterprise',tp:8,tls:3.6,fw:60,lat:'9 μs',cps:'250K',users:'500 to 1,000'},
+  {m:'9300',fit:'Mid-size HQ',tp:10.5,tls:5.1,fw:70,lat:'9 μs',cps:'300K',users:'1,000 to 2,500'},
+  {m:'9400',fit:'Large HQ',tp:14,tls:5.5,fw:72.6,lat:'1.85 μs',cps:'355K',users:'2,500 to 5,000'},
+  {m:'9700',fit:'Large HQ, data-center edge',tp:20,tls:9.6,fw:129,lat:'1.85 μs',cps:'535K',users:'5,000 to 10,000'},
+  {m:'9800',fit:'Data center, global enterprise',tp:25,tls:10.1,fw:185,lat:'1.85 μs',cps:'715K',users:'10,000+'}];
+ st.innerHTML=M.map((d,i)=>`<div class="mdl" data-i="${i}"><div class="cap"><div class="m">${d.m}</div><div class="fit">${d.fit}</div></div><div class="bd"><div class="tp">${d.tp}<small>Gbps Threat Prevention</small></div><div class="sp"><span>Users</span><b>${d.users}</b></div><div class="sp"><span>TP + TLS</span><b>~${Math.round(d.tls)} G</b></div><div class="sp"><span>Latency</span><b>${d.lat}</b></div><div class="sp"><span>Conn / s</span><b>${d.cps}</b></div></div></div>`).join('');
+ function sel(i){const d=M[i];[...st.children].forEach((el,j)=>el.classList.toggle('on',i===j));
+  det.innerHTML=`<span class="m">${d.m}</span><div class="d"><b>${d.fw} Gbps</b><small>Firewall · enterprise conditions</small></div><div class="d"><b>${d.tp} Gbps</b><small>Threat Prevention</small></div><div class="d"><b>~${d.tls} Gbps</b><small>TP + TLS inspection</small></div><div class="d"><b>${d.lat}</b><small>latency</small></div><div class="d"><b>${d.cps}</b><small>new connections / s</small></div><div class="d"><b>1RU</b><small>form factor</small></div>`;}
+ st.addEventListener('click',e=>{const t=e.target.closest('.mdl'); if(t) sel(+t.dataset.i);}); sel(5);})();
+
+/* ───────── S5: block rate × attacks per day ───────── */
+(function(){const eff=document.getElementById('eff'), atk=document.getElementById('atk'), av=document.getElementById('atkv'); if(!eff||!atk) return;
+ const V=[{k:'cp',n:'Check Point',r:99,l:'99%+'},{k:'pa',n:'Palo Alto',r:99,l:'99%+'},{k:'ft',n:'Fortinet',r:96,l:'~96%'},{k:'cs',n:'Cisco',r:91,l:'~91%'}];
+ eff.innerHTML=V.map(v=>`<div class="er ${v.k}"><span class="n">${v.n}</span><div class="trk"><i style="--w:${v.r}%"></i></div><span class="v">${v.l}</span><span class="ms"><b id="ms_${v.k}"></b>missed per day</span></div>`).join('');
+ function attacks(v){return Math.round(Math.pow(10,3+v/100*2)/100)*100;} /* 1,000 → 100,000 */
+ function draw(){const a=attacks(+atk.value); av.textContent=a.toLocaleString();
+  V.forEach(v=>{document.getElementById('ms_'+v.k).textContent=Math.round(a*(100-v.r)/100).toLocaleString();});}
+ atk.oninput=draw; draw();})();
+
+/* ───────── S6: point products → one platform ───────── */
+(function(){const c=document.getElementById('cons'), st=document.getElementById('constat'); if(!c||!st) return;
+ function set(m){c.classList.toggle('on',m===1);document.querySelectorAll('#conseg button').forEach(b=>b.classList.toggle('on',+b.dataset.c===m));
+  st.innerHTML=m?'<b>1</b> console · <b>0</b> hand-offs':'<b>6</b> hand-offs between tools';}
+ document.querySelectorAll('#conseg button').forEach(b=>b.onclick=()=>set(+b.dataset.c)); set(0);})();
+
+/* ───────── S8: capacity on demand, growth slider ───────── */
+(function(){const s=document.getElementById('s8'), wrap=document.getElementById('codchart'), sl=document.getElementById('codsl'); if(!s||!wrap||!sl) return;
+ const BASE=8, CEIL0=10, CEIL1=40, BOX=22, CARD=15, STACK=88;
+ function hitYear(g){for(let y=0;y<=3;y++) if(BASE*Math.pow(1+g,y)>CEIL0+0.05) return y; return 4;}
+ function fmt(n){return '$'+n+'K';}
+ function draw(){
+  const g=+sl.value/100; document.getElementById('codg').textContent=sl.value+'% / yr';
+  const dem=[0,1,2,3].map(y=>BASE*Math.pow(1+g,y));
+  const hy=hitYear(g);
+  const forklift=hy>3?BOX:BOX+STACK, cod=hy>3?BOX:BOX+CARD;
+  document.getElementById('cA').textContent=fmt(STACK);
+  document.getElementById('cB').textContent=fmt(forklift);
+  document.getElementById('cC').innerHTML=fmt(cod)+'<small>target</small>';
+  document.getElementById('cBw').textContent=hy>3?'Does not hit 10G inside 3 years':'Hits the wall in year '+hy+' · then $88K + a migration';
+  document.getElementById('cCw').textContent=hy>3?'$22K year 0 · card not needed in this window':'$22K year 0 · ~$15K in year '+hy;
+  const W=wrap.clientWidth||680, H=wrap.clientHeight||210;
+  const padL=36, padR=52, padT=16, padB=28;
+  const X=t=>padL+t*(W-padL-padR)/3, Y=v=>padT+(1-v/45)*(H-padT-padB);
+  let svg='';
+  [10,20,30,40].forEach(v=>{svg+=`<line class="gl" x1="${padL}" x2="${W-padR}" y1="${Y(v)}" y2="${Y(v)}"/><text class="gt" x="${W-padR+6}" y="${Y(v)+3.5}">${v}</text>`;});
+  svg+=`<text class="gt" x="${W-padR+6}" y="${padT-4}">Gbps</text>`;
+  [0,1,2,3].forEach(t=>{svg+=`<text class="ax" x="${X(t)}" y="${H-6}" text-anchor="middle">Y${t}</text>`;});
+  svg+=`<line class="ceil0" x1="${padL}" x2="${W-padR}" y1="${Y(CEIL0)}" y2="${Y(CEIL0)}"/>`;
+  const ins=Math.min(hy,3);
+  const stepPts=hy>3
+    ? [[0,CEIL0],[3,CEIL0]]
+    : [[0,CEIL0],[ins,CEIL0],[ins,CEIL1],[3,CEIL1]];
+  svg+=`<path class="step" d="M ${stepPts.map(([t,v])=>`${X(t)},${Y(v)}`).join(' L ')}"/>`;
+  const dPts=dem.map((v,t)=>`${X(t)},${Y(v)}`).join(' L ');
+  svg+=`<path class="dem" d="M ${dPts}"/>`;
+  dem.forEach((v,t)=>svg+=`<circle class="dot" cx="${X(t)}" cy="${Y(v)}" r="4.5" fill="#ff7ba8"/>`);
+  if(hy<=3){const x=X(hy), y=Y(CEIL0);
+   svg+=`<circle cx="${x}" cy="${y}" r="6" fill="#6fe3a1" stroke="#fff" stroke-width="2"/>`;
+   svg+=`<text class="mark" x="${x+10}" y="${Y(CEIL1)+14}" text-anchor="start">card in</text>`;}
+  wrap.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${svg}</svg>`;
+ }
+ sl.oninput=draw;
+ new MutationObserver(()=>{if(s.classList.contains('active'))draw();}).observe(s,{attributes:true,attributeFilter:['class']});
+ draw();
+})();
+
+/* ───────── S9: TCO chart, per box today vs per 10G with the card ───────── */
+(function(){const el=document.getElementById('tco'), h=document.getElementById('tcoh'), note=document.getElementById('tconote'); if(!el||!h) return;
+ const D=[
+  {h:'3-year TCO, 10 Gbps Threat Prevention tier',rows:[['ft','Fortinet','hardware + 3-yr subscription',14],['cp','Check Point 9800','hardware + 3-yr subscription',22],['pa','Palo Alto','hardware + 3-yr subscription',43]],
+   note:'Half of Palo Alto\'s TCO at the same block rate. Fortinet is cheaper per box, and buys you a lower block rate and a fixed ASIC. <b>Toggle to see the per-Gbps picture once the card is in.</b>'},
+  {h:'Cost per 10 Gbps of TP + TLS actually inspected',rows:[['ft','Fortinet','10G tier, as published',14],['cp0','Check Point 9800 today','$22K ÷ 1',22],['cpb','9800 + DPU card','($22K + ~$15K) ÷ 4 · target',9.3],['pa','Palo Alto','10G tier, as published',43]],
+   note:'Per gigabit of encrypted traffic you actually inspect, <b>the 9800 with the card is the cheapest option on the chart</b>, at a 99%+ block rate. This is the number a rack pays for.'}];
+ function draw(m){const d=D[m], mx=Math.max(...d.rows.map(r=>r[3])); h.textContent=d.h; note.innerHTML=d.note;
+  el.innerHTML=d.rows.map(r=>`<div class="hb ${r[0]}"><div class="n">${r[1]}<small>${r[2]}</small></div><div class="tr"><i data-w="${r[3]/mx*100}" style="width:0"></i></div><div class="v">$${r[3]%1?r[3].toFixed(1):r[3]}K${r[0]==='cpb'?'<small>target</small>':''}</div></div>`).join('');
+  requestAnimationFrame(()=>el.querySelectorAll('i[data-w]').forEach(i=>i.style.width=i.dataset.w+'%'));
+  document.querySelectorAll('#tcoseg button').forEach(b=>b.classList.toggle('on',+b.dataset.m===m));}
+ document.querySelectorAll('#tcoseg button').forEach(b=>b.onclick=()=>draw(+b.dataset.m)); draw(0);})();
+
+/* ───────── A4: static TCO bars, animate on entry ───────── */
+(function(){const s=document.getElementById('a4'), el=document.getElementById('a4bars'); if(!s||!el) return;
+ function run(){el.querySelectorAll('i[data-w]').forEach(i=>{i.style.width='0';requestAnimationFrame(()=>setTimeout(()=>i.style.width=i.dataset.w+'%',60));});}
+ new MutationObserver(()=>{if(s.classList.contains('active'))run();}).observe(s,{attributes:true,attributeFilter:['class']});
+ if(s.classList.contains('active')) run();})();
+</script>
+</body>
+</html>
