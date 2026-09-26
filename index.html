@@ -117,8 +117,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .sl .slh b{font-family:var(--font-num);color:var(--text);direction:ltr;font-size:13px;}
 
 /* hero */
-.hero{background:radial-gradient(1200px 600px at 80% 20%,rgba(228,12,91,.35),transparent 60%),radial-gradient(900px 500px at 10% 90%,rgba(116,25,132,.45),transparent 60%),var(--dark-2);color:#fff;justify-content:center;padding:0 90px;}
-.hero .logo{height:40px;width:auto;align-self:flex-start;margin-bottom:28px;background:#fff;padding:7px 12px;border-radius:6px;}
+.hero{background:radial-gradient(1200px 600px at 80% 20%,rgba(228,12,91,.35),transparent 60%),radial-gradient(900px 500px at 10% 90%,rgba(116,25,132,.45),transparent 60%),var(--dark-2);color:#fff;justify-content:center;align-items:center;text-align:center;padding:0 90px;}
+.hero .logo{position:absolute;top:28px;left:56px;height:32px;width:auto;background:#fff;padding:6px 10px;border-radius:6px;}
 .hero .eyebrow{color:var(--pink-soft);}
 .hero h1{font-size:46px;font-weight:900;line-height:1.08;margin:6px 0 10px;}
 .hero h1 .en{font-weight:800;}
@@ -128,10 +128,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .hero .th{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:14px 18px;}
 .hero .th .v{font-family:var(--font-num);font-size:38px;font-weight:800;color:var(--pink-soft);line-height:1;direction:ltr;text-align:right;}
 .hero .th .l{font-size:12.5px;color:rgba(255,255,255,.7);margin-top:6px;line-height:1.35;}
-.hero .meta{display:flex;gap:40px;}
-.hero .meta .lbl{font-size:10.5px;color:rgba(255,255,255,.45);letter-spacing:.1em;font-weight:700;}
-.hero .meta .val{font-size:15px;font-weight:600;margin-top:2px;}
-.hero .hint{position:absolute;bottom:26px;inset-inline-start:90px;font-size:11px;color:rgba(255,255,255,.4);}
 
 /* S2 product */
 .solve{display:flex;flex-direction:column;gap:8px;}
@@ -237,7 +233,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 .lanes{display:grid;grid-template-columns:112px repeat(5,1fr);gap:3px;margin:6px 0 0;}
 .lanes .lh{background:var(--dark);color:#fff;border-radius:5px;padding:4px 3px;text-align:center;font-size:10px;font-weight:800;line-height:1.15;transition:opacity .3s;} .lanes .lh small{display:block;font-size:8.5px;font-weight:500;opacity:.75;}
 .lanes .lh.corner{background:transparent;color:var(--mid);text-align:start;padding-inline-start:4px;} .lanes .lh.corner small{color:var(--light);}
-.lanes .ln{display:flex;flex-direction:column;justify-content:center;padding:2px 6px;border-inline-start:4px solid;border-radius:4px;background:var(--gray);line-height:1.15;} .lanes .ln b{font-size:11px;font-weight:800;} .lanes .ln small{font-size:9px;color:var(--light);font-weight:600;direction:ltr;text-align:start;}
+.lanes .ln{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2px 6px;border-inline-start:4px solid;border-radius:4px;background:var(--gray);line-height:1.15;text-align:center;} .lanes .ln b{font-size:11px;font-weight:800;} .lanes .ln small{font-size:9px;color:var(--light);font-weight:600;direction:ltr;text-align:center;}
 .lanes .ln.cp{border-color:var(--cp);} .lanes .ln.ft{border-color:var(--ft);} .lanes .ln.pa{border-color:var(--pa);} .lanes .ln.cs{border-color:var(--cs);}
 .lanes .c{border-radius:5px;padding:4px 3px;text-align:center;font-size:10.5px;font-weight:800;color:#fff;line-height:1.15;transition:all .35s;} .lanes .c small{display:block;font-size:8.5px;font-weight:500;opacity:.85;margin-top:1px;}
 .lanes .c.asic{background:var(--teal);} .lanes .c.acc{background:var(--amber);} .lanes .c.cpu{background:var(--primary);}
@@ -305,7 +301,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 #sSilx .conn{display:flex;flex-direction:column;align-items:center;gap:0;color:var(--mid);margin:-2px 0;}
 #sSilx .conn span{font-size:8.6px;font-weight:800;letter-spacing:.02em;}
 #sSilx .conn::after{content:'▼';font-size:10px;line-height:1;color:var(--light);}
-/* analysis block — the answer to "where the inspection runs" */
+/* analysis block: the answer to "where the inspection runs" */
 #sSilx .ana{position:relative;border-width:2px;flex:1;justify-content:center;}
 #sSilx .atag{position:absolute;top:-9px;inset-inline-start:10px;font-size:8.6px;font-weight:900;padding:1px 8px;border-radius:9px;color:#fff;}
 /* cores style: general cores, one item at a time */
@@ -598,7 +594,20 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 /* S9 v3: risks table header + cost/time breakdown */
 .rr.hdr{background:var(--off);border-color:var(--dark);}
 .rr.hdr .sv,.rr.hdr .nm,.rr.hdr .mt{font-size:9.5px;font-weight:800;color:var(--dark);letter-spacing:.02em;padding-top:0;}
-.brk{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+.brk{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;margin-top:10px;}
+.reqcard{display:flex;flex-direction:column;}
+.reqcard .reqsec + .reqsec{margin-top:6px;padding-top:6px;border-top:1px solid var(--border);}
+.reqcard .reqh{font-size:10.5px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:6px;margin-bottom:3px;}
+.reqcard .reqh .dotc{width:8px;height:8px;border-radius:2px;}
+.reqcard ul li{font-size:10.5px;line-height:1.34;}
+.reqcard ul.tul li::before{background:var(--teal)!important;}
+.reqcard ul.aul li::before{background:var(--amber)!important;}
+.reqcard ul.pul li::before{background:var(--purple)!important;}
+#s9 .brk .bc{padding:11px 15px;}
+#s9 .brk .bt{font-size:12.5px;margin-bottom:8px;}
+#s9 .brk .bar{height:30px;border-radius:6px;}
+#s9 .brk .bar span{font-size:10.5px;}
+#s9 .brk .leg{font-size:10px;margin-top:8px;gap:5px 14px;}
 .brk .bc{background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 12px;}
 .brk .bt{font-size:11px;font-weight:800;display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
 .brk .bt .tot{font-family:var(--font-num);direction:ltr;color:var(--primary);}
@@ -751,7 +760,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 .stairs .mdl.rec .sp.nic b{color:#a8d4df;}
 
 .stairs .mdl .sp.thr span{color:var(--mid);}
-.stairs .mdl .sp.thr b{color:var(--primary-dark);font-size:11.5px;}
+.stairs .mdl .sp.thr b{color:var(--primary-dark);font-size:9.5px;white-space:nowrap;}
 .stairs .mdl.rec .sp.thr{border-bottom-color:rgba(255,255,255,.2);}
 .stairs .mdl .sp.thr{border-top:none;padding-top:0;border-bottom:1px solid rgba(228,12,91,.18);padding-bottom:5px;margin-bottom:3px;font-weight:700;}
 
@@ -760,6 +769,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 #sizetip .tip-cols{display:flex;align-items:center;gap:8px;}
 #sizetip .tip-col{flex:1;display:flex;flex-direction:column;gap:1px;}
 #sizetip .tip-lbl{font-size:9px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.4);text-transform:uppercase;}
+#sizetip .tip-lbl .en{text-transform:none;}
 #sizetip .tip-val{font-family:var(--font-num);font-size:17px;font-weight:800;color:#fff;line-height:1;direction:ltr;} #sizetip .tip-val small{font-size:9.5px;font-weight:600;color:rgba(255,255,255,.5);}
 #sizetip .tip-sub{font-size:9px;color:rgba(255,255,255,.4);margin-top:1px;direction:ltr;unicode-bidi:isolate;}
 #sizetip .tip-div{width:1px;height:32px;background:rgba(255,255,255,.12);flex-shrink:0;}
@@ -880,7 +890,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 .stuck .swaparr::before{content:'←';font-size:18px;line-height:1;color:var(--primary);}
 
 /* ── S4 (slide 6): segment × criteria heatmap ── */
-.hmwrap{display:grid;grid-template-columns:1.8fr 1fr;gap:12px;flex:1;min-height:0;}
+.hmwrap{display:grid;grid-template-columns:2.3fr 1fr;gap:12px;flex:1;min-height:0;}
 .hmcard{display:flex;flex-direction:column;}
 .hm{display:grid;grid-template-columns:126px 78px repeat(8,1fr) 58px;gap:3px;flex:1;align-content:stretch;}
 .hm .wl{border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-size:11px;font-weight:800;direction:ltr;cursor:pointer;min-height:40px;transition:all .2s;}
@@ -891,7 +901,6 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 .hm .ch1{font-size:10.5px;font-weight:800;color:var(--mid);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:3px;line-height:1.15;}
 /* fixed slot for the sub-label, so every main label lands on the same baseline */
 .hm .ch1 small{display:flex;align-items:flex-start;justify-content:center;height:21px;font-weight:600;color:var(--light);font-size:9px;line-height:1.15;margin-top:2px;}
-.hm .ch1.hint{align-items:flex-end;text-align:right;padding-inline-end:10px;} .hm .ch1.hint small{color:var(--primary);font-weight:700;}
 .hm .rh{display:flex;flex-direction:column;justify-content:center;padding:0 10px;border-radius:7px;cursor:pointer;background:var(--gray);transition:all .2s;border:2px solid transparent;}
 .hm .rh b{font-family:var(--font-num);font-size:14px;font-weight:800;direction:ltr;text-align:right;line-height:1.1;} .hm .rh small{font-size:9.5px;color:var(--mid);font-weight:600;}
 .hm .mny{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:0 7px;border-radius:7px;background:var(--gray);cursor:pointer;transition:all .2s;border:2px solid transparent;}
@@ -902,7 +911,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 .hm .mny:hover{background:#eee8ec;}
 .hm .mny.star{background:#fdf0e2;} .hm .mny.star b{color:var(--amber);} .hm .mny.star u i{background:var(--amber);}
 .hm .mny.rowon{border-color:var(--dark);background:#fff;}
-.hm .rh:hover{background:#eee8ec;} .hm .rh.on{background:var(--dark);border-color:var(--dark);} .hm .rh.on b,.hm .rh.on small{color:#fff;}
+.hm .rh:hover{background:#eee8ec;} .hm .rh.on{background:#fde6ee;border-color:var(--primary);}
 .hm .rh.star b::after{content:' ★';color:var(--amber);}
 .hm .c{border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-size:17px;font-weight:800;cursor:pointer;transition:all .2s;position:relative;min-height:40px;}
 .hm .c.w0{background:#f6f3f5;color:#cfc7cc;font-size:11px;} .hm .c.w1{background:#ece6ea;} .hm .c.w2{background:#dccfd8;} .hm .c.w3{background:#c7aec0;box-shadow:inset 0 0 0 2px #a98aa0;}
@@ -1078,7 +1087,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 .scard .seg{font-family:var(--font-num);font-size:36px;font-weight:800;line-height:1.05;color:var(--text);}
 .scard .why{display:block;font-size:14px;color:var(--mid);line-height:1.65;} /* .why is also a flex list elsewhere; reset it here */
 .scard .why b{color:var(--text);font-weight:700;}
-.scard .act{margin-top:auto;padding-top:14px;border-top:1px dashed var(--border);font-size:13.5px;line-height:1.6;color:var(--text);}
+.scard .act{margin-top:auto;padding-top:14px;border-top:1px dashed var(--border);font-size:13.5px;line-height:1.6;color:var(--text);min-height:80px;}
 .scard .act .k{font-weight:800;margin-inline-end:5px;}
 .scard.focus .act .k{color:var(--amber);} .scard.hold .act .k{color:var(--teal);} .scard.skip .act .k{color:var(--primary);}
 .src.box{opacity:1;background:var(--off);border:1px solid var(--border);border-radius:8px;padding:8px 12px;}
@@ -1144,11 +1153,12 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 #s10 .solve .row{padding:11px 13px;} #s10 .solve .row p{font-size:12px;} #s10 .solve .row h4{font-size:13.5px;}
 #s10 .card .assume{margin-top:auto;padding-top:10px;font-size:10.5px;}
 /* sHow sizing: centered diagram at a balanced height */
+#sHow .callout{margin-top:6px;flex-shrink:0;background:#fdf1f5;border:1px solid rgba(228,12,91,.25);border-inline-start:4px solid var(--primary);border-radius:9px;padding:7px 13px;font-size:12px;line-height:1.45;color:var(--mid);font-weight:600;}
 #sHow .how1{justify-content:center;}
 #sHow .how1 > .card{flex:0 1 auto;}
-#sHow .flow{flex:0 1 auto;padding-bottom:30px;}
+#sHow .flow{flex:0 1 auto;padding-bottom:6px;}
 #sHow .flow .grp.dpu.one{flex:0 0 auto;}
-#sHow .flow .stn{display:flex;flex-direction:column;justify-content:center;min-height:190px;}
+#sHow .flow .stn{display:flex;flex-direction:column;justify-content:center;min-height:176px;}
 #sHow .flow .stn b{font-size:12.5px;} #sHow .flow .stn small{font-size:10px;}
 /* S9 sizing */
 #s9 .card{padding:11px 14px;} #s9 .card .ch{font-size:12px;margin-bottom:7px;}
@@ -1189,8 +1199,141 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
   .slide{position:relative;opacity:1!important;visibility:visible!important;transform:none!important;width:1280px;height:720px;page-break-after:always;}
   .bar .fil{width:var(--w)!important;}
   .swot2 .it small{position:static!important;opacity:1!important;visibility:visible!important;margin-top:2px!important;box-shadow:none!important;border:none!important;border-radius:0!important;padding:0!important;background:transparent!important;color:var(--mid)!important;font-size:9px!important;line-height:1.3!important;}
+  .s17 .ucard,.s17 .s17foot,.s17 .askpanel{opacity:1!important;transform:none!important;animation:none!important;}
   .nav,.dots,.progress,.hero .hint{display:none!important;}
 }
+/* ─── Redesign: S10 Business Case ─── */
+.biz2{display:grid;grid-template-columns:1fr 1.4fr;gap:14px;flex:1;min-height:0;}
+.gatef{display:flex;flex-direction:column;align-items:stretch;gap:6px;margin:10px 0;}
+.gate-item{text-align:center;background:var(--off);border:1px solid var(--border);border-radius:8px;padding:8px 14px;}
+.gate-item.mid{background:rgba(228,12,91,.06);border-color:rgba(228,12,91,.3);}
+.gate-num{font-family:var(--font-num);font-size:26px;font-weight:800;color:var(--primary);line-height:1;direction:ltr;}
+.gate-lbl{font-size:10.5px;color:var(--mid);font-weight:700;margin-top:2px;}
+.gate-lbl-top{font-size:9px;letter-spacing:.08em;font-weight:800;color:var(--mid);text-transform:uppercase;}
+.gate-val{font-size:13px;font-weight:800;color:var(--primary);margin-top:2px;}
+.gate-arr{text-align:center;font-size:14px;color:var(--primary);line-height:1;padding:1px 0;}
+.gate-note{font-size:11px;color:var(--mid);line-height:1.4;margin-top:8px;padding:6px 10px;background:var(--off);border-radius:6px;}
+.scenario-box{margin-top:8px;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.scenario-box summary{font-size:11.5px;font-weight:700;color:var(--mid);padding:6px 12px;cursor:pointer;background:var(--off);list-style:none;display:flex;align-items:center;gap:6px;user-select:none;}
+.scenario-box summary::-webkit-details-marker{display:none;}
+.scenario-box summary::before{content:'▸ ';color:var(--primary);}
+.scenario-box[open] summary::before{content:'▾ ';}
+.scenario-box .sliders{padding:10px 12px;display:flex;flex-direction:column;gap:8px;}
+.drv-chips{display:flex;flex-direction:column;gap:6px;margin-bottom:8px;}
+.drv-chip{font-size:11.5px;font-weight:600;background:var(--off);border:1px solid var(--border);border-inline-start:3px solid var(--primary);border-radius:6px;padding:5px 10px;color:var(--mid);}
+.retention-band{flex-shrink:0;background:var(--dark);color:#fff;border-radius:7px;padding:8px 14px;font-size:12px;line-height:1.45;margin-top:8px;}
+.retention-band b{color:var(--pink-soft);}
+#s10 .kpis{flex-shrink:0;margin-top:6px!important;}
+#s10 .kpi .v{font-size:30px;}
+#s10 .biz2{margin-top:6px;}
+#s10 .rev{height:170px;}
+#s10 .rev .yr .tv{font-size:15px;}
+#s10 .rev .yr .yl{font-size:11px;}
+/* ─── Redesign v2: S10 Business Value ─── */
+#s10 .s10head .title{margin:0;font-size:30px;}
+.s10head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-shrink:0;}
+.s10sub{font-size:13px;color:var(--mid);line-height:1.5;margin-top:4px;}
+.scentoggle{display:inline-flex;flex-shrink:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--off);margin-top:4px;}
+.scentoggle button{font-family:inherit;font-size:11.5px;font-weight:700;color:var(--mid);background:none;border:none;padding:8px 14px;cursor:pointer;white-space:nowrap;}
+.scentoggle button.on{background:var(--dark);color:#fff;}
+.bval{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px;flex:1;min-height:0;}
+.vcard{position:relative;background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px 15px 11px;border-top:4px solid var(--primary);display:flex;flex-direction:column;}
+.vcard.v2{border-top-color:var(--purple);opacity:.6;transition:opacity .3s,box-shadow .3s;}
+.vcard.v2.active{opacity:1;box-shadow:0 4px 18px rgba(116,25,132,.18);}
+.vcard.v3{border-top-color:var(--teal);}
+.vcard .vhead{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;}
+.vcard .vnum{flex-shrink:0;width:22px;height:22px;border-radius:50%;font-family:var(--font-num);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.vcard.v1 .vnum{background:#fde9f0;color:var(--primary);}
+.vcard.v2 .vnum{background:#f3e8f5;color:var(--purple);}
+.vcard.v3 .vnum{background:#e6f4f4;color:var(--teal);}
+.vcard h4{font-size:13.5px;font-weight:800;color:var(--text);line-height:1.25;margin:2px 0 0;}
+.vcard p{font-size:11px;color:var(--mid);line-height:1.4;flex:1;margin:0;}
+.vcard .vbig{font-family:var(--font-num);font-size:29px;font-weight:800;color:var(--primary);line-height:1;direction:ltr;text-align:right;margin-top:8px;}
+.vcard.v2 .vbig{color:var(--purple);}
+.vcard .vbig.txt{font-family:inherit;font-size:15px;color:var(--teal);direction:rtl;line-height:1.3;text-align:right;}
+.vbig.tip{position:relative;cursor:help;}
+.tipi{display:inline-block;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:9px;font-weight:700;width:13px;height:13px;line-height:13px;text-align:center;border-radius:50%;background:var(--off);color:var(--mid);vertical-align:super;margin-inline-start:5px;direction:ltr;}
+.vbig.tip:hover .tipi{background:var(--primary);color:#fff;}
+.vbig.tip::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 9px);inset-inline-end:0;background:var(--dark);color:#fff;font-family:var(--font);font-size:10px;font-weight:600;line-height:1.5;padding:9px 12px;border-radius:8px;width:250px;white-space:normal;direction:rtl;text-align:right;opacity:0;visibility:hidden;transform:translateY(5px);transition:opacity .18s,transform .18s;z-index:30;box-shadow:0 10px 26px rgba(41,14,35,.3);pointer-events:none;}
+.vbig.tip::before{content:'';position:absolute;bottom:calc(100% + 3px);inset-inline-end:14px;border:6px solid transparent;border-top-color:var(--dark);opacity:0;visibility:hidden;transition:opacity .18s;z-index:31;}
+.vbig.tip:hover::after,.vbig.tip:hover::before{opacity:1;visibility:visible;transform:translateY(0);}
+.vcard .vlbl{font-size:10.5px;color:var(--mid);font-weight:700;margin-top:3px;}
+.vcard .vnote{font-size:9.3px;color:var(--light);margin-top:7px;line-height:1.35;border-top:1px dashed var(--border);padding-top:5px;}
+.calc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:11px 16px 8px;margin-top:10px;flex-shrink:0;box-shadow:0 2px 10px rgba(41,14,35,.05);}
+.calc .calchd{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.calc .calchd h3{font-size:13px;font-weight:800;color:var(--text);margin:0;}
+.calc .calchd h3 .calcscn{color:var(--primary);font-weight:800;}
+.calc .calcbe{font-size:10.5px;font-weight:700;color:var(--primary-dark);background:#fde9f0;border-radius:6px;padding:4px 11px;white-space:nowrap;}
+.ptbl{width:100%;border-collapse:collapse;table-layout:fixed;}
+.ptbl th{font-size:9.3px;font-weight:800;color:var(--mid);text-align:right;padding:4px 8px;border-bottom:1.5px solid var(--dark);letter-spacing:.02em;}
+.ptbl th.a{text-align:left;}
+.ptbl th:nth-child(1),.ptbl td:nth-child(1){width:19%;}
+.ptbl th:nth-child(2),.ptbl td:nth-child(2){width:35%;}
+.ptbl th:nth-child(3),.ptbl td:nth-child(3){width:29%;}
+.ptbl th:nth-child(4),.ptbl td:nth-child(4){width:17%;}
+.ptbl td{font-size:11px;color:var(--mid);padding:4px 8px;border-bottom:1px solid var(--border);}
+.ptbl td:first-child{color:var(--text);font-weight:700;}
+.ptbl td.as{font-size:9.3px;color:var(--light);line-height:1.3;}
+.ptbl td.cc{unicode-bidi:plaintext;text-align:right;font-size:10.3px;color:var(--mid);}
+.ptbl td.a{text-align:left;font-family:var(--font-num);direction:ltr;font-weight:800;color:var(--text);font-size:12.5px;}
+.ptbl td.a.neg{color:var(--primary);}
+.ptbl td.a.purple,.ptbl td.a .amt.purple{color:var(--purple);}
+.ptbl tr.sub td{background:var(--off);}
+.ptbl tr.sub td:first-child{font-weight:800;}
+.ptbl tr.sub td.a{font-size:13.5px;}
+.ptbl tr.roi td{background:#fde9f0;border-bottom:none;}
+.ptbl tr.roi td:first-child{color:var(--primary-dark);font-weight:800;}
+.ptbl tr.roi td.a{color:var(--primary);font-size:17px;}
+.ptbl tr.up-only{display:none;}
+.calc.up .ptbl tr.up-only{display:table-row;animation:rowIn .45s ease-out;}
+@keyframes rowIn{from{opacity:0}to{opacity:1}}
+.ptbl .amt{display:inline-block;}
+.ptbl .amt.pulse{animation:amtPulse .55s cubic-bezier(.2,.9,.2,1);}
+@keyframes amtPulse{0%{transform:scale(1.22)}55%{transform:scale(.97)}100%{transform:scale(1)}}
+/* ─── Redesign: S17 · למה לפעול עכשיו (finale) ─── */
+.s17{background:radial-gradient(1100px 560px at 84% 8%,rgba(228,12,91,.26),transparent 58%),radial-gradient(950px 540px at 6% 98%,rgba(116,25,132,.32),transparent 60%),var(--dark-2);}
+.s17 .title{color:#fff;font-size:27px;margin-bottom:6px;}
+.s17 .title .hl{color:var(--pink-soft);}
+.s17sub{font-size:13.5px;color:rgba(255,255,255,.78);line-height:1.5;margin:0 0 13px;max-width:960px;}
+.s17sub .num,.s17sub .en{color:#fff;font-weight:700;}
+/* urgency cards (מחיר ההמתנה) */
+.s17grid{display:flex;gap:14px;flex:1;min-height:0;margin-bottom:13px;}
+.s17 .ucard{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-top:3px solid var(--primary);border-radius:12px;padding:16px 19px;display:flex;flex-direction:column;justify-content:center;
+  opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.25,1);}
+.s17 .u2{border-top-color:var(--pink-soft);}
+.s17 .u3{border-top-color:var(--purple);}
+.slide.active.s17 .ucard{opacity:1;transform:none;}
+.slide.active.s17 .u1{transition-delay:.10s}
+.slide.active.s17 .u2{transition-delay:.22s}
+.slide.active.s17 .u3{transition-delay:.34s}
+.s17 .utop{display:flex;align-items:baseline;gap:9px;margin-bottom:10px;}
+.s17 .uk{font-family:var(--font-num);font-size:16px;font-weight:800;color:var(--pink-soft);flex-shrink:0;direction:ltr;}
+.s17 .uh{font-size:14.5px;font-weight:800;color:#fff;line-height:1.25;}
+.s17 .ucard p{font-size:12px;color:rgba(255,255,255,.7);line-height:1.62;margin:0;}
+.s17 .ucard p .en{color:rgba(255,255,255,.9);font-weight:600;}
+/* footer: KPI scorecard + the ask */
+.s17foot{display:flex;gap:14px;flex-shrink:0;
+  opacity:0;transform:translateY(16px);transition:opacity .55s ease .42s,transform .55s cubic-bezier(.2,.8,.25,1) .42s;}
+.slide.active.s17 .s17foot{opacity:1;transform:none;}
+.s17 .kpanel{flex:1.75;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);border-radius:13px;padding:11px 20px 13px;}
+.s17 .ktitle{font-size:11px;letter-spacing:.12em;font-weight:800;color:var(--pink-soft);text-transform:uppercase;margin-bottom:10px;}
+.s17 .ktiles{display:flex;}
+.s17 .ktile{flex:1;padding:0 16px;border-inline-start:1px solid rgba(255,255,255,.1);}
+.s17 .ktile:first-child{border-inline-start:none;padding-inline-start:0;}
+.s17 .kv{font-family:var(--font-num);font-size:26px;font-weight:800;color:#fff;line-height:1;direction:ltr;text-align:right;}
+.s17 .ktile.win .kv{color:#6fe3a1;}
+.s17 .kl{font-size:10.5px;color:rgba(255,255,255,.62);margin-top:7px;line-height:1.35;}
+.s17 .kl .en{color:rgba(255,255,255,.8);}
+.s17 .askpanel{flex:1;background:linear-gradient(125deg,var(--dark) 0%,#48102f 100%);border:1.5px solid var(--primary);border-radius:13px;padding:12px 22px;display:flex;flex-direction:column;justify-content:center;gap:3px;
+  animation:ctaGlow 2.8s ease-in-out infinite;}
+@keyframes ctaGlow{0%,100%{box-shadow:0 0 16px rgba(228,12,91,.2)}50%{box-shadow:0 0 36px rgba(228,12,91,.48)}}
+.s17 .ask-lbl{font-size:10px;letter-spacing:.14em;font-weight:800;color:var(--pink-soft);text-transform:uppercase;}
+.s17 .ask-big{font-size:21px;font-weight:800;color:#fff;line-height:1.14;}
+.s17 .ask-big .num{color:var(--pink-soft);font-family:var(--font-num);}
+.s17 .ask-gate{font-size:12px;font-weight:700;color:#6fe3a1;margin-top:5px;}
+.s17 .ask-gate .num,.s17 .ask-gate .en{color:#8ef0b8;}
+.s17 .ask-stop{font-size:11px;color:rgba(255,255,255,.6);line-height:1.4;}
+.s17 .ask-stop .num{color:rgba(255,255,255,.85);}
 </style>
 </head>
 <body>
@@ -1201,14 +1344,8 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 <!-- ═══════════ 1 · HERO ═══════════ -->
 <section class="slide hero active" data-ch="0">
   <img src="checkpoint-logo.PNG" alt="Check Point" class="logo">
-  <div class="eyebrow"><span class="en">Senior PM Assignment · Session 1</span> · ספטמבר 2026</div>
-  <h1 style="font-size:64px"><span class="en">Quantum 9000 Series</span></h1>
-  <div class="meta" style="margin-top:28px">
-    <div><div class="lbl">מגיש</div><div class="val">ברק רוזנפלד</div></div>
-    <div><div class="lbl">קהל</div><div class="val"><span class="en">R&amp;D · Product · Sales · Marketing</span></div></div>
-    <div><div class="lbl">משך</div><div class="val">15 דקות + דיון</div></div>
-  </div>
-  <div class="hint">← → למעבר · <span class="en">F11</span> למסך מלא · כל שקף אינטראקטיבי, לחצו על הבקרות</div>
+  <h1 style="font-size:64px"><span class="en">Quantum Force 9000 Series</span></h1>
+  <div class="en" style="margin-top:20px;font-size:20px;font-weight:600;color:rgba(255,255,255,.72);letter-spacing:.04em">Senior PM Assignment 2026 · Barak Rozenfeld</div>
 </section>
 
 <!-- ═══════════ 2 · WHAT IS IT ═══════════ -->
@@ -1216,7 +1353,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
   <div class="rail"></div>
   <div class="body">
     <div class="eyebrow">פרק 1 · המוצר</div>
-    <h1 class="title">Quantum 9000: <span class="hl">שכבת ההגנה שבין הארגון לכל מה שמחוץ לו</span></h1>
+    <h1 class="title">הגנה רב־שכבתית על תעבורת הארגון</h1>
     <div class="what">
       <div class="scene">
         <div class="lane3">
@@ -1240,10 +1377,10 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
           <div class="tpg"><span class="l" id="stTpLabel">Firewall Throughput</span><b id="stTp">400</b><span class="u">Gbps</span><div class="tr"><i id="stTpb" style="width:100%"></i></div></div>
         </div>
         <div class="layers" id="layers">
-          <div class="ly on"  data-k="l4" ><div class="n">L3–L4</div><div class="t">סינון לפי IP ופורט</div><div class="d">מי שולח, למי, באיזה פורט. בדיקת הכתובת על המכתב, בלי לפתוח</div></div>
+          <div class="ly on"  data-k="l4" ><div class="n">L3–L4</div><div class="t">סינון לפי IP ופורט</div><div class="d">בקרת גישה לפי כתובת IP ופורט. בדיקת מעטפת החיבור בלבד, ללא פתיחת התוכן</div></div>
           <div class="ly off" data-k="l7" ><div class="n">L7</div><div class="t">זיהוי אפליקציה ומשתמש</div><div class="d">זיהוי האפליקציה, האתר והמשתמש</div></div>
           <div class="ly off" data-k="tp" ><div class="n">Threat Prevention</div><div class="t">ניתוח תוכן ואיתור איומים</div><div class="d">קובץ נגוע, ניצול באג, תקשורת עם תוקף. בדיקת התוכן עצמו</div></div>
-          <div class="ly off" data-k="tls"><div class="n">TLS Inspection</div><div class="t">פענוח תעבורה מוצפנת</div><div class="d">פענוח HTTPS לצורך בדיקת L7 ו-Threat Prevention. ללא זה, שתי השכבות הקודמות עיוורות לתעבורה מוצפנת</div></div>
+          <div class="ly off" data-k="tls"><div class="n">TLS Inspection</div><div class="t">פענוח תעבורה מוצפנת</div><div class="d">פענוח HTTPS לצורך בדיקה עמוקה של L7 ו־Threat Prevention. ללא פענוח ניתן לראות את מעטפת החיבור, אך לא את ה־URL המלא, הבקשה או הקובץ שבתוכו</div></div>
         </div>
       </div>
       <div class="card" style="min-height:0;display:flex;flex-direction:column;">
@@ -1252,7 +1389,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
       </div>
     </div>
     <div class="src box" style="margin-top:4px">
-      <span class="t">מקורות</span> <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">Check Point Appliance Comparison Chart 2026</a> · FW = מעבדה 1518B · TP = Enterprise Testing Conditions
+      <span class="t">מקורות</span> <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">Check Point Appliance Comparison Chart 2026</a>
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1273,17 +1410,17 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
       </div>
       <div class="metric3" style="display:flex;flex-direction:column;">
         <div class="ch" style="margin-bottom:0;flex-shrink:0"><span class="dotc"></span>הביצועים של דגם <span class="en" id="mxm">9800</span></div>
-        <div class="mx"><h5>Firewall <span id="mxfw">400 Gbps</span></h5><p>רק שכבת המעטפה (<span class="en">L3/4</span>). מספר מעבדה, חבילות גדולות. ערך שיווקי בלבד; אינו מייצג עומס ארגוני אמיתי.</p></div>
-        <div class="mx b"><h5>Threat Prevention <span id="mxtp">25 Gbps</span></h5><p>כל השכבות פעילות, על תמהיל תעבורה ארגוני אמיתי (<span class="en">Enterprise Testing Conditions</span>). <b>זה המספר שמשווים ב-RFP.</b></p></div>
-        <div class="mx c"><h5>TP + TLS Inspection <span id="mxtls">~10 Gbps</span></h5><p>כל השכבות פעילות, כולל פענוח הצפנה. נשארים עם <b><span id="mxr">3%</span> ממספר הכותרת</b>.</p></div>
-        <div class="same" style="margin-top:6px">
+        <div class="mx"><h5>Firewall <span id="mxfw">400 Gbps</span></h5></div>
+        <div class="mx b"><h5>Threat Prevention <span id="mxtp">25 Gbps</span></h5></div>
+        <div class="mx c"><h5>TP + TLS Inspection <span id="mxtls">~10 Gbps</span><span id="mxr" style="display:none"></span></h5></div>
+        <div class="same" style="margin-top:16px">
           <div class="same-hd">משותף לכל הדגמים בקו</div>
           <div class="same-pills">
             <span>Gaia OS</span><span>SmartConsole</span><span>Software Blades</span><span>1RU</span><span>FIPS 140-2 · EAL4+</span><span>Maestro Clustering</span>
           </div>
         </div>
         <div class="src box" style="margin-top:auto">
-          <span class="t">מקורות והנחות</span> <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">Appliance Chart 2026</a> · TP+TLS: נתוני Check Point · <b>הנחה:</b> ≈ 1–2 Mbps למשתמש לצורך אומדן גודל הדגם
+          <span class="t">מקורות והנחות</span> <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">Appliance Chart 2026</a> · ערכי Threat Prevention ו-TP+TLS הם נתוני Check Point · התאמת הדגם לגודל הארגון מבוססת על אומדן של כ-1–2 Mbps למשתמש פעיל
         </div>
       </div>
     </div>
@@ -1300,7 +1437,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
     <h1 class="title">נתחי שוק ה-<span class="en">Perimeter Firewall</span>, <span class="hl en">2020 → 2030</span></h1>
     <div class="slope" id="slope"></div>
     <div class="src box" style="margin-top:6px">
-      <span class="t">מקורות</span> <a href="https://my.idc.com/getdoc.jsp?containerId=IDC_P6272" target="_blank" rel="noopener">IDC Security Appliance Tracker 2024</a> · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner 09/2026</a> · <a href="https://markwideresearch.com/enterprise-network-firewall-market" target="_blank" rel="noopener">MarkWide CAGR 9.6%</a> · נתחי 2030 = תחזית המשך מגמה
+      <span class="t">מקורות</span> <a href="https://my.idc.com/getdoc.jsp?containerId=IDC_P6272" target="_blank" rel="noopener">IDC Security Appliance Tracker 2024</a> · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner 09/2026</a> · <a href="https://markwideresearch.com/enterprise-network-firewall-market" target="_blank" rel="noopener">MarkWide CAGR 9.6%</a> · נתחי 2024 הם נתוני IDC · נתחי 2030 הם הערכה שלי בהנחת המשך המגמה הנוכחית, ולא תחזית רשמית
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1312,10 +1449,10 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
   <div class="rail"></div>
   <div class="body">
     <div class="eyebrow">פרק 2 · השוק</div>
-    <h1 class="title">ה-<span class="en">TAM</span> גדל ב-<span class="en">$6.5B</span> עד 2030. <span class="hl">בנתח הנוכחי מגיעים ל-<span class="en">Check Point</span> רק <span class="en">$437M</span></span></h1>
+    <h1 class="title">צמיחת השוק עד 2030</h1>
     <div class="grow6" id="grow6"></div>
     <div class="src box" style="margin-top:6px">
-      <span class="t">מקורות והנחות</span> <a href="https://markwideresearch.com/enterprise-network-firewall-market" target="_blank" rel="noopener">MarkWide Enterprise Network Firewall</a> · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner MQ 09/2026</a> · <a href="https://my.idc.com/getdoc.jsp?containerId=IDC_P6272" target="_blank" rel="noopener">IDC Security Appliance Tracker</a> · <a href="https://www.gartner.com/reviews/market/hybrid-mesh-firewall" target="_blank" rel="noopener">Gartner Peer Insights</a> · <a href="https://cyberratings.org/resources/2025-q4-enterprise-firewall-report-comparative-report/" target="_blank" rel="noopener">CyberRatings Q4 2025</a> · <b>הנחות:</b> בסיס 13.8B$ ב-2026 ו-CAGR 9.6% לשוק כולו הם נתוני MarkWide · <span class="en">Incremental TAM</span> = גודל 2026 × (1+CAGR)⁴ · <span class="en">CP Capture</span> = ה-Incremental TAM בסגמנט × נתח Check Point הנוכחי, כלומר בהנחה שהנתח לא משתנה עד 2030 · קצב הצמיחה לכל סגמנט בנפרד הוא אומדן שלי, וה-CAGR המשוקלל שלו יוצא 10%, מעט מעל ה-9.6% של השוק כולו · נתחי ה-vendors לסגמנט הם אומדן מכויל, שסכומו המשוקלל מחזיר את הנתחים הכוללים (CP 7.7% · PA 19.5% · FTN 19% · Cisco 13%).
+      <span class="t">מקורות והנחות</span> <a href="https://markwideresearch.com/enterprise-network-firewall-market" target="_blank" rel="noopener">MarkWide Enterprise Network Firewall</a> · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner MQ 09/2026</a> · <a href="https://my.idc.com/getdoc.jsp?containerId=IDC_P6272" target="_blank" rel="noopener">IDC Security Appliance Tracker</a> · <a href="https://www.gartner.com/reviews/market/hybrid-mesh-firewall" target="_blank" rel="noopener">Gartner Peer Insights</a> · <a href="https://cyberratings.org/resources/2025-q4-enterprise-firewall-report-comparative-report/" target="_blank" rel="noopener">CyberRatings Q4 2025</a> · בסיס 13.8B$ ב-2026 ו-CAGR 9.6% לשוק כולו הם נתוני MarkWide · פירוק הצמיחה לכל סגמנט בנפרד הוא הערכה שלי; כיילתי אותה כך שהממוצע המשוקלל של כל הסגמנטים (10%) מתלכד עם ה-9.6% הידוע של השוק כולו · חלוקת נתחי היצרנים בתוך כל סגמנט היא גם הערכה שלי, מכוילת כך שסכומם חוזר לנתחי השוק הכוללים הידועים (CP 7.7% · PA 19.5% · FTN 19% · Cisco 13%).
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1327,7 +1464,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
   <div class="rail"></div>
   <div class="body">
     <div class="eyebrow">פרק 2 · השוק</div>
-    <h1 class="title">מה מכריע בכל סגמנט, <span class="hl">ואיפה <span class="en">Check Point</span> עומד מול הטוב ביותר</span></h1>
+    <h1 class="title">מה מכריע בכל סגמנט</h1>
     <div class="hmwrap">
       <div class="card white hmcard">
         <div class="hm" id="hm"></div>
@@ -1336,7 +1473,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
       <div class="card hmdet" id="hmdet"></div>
     </div>
     <div class="src box" style="margin-top:6px">
-      <span class="t">מקורות והנחות</span> <a href="https://cyberratings.org/resources/2025-q4-enterprise-firewall-report-comparative-report/" target="_blank" rel="noopener">CyberRatings</a> · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">CP Appliance Chart</a> · <a href="https://docs.fortinet.com/document/fortigate/8.0.0/hardware-acceleration/750811/fortigate-6000f-series" target="_blank" rel="noopener">FortiGate 6500F DS</a> · <a href="https://www.paloaltonetworks.com/resources/datasheets/pa-5450-series" target="_blank" rel="noopener">PA-5450 DS</a> · Decryption Digest (TCO) · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner MQ 09/2026</a> · <b>הנחות:</b> משקל הקריטריון בכל סגמנט (מכריע / חשוב / משני) הוא <b>אומדן שלי</b>, לפי מה שהלקוח באותו סגמנט בודק ב-RFP · Throughput = TP+TLS ב-Enterprise Testing Conditions, לא lab · נפח בארון נמדד כגודל הקופסה עצמה (9800 = 1RU, Cisco 4225 = 1RU, FortiGate 6500F = 3RU, PA-5450 = 5U) <b>ולא כ-Gbps לרק-יוניט</b>, כדי שלא לספור את פער ה-Throughput פעמיים תחת שני קריטריונים
+      <span class="t">מקורות והנחות</span> <a href="https://cyberratings.org/resources/2025-q4-enterprise-firewall-report-comparative-report/" target="_blank" rel="noopener">CyberRatings</a> · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">CP Appliance Chart</a> · <a href="https://docs.fortinet.com/document/fortigate/8.0.0/hardware-acceleration/750811/fortigate-6000f-series" target="_blank" rel="noopener">FortiGate 6500F DS</a> · <a href="https://www.paloaltonetworks.com/resources/datasheets/pa-5450-series" target="_blank" rel="noopener">PA-5450 DS</a> · Decryption Digest (TCO) · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner MQ 09/2026</a> · משקל כל קריטריון בכל סגמנט (מכריע / חשוב / משני) הוא <b>הערכה שלי</b>, המבוססת על מה שלקוח באותו סגמנט נוהג לבדוק בפועל ב-RFP · Throughput = TP+TLS ב-Enterprise Testing Conditions, לא lab · נפח בארון נמדד כגודל הקופסה עצמה (9800 = 1RU, Cisco 4225 = 1RU, FortiGate 6500F = 3RU, PA-5450 = 5U) <b>ולא כ-Gbps לכל RU</b>, כדי שלא לספור את פער ה-Throughput פעמיים תחת שני קריטריונים
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1351,26 +1488,26 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
     <h1 class="title">היכן ראוי להשקיע, <span class="hl">והיכן להסתפק בנוכחות</span></h1>
     <div class="stratgrid">
       <div class="scard focus">
-        <div class="sh"><span class="ic">★</span><span class="lb">לתקוף</span></div>
+        <div class="sh"><span class="ic">★</span><span class="lb">מוקד השקעה וצמיחה</span></div>
         <div class="seg"><span class="en">Data Center</span></div>
-        <div class="why">הסגמנט היחיד שבו הקריטריון המכריע הוא <b>Throughput תחת Threat Prevention</b>, כלומר הנדסי. המתחרים מגיעים למספר שלהם בחומרה גדולה פי 3 עד 5, והפלטפורמה שלנו כבר מותקנת אצל הלקוח. כאן שיפור בחומרה <b>משנה את תוצאת ה-RFP</b>.</div>
-        <div class="act"><span class="k">הצעד:</span>לבסס הובלה ב-<span class="en">TP per RU</span>, ולהמיר את הבסיס המותקן לעסקאות <span class="en">Data Center</span> בדור הבא.</div>
+        <div class="why">זהו הסגמנט היחיד שבו תפוקת <span class="en">Threat Prevention</span> הוא שיקול מכריע בבחירת הספק. לכן שדרוג חומרתי יכול להטות את תוצאת ה-<span class="en">RFP</span> לטובתנו: המתחרים מגיעים לביצועים דומים באמצעות מערכות גדולות פי 3–5, בעוד של-<span class="en">Check Point</span> כבר קיים בסיס מותקן שניתן לשדרג.</div>
+        <div class="act"><span class="k">הצעד:</span>לבסס הובלה ב-<span class="en">TP per RU</span> ולתרגם את הבסיס המותקן לשדרוגים ולעסקאות <span class="en">Data Center</span> בדור הבא.</div>
       </div>
       <div class="scard hold">
-        <div class="sh"><span class="ic">✓</span><span class="lb">להגן</span></div>
+        <div class="sh"><span class="ic">✓</span><span class="lb">שימור והעמקת אחיזה</span></div>
         <div class="seg"><span class="en">Regulated · OT · HQ</span></div>
-        <div class="why">בשלושתם אנחנו כבר <b>מנצחים בקריטריון המכריע</b>: compliance וזיהוי ב-<span class="en">Regulated</span>, latency ב-<span class="en">OT</span>, זיהוי וניהול ב-<span class="en">HQ</span>. כאן מרוכז הנתח הגבוה שלנו, וההכנסה חוזרת במחזורי <span class="en">renewal</span>.</div>
-        <div class="act"><span class="k">הצעד:</span>לשמר את מחזורי ה-<span class="en">renewal</span> ולהעמיק אחיזה, בלי להקצות משאבי פיתוח לפער שאינו קיים.</div>
+        <div class="why">בשלושת הסגמנטים הללו <span class="en">Check Point</span> כבר חזקה בגורמי ההכרעה: תאימות רגולטורית, השהיה נמוכה ב-<span class="en">OT</span>, וזיהוי וניהול ב-<span class="en">HQ</span>. כאן מרוכזים בסיס לקוחות משמעותי והכנסות חוזרות.</div>
+        <div class="act"><span class="k">הצעד:</span>לשמר את הלקוחות ואת מחזורי החידוש, ולהעמיק את האחיזה באמצעות שדרוגים ויכולות משלימות, ללא השקעת מו״פ בפער שאינו מהותי.</div>
       </div>
       <div class="scard skip">
-        <div class="sh"><span class="ic">✕</span><span class="lb">לדלג</span></div>
+        <div class="sh"><span class="ic">✕</span><span class="lb">נוכחות סלקטיבית</span></div>
         <div class="seg"><span class="en">Branch · Cloud</span></div>
-        <div class="why">כאן מרוכז ה-<span class="en">Incremental TAM</span> הגדול ביותר, אך הקריטריון המכריע <b>אינו הנדסי</b>: ב-<span class="en">Branch</span> מכריעים מחיר ו-<span class="en">SD-WAN</span>, ב-<span class="en">Cloud</span> מכריע מוצר ענן ילידי. שיפור בחומרה לא ישנה את התוצאה.</div>
-        <div class="act"><span class="k">הצעד:</span>לא להקצות מו״פ לסגמנטים אלה. נוכחות, אם בכלל, דרך <span class="en">SASE</span>.</div>
+        <div class="why">לסגמנטים אלה פוטנציאל צמיחה משמעותי, אך גורמי ההכרעה בהם אינם נפתרים בשדרוג חומרה: ב-<span class="en">Branch</span> מדובר בעיקר במחיר וב-<span class="en">SD-WAN</span>; ב-<span class="en">Cloud</span> נדרש מוצר ענן ייעודי. לכן השקעת מו״פ ב-9000 לא צפויה לשנות את התוצאה התחרותית.</div>
+        <div class="act"><span class="k">הצעד:</span>לא להקצות מו״פ ייעודי ל-9000; לשמר נוכחות באמצעות פתרונות הענן וה-<span class="en">SASE</span> הקיימים.</div>
       </div>
     </div>
     <div class="src box" style="margin-top:10px">
-      <span class="t">מקורות והנחות</span> <a href="https://markwideresearch.com/enterprise-network-firewall-market" target="_blank" rel="noopener">MarkWide Enterprise Network Firewall</a> · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner MQ 09/2026</a> · <a href="https://my.idc.com/getdoc.jsp?containerId=IDC_P6272" target="_blank" rel="noopener">IDC Security Appliance Tracker</a> · <a href="https://cyberratings.org/resources/2025-q4-enterprise-firewall-report-comparative-report/" target="_blank" rel="noopener">CyberRatings Q4 2025</a> · <b>הנחות:</b> החלוקה לשלושת המהלכים היא <b>מסקנה שלי</b>, ואינה נתון מדוח. היא נגזרת מהצלבת שלושה נתונים שהוצגו בשני השקפים הקודמים: ה-Incremental TAM וקצב הצמיחה בכל סגמנט, נתח Check Point בו, והאם הקריטריון המכריע בו הנדסי · הכלל שהפעלתי: <b>לתקוף</b> = הפער הנדסי וניתן לסגירה בחומרה, <b>להגן</b> = נתח גבוה יחד עם ניצחון בקריטריון המכריע, <b>לדלג</b> = הקריטריון המכריע אינו הנדסי, ולכן חומרה חזקה יותר לא תשנה את התוצאה.
+      <span class="t">מקורות והנחות</span> <a href="https://markwideresearch.com/enterprise-network-firewall-market" target="_blank" rel="noopener">MarkWide Enterprise Network Firewall</a> · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner MQ 09/2026</a> · <a href="https://my.idc.com/getdoc.jsp?containerId=IDC_P6272" target="_blank" rel="noopener">IDC Security Appliance Tracker</a> · <a href="https://cyberratings.org/resources/2025-q4-enterprise-firewall-report-comparative-report/" target="_blank" rel="noopener">CyberRatings Q4 2025</a>
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1381,11 +1518,10 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 <section class="slide" data-ch="3" id="s5">
   <div class="rail"></div>
   <div class="body">
-    <div class="eyebrow">פרק 3 · תמונת מצב</div>
-    <h1 class="title" style="margin-bottom:6px">מודל <span class="hl en">SWOT</span></h1>
+    <div class="eyebrow">פרק 3 · מודל <span class="en">SWOT</span></div>
     <div class="swctl">
-      <span class="lbl">מימד:</span><div class="seg" id="swdim"><button class="on" data-d="all">הכל</button><button data-d="t">🔧 טכני</button><button data-d="c">💼 מסחרי</button></div>
-      <span class="lbl" style="margin-inline-start:14px">מול:</span><div class="seg" id="swvs"><button class="on" data-v="all">כולם</button><button data-v="ft">Fortinet</button><button data-v="pa">Palo Alto</button><button data-v="cs">Cisco</button></div>
+      <span class="lbl">מימד:</span><div class="seg" id="swdim"><button data-d="all">הכל</button><button data-d="t">🔧 טכני</button><button class="on" data-d="c">💼 מסחרי</button></div>
+      <span class="lbl" style="margin-inline-start:14px">מול:</span><div class="seg" id="swvs"><button data-v="all">כולם</button><button data-v="ft">Fortinet</button><button data-v="pa">Palo Alto</button><button class="on" data-v="cs">Cisco</button></div>
       <span class="vleg"><i style="background:var(--ft)"></i>Fortinet <i style="background:var(--pa)"></i>Palo Alto <i style="background:var(--cs)"></i>Cisco</span>
     </div>
     <div class="swmx">
@@ -1394,7 +1530,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
       <div class="swot2" id="swot2"></div>
     </div>
     <div class="src box" style="margin-top:6px">
-      <span class="t">מקורות והנחות</span> <a href="https://cyberratings.org/resources/2025-q4-enterprise-firewall-report-comparative-report/" target="_blank" rel="noopener">CyberRatings</a> (דיוק זיהוי) · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">CP Appliance Comparison Chart 2026</a> · <a href="https://docs.fortinet.com/document/fortigate/8.0.0/hardware-acceleration/750811/fortigate-6000f-series" target="_blank" rel="noopener">FortiGate 6500F DS</a> · <a href="https://www.paloaltonetworks.com/resources/datasheets/pa-5450-series" target="_blank" rel="noopener">PA-5450 DS</a> · Decryption Digest (TCO) · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner MQ 09/2026</a> · <a href="https://www.peerspot.com/products/check-point-quantum-force-reviews" target="_blank" rel="noopener">PeerSpot</a> (תמיכה) · <b>הנחות:</b> Throughput ליחידת ראק = Gbps מסונן חלקי גובה הקופסה (CP 9800 ב-1RU, FortiGate 6500F ב-3RU, PA-5450 ב-5U), אומדן להשוואה בין form factors שונים · Throughput ללא TLS הוא נתון datasheet במעבדה, ועם TLS זה אומדן של כ-50% ירידה · TCO ל-3 שנים בשכבת 10 Gbps מסונן · התקינה נמדדת בכיסוי כל הקו, לא בדגם בודד
+      <span class="t">מקורות והנחות</span> <a href="https://cyberratings.org/resources/2025-q4-enterprise-firewall-report-comparative-report/" target="_blank" rel="noopener">CyberRatings</a> (דיוק זיהוי) · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">CP Appliance Comparison Chart 2026</a> · <a href="https://docs.fortinet.com/document/fortigate/8.0.0/hardware-acceleration/750811/fortigate-6000f-series" target="_blank" rel="noopener">FortiGate 6500F DS</a> · <a href="https://www.paloaltonetworks.com/resources/datasheets/pa-5450-series" target="_blank" rel="noopener">PA-5450 DS</a> · Decryption Digest (TCO) · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner MQ 09/2026</a> · <a href="https://www.peerspot.com/products/check-point-quantum-force-reviews" target="_blank" rel="noopener">PeerSpot</a> (תמיכה) · <a href="https://nvd.nist.gov/vuln" target="_blank" rel="noopener">NVD · NIST</a> (חולשות) · Throughput לכל RU = Gbps מסונן חלקי גובה הקופסה ביחידות RU (CP 9800 ב-1RU, FortiGate 6500F ב-3RU, PA-5450 ב-5U), אומדן להשוואה בין form factors שונים · Throughput ללא TLS הוא נתון datasheet במעבדה, ועם TLS זה אומדן של כ-50% ירידה · TCO ל-3 שנים ברמת 10 Gbps מסונן · התקינה נמדדת בכיסוי כל הקו, לא בדגם בודד · CVE-2026-50751 מובא כדוגמה להמחשת סיכון המוניטין מפרסום חולשה בעיתוי רגיש; חולשות מסוג זה מתפרסמות ומתועדות ב-NVD ו-MITRE
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1418,7 +1554,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
       </div>
       <div class="decside">
         <div class="card white losec">
-          <div class="ch"><span class="dotc"></span>Throughput לכל 1RU <small>Firewall מול התצורה שנבחרה</small></div>
+          <div class="ch"><span class="dotc"></span>Throughput לכל 1RU</div>
           <table class="tb dtab">
             <thead><tr><th>יצרן</th><th class="c">Firewall</th><th class="c">בתצורה</th><th class="c">נשאר</th></tr></thead>
             <tbody id="dtb"></tbody>
@@ -1427,7 +1563,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
       </div>
     </div>
     <div class="src box" style="margin-top:10px">
-      <span class="t">מקורות והנחות</span> <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">Check Point Appliance Comparison Chart</a> · <a href="https://docs.fortinet.com/document/fortigate/8.0.0/hardware-acceleration/750811/fortigate-6000f-series" target="_blank" rel="noopener">FortiGate 6000F datasheet</a> · <a href="https://www.paloaltonetworks.com/resources/datasheets/pa-5450-series" target="_blank" rel="noopener">PA-5450 datasheet (PAN-OS 12.1)</a> · <a href="https://www.cisco.com/c/en/us/products/collateral/security/firewalls/secure-firewall-4200-ds.html" target="_blank" rel="noopener">Cisco Secure Firewall 4200 datasheet</a> · <b>הנחות:</b> ערכי Firewall הם lab 1518B ולא Enterprise Testing Conditions; TP+TLS של Fortinet ו-Palo Alto הוא אומדן של כ-50% מה-TP, כי היצרנים לא מפרסמים TP עם TLS; ב-Cisco 4225 נלקח במקום זאת נתון ה-TLS Hardware Decryption שהוא 30 Gbps, כי הוא תקרה נמוכה יותר; נרמול per RU לפי 1RU (9800 ו-Cisco 4225) · 3RU · 5U
+      <span class="t">מקורות והנחות</span> <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">Check Point Appliance Comparison Chart</a> · <a href="https://docs.fortinet.com/document/fortigate/8.0.0/hardware-acceleration/750811/fortigate-6000f-series" target="_blank" rel="noopener">FortiGate 6000F datasheet</a> · <a href="https://www.paloaltonetworks.com/resources/datasheets/pa-5450-series" target="_blank" rel="noopener">PA-5450 datasheet (PAN-OS 12.1)</a> · <a href="https://www.cisco.com/c/en/us/products/collateral/security/firewalls/secure-firewall-4200-ds.html" target="_blank" rel="noopener">Cisco Secure Firewall 4200 datasheet</a> · ערכי Firewall הם lab 1518B ולא Enterprise Testing Conditions; TP+TLS של Fortinet ו-Palo Alto הוא אומדן של כ-50% מה-TP, כי היצרנים לא מפרסמים TP עם TLS; ב-Cisco 4225 נלקח במקום זאת נתון ה-TLS Hardware Decryption שהוא 30 Gbps, כי הוא תקרה נמוכה יותר; נרמול per RU לפי 1RU (9800 ו-Cisco 4225) · 3RU · 5U
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1443,34 +1579,34 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
     <div class="leg" style="margin-bottom:7px"><span><i style="background:var(--teal)"></i>סיליקון קבוע</span><span><i style="background:var(--amber)"></i>מנוע האצה ייעודי</span><span><i style="background:var(--primary)"></i><span class="en">x86</span> בתוכנה</span></div>
     <div class="lanes big" id="ppath">
       <div class="lh corner">שלב בנתיב ←<small>מי מריץ אותו ↓</small></div>
-      <div class="lh" data-s="0">L3/4 · NAT · Session<small>Firewall</small></div>
+      <div class="lh" data-s="0">L3/4<small>Firewall</small></div>
       <div class="lh" data-s="1">App · URL · Identity<small>NGFW</small></div>
       <div class="lh" data-s="2">TLS Decrypt<small>handshake + bulk</small></div>
       <div class="lh" data-s="3">IPS · AV · Anti-Bot<small>signatures · regex</small></div>
       <div class="lh" data-s="4">TLS Re-encrypt<small>TLS out</small></div>
 
-      <div class="ln cp"><b>Check Point 9800</b><small>1RU · Check Point ASIC + Intel x86</small></div>
+      <div class="ln cp"><b>Check Point 9800</b><small>1RU</small></div>
       <div class="c asic" data-s="0"><small>Check Point · ASIC</small>FW ASIC</div>
       <div class="c cpu" data-s="1"><small>Intel · CPU</small>x86</div>
       <div class="c cpu" data-s="2"><small>Intel · CPU</small>x86</div>
       <div class="c cpu" data-s="3"><small>Intel · CPU</small>x86</div>
       <div class="c cpu" data-s="4"><small>Intel · CPU</small>x86</div>
 
-      <div class="ln cs"><b>Cisco 4225</b><small>1RU · AMD Versal + AMD EPYC</small></div>
+      <div class="ln cs"><b>Cisco 4225</b><small>1RU</small></div>
       <div class="c asic" data-s="0"><small>AMD · FPGA</small>Versal</div>
       <div class="c cpu" data-s="1"><small>AMD · CPU</small>EPYC</div>
       <div class="c acc" data-s="2"><small>AMD · FPGA</small>Versal</div>
       <div class="c cpu" data-s="3"><small>AMD · CPU</small>EPYC</div>
       <div class="c acc" data-s="4"><small>AMD · FPGA</small>Versal</div>
 
-      <div class="ln ft"><b>Fortinet 6500F</b><small>3RU · Fortinet NP6 + CP9</small></div>
+      <div class="ln ft"><b>Fortinet 6500F</b><small>3RU</small></div>
       <div class="c asic" data-s="0"><small>Fortinet · ASIC</small>NP6</div>
       <div class="c cpu" data-s="1"><small>Intel · CPU</small>x86</div>
       <div class="c acc" data-s="2"><small>Fortinet · ASIC</small>CP9</div>
       <div class="c acc" data-s="3"><small>Fortinet · ASIC</small>CP9</div>
       <div class="c acc" data-s="4"><small>Fortinet · ASIC</small>CP9</div>
 
-      <div class="ln pa"><b>Palo Alto PA-5450</b><small>5U · Palo Alto NC + DPC</small></div>
+      <div class="ln pa"><b>Palo Alto PA-5450</b><small>5U</small></div>
       <div class="c asic" data-s="0"><small>Palo Alto · Card</small>NC</div>
       <div class="c acc" data-s="1"><small>Palo Alto · Card</small>DPC</div>
       <div class="c acc" data-s="2"><small>Palo Alto · Card</small>DPC</div>
@@ -1487,7 +1623,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
       </div>
     </div>
     <div class="src box" style="margin-top:6px">
-      <span class="t">מקורות והנחות</span> <a href="https://www.fortinet.com/content/dam/fortinet/assets/white-papers/wp-fortinet-spu.pdf" target="_blank" rel="noopener">Fortinet SPU whitepaper</a> · <a href="https://docs.fortinet.com/document/fortigate/8.0.0/hardware-acceleration/750811/fortigate-6000f-series" target="_blank" rel="noopener">FortiGate 6000F datasheet</a> · <a href="https://www.paloaltonetworks.com/resources/datasheets/pa-5450-series" target="_blank" rel="noopener">PA-5450 datasheet (PAN-OS 12.1)</a> · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">Check Point Appliance Comparison Chart</a> · <a href="https://www.cisco.com/c/en/us/products/collateral/security/firewalls/secure-firewall-4200-ds.html" target="_blank" rel="noopener">Cisco Secure Firewall 4200 datasheet</a> · <a href="https://www.ciscolive.com/c/dam/r/ciscolive/emea/docs/2026/pdf/BRKSEC-2239.pdf" target="_blank" rel="noopener">Cisco Live BRKSEC-2239</a> · <a href="https://www.amd.com/en/blogs/2023/amd-processor-powered-cisco-secure-firewall-4200-s.html" target="_blank" rel="noopener">AMD on Cisco 4200</a> · <b>הנחות:</b> חלוקת השלבים בין סיליקון ל-CPU נגזרת מתיעוד היצרנים ולא ממדידה עצמאית; שמות היצרנים בתאים: Cisco 4225 מבוסס AMD EPYC 7763 ו-AMD Versal לפי AMD ו-Cisco Live, Fortinet מבוסס Intel Xeon לפי תיעוד Fortinet, וה-6500F נושא NP6 ולא NP7; הדאטהשיט של 9800 מציין 20 ליבות פיזיות בלי לנקוב ביצרן המעבד; NP6 ו-CP9 הם שבבים על כרטיס ה-FPC של Fortinet, NC ו-DPC הם כרטיסי קו בשלדת ה-PA-5450, ו-FW ASIC הוא שבב בתכנון Check Point, בעוד ש-Intel ו-AMD הם רכיבי מדף; שלב ה-IPS · AV נספר כסיליקון מאחר שהוא רץ על שבב התוכן (CP9 ב-Fortinet, DPC ב-Palo Alto); App-ID של Palo Alto נספר כהאצה על בסיס ארכיטקטורת ה-DPC; ב-Cisco 4225 ה-flow offload ב-FPGA חל על flows שכבר סווגו כמהימנים ולא על כלל התעבורה, ובדיקת התוכן רצה על Snort 3 בתוכנה
+      <span class="t">מקורות והנחות</span> <a href="https://www.fortinet.com/content/dam/fortinet/assets/white-papers/wp-fortinet-spu.pdf" target="_blank" rel="noopener">Fortinet SPU whitepaper</a> · <a href="https://docs.fortinet.com/document/fortigate/8.0.0/hardware-acceleration/750811/fortigate-6000f-series" target="_blank" rel="noopener">FortiGate 6000F datasheet</a> · <a href="https://www.paloaltonetworks.com/resources/datasheets/pa-5450-series" target="_blank" rel="noopener">PA-5450 datasheet (PAN-OS 12.1)</a> · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">Check Point Appliance Comparison Chart</a> · <a href="https://www.cisco.com/c/en/us/products/collateral/security/firewalls/secure-firewall-4200-ds.html" target="_blank" rel="noopener">Cisco Secure Firewall 4200 datasheet</a> · <a href="https://www.ciscolive.com/c/dam/r/ciscolive/emea/docs/2026/pdf/BRKSEC-2239.pdf" target="_blank" rel="noopener">Cisco Live BRKSEC-2239</a> · <a href="https://www.amd.com/en/blogs/2023/amd-processor-powered-cisco-secure-firewall-4200-s.html" target="_blank" rel="noopener">AMD on Cisco 4200</a> · חלוקת השלבים בין סיליקון ל-CPU נגזרת מתיעוד היצרנים ולא ממדידה עצמאית · NP6 ו-CP9 הם שבבים על כרטיס ה-FPC של Fortinet, NC ו-DPC הם כרטיסי קו בשלדת ה-PA-5450, ו-FW ASIC הוא שבב בתכנון Check Point, בעוד ש-Intel ו-AMD הם רכיבי מדף · שלבי IPS/AV ו-App-ID נספרים כסיליקון כשהם רצים על שבב התוכן הייעודי (CP9 ב-Fortinet, DPC ב-Palo Alto) · ב-Cisco 4225 ה-flow offload ב-FPGA חל רק על flows שכבר סווגו כמהימנים ולא על כלל התעבורה, ובדיקת התוכן רצה על Snort 3 בתוכנה
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1500,57 +1636,57 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
   <div class="body">
     <div class="eyebrow">פרק 4 · הבעיה</div>
     <h1 class="title">ארכיטקטורת השבב: <span class="hl">איפה מתבצע ניתוח האבטחה בכל מוצר</span></h1>
-    <div class="leg" style="margin-bottom:7px"><span><i style="background:var(--teal)"></i>שבב L4: session · NAT, בחומרה אצל כולם</span><span><i style="background:var(--amber)"></i>סריקה בחומרה: מאות <span class="en">packets</span> במקביל</span><span><i style="background:var(--primary)"></i>סריקה בתוכנה (x86): <span class="en">packet</span> אחר <span class="en">packet</span></span></div>
+    <div class="leg" style="margin-bottom:7px"><span><i style="background:var(--teal)"></i>שבב Firewall L3/4, בחומרה אצל כולם</span><span><i style="background:var(--amber)"></i><span class="en">NGFW · TP · TLS</span> בחומרה: מאות חבילות מידע במקביל</span><span><i style="background:var(--primary)"></i><span class="en">NGFW · TP · TLS</span> בתוכנה (x86): חבילה אחר חבילה</span></div>
     <div class="silx">
       <div class="xbox cp">
         <div class="xh"><h3>Check Point 9800</h3><small>1RU</small></div>
-        <div class="stg sil"><b>FW ASIC</b><span class="role">L4 · session · NAT</span></div>
+        <div class="stg sil"><b>FW ASIC</b><span class="role">Firewall L3/4</span></div>
         <div class="conn"></div>
         <div class="stg ana cores">
-          <b>Intel Xeon</b>
+          <b>Intel Xeon</b><span class="role">NGFW · TP · TLS</span>
           <div class="qcores">
-            <div class="q"><span>ממתין</span><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="q"><span>בתור</span><i></i><i></i><i></i><i></i><i></i></div>
             <div class="cr"><u><i></i></u><u><i></i></u><u><i></i></u><u><i></i></u></div>
           </div>
-          <span class="note">הסריקה רצה <b>בתוכנה</b> על ליבות x86, <b><span class="en">packet</span> אחר <span class="en">packet</span></b></span>
+          <span class="note">הניתוח מתבצע <b>בתוכנה</b>, על ליבות x86, <b>חבילה (<span class="en">packet</span>) אחר חבילה</b></span>
         </div>
       </div>
       <div class="xbox cs">
         <div class="xh"><h3>Cisco 4225</h3><small>1RU</small></div>
-        <div class="stg sil"><b>AMD Versal</b><span class="role">L4 · crypto · FPGA</span></div>
+        <div class="stg sil"><b>AMD Versal</b><span class="role">Firewall L3/4 · פענוח TLS · FPGA</span></div>
         <div class="conn"></div>
         <div class="stg ana cores">
-          <b>AMD EPYC</b>
+          <b>AMD EPYC</b><span class="role">NGFW · TP</span>
           <div class="qcores">
-            <div class="q"><span>ממתין</span><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="q"><span>בתור</span><i></i><i></i><i></i><i></i><i></i></div>
             <div class="cr"><u><i></i></u><u><i></i></u><u><i></i></u><u><i></i></u></div>
           </div>
-          <span class="note">הסריקה רצה <b>בתוכנה</b> על ליבות x86, <b><span class="en">packet</span> אחר <span class="en">packet</span></b></span>
+          <span class="note">בדיקת התוכן <b>בתוכנה</b>, על ליבות x86, <b>חבילה (<span class="en">packet</span>) אחר חבילה</b>. פענוח ה-<span class="en">TLS</span> מואץ ב-<span class="en">Versal</span></span>
         </div>
       </div>
       <div class="xbox ft">
         <div class="xh"><h3>Fortinet 6500F</h3><small>3RU</small></div>
-        <div class="stg sil"><b>NP6</b><span class="role">L4 · session · NAT</span></div>
+        <div class="stg sil"><b>NP6</b><span class="role">Firewall L3/4</span></div>
         <div class="conn"></div>
         <div class="stg ana eng">
-          <b>CP9</b>
+          <b>CP9</b><span class="role">NGFW · TP · TLS</span>
           <div class="engv"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          <span class="note">הסריקה רצה <b>בחומרה</b> ייעודית, <b>מאות <span class="en">packets</span> במקביל</b></span>
+          <span class="note">הניתוח מתבצע <b>בחומרה</b> ייעודית, במקביל על <b>מאות חבילות מידע (<span class="en">packets</span>)</b></span>
         </div>
       </div>
       <div class="xbox pa">
         <div class="xh"><h3>Palo Alto PA-5450</h3><small>5U</small></div>
-        <div class="stg sil"><b>NC</b><span class="role">L4 · session · NAT</span></div>
+        <div class="stg sil"><b>NC</b><span class="role">Firewall L3/4</span></div>
         <div class="conn"></div>
         <div class="stg ana eng">
-          <b>DPC</b>
+          <b>DPC</b><span class="role">NGFW · TP · TLS</span>
           <div class="engv"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          <span class="note">הסריקה רצה <b>בחומרה</b> ייעודית, <b>מאות <span class="en">packets</span> במקביל</b></span>
+          <span class="note">הניתוח מתבצע <b>בחומרה</b> ייעודית, במקביל על <b>מאות חבילות מידע (<span class="en">packets</span>)</b></span>
         </div>
       </div>
     </div>
     <div class="src box" style="margin-top:8px">
-      <span class="t">מקורות והנחות</span> <a href="https://www.fortinet.com/content/dam/fortinet/assets/white-papers/wp-fortinet-spu.pdf">Fortinet SPU whitepaper</a> · <a href="https://docs.fortinet.com/document/fortigate/8.0.0/hardware-acceleration/750811/fortigate-6000f-series" target="_blank" rel="noopener">FortiGate 6000F datasheet</a> · <a href="https://www.paloaltonetworks.com/resources/datasheets/pa-5450-series">PA-5450 datasheet</a> · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">Check Point Appliance Comparison Chart</a> · <a href="https://www.cisco.com/c/en/us/products/collateral/security/firewalls/secure-firewall-4200-ds.html" target="_blank" rel="noopener">Cisco Secure Firewall 4200 datasheet</a> · <b>הנחות:</b> סכימת תפקידים וחיבורים, לא תרשים לוח, תואם לשקף הקודם · שבב ה-L4 בסיליקון אצל כל היצרנים · אצל Check Point ניתוח ה-TP רץ על ליבות Xeon, אצל Cisco 4225 ה-Versal מבצע L4 וההצפנה וניתוח התוכן (Snort) רץ על ליבות EPYC · אצל Fortinet ו-Palo Alto הניתוח יורד לחומרה הייעודית CP9/DPC · אופן החיבור המדויק בין שבב ה-L4 למעבד הניתוח אינו מתועד בפומבי, ולכן מוצג רק המעבר עצמו ולא סוג הבאס · הריבועים מייצגים יחידות עיבוד בחומרה, ואומדן "מאות" נגזר מתיאורי היצרנים ולא ממספר רשמי · ה"תור" והליבות אצל Check Point/Cisco הם המחשה סכמטית של עיבוד סדרתי בתוכנה, לא מספר הליבות בפועל
+      <span class="t">מקורות והנחות</span> <a href="https://www.fortinet.com/content/dam/fortinet/assets/white-papers/wp-fortinet-spu.pdf">Fortinet SPU whitepaper</a> · <a href="https://docs.fortinet.com/document/fortigate/8.0.0/hardware-acceleration/750811/fortigate-6000f-series" target="_blank" rel="noopener">FortiGate 6000F datasheet</a> · <a href="https://www.paloaltonetworks.com/resources/datasheets/pa-5450-series">PA-5450 datasheet</a> · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">Check Point Appliance Comparison Chart</a> · <a href="https://www.cisco.com/c/en/us/products/collateral/security/firewalls/secure-firewall-4200-ds.html" target="_blank" rel="noopener">Cisco Secure Firewall 4200 datasheet</a> · תרשים סכמטי, עקבי עם השקף הקודם: שבב ה-Firewall בסיליקון אצל כל היצרנים, והשוני הוא היכן רץ ניתוח התוכן · אצל Check Point (Xeon) ו-Cisco (EPYC · Snort) הוא רץ בתוכנה על x86, ואצל Fortinet (CP9) ו-Palo Alto (DPC) בחומרה ייעודית · ב-Cisco פענוח ה-TLS מואץ ב-Versal ולכן אינו נספר כתוכנה · הריבועים והליבות הם המחשה סכמטית, ואומדן "מאות" נגזר מתיאורי היצרנים ולא ממספר רשמי
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1562,13 +1698,13 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 <section class="slide" data-ch="4" id="sStuck">
   <div class="rail"></div>
   <div class="body">
-    <div class="eyebrow">פרק 4 · הבעיה <span class="pill" style="margin-inline-start:8px">מנקודת המבט של הלקוח</span></div>
-    <h1 class="title">לקוח שממצה <span class="en">TLS Inspection</span> ב-<span class="num">10 Gbps</span>: <span class="hl">שלוש החלופות שאפשר להציע לו היום</span></h1>
+    <div class="eyebrow">פרק 4 · הבעיה</div>
+    <h1 class="title">שלוש החלופות שאפשר להציע ללקוח היום</h1>
     <div class="stuck">
       <div class="opts">
         <div class="opt a">
           <div class="oh"><div class="no">1</div><h4>לצמצם את בדיקת ה-<span class="en">TLS</span></h4></div>
-          <p>פותחים רק חלק מהתעבורה המוצפנת. זול (<span class="en">$0</span>), אבל <b>מבטל בדיוק את מה שהלקוח קנה</b>: בלי <span class="en">TLS</span>, ה-<span class="en">IPS</span> וה-<span class="en">AV</span> עיוורים לרוב ה-<span class="en">HTTPS</span>.</p>
+          <p>פותחים לבדיקה רק חלק מהתעבורה המוצפנת. זו החלופה הזולה ביותר (<span class="en">$0</span>), אך היא מצמצמת בפועל את הערך שהלקוח רכש: ללא <span class="en">TLS Inspection</span>, מנועי <span class="en">IPS</span> ו־<span class="en">AV</span> אינם יכולים לבדוק את תוכן רוב תעבורת ה־<span class="en">HTTPS</span>.</p>
           <div class="oill">
             <div class="covbar"><span class="on">✓</span><span class="on">✓</span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span></div>
             <div class="cap">רק חלק מה-<span class="en">HTTPS</span> נבדק. <b>השאר עיוור</b></div>
@@ -1577,7 +1713,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
         </div>
         <div class="opt b">
           <div class="oh"><div class="no">2</div><h4>להוסיף מכשירים ב-<span class="en">Maestro</span></h4></div>
-          <p>אשכול של ארבעה <span class="en">9800</span> מגיע ל-Throughput וגם לזמינות. אבל <span class="en">Maestro</span> הוא <b><span class="en">scale-out</span></b>: אותם <span class="en">10 Gbps</span> לכל יחידת ראק.</p>
+          <p>אשכול של ארבעה מכשירי <span class="en">9800</span> יכול להגדיל את הקיבולת הכוללת פי ארבעה. אבל הוא עושה זאת באמצעות ארבע קופסאות, ולא באמצעות שיפור הביצועים של כל קופסה: כל <span class="en">9800</span> עדיין מספק <span class="en">10 Gbps TP+TLS</span>. לכן, כדי לקבל פי ארבעה תפוקה, נדרשים פי ארבעה מקום ועלות כוללת (<span class="en">TCO</span>).</p>
           <div class="oill rack">
             <div class="ru">9800</div><div class="ru">9800</div><div class="ru">9800</div><div class="ru">9800</div>
             <div class="cap"><b>×4 מקום ו-<span class="en">TCO</span></b>. אותו <span class="en">10/RU</span></div>
@@ -1586,13 +1722,13 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
         </div>
         <div class="opt c">
           <div class="oh"><div class="no">3</div><h4>להחליף ל-<span class="en">29100 / 29200</span></h4></div>
-          <p>אפליינס חדש ב-<span class="en">2RU</span>, וכזוג <span class="en">HA</span> זה <span class="en">4RU</span>: מסילות, כבילה, <span class="en">SKU</span> ורישוי חדשים ומיגרציה. <b>הרווח חלקי</b>, <span class="en">TP+TLS</span> רק ×2.4.</p>
+          <p>אפליינס חדש בגובה <span class="en">2RU</span>, ובתצורת <span class="en">HA</span> נדרשים <span class="en">4RU</span>. המעבר כרוך בהחלפת חומרה, התאמת חיבורים וחלון תחזוקה, אך השיפור בביצועים מוגבל: תפוקת <span class="en">TP+TLS</span> גדלה רק פי 2.4.</p>
           <div class="oill swap">
             <div class="bx sm">9800<span>1RU</span></div>
             <div class="swaparr">מיגרציה</div>
-            <div class="bx lg">29100<span>2RU · זוג = 4RU</span></div>
+            <div class="bx lg">29100<span>2RU · תצורת HA = 4RU</span></div>
           </div>
-          <div class="cost"><span>TP+TLS<u>×2.4</u></span><span>הספק, זוג HA<u>+0.57kW</u></span></div>
+          <div class="cost"><span>TP+TLS<u>×2.4</u></span><span>הספק, תצורת HA<u>+0.57kW</u></span></div>
         </div>
       </div>
     </div>
@@ -1601,7 +1737,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
       <div class="t">כל שלוש החלופות עובדות ונמכרות היום, אבל <b>לכל אחת מחיר</b>: כיסוי אבטחה, מקום בארון או <span class="en">TCO</span>.</div>
     </div>
     <div class="src box" style="margin-top:6px">
-      <span class="t">מקורות והנחות</span> <a href="https://www.checkpoint.com/downloads/products/quantum-force-9800-datasheet.pdf" target="_blank" rel="noopener">Quantum Force 9800 datasheet</a> · <a href="https://www.checkpoint.com/downloads/products/quantum-force-29100-datasheet.pdf" target="_blank" rel="noopener">29100 / 29200 datasheets</a> (יולי 2026) · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">CP Appliance Comparison Chart 2026</a> · <a href="https://sc1.checkpoint.com/documents/Appliances/Rails/CP_Appliances_Rack_Mounting.pdf" target="_blank" rel="noopener">Check Point Rack Mounting Guide 19000/29000</a> · <b>הנחות:</b> כל מספרי ה-TP+TLS הם Enterprise Testing Conditions ולא Firewall במעבדה (9800: 10.1, 29100: 24.3, 29200: 24.6) · החלפה ל-29100/29200: ליבות ×3.2 אך TP+TLS רק ×2.4, כי TLS לא מתרחב ליניארית עם ליבות x86 · ההשוואה 1RU מול 2RU אינה apples-to-apples, ולכן המדד הוא לכל יחידת ראק · Maestro ×4 = ארבעה 9800, אומדן · צמצום TLS: איור סכמטי של כיסוי חלקי, לא נתון מדוד
+      <span class="t">מקורות והנחות</span> <a href="https://www.checkpoint.com/downloads/products/quantum-force-9800-datasheet.pdf" target="_blank" rel="noopener">Quantum Force 9800 datasheet</a> · <a href="https://www.checkpoint.com/downloads/products/quantum-force-29100-datasheet.pdf" target="_blank" rel="noopener">29100 / 29200 datasheets</a> (יולי 2026) · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">CP Appliance Comparison Chart 2026</a> · <a href="https://sc1.checkpoint.com/documents/Appliances/Rails/CP_Appliances_Rack_Mounting.pdf" target="_blank" rel="noopener">Check Point Rack Mounting Guide 19000/29000</a> · כל מספרי ה-TP+TLS הם Enterprise Testing Conditions ולא Firewall במעבדה (9800: 10.1, 29100: 24.3, 29200: 24.6) · החלפה ל-29100/29200: ליבות ×3.2 אך TP+TLS רק ×2.4, כי TLS לא מתרחב ליניארית עם ליבות x86 · ההשוואה 1RU מול 2RU אינה apples-to-apples, ולכן המדד הוא לכל RU · Maestro ×4 = ארבעה 9800, אומדן · צמצום TLS: איור סכמטי של כיסוי חלקי, לא נתון מדוד
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1612,25 +1748,25 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 <section class="slide" data-ch="5" id="sFork">
   <div class="rail"></div>
   <div class="body">
-    <div class="eyebrow">פרק 5 · הפתרון <span class="pill" style="margin-inline-start:8px">1 · החלופות</span></div>
-    <h1 class="title">שלוש דרכים להאצה, <span class="hl">והדרך שנבחרה</span></h1>
+    <div class="eyebrow">פרק 5 · הפתרון</div>
+    <h1 class="title">שלוש חלופות להאצת <span class="en">TP</span> בשימוש <span class="en">TLS</span></h1>
     <div class="cmp">
       <div class="corner"></div>
-      <div class="hd"><div class="top"><div class="no">1</div><h4>לבנות <span class="en">ASIC</span> משלנו</h4></div><span class="vd">נפסל</span></div>
-      <div class="hd"><div class="top"><div class="no">2</div><h4><span class="en">FPGA</span> בתכנון עצמי</h4></div><span class="vd">נפסל</span></div>
-      <div class="hd pick"><div class="top"><div class="no">✓</div><h4><span class="en">Offload</span>: כרטיס האצה בחריץ הקיים</h4></div><span class="vd">נבחר</span></div>
+      <div class="hd"><div class="top"><div class="no">1</div><h4>לבנות <span class="en">ASIC</span> משלנו</h4></div></div>
+      <div class="hd"><div class="top"><div class="no">2</div><h4><span class="en">FPGA</span> בתכנון עצמי</h4></div></div>
+      <div class="hd pick"><div class="top"><div class="no">✓</div><h4>שימוש בכרטיס האצה <span class="en">BlueField 3</span></h4></div></div>
 
       <div class="rl"><b>מה מפתחים</b></div>
       <div class="v">שבב ייעודי משלנו<span class="s">בתכנון Check Point</span></div>
-      <div class="v">שבב מתכנת משלנו<span class="s">FPGA בתכנון Check Point</span></div>
-      <div class="v pick">כרטיס סביב שבב <span class="en">NVIDIA</span> קיים<span class="s">בונים כרטיס, לא שבב</span></div>
+      <div class="v"><span class="en">FPGA</span> בתכנון עצמי<span class="s">FPGA בתכנון Check Point</span></div>
+      <div class="v pick">כרטיס האצה <span class="en">BlueField-3</span> קיים של <span class="en">NVIDIA</span></div>
 
-      <div class="rl"><b>גמישות</b><small>מה צריך ל-engine/AI חדש</small></div>
+      <div class="rl"><b>גמישות</b><small>התאמה למנוע אבטחה או יכולת <span class="en">AI</span> חדשה</small></div>
       <div class="v">דור חומרה חדש<span class="s">הלוגיקה צרובה בשבב</span></div>
       <div class="v">תכנות מחדש של ה-FPGA<span class="s">עבודת HDL לכל engine</span></div>
-      <div class="v pick"><b>עדכון תוכנה</b><span class="s">הסיליקון מתוכנת, התוכנה נשארת שלנו</span></div>
+      <div class="v pick"><b>עדכון תוכנה</b><span class="s">תוכנת הכרטיס מתעדכנת; הסיליקון נשאר קבוע</span></div>
     </div>
-    <div class="drvh">כך נאמדו זמן הפיתוח, העלות והתפוקה, לכל חלופה</div>
+    <div class="drvh">השוואת חלופות: זמן פיתוח, עלות ותפוקה</div>
     <div class="drv">
       <div class="dl">זמן פיתוח<small>עד מוצר</small></div>
       <div class="d"><span class="m">3–5 שנים</span>tape-out (~2ש') + bring-up + תוכנה · תקדים תעשייה</div>
@@ -1639,7 +1775,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 
       <div class="dl">עלות פיתוח<small>NRE</small></div>
       <div class="d"><span class="m">$300M+</span>מסכות + צוות סיליקון · IBS/McKinsey (7nm ~$300M)</div>
-      <div class="d"><span class="m">$30–50M</span>FPGA-ים בכירים + צוות HDL, בלי מסכות</div>
+      <div class="d"><span class="m">$30–50M</span>רכיבי FPGA מתקדמים וצוות HDL, ללא עלויות tape-out ומסכות</div>
       <div class="d pick"><span class="m">~$7M</span>‎12 מהנדסים×18ח' ≈ $4.5M + PoC/כלים ≈ $2.5M</div>
 
       <div class="dl">תפוקה<small>TP+TLS/RU · היום 10</small></div>
@@ -1647,9 +1783,9 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
       <div class="d"><span class="m">~30–40</span>פער תדר/צפיפות מול ASIC</div>
       <div class="d pick"><span class="m">10 → ~40</span>‎×4: הורדת TLS+IPS מה-x86; מעל זה policy חוסם</div>
     </div>
-    <div class="pickline"><b>ההצעה:</b> היום כרטיס ההאצה בחריץ מאיץ <b>רק Firewall (L4)</b>. אנחנו לוקחים את אותו מודל כרטיס, ומוסיפים לו האצת <b>TLS ו-IPS</b> על סיליקון BlueField-3, כדי לשחרר את ה-x86 מהשכבות הכבדות. <span class="tr">Trade-off: תופס אחד משני חריצי ה-I/O, לאימות ב-PoC.</span></div>
+    <div class="pickline"><b>לא מתחילים מאפס:</b> ה-<span class="en">9000</span> כבר משתמש היום בכרטיסי האצה בחריצי ה-<span class="en">I/O</span> (40/100G עם <span class="en">ASIC firewall acceleration</span>), ו-Check Point כבר מריצה <span class="en">BlueField-3</span> בייצור במוצר <span class="en">AI Cloud Protect</span>. ההצעה רק מחברת בין שני אלה לכרטיס האצה מהדור הבא.</div>
     <div class="src box" style="margin-top:8px">
-      <span class="t">מקורות והנחות</span> <a href="https://www.checkpoint.com/downloads/products/quantum-force-9800-datasheet.pdf" target="_blank" rel="noopener">Quantum Force 9800 datasheet</a> · <a href="https://checkpoint.com/downloads/products/check-point-appliance-accessory-guide.pdf" target="_blank" rel="noopener">CP Appliance Accessory Guide 2026</a> · <a href="https://docs.nvidia.com/networking/display/bluefield3dpu" target="_blank" rel="noopener">Nvidia BlueField-3 spec</a> · <a href="https://www.checkpoint.com/press-releases/check-point-redefines-ai-security-for-enterprises-with-ai-cloud-protect-powered-by-nvidia-bluefield/" target="_blank" rel="noopener">Check Point AIFF press release</a> · <a href="https://semiengineering.com/big-trouble-at-3nm/" target="_blank" rel="noopener">IBS chip design cost by node</a> · <b>הנחות:</b> לפי הדאטהשיט ל-9800 יש <b>שני network I/O slots</b> לכרטיסי רשת של Check Point, וחלקם כבר עם האצה (כרטיס 40/100G עם ASIC based firewall acceleration). ההצעה היא כרטיס האצה מהדור הבא באותו מודל חריץ, <b>לא</b> חריץ PCIe x16 גנרי · תפיסת אחד משני חריצי ה-I/O והתאמת סיליקון BF-3 לכרטיס בפורמט Check Point (חשמל/תרמיקה/mech) הן <b>לאימות ב-PoC</b> · הדרך שבה נאמדו זמן הפיתוח, העלות והתפוקה מפורטת בטבלה למעלה: מספרי ASIC/FPGA הם <b>תקדים תעשייה</b> (IBS/McKinsey), ומספרי ה-DPU הם <b>אומדן bottom-up</b> שלנו · מספרי התפוקה של ASIC/FPGA הם השוואה איכותית · הפסיקה בין החלופות לפי הקריטריון: תפוקה per RU בלי לפגוע בגמישות
+      <span class="t">מקורות והנחות</span> <a href="https://www.checkpoint.com/downloads/products/quantum-force-9800-datasheet.pdf" target="_blank" rel="noopener">Quantum Force 9800 datasheet</a> · <a href="https://checkpoint.com/downloads/products/check-point-appliance-accessory-guide.pdf" target="_blank" rel="noopener">CP Appliance Accessory Guide 2026</a> · <a href="https://docs.nvidia.com/networking/display/bluefield3dpu" target="_blank" rel="noopener">Nvidia BlueField-3 spec</a> · <a href="https://www.checkpoint.com/press-releases/check-point-redefines-ai-security-for-enterprises-with-ai-cloud-protect-powered-by-nvidia-bluefield/" target="_blank" rel="noopener">Check Point AIFF press release</a> · <a href="https://semiengineering.com/big-trouble-at-3nm/" target="_blank" rel="noopener">IBS chip design cost by node</a> · לפי הדאטהשיט ל-9800 יש <b>שני network I/O slots</b> לכרטיסי רשת של Check Point, וחלקם כבר עם האצה (כרטיס 40/100G עם ASIC based firewall acceleration). ההצעה היא כרטיס האצה מהדור הבא באותו מודל חריץ, <b>לא</b> חריץ PCIe x16 גנרי · Check Point כבר מריצה BlueField-3 בייצור דרך AI Cloud Protect (AIFF), ולכן קשר הספק, פלטפורמת ה-DPU והאינטגרציה כבר מוכחים · תפיסת אחד משני חריצי ה-I/O והתאמת סיליקון BF-3 לכרטיס בפורמט Check Point (חשמל/תרמיקה/mech) הן <b>לאימות ב-PoC</b> · הדרך שבה נאמדו זמן הפיתוח, העלות והתפוקה מפורטת בטבלה למעלה: מספרי ASIC/FPGA הם <b>תקדים תעשייה</b> (IBS/McKinsey), ומספרי ה-DPU הם <b>אומדן bottom-up</b> שלנו · מספרי התפוקה של ASIC/FPGA הם השוואה איכותית · הפסיקה בין החלופות לפי הקריטריון: תפוקה per RU בלי לפגוע בגמישות
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
   <div class="footer"><span class="c"><span class="en">Check Point Software Technologies</span> · Confidential</span><span class="n">ברק רוזנפלד · <span class="en">Senior PM Assignment 2026</span></span></div>
@@ -1659,32 +1795,34 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 <section class="slide" data-ch="5" id="sHow">
   <div class="rail"></div>
   <div class="body">
-    <div class="eyebrow">פרק 5 · הפתרון <span class="pill" style="margin-inline-start:8px">3 · איך זה עובד</span></div>
-    <h1 class="title">הכרטיס מפענח, סורק ומכריע. <span class="hl">ל-x86 נשאר רק ה-policy</span></h1>
+    <div class="eyebrow">פרק 5 · הפתרון</div>
+    <h1 class="title">המסלול של ה-<span class="en">packet</span> ב-<span class="en">9800</span> עם כרטיס ההאצה</h1>
+    <div class="callout">הכרטיס מאיץ פענוח <span class="en">TLS</span>, הצפנה מחדש וסריקת דפוסים הניתנים להאצה. ה-<span class="en">x86</span> ממשיך לאכוף <span class="en">policies</span>.</div>
     <div class="how1">
       <div class="card white">
-        <div class="ch"><span class="dotc"></span>נתיב ה-<span class="en">packet</span>: <span class="en">Quantum 9800 + DPU</span> · <span class="en">TLS + Full TP</span> <span class="pill" style="margin-inline-start:auto;font-size:9.5px" id="pkstate">▶ מדגים</span></div>
         <div class="flow" id="flow">
           <div class="grp io"><div class="stn" data-i="0"><b>NIC</b><small>100G in</small></div></div>
           <span class="farr">←</span>
           <div class="grp dpu"><div class="gh">BlueField-3 DPU <span>כרטיס · PCIe Gen5</span></div>
             <div class="stns">
-              <div class="stn" data-i="1"><b>Flow table</b><small>flow מוכר? → fast path</small><em>HW flow tables</em></div><span class="farr">←</span>
-              <div class="stn" data-i="2"><b>TLS Decrypt</b><small>handshake + bulk</small><em>crypto engines 400G</em></div><span class="farr">←</span>
-              <div class="stn" data-i="3"><b>Pattern match</b><small>IPS · AV · Bot signatures</small><em>RXP engine</em></div><span class="farr">←</span>
-              <div class="stn" data-i="4"><b>Verdict</b><small>clean / block / ask x86</small><em>Arm cores</em></div>
+              <div class="stn" data-i="1"><b>Firewall L3/4</b><small>ניתוב וסיווג בחומרה</small></div><span class="farr">←</span>
+              <div class="stn" data-i="2"><b>פענוח <span class="en">TLS</span></b><small>פתיחת התעבורה המוצפנת</small></div><span class="farr">←</span>
+              <div class="stn" data-i="3"><b>סריקת <span class="en">IPS</span></b><small>חתימות ודפוסי איום בחומרה</small></div><span class="farr">←</span>
+              <div class="stn" data-i="4"><b>החלטה</b><small>העברה, חסימה או <span class="en">x86</span></small></div>
             </div></div>
           <span class="farr">←</span>
           <div class="grp x86"><div class="gh">Intel Xeon x86 <span>נשאר · Gaia</span></div>
-            <div class="stns"><div class="stn" data-i="5"><b>Policy · App · ThreatCloud</b><small>rule base · App-ID · URL · AI</small><em>CoreXL</em></div></div></div>
+            <div class="stns"><div class="stn" data-i="5"><b><span class="en">policies</span></b><small><span class="en">App Control · URL Filtering · ThreatCloud</span></small></div></div></div>
           <span class="farr">←</span>
-          <div class="grp dpu one"><div class="gh">DPU</div><div class="stns"><div class="stn" data-i="6"><b>Re-encrypt</b><small>TLS out</small><em>crypto</em></div></div></div>
+          <div class="grp dpu one"><div class="gh">DPU</div><div class="stns"><div class="stn" data-i="6"><b>הצפנה מחדש</b><small>סגירת ה-<span class="en">TLS</span></small></div></div></div>
           <span class="farr">←</span>
           <div class="grp io"><div class="stn" data-i="7"><b>OUT</b><small>100G</small></div></div>
           <div class="pk" id="pk"></div>
-          <div class="fast" id="fast"><span><span class="en">Fast path</span> · <b>flow מוכר לא מגיע ל-x86 בכלל</b></span></div>
         </div>
       </div>
+    </div>
+    <div class="src box" style="margin-top:8px">
+      <span class="t">מקורות והנחות</span> <a href="https://docs.nvidia.com/networking/display/bluefield3dpu" target="_blank" rel="noopener">Nvidia BlueField-3 spec</a> · <a href="https://www.checkpoint.com/press-releases/check-point-redefines-ai-security-for-enterprises-with-ai-cloud-protect-powered-by-nvidia-bluefield/" target="_blank" rel="noopener">Check Point AIFF press release</a> · <a href="https://www.checkpoint.com/downloads/products/quantum-force-9800-datasheet.pdf" target="_blank" rel="noopener">Quantum Force 9800 datasheet</a> · התרשים סכמטי וממחיש את חלוקת העבודה בין ה-<span class="en">DPU</span> ל-<span class="en">x86</span>, לא תרשים לוח או תזמון בפועל · פענוח ה-<span class="en">TLS</span> וסריקת ה-<span class="en">IPS</span> רצים על מנועי החומרה של <span class="en">BlueField-3</span>, ואכיפת ה-<span class="en">policies</span> נשארת על ה-<span class="en">x86</span>
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1693,21 +1831,35 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 <section class="slide" data-ch="5" id="s9">
   <div class="rail"></div>
   <div class="body">
-    <div class="eyebrow">פרק 5 · הפתרון <span class="pill" style="margin-inline-start:8px">4 · בר-ביצוע וסיכונים</span></div>
-    <h1 class="title">מה נדרש למימוש הפתרון: <span class="hl">חומרה, תוכנה, <span class="num">$7.2M</span> ו-18 חודשים</span>, והסיכונים שבדרך</h1>
+    <div class="eyebrow">פרק 5 · הפתרון</div>
+    <h1 class="title">מה נדרש <span class="hl">למימוש הפתרון</span></h1>
     <div class="exec">
-      <div class="wcol">
-        <div class="card t"><div class="ch"><span class="dotc" style="background:var(--teal)"></span>מה נדרש בחומרה</div><ul>
-          <li><b>Form factor</b>: כרטיס האצה באחד משני <span class="en">network I/O slots</span> של ה-<span class="en">9700/9800</span> <span class="pill warn">לאמת התאמה מכנית</span></li>
-          <li><b>Power · thermal</b>: <span class="num">~75W</span> נוסף, לוודא <span class="en">PSU headroom</span> ו-<span class="en">airflow</span> ב-<span class="en">1RU</span> <span class="pill warn">סימולציה תרמית</span></li>
-          <li><b>Data path</b>: <span class="en">zero-copy DMA</span>, בלי להרע את ה-<span class="num">1.85μs</span> בנתיב ה-<span class="en">FW</span></li>
-        </ul></div>
-        <div class="card a"><div class="ch"><span class="dotc" style="background:var(--amber)"></span>מה נדרש בתוכנה</div><ul>
-          <li><b>Gaia driver + DOCA SDK</b>: מבוסס על ה-<span class="en">containerized gateway</span> של <span class="en">AIFF</span>, שכבר רץ על <span class="en">BF-3</span></li>
-          <li><b>Offload boundary</b>: ה-<span class="en">API</span> בין <span class="en">CoreXL</span> לכרטיס. כאן יושבים רוב 12 המהנדסים</li>
-          <li><b>Signature compiler</b>: <span class="en">IPS DB → RXP</span>; המדד הוא אחוז החתימות שמתקמפלות</li>
-          <li><b>תקינה</b>: <span class="en">FIPS 140-3 / CC</span> למודול הקריפטו. ב-<span class="en">SmartConsole</span>: <span class="en">zero change</span> ללקוח</li>
-        </ul></div>
+      <div class="card reqcard">
+        <div class="ch"><span class="dotc"></span>מה נדרש למימוש</div>
+        <div class="reqsec">
+          <div class="reqh"><span class="dotc" style="background:var(--teal)"></span>חומרה</div>
+          <ul class="tul">
+            <li><b>Form factor</b>: כרטיס האצה באחד משני <span class="en">network I/O slots</span> של ה-<span class="en">9700/9800</span></li>
+            <li><b>Power · thermal</b>: <span class="num">~75W</span> נוסף, לוודא <span class="en">PSU headroom</span> ו-<span class="en">airflow</span> ב-<span class="en">1RU</span></li>
+            <li><b>Data path</b>: <span class="en">zero-copy DMA</span>, בלי להרע את ה-<span class="num">1.85μs</span> בנתיב ה-<span class="en">FW</span></li>
+          </ul>
+        </div>
+        <div class="reqsec">
+          <div class="reqh"><span class="dotc" style="background:var(--amber)"></span>תוכנה ואינטגרציה</div>
+          <ul class="aul">
+            <li><b>Gaia driver + DOCA SDK</b>: מבוסס על ה-<span class="en">containerized gateway</span> של <span class="en">AIFF</span>, שכבר רץ על <span class="en">BF-3</span></li>
+            <li><b>Offload boundary</b>: ה-<span class="en">API</span> בין <span class="en">CoreXL</span> לכרטיס. כאן יושבים רוב 12 המהנדסים</li>
+            <li><b>Signature compiler</b>: המרת <span class="en">IPS DB → RXP</span>; המדד הוא אחוז החתימות שמתקמפלות</li>
+          </ul>
+        </div>
+        <div class="reqsec">
+          <div class="reqh"><span class="dotc" style="background:var(--purple)"></span>מוכנות מוצר לשוק</div>
+          <ul class="pul">
+            <li><b>תקינה</b>: שמירת תאימות ל-<span class="en">FIPS 140-3</span> ובחינת השפעת הכרטיס על הסמכת <span class="en">CC</span></li>
+            <li><b>חוויית לקוח</b>: ללא שינוי ב-<span class="en">SmartConsole</span> או במדיניות האבטחה הקיימת</li>
+            <li><b>השקה</b>: <span class="en">Beta</span> עם <span class="en">Design Partners</span> לפני <span class="en">GA</span></li>
+          </ul>
+        </div>
       </div>
       <div class="card white">
         <div class="ch"><span class="dotc"></span>סיכונים ומיטיגציה</div>
@@ -1715,23 +1867,23 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
           <div class="rr hdr"><div class="rt">חומרה</div><div class="rt">סבירות</div><div class="nm">סיכון</div><div class="mt">מיטיגציה</div><div class="kpi">יעד מדיד</div></div>
           <div class="rr"><div class="rt"><span class="hi">גבוהה</span></div><div class="rt"><span class="mid">בינונית</span></div>
             <div class="nm">Offload boundary<small>ה-TP לא עולה כמצופה</small></div>
-            <div class="mt"><b>מיטיגציה:</b> <span class="en">PoC</span> ממוקד-<span class="en">TLS</span> שמודד את הרווח האמיתי לפני התחייבות מלאה לפרויקט</div>
+            <div class="mt"><span class="en">PoC</span> ממוקד-<span class="en">TLS</span> שמודד את הרווח האמיתי לפני התחייבות מלאה לפרויקט</div>
             <div class="kpi"><span class="n">25G+</span>תחת TLS</div></div>
           <div class="rr"><div class="rt"><span class="mid">בינונית</span></div><div class="rt"><span class="mid">בינונית</span></div>
             <div class="nm">כיסוי חתימות ב-RXP<small>הרווח ב-IPS חלקי</small></div>
-            <div class="mt"><b>מיטיגציה:</b> לא תלויים ב-<span class="en">IPS</span>. ה-<span class="en">TLS</span> לבדו נותן את רוב הרווח (תכנון <span class="en">hybrid</span>)</div>
+            <div class="mt">לא תלויים ב-<span class="en">IPS</span>. ה-<span class="en">TLS</span> לבדו נותן את רוב הרווח (תכנון <span class="en">hybrid</span>)</div>
             <div class="kpi"><span class="n">~85%</span>חתימות</div></div>
           <div class="rr"><div class="rt"><span class="mid">בינונית</span></div><div class="rt"><span class="low">נמוכה</span></div>
             <div class="nm">Power / thermal ב-1RU<small>אין headroom בקופסה</small></div>
-            <div class="mt"><b>מיטיגציה:</b> סימולציה תרמית מוקדמת. אם אין מקום חשמלי, הכרטיס נכנס כאופציה ביצור בדור הבא</div>
+            <div class="mt">סימולציה תרמית מוקדמת. אם אין מקום חשמלי, הכרטיס נכנס כאופציה ביצור בדור הבא</div>
             <div class="kpi"><span class="n">~75W</span>תוספת</div></div>
           <div class="rr"><div class="rt"><span class="mid">בינונית</span></div><div class="rt"><span class="low">נמוכה</span></div>
             <div class="nm">תלות ב-Nvidia<small>ספק יחיד בנתיב הנתונים</small></div>
-            <div class="mt"><b>מיטיגציה:</b> הסכם רב-שנתי במסגרת <span class="en">AIFF</span>, ושכבת הפשטה שמאפשרת מעבר לספק אחר בדור 2</div>
+            <div class="mt">הסכם רב-שנתי במסגרת <span class="en">AIFF</span>, ושכבת הפשטה שמאפשרת מעבר לספק אחר בדור 2</div>
             <div class="kpi"><span class="n">2</span>חלופות ספק</div></div>
           <div class="rr"><div class="rt"><span class="low">נמוכה</span></div><div class="rt"><span class="low">נמוכה</span></div>
             <div class="nm">FIPS / CC מחדש<small>סיכון ל-Regulated</small></div>
-            <div class="mt"><b>מיטיגציה:</b> הגשת <span class="en">FIPS</span> מוקדמת, לא אחרי <span class="en">GA</span>; ל-<span class="en">BF-3</span> כבר יש מודול <span class="en">crypto</span> מאושר</div>
+            <div class="mt">הגשת <span class="en">FIPS</span> מוקדמת, לא אחרי <span class="en">GA</span>; ל-<span class="en">BF-3</span> כבר יש מודול <span class="en">crypto</span> מאושר</div>
             <div class="kpi"><span class="n">~9</span>ח' לפני GA</div></div>
         </div>
       </div>
@@ -1769,7 +1921,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
       </div>
     </div>
     <div class="src box" style="margin-top:6px">
-      <span class="t">מקורות והנחות</span> <a href="https://docs.nvidia.com/networking/display/bluefield3dpu" target="_blank">Nvidia BlueField-3 datasheet</a> · <a href="https://csrc.nist.gov/projects/cryptographic-module-validation-program" target="_blank">NIST CMVP (FIPS 140-3)</a> · <a href="https://www.checkpoint.com/press-releases/check-point-redefines-ai-security-for-enterprises-with-ai-cloud-protect-powered-by-nvidia-bluefield/" target="_blank" rel="noopener">Check Point AIFF PR</a> · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">CP Appliance Chart 2026</a> (1RU · 1.85μs) · <b>הנחות:</b> היקף הצוות (12 מהנדסים ל-18 חודשים) ופיצול העלות ל-$7.2M הם <b>אומדן תכנון</b>: R&amp;D $4.5M (עלות עמוסה למהנדס), HW eng+FIPS $1.2M, dev kits+NRE $0.8M, GTM $0.7M · חלוקת 18 החודשים היא אומדן מאמץ ולא התחייבות לוח זמנים · הכרטיס נכנס לאחד משני ה-<b>network I/O slots</b> לפי מודל הכרטיסים של Check Point (לא חריץ PCIe גנרי), וה-headroom החשמלי/תרמי ב-1RU טעון אימות ב-PoC · דירוג חומרת הסיכונים הוא הערכה איכותית
+      <span class="t">מקורות והנחות</span> <a href="https://docs.nvidia.com/networking/display/bluefield3dpu" target="_blank">Nvidia BlueField-3 datasheet</a> · <a href="https://csrc.nist.gov/projects/cryptographic-module-validation-program" target="_blank">NIST CMVP (FIPS 140-3)</a> · <a href="https://www.checkpoint.com/press-releases/check-point-redefines-ai-security-for-enterprises-with-ai-cloud-protect-powered-by-nvidia-bluefield/" target="_blank" rel="noopener">Check Point AIFF PR</a> · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">CP Appliance Chart 2026</a> (1RU · 1.85μs) · היקף הצוות (12 מהנדסים ל-18 חודשים) ופיצול העלות ל-$7.2M הם <b>אומדן תכנון</b>: R&amp;D $4.5M (עלות עמוסה למהנדס), HW eng+FIPS $1.2M, dev kits+NRE $0.8M, GTM $0.7M · חלוקת 18 החודשים היא אומדן מאמץ ולא התחייבות לוח זמנים · הכרטיס נכנס לאחד משני ה-<b>network I/O slots</b> לפי מודל הכרטיסים של Check Point (לא חריץ PCIe גנרי), וה-headroom החשמלי/תרמי ב-1RU טעון אימות ב-PoC · דירוג חומרת הסיכונים הוא הערכה איכותית
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1780,46 +1932,55 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 <section class="slide" data-ch="5" id="s10">
   <div class="rail"></div>
   <div class="body">
-    <div class="eyebrow">פרק 5 · הפתרון <span class="pill" style="margin-inline-start:8px">5 · כמה זה שווה</span> <span class="pill warn">כל הנחה ניתנת לשינוי, גררו</span></div>
-    <h1 class="title"><span class="num">$7.2M</span> השקעה · <span class="hl" id="hl3y">~$66M</span> הכנסות מצטברות ב-3 שנים מ-<span class="en">GA</span> · <span class="en">break-even</span> <span class="hl" id="hlbe">חודש 15</span></h1>
-    <div class="biz">
-      <div class="card">
-        <div class="ch"><span class="dotc"></span>ההנחות: שנו וראו</div>
-        <div class="sliders">
-          <div class="sl"><div class="slh"><span>מחיר מודול (<span class="en">list</span>)</span><b id="pv">$15K</b></div><input type="range" id="price" min="8" max="25" step="1" value="15"></div>
-          <div class="sl"><div class="slh"><span><span class="en">Attach rate</span> על <span class="en">9700/9800</span> חדשים, שנה 1 (+10 נק'/שנה)</span><b id="av">30%</b></div><input type="range" id="attach" min="10" max="60" step="5" value="30"></div>
-          <div class="sl"><div class="slh"><span>שדרוגי בסיס מותקן, שנה 1 (דוהה 75%/שנה)</span><b id="uv">400</b></div><input type="range" id="upg" min="0" max="1200" step="50" value="400"></div>
-          <div class="sl"><div class="slh"><span>עסקאות <span class="en">DC/HQ</span> נוספות בשנה (<span class="en">win-rate</span>) × <span class="en">$350K</span></span><b id="wv">25</b></div><input type="range" id="wins" min="0" max="80" step="5" value="25"></div>
-        </div>
-        <table class="invtb" style="margin-top:12px">
-          <tr><td>R&amp;D: 12 מהנדסים × 18 חודשים (<span class="en">DOCA, offload, QA</span>)</td><td class="n">$4.5M</td></tr>
-          <tr><td>HW eng · thermal/mech · <span class="en">FIPS/CC/EMC</span></td><td class="n">$1.2M</td></tr>
-          <tr><td><span class="en">Dev kits · lab · Nvidia NRE</span></td><td class="n">$0.8M</td></tr>
-          <tr><td><span class="en">GTM</span>: <span class="en">launch, enablement, channel</span></td><td class="n">$0.7M</td></tr>
-          <tr class="tot"><td>סה"כ השקעה (<span class="en">FY27–28</span>)</td><td class="n">$7.2M</td></tr>
-        </table>
+    <div class="eyebrow">פרק 5 · הפתרון</div>
+    <div class="s10head">
+      <div class="s10headL">
+        <h1 class="title">הערך העסקי</h1>
+        <p class="s10sub">מנוע לשדרוגים, זכיות ושימור לקוחות, עם החזר הנשען על הבסיס הקיים.</p>
       </div>
-      <div class="card white">
-        <div class="ch"><span class="dotc"></span>הכנסות לפי שנה מ-<span class="en">GA</span> · <span class="en">$M</span></div>
-        <div class="rev" id="rev"></div>
-        <div class="legend2"><span><i style="background:var(--primary)"></i>מודולים: <span class="en">attach + upgrade</span></span><span><i style="background:var(--purple)"></i>עסקאות <span class="en">DC/HQ</span> שלא היינו מנצחים</span></div>
-        <div class="kpis" style="margin-top:10px">
-          <div class="kpi"><div class="v" id="kunits">·</div><div class="l">מודולים ב-3 שנים</div></div>
-          <div class="kpi"><div class="v purple" id="kasp">+$15K</div><div class="l"><span class="en">ASP uplift</span> ל-<span class="en">9700/9800</span> עם מודול (≈+35–40%)</div></div>
-          <div class="kpi"><div class="v green" id="kgm">·</div><div class="l">רווח גולמי מצטבר · 3 שנים</div></div>
-          <div class="kpi"><div class="v amber" id="kbe">·</div><div class="l"><span class="en">break-even</span> מ-<span class="en">GA</span> (חודשים), מודולים בלבד, <span class="en">ramp</span> ליניארי בשנה 1</div></div>
-        </div>
-        <div class="solve" style="margin-top:10px">
-          <div class="row"><div class="ic" style="background:var(--green)">R</div><div><h4>Retention: המדד שלא בגרף</h4><p>ה-<span class="en">HQ renewal</span> הוא איפה ש-<span class="en">Fortinet</span> אוכל אותנו ("למה לא 57% פחות?"). <span class="en">upgrade SKU</span> נותן ל-<span class="en">AM</span> תשובה בלי לדבר על מחיר: <b>×4 TLS על הקופסה שכבר קניתם</b>. כל נקודת <span class="en">churn</span> על בסיס <span class="en">HQ</span> = <span class="num">~$10M</span> <span class="en">ARR</span> (הנחה).</p></div></div>
-        </div>
+      <div class="scentoggle" id="scentoggle">
+        <button class="on" data-scen="base">תרחיש בסיס</button>
+        <button data-scen="up">בסיס + <span class="en">upside</span> עסקאות</button>
       </div>
     </div>
-    <div class="thread" style="margin-top:10px">
-      <div class="k" id="thk">$66M<small>3 שנים</small></div><div class="sep"></div>
-      <div class="t">ה-<b>ROI</b> לא תלוי בהנחה אחת: גם ב-<b>attach 15%</b> ובלי עסקאות חדשות, המודולים לבד מחזירים את ההשקעה בתוך שנתיים. ומה שלא בגרף, <b>retention</b> ב-<b>HQ</b>, הוא הסיבה שזה דחוף.</div>
+    <div class="bval">
+      <div class="vcard v1">
+        <div class="vhead"><span class="vnum">1</span><h4>מייצרים הכנסות מהבסיס המותקן</h4></div>
+        <p>מודול שדרוג ל־<span class="en">9700/9800</span> מאפשר ללקוח להגדיל <span class="en">TP+TLS</span> בלי להחליף <span class="en">Appliance</span>.</p>
+        <div class="vbig tip" data-tip="‏$27.0M ממכירת מודול ליחידות חדשות (~1,800 מודולים ב-3 שנים, attach עולה מ-30% ל-50%), ועוד ‏$13.9M משדרוג הבסיס המותקן (~925 מודולים), במחיר ‏$15K למודול">$40.9M<span class="tipi">i</span></div>
+        <div class="vlbl">הכנסות ממודולים ב־3 שנים</div>
+      </div>
+      <div class="vcard v2" id="vcard2">
+        <div class="vhead"><span class="vnum">2</span><h4>מגדילים את היכולת לנצח בעסקאות</h4></div>
+        <p>פי 4 <span class="en">TP+TLS</span> לכל <span class="en">RU</span> הופך את פער הביצועים ליתרון במכרזי <span class="en">Data Center</span> ו־<span class="en">HQ</span>.</p>
+        <div class="vbig tip" data-tip="‏75 עסקאות ‏DC/HQ נוספות (25 בשנה × 3 שנים) × ‏$350K לעסקה, בהנחת שיפור של 10 נקודות ב־win-rate">+$26.3M<span class="tipi">i</span></div>
+        <div class="vlbl">פוטנציאל הכנסות ב־3 שנים</div>
+      </div>
+      <div class="vcard v3">
+        <div class="vhead"><span class="vnum">3</span><h4>מגינים על חידושים ועל מחיר</h4></div>
+        <p>במקום הנחת מחיר, הוספת ארבע קופסאות ב־<span class="en">Maestro</span> או מעבר לדגם גדול יותר, צוות המכירות מציע שדרוג מודול על החומרה הקיימת.</p>
+        <div class="vbig txt">שומרים על הלקוח<br>ועל רווחיות העסקה</div>
+      </div>
+    </div>
+    <div class="calc" id="calcPanel">
+      <table class="ptbl">
+        <thead>
+          <tr><th>רכיב</th><th>ההנחה</th><th>חישוב</th><th class="a">סכום · 3 שנים</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="en">attach</span> על יחידות חדשות</td><td class="as">‏1,500 = משלוחי <span class="en">9700/9800</span> בשנה לפי <span class="en">IDC</span>; מתוכם צירוף מודול עולה מ-30% בשנה 1 ל-50% בשנה 3</td><td class="cc">1,800 מודולים × <span class="en">$15K</span></td><td class="a">$27.0M</td></tr>
+          <tr><td>שדרוגי בסיס מותקן</td><td class="as">מתוך בסיס מותקן של אלפי יחידות, ‏925 משדרגים ב-3 שנים (הביקוש מרוכז בשנה הראשונה)</td><td class="cc">925 מודולים × <span class="en">$15K</span></td><td class="a">$13.9M</td></tr>
+          <tr class="up-only"><td>עסקאות <span class="en">DC/HQ</span> נוספות</td><td class="as">‏25 עסקאות <span class="en">DC/HQ</span> נוספות בשנה שנזכה בהן בזכות יתרון הביצועים (‏+10 נק׳ <span class="en">win-rate</span>)</td><td class="cc">75 עסקאות × <span class="en">$350K</span></td><td class="a purple">+$26.3M</td></tr>
+          <tr class="sub"><td>סה״כ הכנסות</td><td class="as"></td><td class="cc" id="cRevCalc">$27.0M + $13.9M</td><td class="a"><span class="amt" id="cRev">$40.9M</span></td></tr>
+          <tr><td>רווח גולמי</td><td class="as">רווחיות גולמית 65% על מודול תוכנה+חומרה, סטנדרט למוצרי <span class="en">Check Point</span></td><td class="cc" id="cGmCalc">$40.9M × 65%</td><td class="a"><span class="amt" id="cGm">$26.6M</span></td></tr>
+          <tr><td>השקעה חד־פעמית</td><td class="as">אומדן תכנון: 12 מהנדסים ל-18 חודשים (‏<span class="en">R&amp;D</span>, חומרה+<span class="en">FIPS</span>, <span class="en">dev kits</span>, <span class="en">GTM</span>)</td><td class="cc">$4.5M + $1.2M + $0.8M + $0.7M</td><td class="a neg">−$7.2M</td></tr>
+          <tr class="sub"><td>תרומה נטו</td><td class="as"></td><td class="cc" id="cNetCalc">$26.6M − $7.2M</td><td class="a"><span class="amt" id="cNet">$19.4M</span></td></tr>
+          <tr class="roi"><td><span class="en">ROI</span></td><td class="as">תרומה נטו חלקי ההשקעה החד־פעמית</td><td class="cc" id="cRoiCalc">$19.4M ÷ $7.2M</td><td class="a"><span class="amt" id="cRoi">269%</span></td></tr>
+        </tbody>
+      </table>
     </div>
     <div class="src box" style="margin-top:6px">
-      <span class="t">מקורות והנחות</span> <a href="https://my.idc.com/getdoc.jsp?containerId=IDC_P6272" target="_blank" rel="noopener">IDC Security Appliance Tracker</a> · Decryption Digest (TCO) · <a href="https://www.checkpoint.com/about-us/investor-relations/" target="_blank" rel="noopener">Check Point IR</a>: <span class="en">Hardware</span> ≈ 25% מההכנסות · <b>הנחות:</b> משלוחי 9700/9800 ≈ 1,500 יחידות בשנה, <b>אומדן</b> · GM 65% למודול ו-60% לעסקה נוספת (HW+subs) · win-rate ‎+10 נקודות בעסקאות שבהן TP+TLS הוא קריטריון · ‎$350K לעסקת DC/HQ ממוצעת · attach גדל ב-10 נקודות בשנה ושדרוגי הבסיס המותקן דוהים ב-75% בשנה · break-even מחושב מרווח גולמי על מודולים בלבד, ללא העסקאות הנוספות · ‎$10M ARR לנקודת churn בבסיס ה-HQ הוא אומדן, ואינו נכלל ב-$66M
+      <span class="t">מקורות והנחות</span> <a href="https://my.idc.com/getdoc.jsp?containerId=IDC_P6272" target="_blank" rel="noopener">IDC Security Appliance Tracker</a> · <a href="https://www.checkpoint.com/about-us/investor-relations/" target="_blank" rel="noopener">Check Point IR</a> · המודל בנוי לאופק של 3 שנים, אופק תכנון מקובל ל-business case · משלוחי 9700/9800 מוערכים ב-1,500 יחידות בשנה (IDC) · הכנסות ממודולים ל-3 שנים ($40.9M) מורכבות מ-attach על יחידות חדשות (‏$27.0M, ~1,800 מודולים כשה-attach גדל מ-30% ל-50%) ומשדרוגי בסיס מותקן (‏$13.9M, ~925 מודולים כשהביקוש מרוכז בשנה הראשונה), במחיר מודול $15K · רווחיות גולמית 65% למודול ו-60% לעסקת DC/HQ · ההשקעה ($7.2M) היא <b>אומדן תכנון</b>: R&amp;D ‏$4.5M, חומרה+FIPS ‏$1.2M, dev kits+NRE ‏$0.8M, GTM ‏$0.7M · ROI = תרומה נטו (רווח גולמי פחות ההשקעה) חלקי ההשקעה · Break-even בחודש 16 מ-GA מחושב על המודולים בלבד · תרחיש ה-<span class="en">upside</span> (עוד +$26.3M מ-75 עסקאות DC/HQ, 25 בשנה × 3, בהנחת +10 נק׳ win-rate) הוא <b>אומדן</b>, ואינו נדרש להשגת ה-break-even
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1827,33 +1988,45 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 </section>
 
 <!-- ═══════════ 12 · ASK ═══════════ -->
-<section class="slide" data-ch="6" id="s12">
+<section class="slide dark s17" data-ch="6" id="s12">
   <div class="rail"></div>
   <div class="body">
     <div class="eyebrow">פרק 6 · ההחלטה</div>
-    <h1 class="title"><span class="hl">שלוש החלטות</span> שמכניסות את ה-<span class="en">9800</span> לסגמנט שגדל הכי מהר</h1>
-    <div class="ask">
-      <div class="ak"><div class="who">PRODUCT & R&amp;D</div><h3>אישור <span class="en">Roadmap</span></h3><p>כרטיס <span class="en">DPU</span> כ-<span class="en">priority item</span> ל-<span class="en">FY27</span>, וצוות ייעודי של 12 מהנדסים, שחלקו כבר עובד על <span class="en">AIFF</span>.</p></div>
-      <div class="ak p"><div class="who">FINANCE & LEADERSHIP</div><h3>תקציב <span class="num">$7.2M</span></h3><p>בשני שלבים: <span class="num">$2.9M</span> עד ה-<span class="en">PoC</span>, ורק אז <span class="num">$4.3M</span> עד <span class="en">GA</span>. הקוד משותף עם <span class="en">AIFF</span>, ו-<span class="en">break-even</span> ~16 חודשים מ-<span class="en">GA</span>.</p></div>
-      <div class="ak t"><div class="who">SALES & CS</div><h3>שלושה <span class="en">design partners</span></h3><p>לקוחות <span class="en">9800</span> עם <span class="en">TLS mandate</span> ובעיית <span class="en">throughput</span> מתועדת: בנק, <span class="en">telco</span>, גוף ממשלתי, בתמורה ל-<span class="en">case study</span>.</p></div>
-    </div>
-    <div class="rmap">
-      <div class="rmh"><span class="dotc"></span><b class="en">Roadmap</b> · מ-<span class="en">Kickoff</span> ל-<span class="en">GA</span> ב-18 חודשים, עם <span class="en">PoC</span> כמדד באמצע</div>
-      <div class="tl">
-        <div class="ms"><div class="q">Q1'27</div><div class="w">Kickoff · צוות 12<br>DOCA bring-up</div></div>
-        <div class="ms gate"><div class="q">Q3'27</div><div class="w"><b>PoC</b> · TLS offload<br>יעד 25G+ תחת TLS</div></div>
-        <div class="ms"><div class="q">Q4'27</div><div class="w">RXP compiler<br>FIPS submission</div></div>
-        <div class="ms"><div class="q">Q1'28</div><div class="w">Beta · 3 partners<br>DC / HQ</div></div>
-        <div class="ms ga"><div class="q">Q3'28</div><div class="w"><b>GA</b> · 9700/9800<br>upgrade + attach SKU</div></div>
+    <h1 class="title">למה לפעול <span class="hl">עכשיו</span></h1>
+    <p class="s17sub">כל רבעון של דחייה משאיר את ה־<span class="en">9800</span> על <span class="num">10 Gbps</span> תחת <span class="en">TP+TLS</span>, ומרחיק את ההשקה מחלון החידושים הבא. זהו מחיר ההמתנה.</p>
+    <div class="s17grid">
+      <div class="ucard u1">
+        <div class="utop"><span class="uk">01</span><div class="uh">הפער כבר מורגש אצל הלקוח</div></div>
+        <p>היום הלקוח נדרש לבחור בין צמצום <span class="en">TLS Inspection</span>, הוספת קופסאות ב־<span class="en">Maestro</span>, או מעבר ל־<span class="en">29100/29200</span>. אף חלופה לא נותנת לו שדרוג פשוט של הקופסה הקיימת.</p>
+      </div>
+      <div class="ucard u2">
+        <div class="utop"><span class="uk">02</span><div class="uh">חלון השדרוג מוגבל בזמן</div></div>
+        <p>לקוחות <span class="en">9700/9800</span> נכנסים למחזורי חידוש ותכנון קיבולת. בלי <span class="en">Upgrade SKU</span> בזמן, צוות המכירות מגיע לשיחה ללא פתרון תחרותי, ופונה להנחה, להגדלת <span class="en">TCO</span> או להחלפת חומרה.</p>
+      </div>
+      <div class="ucard u3">
+        <div class="utop"><span class="uk">03</span><div class="uh">זמן הפיתוח לא מתקצר אם מחכים</div></div>
+        <p>הדרך ל־<span class="en">GA</span> אורכת כ־<span class="num">18</span> חודשים. דחייה של רבעון אינה קונה זמן, אלא דוחה את ההכנסות ואת חלון השוק ברבעון נוסף.</p>
       </div>
     </div>
-    <div class="close">
-      <div class="clh">השורה התחתונה</div>
-      <p class="punch"><b>הבקשה פשוטה:</b> אישור ה-<span class="en">roadmap</span>, מימון של <b>$2.9M</b> עד ה-<span class="en">PoC</span>, ושלושה <span class="en">design partners</span>. את היכולת להריץ על <b>BlueField</b> כבר הוכחנו ב-<b>AIFF</b>, ולכן זהו פרויקט תוכנה ואינטגרציה, לא סיליקון.</p>
-      <div class="whynow"><b>למה עכשיו:</b> מדד אחד, <b>TP+TLS</b>, מפריד בין ה-<span class="en">9800</span> לסגמנט שצומח הכי מהר, ובו <span class="en">Fortinet</span> ו-<span class="en">Palo Alto</span> כבר מוכרות האצה בחומרה. כל רבעון של המתנה מתורגם לעסקאות <span class="en">HQ</span> ו-<span class="en">renewals</span> שנופלות למתחרים על בסיס מחיר. לקוח שמתחדש היום ננעל למחזור חומרה שלם, ולכן חלון הכניסה הוא <b>ה-refresh הקרוב</b>.</div>
+    <div class="s17foot">
+      <div class="kpanel">
+        <div class="ktitle">מדדי הצלחה</div>
+        <div class="ktiles">
+          <div class="ktile win"><div class="kv">×2.5</div><div class="kl">קפיצת ביצועים ב־<span class="en">TP+TLS</span> (<span class="num">10→25</span>)</div></div>
+          <div class="ktile"><div class="kv">$40.9M</div><div class="kl">הכנסות ממודולים · 3 שנים</div></div>
+          <div class="ktile"><div class="kv">269%</div><div class="kl"><span class="en">ROI</span> · 3 שנים</div></div>
+          <div class="ktile"><div class="kv">חודש 16</div><div class="kl"><span class="en">Break-even</span> מ־<span class="en">GA</span></div></div>
+        </div>
+      </div>
+      <div class="askpanel">
+        <div class="ask-lbl">הפעולה היום</div>
+        <div class="ask-big">לאשר <span class="num">$2.9M</span> ל־<span class="en">PoC</span> ממוקד</div>
+        <div class="ask-gate">שער הצלחה: <span class="num">25 Gbps+</span> תחת <span class="en">TLS</span></div>
+        <div class="ask-stop">אם היעד אינו מושג, עוצרים לפני יתרת ה־<span class="num">$4.3M</span></div>
+      </div>
     </div>
     <div class="src box" style="margin-top:8px">
-      <span class="t">מקורות והנחות</span> <a href="https://www.checkpoint.com/press-releases/check-point-redefines-ai-security-for-enterprises-with-ai-cloud-protect-powered-by-nvidia-bluefield/" target="_blank" rel="noopener">Check Point AIFF PR</a> · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner 09/2026</a> · <b>הנחות:</b> לוח הזמנים ופיצול התקציב ($2.9M עד ה-PoC, $4.3M עד ה-GA) הם <b>אומדן תכנון</b> · ה-break-even נגזר מהמודל בשקף ה-business case · הכרטיס והקוד ממנפים את פלטפורמת AIFF הקיימת על BlueField-3
+      <span class="t">מקורות והנחות</span> <a href="https://www.checkpoint.com/press-releases/check-point-redefines-ai-security-for-enterprises-with-ai-cloud-protect-powered-by-nvidia-bluefield/" target="_blank" rel="noopener">Check Point AIFF PR</a> · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner 09/2026</a> · פיצול התקציב ($2.9M עד ה-PoC, $4.3M נוספים עד ה-GA, סה״כ $7.2M) ולוח הזמנים (כ-18 חודשים ל-GA) הם <b>אומדן תכנון</b> · שער ההצלחה 25 Gbps+ תחת TLS נגזר מיעד פי 2.5 מול ה-10 Gbps של ה-9800 כיום · הכרטיס והקוד ממנפים את פלטפורמת AIFF הקיימת על BlueField-3
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1865,7 +2038,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 <div class="navwrap">
   <div class="nav">
     <button id="prev" aria-label="קודם">‹</button>
-    <span class="count" id="count">1 / 15</span>
+    <span class="count" id="count">1 / 17</span>
     <button id="next" aria-label="הבא">›</button>
   </div>
   <div class="dots" id="dots"></div>
@@ -1877,7 +2050,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 (function(){const st=document.getElementById('stage');function fit(){const s=Math.min(innerWidth/1280,innerHeight/720);st.style.transform=`translate(-50%,-50%) scale(${s})`;}addEventListener('resize',fit);fit();})();
 
 /* ───────── navigation + story rail ───────── */
-const CH=['פתיח','המוצר','השוק','תמונת מצב','הבעיה','הפתרון','ההחלטה'];
+const CH=['פתיח','המוצר','השוק','SWOT','הבעיה','הפתרון','ההחלטה'];
 const slides=[...document.querySelectorAll('.slide')], total=slides.length; let cur=0;
 const progress=document.getElementById('progress'), count=document.getElementById('count');
 const prevBtn=document.getElementById('prev'), nextBtn=document.getElementById('next'), dotsWrap=document.getElementById('dots');
@@ -1902,18 +2075,18 @@ c.setAttribute('stroke',C[k]);c.setAttribute('stroke-width',sw);c.setAttribute('
 
 /* ───────── WHAT-IS: traffic scene ───────── */
 const THREATS=[
- {ic:'🚪',t:'ניסיון פריצה מהאינטרנט',s:'נחסם ברמת IP ופורט',need:0,by:'Firewall'},
+ {ic:'🚪',t:'חסימת גישה לפי IP ופורט',s:'נחסם ברמת IP ופורט',need:0,by:'Firewall'},
  {ic:'🎣',t:'לינק פישינג במייל',s:'אתר מזויף נחסם לפי קטגוריית URL',need:1,by:'URL Filtering'},
  {ic:'🕳️',t:'אפליקציה אסורה ברשת',s:'Tor, Torrent: זיהוי לפי התנהגות, לא לפי פורט',need:1,by:'App Control'},
  {ic:'📎',t:'קובץ נגוע במייל',s:'נסרק בארגז חול לפני הגעה למשתמש',need:2,by:'AV · Emulation'},
- {ic:'🧨',t:'ניצול חולשה ידועה בשרת',s:'הבקשה נראית תקינה; התוכן מסגיר CVE',need:2,by:'IPS'},
+ {ic:'🧨',t:'ניסיון תקיפה המנצל פרצת אבטחה ידועה (CVE)',s:'הבקשה נראית תקינה; התוכן מסגיר CVE',need:2,by:'IPS'},
  {ic:'🤖',t:'מחשב נגוע מתקשר עם תוקף',s:'נחסם ביציאה; מונע תקשורת C2',need:2,by:'Anti-Bot'},
- {ic:'🔒',t:'נוזקה מוסתרת בתוך HTTPS',s:'ללא פתיחת ההצפנה, השכבות הקודמות עיוורות',need:3,by:'TLS + AV/IPS'},
+ {ic:'🔒',t:'נוזקה המוסתרת בתוך תעבורה מוצפנת (HTTPS)',s:'ללא פתיחת ההצפנה, השכבות הקודמות עיוורות',need:3,by:'TLS + AV/IPS'},
  {ic:'🧠',t:'העלאת קוד מקור ל-ChatGPT',s:'זיהוי קוד בהעלאה. Prompt inspection: roadmap',need:3,by:'TLS + DLP'}];
 const CFGK=['l4','l7','tp','tls'], TPG=[400,67.7,25,10], SHPOS={0:0,1:2,2:3,3:3}; /* shield position (right→left) that catches each level */
 let cfg=0, stB=0, stP=0;
 const thWrap=document.getElementById('threats');
-function renderThreats(){thWrap.innerHTML=THREATS.map(th=>{const ok=cfg>=th.need;return `<div class="th ${ok?'ok':'miss'}"><div class="ic">${th.ic}</div><div class="tx">${th.t}<small>${th.s}</small></div><div class="res">${ok?'✓ נעצר':'✗ חודר'}<small>${ok?'':'דורש '}${th.by}</small></div></div>`;}).join('');}
+function renderThreats(){thWrap.innerHTML=THREATS.map(th=>{const ok=cfg>=th.need;return `<div class="th ${ok?'ok':'miss'}"><div class="ic">${th.ic}</div><div class="tx">${th.t}</div><div class="res">${ok?'✓ נעצר':'✗ חודר'}<small>${ok?'':'דורש '}${th.by}</small></div></div>`;}).join('');}
 function setCfg(c){cfg=c;document.querySelectorAll('#cfgseg button').forEach(b=>b.classList.toggle('on',+b.dataset.c===c));
  document.querySelectorAll('#gw .sh').forEach(s=>{const on=CFGK.indexOf(s.dataset.k)<=c;s.classList.toggle('on',on);s.classList.toggle('off',!on);});
  document.querySelectorAll('#layers .ly').forEach(s=>{const on=CFGK.indexOf(s.dataset.k)<=c;s.classList.toggle('on',on);s.classList.toggle('off',!on);});
@@ -1937,12 +2110,12 @@ setCfg(0);
 
 /* ───────── LINEUP: stairs + org-size slider ───────── */
 const MODELS=[
- {m:'9100',fit:'סניף גדול / ארגון בינוני',tp:6.5,tls:2.96,fw:80,cores:8,cpu:'Core i3-13100E',ram:16,rammax:64,nic:1,lo:0,hi:500,mpu:13},
- {m:'9200',fit:'קמפוס · ארגון בינוני',tp:8,tls:3.6,fw:80,cores:8,cpu:'Core i3-13100E',ram:16,rammax:64,nic:2,lo:500,hi:1000,mpu:8},
- {m:'9300',fit:'מטה בינוני',tp:10.5,tls:5.1,fw:200,cores:16,cpu:'Core i5-13400E',ram:16,rammax:64,nic:1,lo:1000,hi:2500,mpu:4.2},
- {m:'9400',fit:'מטה גדול · HQ',tp:14,tls:5.5,fw:200,cores:20,cpu:'Core i5-13500E',ram:32,rammax:64,nic:1,lo:2500,hi:5000,mpu:2.8},
- {m:'9700',fit:'מטה גדול · קצה Data Center',tp:20,tls:9.6,fw:400,cores:32,cpu:'Xeon Silver 4314',ram:32,rammax:128,nic:2,lo:5000,hi:10000,mpu:2},
- {m:'9800',fit:'Data Center · ארגון גלובלי',tp:25,tls:10.1,fw:400,cores:40,cpu:'Xeon Silver 4316',ram:32,rammax:128,nic:2,lo:10000,hi:1e9,mpu:2}];
+ {m:'9100',fit:'סניף',tp:6.5,tls:2.96,fw:80,cores:8,cpu:'Core i3-13100E',ram:16,rammax:64,nic:1,lo:0,hi:500,mpu:13},
+ {m:'9200',fit:'ארגון קטן',tp:8,tls:3.6,fw:80,cores:8,cpu:'Core i3-13100E',ram:16,rammax:64,nic:2,lo:500,hi:1000,mpu:8},
+ {m:'9300',fit:'ארגון בינוני',tp:10.5,tls:5.1,fw:200,cores:16,cpu:'Core i5-13400E',ram:16,rammax:64,nic:1,lo:1000,hi:2500,mpu:4.2},
+ {m:'9400',fit:'מטה ארגוני',tp:14,tls:5.5,fw:200,cores:20,cpu:'Core i5-13500E',ram:32,rammax:64,nic:1,lo:2500,hi:5000,mpu:2.8},
+ {m:'9700',fit:'מטה ארגוני גדול',tp:20,tls:9.6,fw:400,cores:32,cpu:'Xeon Silver 4314',ram:32,rammax:128,nic:2,lo:5000,hi:10000,mpu:2},
+ {m:'9800',fit:'מרכז נתונים',tp:25,tls:10.1,fw:400,cores:40,cpu:'Xeon Silver 4316',ram:32,rammax:128,nic:2,lo:10000,hi:1e9,mpu:2}];
 const stairs=document.getElementById('stairs'), org=document.getElementById('org');
 function thrFmt(lo,hi){if(lo===0)return'עד '+hi.toLocaleString();if(hi>=1e8)return lo.toLocaleString()+'+';return lo.toLocaleString()+'–'+hi.toLocaleString();}
 stairs.innerHTML=MODELS.map((d,i)=>`<div class="mdl${d.hr?' hr':''}" data-i="${i}">${d.hr?'<div class="hrb">★ High-runner</div>':''}<div class="cap"><div class="m">${d.m}</div><div class="fit">${d.fit}</div></div><div class="bd"><div class="tp">${d.tp}<small>Gbps Threat Prevention</small></div><div class="sp thr"><span>משתמשים</span><b>${thrFmt(d.lo,d.hi)}</b></div><div class="sp"><span>TP+TLS</span><b>~${Math.round(d.tls)}G</b></div><div class="sp cpu"><span>ליבות CPU</span><b>${d.cores}</b></div><div class="sp"><span>מעבד</span><b class="en">${d.cpu}</b></div><div class="sp"><span>RAM</span><b>${d.ram} GB</b></div><div class="sp nic"><span>NIC slots</span><b>${d.nic}</b></div></div></div>`).join('');
@@ -1976,9 +2149,7 @@ function lineup(){const u=orgUsers(+org.value); document.getElementById('orgv').
  const tip=document.getElementById('sizetip');
  tip.classList.add('vis');
  tip.innerHTML=`<div class="tip-cols">
-  <div class="tip-col"><div class="tip-lbl">ביקוש משוער</div><div class="tip-val" style="color:${col}">${tp_est} <small>Gbps TP</small></div><div class="tip-sub">${u.toLocaleString()} users × ${d.mpu} Mbps</div></div>
-  <div class="tip-div"></div>
-  <div class="tip-col"><div class="tip-lbl">${headroomLbl}</div><div class="tip-val" style="color:${col}">${headroomVal} <small>${headroomLbl==='פתרון'?'units':'Gbps'}</small></div><div class="tip-sub">${statusNote}</div></div>
+  <div class="tip-col"><div class="tip-lbl">ביקוש משוער ל-<span class="en">Threat Prevention</span></div><div class="tip-val" style="color:${col}">${tp_est} <small>Gbps TP</small></div><div class="tip-sub">${u.toLocaleString()} משתמשים × ${d.mpu} Mbps</div></div>
  </div>`;
 }
 org.oninput=lineup; lineup();
@@ -1992,38 +2163,38 @@ const SEG=[{n:'HQ',s0:22,c:.05,g:0,col:'#741984',sh:.10},{n:'Regulated',s0:14,c:
  const A=['ft','pa','cs'];
  const Q=[
   {k:'S',t:'חוזקות',s:'למה לקוחות המטה והמפוקחים נשארים',items:[
-   {d:'t',v:['ft','cs'],h:'דיוק זיהוי איומים 99%+',x:'"דיוק זיהוי" (Efficacy) = אחוז ההתקפות שנחסמות בבדיקה חוץ ארגונית. Check Point ו-Palo Alto בצמרת עם 99%+, Fortinet כ-96%, Cisco כ-91%. מה שמאחורי המספר: ThreatCloud AI, מודיעין איומים שמתעדכן מיותר מ-300 מקורות.'},
-   {d:'t',v:['ft','pa'],h:'עיכוב 1.85 מיקרו־שנייה, בקופסה של 1U',x:'"עיכוב" (Latency) = הזמן שהקופסה מוסיפה לכל חבילת מידע שעוברת בה. אצלנו 1.85 מיליוניות השנייה, אצל Fortinet 4.8 ובקופסה גבוהה פי שלוש, אצל Palo Alto כ-5. חשוב לדעת: זה טיעון מכירה רק במסחר אלגוריתמי ובמערכות תעשייה, לא באפליקציות מטה רגילות.'},
-   {d:'t',v:['pa','cs'],h:'גדילה וזמינות בלי שלדה: Maestro',x:'Maestro מחבר כמה קופסאות לאשכול שמתנהג כפיירוול אחד, עד 300 Gbps תעבורה מסוננת, וממשיך לעבוד גם כשקופסה נופלת. אצל Palo Alto מדובר בעיקר בזוגות גיבוי, אצל Cisco באשכול של עד 16 יחידות.'},
-   {d:'t',v:A,h:'מדיניות אחת לכל הסביבות',x:'SmartConsole = מסך ניהול אחד שבו מגדירים את מדיניות האבטחה למוקד, לסניפים ולענן, כולל API ו-Terraform לאוטומציה. אצל המתחרים אותה עבודה מתפצלת לשלוש מערכות נפרדות: Panorama, FortiManager ו-FMC.'},
-   {d:'c',v:['pa'],h:'עלות 3 שנים 22K$, חצי מ-Palo Alto',x:'TCO = כל העלות ל-3 שנים: חומרה, רישוי, תמיכה ומנויים, בשכבת 10 Gbps תעבורה מסוננת. אצלנו 22K$ מול 43K$ ב-Palo Alto, ובאותו דיוק זיהוי.'},
-   {d:'c',v:['ft','pa','cs'],h:'תקינה בכל דגם בקו',x:'FIPS 140-2 הוא תקן ההצפנה של ממשל ארה"ב, ו-EAL4+ הוא תקן אבטחה בינלאומי. אצלנו שניהם קיימים בכל דגם, אצל המתחרים רק בדגמים נבחרים. בפועל זה מקצר את שלב הסינון במכרזים ממשלתיים ובבנקים.'},
-   {d:'c',v:A,h:'שותפים ובסיס לקוחות מותקן',x:'כל המכירות עוברות דרך שותפים, ובסיס הלקוחות במטה ובארגונים מפוקחים גדול. חידושי הרישוי מהבסיס הזה הם הכנסה יציבה וצפויה מראש.'}]},
-  {k:'W',t:'חולשות',s:'למה מפסידים דילים שנמדדים ב-Throughput',items:[
-   {d:'t',v:['ft','pa'],hinge:1,h:'Throughput מסונן: 25 Gbps ליחידת ראק',x:'"תעבורה מסוננת" (Threat Prevention) = מה שעובר בקופסה כשכל מנועי האבטחה דולקים. אצלנו כל בדיקה שמעל כתובת ויציאה רצה על מעבד x86 רגיל, ולכן יוצאים 25 Gbps לכל יחידת ראק, מול כ-33 ב-Fortinet וכ-38 ב-Palo Alto. כשפותחים תעבורה מוצפנת לבדיקה נשארים כ-10 Gbps בלבד. זה הקריטריון שמכריע במרכזי נתונים, וזה מה שלקוח מטה בודק בחידוש.'},
-   {d:'t',v:['ft','pa'],h:'אין האצה חומרתית לסינון תוכן',x:'שבב החומרה שלנו מאיץ רק ניתוב בסיסי לפי כתובת ויציאה. הצפנה וחיפוש חתימות של התקפות רצים בתוכנה על המעבד. ל-Fortinet יש שבב תוכן ייעודי (CP9) ול-Palo Alto כרטיס עיבוד שלהם (DPC) שעושים בדיוק את זה בחומרה.'},
-   {d:'t',v:['ft','pa'],h:'715 אלף חיבורים חדשים בשנייה',x:'זה מספר החיבורים החדשים שהקופסה פותחת בכל שנייה, מדד שמכריע באתרים בעומס, ב-API ובמיקרו־שירותים. אצל Fortinet 3 מיליון ואצל Palo Alto 3.6 מיליון, כלומר פער של פי ארבע עד פי חמש.'},
-   {d:'t',v:['ft'],h:'SD-WAN לא מגיע בתוך המוצר',x:'SD-WAN = חיבור סניפים דרך אינטרנט רגיל במקום קווים יקרים, עם ניתוב חכם בין הקווים. ב-FortiGate זה כלול במערכת ההפעלה בלי תוספת מחיר, אצלנו זו רכישה נפרדת. בסניפים אנחנו יוצאים יקרים יותר עוד לפני שדיברנו על אבטחה.'},
-   {d:'c',v:['ft'],h:'יקרים ב-57% מ-Fortinet',x:'באותה שכבה של 10 Gbps תעבורה מסוננת: 22K$ אצלנו מול 14K$ ב-Fortinet. Fortinet גם אגרסיבית במיוחד בחידושי רישוי ובדילים גדולים, ושם ההפרש הזה מכריע.'},
+   {d:'t',v:['ft','cs'],h:'דיוק זיהוי איומים 99%+',x:'דיוק זיהוי (Efficacy) הוא אחוז ההתקפות שנחסמות במבחן של מעבדה בלתי תלויה. Check Point ו-Palo Alto מובילות עם 99%+, Fortinet כ-96% ו-Cisco כ-91%. מאחורי המספר עומד ThreatCloud AI, מנוע מודיעין איומים שמתעדכן ממעל 300 מקורות.'},
+   {d:'t',v:['ft','pa'],h:'עיכוב 1.85 מיקרו־שנייה, בקופסה של 1U',x:'עיכוב (Latency) הוא הזמן שהקופסה מוסיפה לכל חבילת מידע שעוברת דרכה. אצלנו 1.85 מיקרו-שנייה, מול 4.8 אצל Fortinet (בקופסה גבוהה פי שלושה) וכ-5 אצל Palo Alto. חשוב לזכור: זה טיעון מכירה רק במסחר אלגוריתמי ובמערכות תעשייה, ולא באפליקציות מטה רגילות.'},
+   {d:'t',v:['pa','cs'],h:'גדילה וזמינות בלי שלדה: Maestro',x:'Maestro מחבר כמה קופסאות לאשכול שמתנהג כחומת אש אחת, עד 300 Gbps תעבורה מסוננת, וממשיך לפעול גם כשקופסה אחת נופלת. אצל Palo Alto מדובר בעיקר בזוגות גיבוי, ואצל Cisco באשכול של עד 16 יחידות.'},
+   {d:'t',v:A,h:'מדיניות אחת לכל הסביבות',x:'SmartConsole הוא מסך ניהול אחד שבו מגדירים את מדיניות האבטחה למטה, לסניפים ולענן, כולל API ו-Terraform לאוטומציה. אצל המתחרים אותה עבודה מתפצלת לשלוש מערכות נפרדות: Panorama, FortiManager ו-FMC.'},
+   {d:'c',v:['pa'],h:'עלות 3 שנים 22K$, חצי מ-Palo Alto',x:'TCO הוא סך העלות ל-3 שנים: חומרה, רישוי, תמיכה ומנויים, ברמת 10 Gbps תעבורה מסוננת. אצלנו 22K$ מול 43K$ ב-Palo Alto, ובאותו דיוק זיהוי.'},
+   {d:'c',v:['ft','pa','cs'],h:'תקינה בכל דגם בקו',x:'FIPS 140-2 הוא תקן ההצפנה של ממשל ארה"ב, ו-EAL4+ הוא תקן אבטחה בינלאומי. אצלנו שניהם קיימים בכל דגם בקו, ואצל המתחרים רק בדגמים נבחרים. בפועל זה מקצר את שלב הסינון במכרזים ממשלתיים ובבנקים.'},
+   {d:'c',v:A,h:'שותפים ובסיס לקוחות מותקן',x:'כל המכירות עוברות דרך שותפים, ובסיס הלקוחות במטה ובארגונים המפוקחים הוא גדול. חידושי הרישוי מהבסיס הזה מספקים הכנסה יציבה וצפויה מראש.'}]},
+  {k:'W',t:'חולשות',s:'למה מפסידים עסקאות שנמדדות ב-Throughput',items:[
+   {d:'t',v:['ft','pa'],hinge:1,h:'Throughput מסונן: 25 Gbps לכל RU',x:'תעבורה מסוננת (Threat Prevention) היא מה שעובר בקופסה כשכל מנועי האבטחה פועלים. אצלנו כל בדיקה מעבר לכתובת ולפורט רצה על מעבד x86 רגיל, ולכן מתקבלים 25 Gbps לכל RU, מול כ-33 ב-Fortinet וכ-38 ב-Palo Alto. כשפותחים תעבורה מוצפנת לבדיקה נשארים כ-10 Gbps בלבד. זה הקריטריון שמכריע במרכזי נתונים, וזה מה שלקוח מטה בודק בחידוש.'},
+   {d:'t',v:['ft','pa'],h:'אין האצה חומרתית לסינון תוכן',x:'שבב החומרה שלנו מאיץ רק ניתוב בסיסי לפי כתובת ופורט. ההצפנה וחיפוש חתימות ההתקפות רצים בתוכנה על המעבד. ל-Fortinet יש שבב תוכן ייעודי (CP9) ול-Palo Alto כרטיס עיבוד ייעודי (DPC) שמבצעים בדיוק את זה בחומרה.'},
+   {d:'t',v:['ft','pa'],h:'715 אלף חיבורים חדשים בשנייה',x:'זהו מספר החיבורים החדשים שהקופסה פותחת בכל שנייה, מדד שמכריע באתרים עמוסים, ב-API ובמיקרו־שירותים. אצל Fortinet 3 מיליון ואצל Palo Alto 3.6 מיליון, פער של פי ארבעה עד חמישה.'},
+   {d:'t',v:['ft'],h:'SD-WAN לא מגיע בתוך המוצר',x:'SD-WAN הוא חיבור סניפים דרך אינטרנט רגיל במקום קווים יקרים, עם ניתוב חכם בין הקווים. ב-FortiGate הוא כלול במערכת ההפעלה ללא תוספת מחיר, ואצלנו זו רכישה נפרדת. בסניפים אנחנו יקרים יותר עוד לפני שדיברנו על אבטחה.'},
+   {d:'c',v:['ft'],h:'יקרים ב-57% מ-Fortinet',x:'באותה רמה של 10 Gbps תעבורה מסוננת: 22K$ אצלנו מול 14K$ ב-Fortinet. Fortinet גם אגרסיבית במיוחד בחידושי רישוי ובעסקאות גדולות, ושם ההפרש הזה מכריע.'},
    {d:'c',v:['ft'],h:'מודל רישוי מסובך',x:'הרישוי אצלנו נבנה מחבילות של מנועי אבטחה (NGTP, NGTX, Harmony), והלקוח צריך להבין מה נכלל בכל חבילה. אצל Fortinet יש מנוי אחד בשם FortiGuard, וזה פשוט יותר להצגה ולהשוואה.'},
-   {d:'c',v:['cs','pa'],h:'תמיכה לא אחידה בין אזורים',x:'לפי ביקורות לקוחות ב-PeerSpot, איכות התמיכה משתנה מחוץ לארה"ב ולאירופה. מול Cisco, שמרכז התמיכה שלה נחשב לסטנדרט בתעשייה, זה סעיף שחוזר בהתנגדויות מכירה.'}]},
+   {d:'c',v:['cs','pa'],h:'תמיכה לא אחידה בין אזורים',x:'לפי ביקורות לקוחות ב-PeerSpot, איכות התמיכה משתנה מחוץ לארה"ב ולאירופה. מול Cisco, שמערך התמיכה שלה נחשב לסטנדרט בתעשייה, זה סעיף שחוזר בהתנגדויות בתהליך המכירה.'}]},
   {k:'O',t:'הזדמנויות',s:'איפה נפתח חלון הזדמנות',items:[
-   {d:'t',v:['ft'],h:'להשתמש בסיליקון של אחרים (DPU)',x:'DPU = כרטיס עם מעבד רשת מוכן שנכנס לקופסה. NVIDIA BlueField-3 מספק הצפנה ב-400 Gbps וחיפוש תבניות בחומרה, בלי לפתח שבב בעצמנו. Check Point כבר מריצה עליו את AIFF, ומ-2027 המעבר להצפנה עמידה לקוונטים יהפוך האצה כזו להכרח.'},
-   {d:'t',v:['ft'],h:'Fortinet כבולה לשבב שלה',x:'אצל Fortinet שדרוג יכולת הסינון מחייב קופסה חדשה, כי הלוגיקה צרובה בשבב. במודל שלנו, מעבד רגיל בתוספת כרטיס האצה, שדרוג הוא כרטיס שנכנס לחריץ קיים באותה קופסה.'},
-   {d:'t',v:['pa'],h:'להריץ AI על הקופסה בלי לגזול מהמעבד',x:'מנוע ה-AI (למשל Lakera) יכול לרוץ על ליבות ה-Arm שבתוך ה-DPU, כך שאינו לוקח כוח עיבוד מהאבטחה עצמה. שוק אבטחת ה-AI מוערך ב-21.9 מיליארד דולר. Palo Alto מריצה את יכולות ה-AI שלה על המעבד הראשי.'},
-   {d:'c',v:['ft','pa'],h:'גל החלפת ציוד 2025 עד 2027',x:'בסיס הלקוחות מחליף חומרה בדיוק בשנים האלה. שדרוג באמצעות כרטיס בשטח נמכר בלי להחליף קופסה שלמה ובלי לשלם שוב על חומרה, וזו נקודת פתיחה נוחה לשיחת חידוש.'},
+   {d:'t',v:['ft'],h:'להשתמש בסיליקון של אחרים (DPU)',x:'DPU הוא כרטיס עם מעבד רשת מובנה שנכנס לקופסה. NVIDIA BlueField-3 מספק הצפנה ב-400 Gbps וחיפוש תבניות בחומרה, בלי שנפתח שבב בעצמנו. Check Point כבר מריצה עליו את AIFF, ומ-2027 המעבר להצפנה עמידה בפני קוונטים יהפוך האצה כזו להכרח.'},
+   {d:'t',v:['ft'],h:'Fortinet כבולה לשבב שלה',x:'אצל Fortinet שדרוג יכולת הסינון מחייב קופסה חדשה, כי הלוגיקה צרובה בשבב. במודל שלנו, של מעבד רגיל בתוספת כרטיס האצה, השדרוג הוא כרטיס שנכנס לחריץ קיים באותה קופסה.'},
+   {d:'t',v:['pa'],h:'להריץ AI על הקופסה בלי לגזול מהמעבד',x:'מנוע ה-AI (למשל Lakera) יכול לרוץ על ליבות ה-Arm שבתוך ה-DPU, כך שאינו גוזל כוח עיבוד מהאבטחה עצמה. שוק אבטחת ה-AI מוערך ב-21.9 מיליארד דולר. Palo Alto מריצה את יכולות ה-AI שלה על המעבד הראשי.'},
+   {d:'c',v:['ft','pa'],h:'גל החלפת ציוד 2025 עד 2027',x:'בסיס הלקוחות מחליף חומרה בדיוק בשנים האלה. שדרוג באמצעות כרטיס בשטח נמכר בלי להחליף קופסה שלמה ובלי לשלם שוב על החומרה, וזו נקודת פתיחה נוחה לשיחת החידוש.'},
    {d:'c',v:['ft'],h:'שדרוג באותה קופסה, לא קופסה חדשה',x:'מעבד רגיל בתוספת כרטיס האצה מאריך את חיי אותה קופסה ל-5 עד 7 שנים. במודל של שבב ייעודי, כל קפיצה ב-Throughput מחייבת רכישת חומרה חדשה. זה הטיעון הכספי שלנו מול Fortinet.'},
-   {d:'c',v:['pa'],h:'מרכזי נתונים: 2.8 עד 4.0 מיליארד דולר',x:'זה הסגמנט היחיד שבו הקריטריון המכריע הוא הנדסי, כלומר בדיוק מה שכרטיס האצה משפר. הדגמים 9700 ו-9800 כבר משווקים לשם, ולכן לא נדרש קו מוצר חדש.'}]},
+   {d:'c',v:['pa'],h:'מרכזי נתונים: 2.8 עד 4.0 מיליארד דולר',x:'זהו הסגמנט היחיד שבו הקריטריון המכריע הוא הנדסי, כלומר בדיוק מה שכרטיס ההאצה משפר. הדגמים 9700 ו-9800 כבר משווקים לשם, ולכן לא נדרש קו מוצר חדש.'}]},
   {k:'T',t:'איומים',s:'מה קורה אם לא נזוז',items:[
    {d:'t',v:['ft','pa'],h:'המתחרים מעלים את הרף',x:'Palo Alto השיקה את PA-7500 עם 1.44 טרה־ביט תעבורה מסוננת ויכולות אבטחה ל-AI. Fortinet משפרת את דיוק הזיהוי שלה בעזרת AI, וסוגרת בדיוק את הפער שבו אנחנו מובילים היום.'},
-   {d:'t',v:['pa','cs'],h:'המעבר לאבטחה כשירות ענן (SASE)',x:'SASE = אבטחה שנצרכת כשירות ענן במקום דרך קופסה בארגון. Prisma Access ו-Umbrella לוקחים את קצה הקמפוס, ובענן ספקי הענן הגדולים מציעים אבטחה משלהם. התקציב שעובר לשם לא חוזר לחומרה.'},
-   {d:'t',v:A,h:'CVE-2026-50751: פגיעה בנרטיב',x:'חולשת עקיפת אימות שפורסמה ביוני 2026. הנזק כאן תדמיתי בעיקרו: הטיעון המרכזי שלנו הוא דיוק זיהוי, ואירוע כזה מחליש בדיוק אותו בשיחה עם מנהל אבטחת מידע.'},
-   {d:'c',v:['ft'],h:'שחיקה בשוק הבינוני',x:'Fortinet לוקחת חידושי רישוי בשוק הבינוני בשילוב של מחיר נמוך ו-SD-WAN שכלול במוצר. כל חידוש שנופל שם הוא הכנסה חוזרת שיוצאת מהבסיס שלנו.'},
-   {d:'c',v:['ft','pa'],h:'שותפים הולכים אחרי הצמיחה',x:'שותפים משקיעים אצל מי שמצמיח להם רווח: ב-Palo Alto זה גודל הדיל, ב-Fortinet זה נפח ושירותים מנוהלים. אם אין לנו סיפור צמיחה, השותף מוביל את הלקוח למתחרה.'},
+   {d:'t',v:['pa','cs'],h:'המעבר לאבטחה כשירות ענן (SASE)',x:'SASE הוא אבטחה שנצרכת כשירות ענן במקום דרך קופסה בארגון. Prisma Access ו-Umbrella לוקחים את קצה הקמפוס, וספקי הענן הגדולים מציעים אבטחה משלהם. התקציב שעובר לשם לא חוזר לחומרה.'},
+   {d:'t',v:A,h:'CVE-2026-50751: פגיעה בתדמית האבטחה',x:'חולשת עקיפת אימות שפורסמה ביוני 2026. הנזק כאן תדמיתי בעיקרו: הטיעון המרכזי שלנו הוא דיוק זיהוי, ואירוע כזה מחליש בדיוק אותו בשיחה עם מנהל אבטחת מידע.'},
+   {d:'c',v:['ft'],h:'שחיקה בשוק הבינוני',x:'Fortinet חוטפת חידושי רישוי בשוק הבינוני בשילוב של מחיר נמוך ו-SD-WAN שכלול במוצר. כל חידוש שנופל שם הוא הכנסה חוזרת שיוצאת מהבסיס שלנו.'},
+   {d:'c',v:['ft','pa'],h:'שותפים הולכים אחרי הצמיחה',x:'שותפים משקיעים אצל מי שמצמיח להם רווח: ב-Palo Alto זה גודל העסקה, וב-Fortinet זה נפח ושירותים מנוהלים. אם אין לנו סיפור צמיחה, השותף מוביל את הלקוח למתחרה.'},
    {d:'c',v:['cs'],h:'Cisco מוכרת איחוד עם Splunk',x:'בארגונים שכבר בנויים על Cisco, ההצעה היא לאחד רשת, אבטחה ונתוני Splunk אצל ספק אחד. התמיכה והשירותים של Cisco הופכים לטיעון שמדלג על השוואת ביצועים.'}]}]; const wrap=document.getElementById('swot2');
  wrap.innerHTML=Q.map(q=>`<div class="q ${q.k}"><div class="qh"><b>${q.k}</b><div><h3>${q.t}</h3><small>${q.s}</small></div></div>
    <div class="dims">${['t','c'].map(d=>`<div class="dim ${d}"><h5>${d==='t'?'🔧 טכני':'💼 מסחרי'}</h5>${q.items.filter(i=>i.d===d).map(i=>`<div class="it ${i.hinge?'hinge':''}" data-d="${i.d}" data-v="${i.v.join(' ')}"><span class="vs">${i.v.map(v=>`<i class="${v}"></i>`).join('')}</span><div><b>${i.h}</b><small>${i.x}</small></div></div>`).join('')}</div>`).join('')}</div></div>`).join('');
- let dim='all', vs='all';
+ let dim='c', vs='cs';
  function apply(){wrap.querySelectorAll('.it').forEach(it=>{const ok=(dim==='all'||it.dataset.d===dim)&&(vs==='all'||it.dataset.v.split(' ').includes(vs)); it.classList.toggle('off',!ok);});
   wrap.querySelectorAll('.dim').forEach(d=>d.classList.toggle('off',dim!=='all'&&!d.classList.contains(dim)));}
  document.querySelectorAll('#swdim button').forEach(b=>b.onclick=()=>{dim=b.dataset.d;document.querySelectorAll('#swdim button').forEach(x=>x.classList.toggle('on',x===b));apply();});
@@ -2049,13 +2220,13 @@ const SEG=[{n:'HQ',s0:22,c:.05,g:0,col:'#741984',sh:.10},{n:'Regulated',s0:14,c:
   {n:'Cloud',d:'Firewall וירטואלי בענן',add:1.0,cagr:17,sz:'$1.1B → $2.1B',w:[1,2,1,0,1,0,2,3],win:['pa','Palo Alto'],vd:'מכריע <b>SASE / cloud-native</b>. זה <b>מוצר אחר</b>: CloudGuard ו-Harmony, לא ה-9000. לא הקרב של הקופסה הזו.'},
   {n:'Regulated',d:'בנקים · ממשלה · בריאות',add:0.8,cagr:9,sz:'$1.9B → $2.7B',w:[3,2,3,1,1,1,1,0],win:['cp','Check Point'],vd:'<b>Compliance</b> על כל הקו יחד עם זיהוי: שני המכריעים שלנו. הנתח הגבוה ביותר שלנו (~18%). לקוח שלא עובר ספק בקלות.'},
   {n:'HQ',d:'מטה ארגוני · קמפוס',add:0.7,cagr:5,sz:'$3.0B → $3.7B',w:[3,3,1,0,2,1,2,1],win:['cp','Check Point'],vd:'מנצחים ב-<b>זיהוי וניהול</b>, שני המכריעים. הסיכון: ב-<b>renewal</b> בודקים גם TP+TLS, ושם המספר שלנו נמוך. זה הבסיס שלנו, והוא גדל הכי לאט (5%/y).'},
-  {n:'OT',d:'תעשייה · SCADA · תשתיות',add:0.4,cagr:11,sz:'$0.8B → $1.3B',w:[2,1,2,3,1,1,1,0],win:['cp','Check Point'],vd:'מכריע <b>Latency</b>: 1.85μs, ורק כאן זה נמכר. סגמנט קטן, ואנחנו חזקים בו (~15%).'}];
+  {n:'OT',d:'תעשייה · תשתיות',add:0.4,cagr:11,sz:'$0.8B → $1.3B',w:[2,1,2,3,1,1,1,0],win:['cp','Check Point'],vd:'מכריע <b>Latency</b>: 1.85μs, ורק כאן זה נמכר. סגמנט קטן, ואנחנו חזקים בו (~15%).'}];
  const hm=document.getElementById('hm'), det=document.getElementById('hmdet'); let sel=1;
  const WLB={cp:'CP',ft:'FTN',pa:'PA',mix:'PA/FTN'};
  const maxAdd=Math.max(...SG.map(s=>s.add));
- hm.innerHTML=`<div class="ch1 hint">סגמנט<small>לחצו לפירוט</small></div><div class="ch1">כסף חדש<small>עד 2030</small></div>`
+ hm.innerHTML=`<div class="ch1">סגמנט</div><div class="ch1">כסף חדש<small>עד 2030</small></div>`
   +CR.map(c=>`<div class="ch1">${c.h}</div>`).join('')+`<div class="ch1">מוביל<small>בסגמנט</small></div>`
-  +SG.map((s,i)=>`<div class="rh ${s.star?'star':''}" data-i="${i}"><b>${s.n}</b><small>${s.d}</small></div>`
+  +SG.map((s,i)=>`<div class="rh ${s.star?'star':''}" data-i="${i}"><b>${s.n}</b></div>`
    +`<div class="mny ${s.star?'star':''}" data-i="${i}" title="כסף חדש עד 2030"><b>+$${s.add.toFixed(1)}B</b>`
    +`<u><i style="width:${(s.add/maxAdd*100).toFixed(0)}%"></i></u><small>+${s.cagr}%/y</small></div>`+
    CR.map((c,j)=>{const w=s.w[j];return `<div class="c w${w} ${w?c.st:''}" data-i="${i}" title="${c.n}">${w?(c.st==='ok'?'✓':'✗'):'–'}</div>`;}).join('')
@@ -2064,21 +2235,20 @@ const SEG=[{n:'HQ',s0:22,c:.05,g:0,col:'#741984',sh:.10},{n:'Regulated',s0:14,c:
   hm.querySelectorAll('.rh').forEach(r=>r.classList.toggle('on',+r.dataset.i===i)); hm.querySelectorAll('.c,.wl,.mny').forEach(c=>c.classList.toggle('rowon',+c.dataset.i===i));
   const list=CR.map((c,j)=>({c,w:s.w[j]})).filter(x=>x.w>0).sort((a,b)=>b.w-a.w);
   det.innerHTML=`<div class="hd"><h3>${s.n}${s.star?' <span style="color:var(--amber)">★</span>':''}<small>${s.d}</small></h3><span class="sz">${s.sz}</span></div>`+
-   list.map(x=>`<div class="dr w${x.w} ${x.c.st}"><div class="g">${x.c.st==='ok'?'✓':'✗'}</div><div class="n">${x.c.n}<small>${x.c.ev}</small></div><div class="wt">${[1,2,3].map(k=>`<i class="${k<=x.w?'f':''}"></i>`).join('')}</div></div>`).join('')+
-   `<div class="vd"><span class="wwin"><small>מנצח במכריע</small><span class="wchip ${s.win[0]}">${s.win[1]}</span></span>${s.vd}</div>`;}
+   list.map(x=>`<div class="dr w${x.w} ${x.c.st}"><div class="g">${x.c.st==='ok'?'✓':'✗'}</div><div class="n">${x.c.n}</div><div class="wt">${[1,2,3].map(k=>`<i class="${k<=x.w?'f':''}"></i>`).join('')}</div></div>`).join('');}
  hm.addEventListener('click',e=>{const t=e.target.closest('[data-i]'); if(t) show(+t.dataset.i);}); show(sel);})();
 
 /* ───────── S5: new money by segment, sorted bars ───────── */
 (function(){const s=document.getElementById('sBridge'), box=document.getElementById('grow6');
  if(!s||!box) return;
- const DESC={Branch:'סניפים · SD-WAN',DC:'Data Center · Hyperscale',Cloud:'Firewall וירטואלי בענן',
-             Regulated:'בנקים · ממשלה · בריאות',HQ:'מטה ארגוני · קמפוס',OT:'תעשייה · SCADA · תשתיות'};
+ const DESC={Branch:'סניפים',DC:'מרכז נתונים',Cloud:'Firewall וירטואלי בענן',
+             Regulated:'בנקים · ממשלה · בריאות',HQ:'מטה ארגוני',OT:'תעשייה · תשתיות'};
  /* mine = the slice of that segment's new money Check Point collects if its share stays flat */
  const rows=SEG.map(sg=>{const v0=sg.s0/100*13.8, v1=v0*Math.pow(1+sg.c,4), add=v1-v0;
    return {n:sg.n,col:sg.col,c:sg.c,sh:sg.sh*100,add,mine:add*sg.sh};}).sort((a,b)=>b.add-a.add);
  const max=rows[0].add, tAdd=rows.reduce((a,r)=>a+r.add,0), tMine=rows.reduce((a,r)=>a+r.mine,0);
  const tCagr=Math.round((Math.pow((13.8+tAdd)/13.8,.25)-1)*100);
- box.innerHTML=`<div class="g6h"><span>סגמנט</span><span>Incremental TAM · 2026 → 2030<small>אפור = השוק · ורוד = מה ש-Check Point קולט</small></span><span></span><span>CAGR</span><span>נתח CP</span><span>CP Capture<small>בנתח הנוכחי</small></span></div>`
+ box.innerHTML=`<div class="g6h"><span>סגמנט</span><span>Incremental TAM · 2026 → 2030</span><span>+TAM ($B)</span><span>CAGR</span><span>נתח CP</span><span>CP Capture<small>בנתח הנוכחי</small></span></div>`
   +rows.map(r=>{const star=r.n==='DC';
    return `<div class="g6${star?' star':''}">`
     +`<div class="nm"><b>${star?'★ ':''}${r.n}</b><small>${DESC[r.n]}</small></div>`
@@ -2297,35 +2467,43 @@ const SEG=[{n:'HQ',s0:22,c:.05,g:0,col:'#741984',sh:.10},{n:'Regulated',s0:14,c:
  cmpDraw();
 })();
 /* ───────── sHow: packet animation along the DPU path ───────── */
-(function(){const s=document.getElementById('sHow'),flow=document.getElementById('flow'),pk=document.getElementById('pk'),st=document.getElementById('pkstate');
+(function(){const s=document.getElementById('sHow'),flow=document.getElementById('flow'),pk=document.getElementById('pk');
  const stns=[...flow.querySelectorAll('.stn')].sort((a,b)=>+a.dataset.i-+b.dataset.i);
- // two scripted passes: full path (new flow) then fast path (known flow skips x86)
- const PASS=[{seq:[0,1,2,3,4,5,6,7],label:'▶ flow חדש: נתיב מלא'},{seq:[0,1,7],label:'▶ flow מוכר: fast path, בלי x86'}];
+ // single scripted pass along the full path
+ const PASS=[{seq:[0,1,2,3,4,5,6,7]}];
  let timer=null,p=0,k=0;
  function moveTo(i){const r=stns[i].getBoundingClientRect(),f=flow.getBoundingClientRect(),sc=r.width/stns[i].offsetWidth;
   pk.style.left=((r.left-f.left)/sc+stns[i].offsetWidth/2-9)+'px'; pk.style.top=((r.top-f.top)/sc-10)+'px';
   stns.forEach((e,j)=>e.classList.toggle('lit',j===i)); pk.className='pk'+(i>=2&&i<=4||i===6?' tls':i===5?' x':'');}
- function step(){const seq=PASS[p].seq; st.textContent=PASS[p].label; moveTo(seq[k]); k++; if(k>=seq.length){k=0;p=(p+1)%PASS.length;timer=setTimeout(step,1400);} else timer=setTimeout(step,k===1?600:800);}
+ function step(){const seq=PASS[p].seq; moveTo(seq[k]); k++; if(k>=seq.length){k=0;p=(p+1)%PASS.length;timer=setTimeout(step,1400);} else timer=setTimeout(step,k===1?600:800);}
  function start(){stop();p=0;k=0;step();} function stop(){clearTimeout(timer);timer=null;}
  new MutationObserver(()=>{s.classList.contains('active')?setTimeout(start,300):stop();}).observe(s,{attributes:true});
  flow.onclick=()=>{timer?stop():start();};})();
 
 
-/* ───────── S10 business model ───────── */
-const P=document.getElementById('price'),A=document.getElementById('attach'),U=document.getElementById('upg'),W=document.getElementById('wins');
-function biz(){const price=+P.value,att=+A.value/100,upg=+U.value,wins=+W.value,SHIP=1500,DEAL=.35,INV=7.2;
- document.getElementById('pv').textContent='$'+price+'K';document.getElementById('av').textContent=Math.round(att*100)+'%';document.getElementById('uv').textContent=upg;document.getElementById('wv').textContent=wins;
- let units=0,hw=[],wn=[],tot=0,gm=0;
- for(let y=0;y<3;y++){const u=SHIP*Math.min(att+.10*y,.9)+upg*Math.pow(.75,y);units+=u;const h=u*price/1000,w=wins*DEAL;hw.push(h);wn.push(w);tot+=h+w;gm+=h*.65+w*.60;}
- const mx=Math.max(...hw.map((h,i)=>h+wn[i]),1);
- document.getElementById('rev').innerHTML=hw.map((h,i)=>`<div class="yr"><div class="tv">$${(h+wn[i]).toFixed(1)}M</div><div class="col" style="height:${(h+wn[i])/mx*78}%"><i class="hw" style="height:${h/(h+wn[i])*100}%"></i><i class="win" style="height:${wn[i]/(h+wn[i])*100}%"></i></div><div class="yl">שנה ${i+1}</div></div>`).join('');
- /* break-even: module GM only (conservative), linear ramp over first 12 months */
- let cum=0,be=99; for(let m=1;m<=60;m++){const y=Math.min(Math.floor((m-1)/12),2); const rate=hw[y]*.65/12*(m<=12?m/12:1); cum+=rate; if(cum>=INV){be=m;break;}}
- document.getElementById('kunits').textContent=Math.round(units).toLocaleString();document.getElementById('kasp').textContent='+$'+price+'K';
- document.getElementById('kgm').textContent='$'+gm.toFixed(0)+'M';document.getElementById('kbe').textContent=be>60?'>60':be;
- document.getElementById('hl3y').textContent='~$'+tot.toFixed(0)+'M';document.getElementById('hlbe').textContent=be>60?'>60 חודשים':'חודש '+be;
- document.getElementById('thk').innerHTML='$'+tot.toFixed(0)+'M<small>3 שנים</small>';}
-[P,A,U,W].forEach(s=>s.oninput=biz); biz();
+/* ───────── S10 business value: scenario toggle ───────── */
+(function(){
+  const tg=document.getElementById('scentoggle'); if(!tg) return;
+  const panel=document.getElementById('calcPanel');
+  const SC={
+    base:{revCalc:'$27.0M + $13.9M',rev:'$40.9M',gmCalc:'$40.9M × 65%',gm:'$26.6M',netCalc:'$26.6M − $7.2M',net:'$19.4M',roiCalc:'$19.4M ÷ $7.2M',roi:'269%'},
+    up:{revCalc:'$40.9M + $26.3M',rev:'$67.2M',gmCalc:'$26.6M + $15.8M',gm:'$42.4M',netCalc:'$42.4M − $7.2M',net:'$35.2M',roiCalc:'$35.2M ÷ $7.2M',roi:'489%'}
+  };
+  const set=(id,v)=>{const e=document.getElementById(id); if(e) e.textContent=v;};
+  const flash=id=>{const e=document.getElementById(id); if(!e) return; e.classList.remove('pulse'); void e.offsetWidth; e.classList.add('pulse');};
+  function apply(k,animate){const s=SC[k]; if(!s) return;
+    set('cRevCalc',s.revCalc);set('cRev',s.rev);
+    set('cGmCalc',s.gmCalc);set('cGm',s.gm);
+    set('cNetCalc',s.netCalc);set('cNet',s.net);
+    set('cRoiCalc',s.roiCalc);set('cRoi',s.roi);
+    if(panel) panel.className='calc '+k;
+    const c2=document.getElementById('vcard2'); if(c2) c2.classList.toggle('active',k==='up');
+    tg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.scen===k));
+    if(animate)['cRev','cGm','cNet','cRoi'].forEach(flash);
+  }
+  tg.querySelectorAll('button').forEach(b=>b.onclick=()=>apply(b.dataset.scen,true));
+  apply('base',false);
+})();
 </script>
 </body>
 </html>
