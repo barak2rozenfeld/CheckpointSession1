@@ -845,13 +845,25 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 .swot2 .dim.off{opacity:.18;}
 .swot2 .dim h5{font-size:9.5px;letter-spacing:.08em;font-weight:800;color:var(--mid);margin-bottom:1px;} .swot2 .dim.c h5{color:#6a4a78;}
 .swot2 .it{position:relative;display:flex;gap:5px;align-items:center;background:#fff;border-radius:5px;padding:5px 7px;font-size:10px;line-height:1.2;transition:opacity .25s;border:1px solid transparent;cursor:help;}
-.swot2 .it b{display:block;font-weight:800;font-size:11px;line-height:1.25;}
+.swot2 .it b{display:flex;align-items:center;gap:4px;font-weight:800;font-size:11px;line-height:1.25;}
+.swot2 .it b .swi{display:inline-flex;align-items:center;justify-content:center;width:12px;height:12px;border:1px solid #bcb0be;border-radius:50%;color:#856f89;font-family:var(--font-num);font-size:8px;font-weight:900;font-style:normal;line-height:1;flex:0 0 auto;}
 .swot2 .it small{position:absolute;inset-inline:-4px;top:calc(100% + 3px);z-index:40;display:block;background:#fff;border:1px solid var(--border);border-inline-start:3px solid var(--primary);border-radius:7px;box-shadow:0 8px 22px rgba(41,14,35,.16);padding:6px 8px;color:var(--dark);font-size:10px;font-weight:500;line-height:1.45;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease,visibility .18s ease;}
+.swot2 .it small .swmeta{display:inline-flex;align-items:center;margin-top:4px;padding:1px 5px;border-radius:10px;font-size:8.3px;font-weight:800;line-height:1.35;}
+.swot2 .it small .swmeta.source{background:#f0eafa;color:#633b75;} .swot2 .it small .swmeta.assumption{background:#fff2df;color:#9a5a00;}
 .swot2 .q.O .it small,.swot2 .q.T .it small{top:auto;bottom:calc(100% + 3px);}
 .swot2 .it:hover{border-color:var(--border);background:var(--off);} .swot2 .it:hover small{opacity:1;visibility:visible;} .swot2 .it:hover{z-index:41;}
 .swctl{margin-bottom:6px;} #s5 .thread .t{font-size:11px;} #s5 .thread{margin-top:6px!important;}
 .swot2 .it.off{opacity:.2;} .swot2 .it.hinge{border-color:var(--primary);background:#fff5f8;} .swot2 .it.hinge b{color:var(--primary-dark);}
 .swot2 .it .vs{display:flex;flex-direction:column;gap:2px;padding-top:3px;flex-shrink:0;} .swot2 .it .vs i{width:6px;height:6px;border-radius:50%;} .swot2 .vs i.ft{background:var(--ft);} .swot2 .vs i.pa{background:var(--pa);} .swot2 .vs i.cs{background:var(--cs);}
+#s5 .swsrc{position:relative;display:flex;align-items:center;gap:7px;overflow:visible;}
+#s5 .swsrc .srcsum{font-size:9px;font-weight:600;color:var(--light);}
+#s5 .swsrc-help{width:17px;height:17px;border:1px solid #b9adb9;border-radius:50%;padding:0;background:#fff;color:#6f5872;font-family:var(--font-num);font-size:10px;font-weight:900;line-height:1;cursor:help;flex:0 0 auto;}
+#s5 .swsrc-help:hover,#s5 .swsrc-help:focus{outline:none;border-color:var(--primary);color:var(--primary);box-shadow:0 0 0 3px rgba(228,12,91,.10);}
+#s5 .swsrc-pop{position:absolute;inset-inline-end:0;bottom:calc(100% + 8px);z-index:62;width:500px;background:#fff;border:1px solid var(--border);border-inline-start:3px solid var(--primary);border-radius:8px;box-shadow:0 10px 28px rgba(41,14,35,.18);padding:9px 11px;color:var(--dark);font-size:9.2px;line-height:1.45;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease,visibility .18s ease;}
+#s5 .swsrc:hover .swsrc-pop,#s5 .swsrc:focus-within .swsrc-pop{opacity:1;visibility:visible;pointer-events:auto;}
+#s5 .swsrc-pop .sp{display:grid;grid-template-columns:86px 1fr;gap:7px;padding:3px 0;}
+#s5 .swsrc-pop .sp + .sp{border-top:1px solid var(--border);}
+#s5 .swsrc-pop .sp b{font-size:8.5px;color:var(--primary-dark);letter-spacing:.03em;}
 /* ── sStuck: the customer's three options when TLS runs out ── */
 .stuck{display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;}
 .stuck .opts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;flex:1;min-height:0;}
@@ -1236,6 +1248,19 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 .scentoggle{display:inline-flex;flex-shrink:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--off);margin-top:4px;}
 .scentoggle button{font-family:inherit;font-size:11.5px;font-weight:700;color:var(--mid);background:none;border:none;padding:8px 14px;cursor:pointer;white-space:nowrap;}
 .scentoggle button.on{background:var(--dark);color:#fff;}
+.impact-strip{display:grid;grid-template-columns:repeat(3,1fr);margin-top:8px;background:#fff;border:1px solid var(--border);border-radius:9px;overflow:visible;flex-shrink:0;box-shadow:0 2px 9px rgba(41,14,35,.04);}
+.impact-kpi{position:relative;min-height:58px;padding:8px 14px 7px;display:flex;flex-direction:column;justify-content:center;}
+.impact-kpi + .impact-kpi{border-inline-start:1px solid var(--border);}
+.impact-kpi .impact-label{display:flex;align-items:center;gap:5px;font-size:9.5px;line-height:1.1;font-weight:800;letter-spacing:.04em;color:var(--mid);}
+.impact-kpi .impact-value{font-family:var(--font-num);font-size:24px;font-weight:800;line-height:1;text-align:right;color:var(--primary);margin-top:3px;}
+.impact-kpi.win .impact-value{color:var(--purple);}
+.impact-kpi.retention .impact-value{color:var(--teal);}
+.impact-kpi .impact-detail{font-size:9.5px;font-weight:700;color:var(--mid);margin-top:2px;}
+.impact-help{position:relative;display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:50%;background:var(--off);color:var(--mid);font-family:Georgia,'Times New Roman',serif;font-size:9px;font-style:italic;font-weight:700;cursor:help;outline:none;flex-shrink:0;}
+.impact-help:hover,.impact-help:focus{background:var(--primary);color:#fff;}
+.impact-help::after{content:attr(data-tip);position:absolute;top:calc(100% + 9px);inset-inline-start:0;width:278px;padding:10px 12px;border-radius:8px;background:var(--dark);color:#fff;font-family:var(--font);font-size:10px;font-style:normal;font-weight:600;line-height:1.5;white-space:normal;direction:rtl;text-align:right;opacity:0;visibility:hidden;transform:translateY(-5px);transition:opacity .18s,transform .18s;z-index:40;box-shadow:0 10px 26px rgba(41,14,35,.3);pointer-events:none;}
+.impact-help::before{content:'';position:absolute;top:calc(100% + 3px);inset-inline-start:4px;border:6px solid transparent;border-bottom-color:var(--dark);opacity:0;visibility:hidden;transition:opacity .18s;z-index:41;}
+.impact-help:hover::after,.impact-help:focus::after,.impact-help:hover::before,.impact-help:focus::before{opacity:1;visibility:visible;transform:translateY(0);}
 .bval{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px;flex:1;min-height:0;}
 .vcard{position:relative;background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px 15px 11px;border-top:4px solid var(--primary);display:flex;flex-direction:column;}
 .vcard.v2{border-top-color:var(--purple);opacity:.6;transition:opacity .3s,box-shadow .3s;}
@@ -1529,8 +1554,14 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
       <div class="swax axr"><span>פנימי<small>Check Point</small></span><span>חיצוני<small>השוק</small></span></div>
       <div class="swot2" id="swot2"></div>
     </div>
-    <div class="src box" style="margin-top:6px">
-      <span class="t">מקורות והנחות</span> <a href="https://cyberratings.org/resources/2025-q4-enterprise-firewall-report-comparative-report/" target="_blank" rel="noopener">CyberRatings</a> (דיוק זיהוי) · <a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">CP Appliance Comparison Chart 2026</a> · <a href="https://docs.fortinet.com/document/fortigate/8.0.0/hardware-acceleration/750811/fortigate-6000f-series" target="_blank" rel="noopener">FortiGate 6500F DS</a> · <a href="https://www.paloaltonetworks.com/resources/datasheets/pa-5450-series" target="_blank" rel="noopener">PA-5450 DS</a> · Decryption Digest (TCO) · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner MQ 09/2026</a> · <a href="https://www.peerspot.com/products/check-point-quantum-force-reviews" target="_blank" rel="noopener">PeerSpot</a> (תמיכה) · <a href="https://nvd.nist.gov/vuln" target="_blank" rel="noopener">NVD · NIST</a> (חולשות) · Throughput לכל RU = Gbps מסונן חלקי גובה הקופסה ביחידות RU (CP 9800 ב-1RU, FortiGate 6500F ב-3RU, PA-5450 ב-5U), אומדן להשוואה בין form factors שונים · Throughput ללא TLS הוא נתון datasheet במעבדה, ועם TLS זה אומדן של כ-50% ירידה · TCO ל-3 שנים ברמת 10 Gbps מסונן · התקינה נמדדת בכיסוי כל הקו, לא בדגם בודד · CVE-2026-50751 מובא כדוגמה להמחשת סיכון המוניטין מפרסום חולשה בעיתוי רגיש; חולשות מסוג זה מתפרסמות ומתועדות ב-NVD ו-MITRE
+    <div class="src box swsrc" style="margin-top:6px">
+      <span class="t">מקורות והנחות</span><span class="srcsum">ריחוף על <span class="en">i</span> חושף פירוט</span>
+      <button class="swsrc-help" type="button" aria-label="פירוט מקורות והנחות" aria-describedby="s5sources">i</button>
+      <div class="swsrc-pop" id="s5sources" role="tooltip">
+        <div class="sp"><b>נתוני מוצר</b><span><a href="https://www.checkpoint.com/downloads/products/check-point-appliance-comparison-chart.pdf" target="_blank" rel="noopener">Check Point Appliance Chart 2026</a> · <a href="https://docs.fortinet.com/document/fortigate/8.0.0/hardware-acceleration/750811/fortigate-6000f-series" target="_blank" rel="noopener">FortiGate 6500F</a> · <a href="https://www.paloaltonetworks.com/resources/datasheets/pa-5450-series" target="_blank" rel="noopener">PA-5450</a></span></div>
+        <div class="sp"><b>אימות שוק</b><span><a href="https://cyberratings.org/resources/2025-q4-enterprise-firewall-report-comparative-report/" target="_blank" rel="noopener">CyberRatings</a> ליעילות זיהוי · <a href="https://www.checkpoint.com/press-releases/check-point-redefines-ai-security-for-enterprises-with-ai-cloud-protect-powered-by-nvidia-bluefield/" target="_blank" rel="noopener">Check Point AI Cloud Protect</a> ל־BlueField-3 · <a href="https://www.checkpoint.com/resources/items/gartner-magic-quadrant-for-hybrid-mesh-firewall-2026" target="_blank" rel="noopener">Gartner MQ</a> להקשר שוק</span></div>
+        <div class="sp"><b>הנחות תכנון</b><span>ה־TCO ל־3 שנים וה־TAM הם מודלים פנימיים במצגת. השוואות בין ספקים אינן benchmark אחיד, משום שתנאי המדידה וה־bundles שונים. חלון החידושים והערך של מודול השדרוג הם השערות עבודה לאימות מול CRM וב־PoC.</span></div>
+      </div>
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -1943,6 +1974,23 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
         <button data-scen="up">בסיס + <span class="en">upside</span> עסקאות</button>
       </div>
     </div>
+    <div class="impact-strip" aria-label="Expected business impact">
+      <div class="impact-kpi asp">
+        <div class="impact-label">ערך עסקה ממוצע <span class="en">ASP</span><span class="impact-help" tabindex="0" data-tip="ASP הוא Average Selling Price, כלומר ההכנסה הממוצעת מעסקה ש-Check Point זוכה בה. כאן מודול במחיר $15K מגדיל את הערך של עסקה שבה מצרפים אותו. שיעור ה-attach עולה מ-30% ל-50%. המחיר הממומש בפועל תלוי בהנחות ערוץ.">i</span></div>
+        <div class="impact-value"><span class="en">+$15K</span></div>
+        <div class="impact-detail">לעסקה הכוללת מודול</div>
+      </div>
+      <div class="impact-kpi win">
+        <div class="impact-label">שיעור זכייה <span class="en">Win-rate</span><span class="impact-help" tabindex="0" data-tip="Win-rate הוא שיעור העסקאות שבהן Check Point זוכה מתוך כלל ההזדמנויות הרלוונטיות. כאן מדובר ביעד של תוספת 10 נקודות אחוז במכרזי Data Center ו-HQ. בתרחיש upside: 75 זכיות נוספות ב-3 שנים כפול $350K לעסקה, כלומר $26.3M. זו הנחת תכנון.">i</span></div>
+        <div class="impact-value"><span class="en">+10</span> נק׳</div>
+        <div class="impact-detail">יעד ב־<span class="en">DC/HQ</span>, תרחיש <span class="en">upside</span></div>
+      </div>
+      <div class="impact-kpi retention">
+        <div class="impact-label">שימור לקוחות <span class="en">Retention</span><span class="impact-help" tabindex="0" data-tip="Retention הוא שיעור הלקוחות שמחדשים או מרחיבים עם Check Point במקום לעבור למתחרה. מסלול שדרוג על אותה קופסה מחזק את סיכוי החידוש ושומר על מחיר העסקה. יעד של 5 נקודות אחוז הוא הנחת תכנון שדורשת אימות מול נתוני CRM, ואינו נכלל ב-ROI הבסיסי כדי למנוע ספירה כפולה.">i</span></div>
+        <div class="impact-value"><span class="en">+5</span> נק׳*</div>
+        <div class="impact-detail">יעד תכנון בחידושי <span class="en">9700/9800</span></div>
+      </div>
+    </div>
     <div class="bval">
       <div class="vcard v1">
         <div class="vhead"><span class="vnum">1</span><h4>מייצרים הכנסות מהבסיס המותקן</h4></div>
@@ -1980,7 +2028,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
       </table>
     </div>
     <div class="src box" style="margin-top:6px">
-      <span class="t">מקורות והנחות</span> <a href="https://my.idc.com/getdoc.jsp?containerId=IDC_P6272" target="_blank" rel="noopener">IDC Security Appliance Tracker</a> · <a href="https://www.checkpoint.com/about-us/investor-relations/" target="_blank" rel="noopener">Check Point IR</a> · המודל בנוי לאופק של 3 שנים, אופק תכנון מקובל ל-business case · משלוחי 9700/9800 מוערכים ב-1,500 יחידות בשנה (IDC) · הכנסות ממודולים ל-3 שנים ($40.9M) מורכבות מ-attach על יחידות חדשות (‏$27.0M, ~1,800 מודולים כשה-attach גדל מ-30% ל-50%) ומשדרוגי בסיס מותקן (‏$13.9M, ~925 מודולים כשהביקוש מרוכז בשנה הראשונה), במחיר מודול $15K · רווחיות גולמית 65% למודול ו-60% לעסקת DC/HQ · ההשקעה ($7.2M) היא <b>אומדן תכנון</b>: R&amp;D ‏$4.5M, חומרה+FIPS ‏$1.2M, dev kits+NRE ‏$0.8M, GTM ‏$0.7M · ROI = תרומה נטו (רווח גולמי פחות ההשקעה) חלקי ההשקעה · Break-even בחודש 16 מ-GA מחושב על המודולים בלבד · תרחיש ה-<span class="en">upside</span> (עוד +$26.3M מ-75 עסקאות DC/HQ, 25 בשנה × 3, בהנחת +10 נק׳ win-rate) הוא <b>אומדן</b>, ואינו נדרש להשגת ה-break-even
+      <span class="t">מקורות והנחות</span> <b>Retention:</b> יעד של +5 נק׳ בחידושי 9700/9800 הוא <b>הנחת תכנון</b> לאימות מול נתוני CRM, ואינו כלול ב-ROI הבסיסי כדי למנוע ספירה כפולה · <a href="https://my.idc.com/getdoc.jsp?containerId=IDC_P6272" target="_blank" rel="noopener">IDC Security Appliance Tracker</a> · <a href="https://www.checkpoint.com/about-us/investor-relations/" target="_blank" rel="noopener">Check Point IR</a> · המודל בנוי לאופק של 3 שנים, אופק תכנון מקובל ל-business case · משלוחי 9700/9800 מוערכים ב-1,500 יחידות בשנה (IDC) · הכנסות ממודולים ל-3 שנים ($40.9M) מורכבות מ-attach על יחידות חדשות (‏$27.0M, ~1,800 מודולים כשה-attach גדל מ-30% ל-50%) ומשדרוגי בסיס מותקן (‏$13.9M, ~925 מודולים כשהביקוש מרוכז בשנה הראשונה), במחיר מודול $15K · רווחיות גולמית 65% למודול ו-60% לעסקת DC/HQ · ההשקעה ($7.2M) היא <b>אומדן תכנון</b>: R&amp;D ‏$4.5M, חומרה+FIPS ‏$1.2M, dev kits+NRE ‏$0.8M, GTM ‏$0.7M · ROI = תרומה נטו (רווח גולמי פחות ההשקעה) חלקי ההשקעה · Break-even בחודש 16 מ-GA מחושב על המודולים בלבד · תרחיש ה-<span class="en">upside</span> (עוד +$26.3M מ-75 עסקאות DC/HQ, 25 בשנה × 3, בהנחת +10 נק׳ win-rate) הוא <b>אומדן</b>, ואינו נדרש להשגת ה-break-even
     </div>
   </div>
   <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
@@ -2162,38 +2210,38 @@ const SEG=[{n:'HQ',s0:22,c:.05,g:0,col:'#741984',sh:.10},{n:'Regulated',s0:14,c:
 (function(){
  const A=['ft','pa','cs'];
  const Q=[
-  {k:'S',t:'חוזקות',s:'למה לקוחות המטה והמפוקחים נשארים',items:[
-   {d:'t',v:['ft','cs'],h:'דיוק זיהוי איומים 99%+',x:'דיוק זיהוי (Efficacy) הוא אחוז ההתקפות שנחסמות במבחן של מעבדה בלתי תלויה. Check Point ו-Palo Alto מובילות עם 99%+, Fortinet כ-96% ו-Cisco כ-91%. מאחורי המספר עומד ThreatCloud AI, מנוע מודיעין איומים שמתעדכן ממעל 300 מקורות.'},
-   {d:'t',v:['ft','pa'],h:'עיכוב 1.85 מיקרו־שנייה, בקופסה של 1U',x:'עיכוב (Latency) הוא הזמן שהקופסה מוסיפה לכל חבילת מידע שעוברת דרכה. אצלנו 1.85 מיקרו-שנייה, מול 4.8 אצל Fortinet (בקופסה גבוהה פי שלושה) וכ-5 אצל Palo Alto. חשוב לזכור: זה טיעון מכירה רק במסחר אלגוריתמי ובמערכות תעשייה, ולא באפליקציות מטה רגילות.'},
-   {d:'t',v:['pa','cs'],h:'גדילה וזמינות בלי שלדה: Maestro',x:'Maestro מחבר כמה קופסאות לאשכול שמתנהג כחומת אש אחת, עד 300 Gbps תעבורה מסוננת, וממשיך לפעול גם כשקופסה אחת נופלת. אצל Palo Alto מדובר בעיקר בזוגות גיבוי, ואצל Cisco באשכול של עד 16 יחידות.'},
-   {d:'t',v:A,h:'מדיניות אחת לכל הסביבות',x:'SmartConsole הוא מסך ניהול אחד שבו מגדירים את מדיניות האבטחה למטה, לסניפים ולענן, כולל API ו-Terraform לאוטומציה. אצל המתחרים אותה עבודה מתפצלת לשלוש מערכות נפרדות: Panorama, FortiManager ו-FMC.'},
-   {d:'c',v:['pa'],h:'עלות 3 שנים 22K$, חצי מ-Palo Alto',x:'TCO הוא סך העלות ל-3 שנים: חומרה, רישוי, תמיכה ומנויים, ברמת 10 Gbps תעבורה מסוננת. אצלנו 22K$ מול 43K$ ב-Palo Alto, ובאותו דיוק זיהוי.'},
-   {d:'c',v:['ft','pa','cs'],h:'תקינה בכל דגם בקו',x:'FIPS 140-2 הוא תקן ההצפנה של ממשל ארה"ב, ו-EAL4+ הוא תקן אבטחה בינלאומי. אצלנו שניהם קיימים בכל דגם בקו, ואצל המתחרים רק בדגמים נבחרים. בפועל זה מקצר את שלב הסינון במכרזים ממשלתיים ובבנקים.'},
-   {d:'c',v:A,h:'שותפים ובסיס לקוחות מותקן',x:'כל המכירות עוברות דרך שותפים, ובסיס הלקוחות במטה ובארגונים המפוקחים הוא גדול. חידושי הרישוי מהבסיס הזה מספקים הכנסה יציבה וצפויה מראש.'}]},
+ {k:'S',t:'חוזקות',s:'למה לקוחות המטה והמפוקחים נשארים',items:[
+   {d:'t',v:['ft','cs'],h:'דיוק זיהוי איומים 99%+',x:'יעילות זיהוי היא שיעור ההתקפות שנחסמות במבחן של מעבדה בלתי תלויה. Check Point ו-Palo Alto מובילות במבחן המצוטט. המספר מתייחס לתצורה ולתרחיש שנבדקו, ולא לכל גרסת מוצר.<span class="swmeta source">מקור: CyberRatings Q4 2025</span>'},
+   {d:'t',v:['ft','pa'],h:'עיכוב 1.85 מיקרו־שנייה, בקופסה של 1U',x:'עיכוב הוא הזמן שהקופסה מוסיפה לחבילת מידע. זהו יתרון כאשר עיכוב הוא קריטי, למשל במסחר אלגוריתמי ובמערכות תעשייה. מחוץ לתרחישים האלה, זהו גורם משני בהחלטה.<span class="swmeta source">מקור: CP Appliance Chart 2026</span>'},
+   {d:'t',v:['pa','cs'],h:'Maestro מספק scale-out',x:'Maestro מחבר כמה קופסאות לאשכול אחד. ב־9800 הוא מגיע עד 300 Gbps NGTP ומספק נתיב גדילה וזמינות. כאשר דרושים ביצועי TLS גבוהים, הפתרון מוסיף מקום בארון ועלות.<span class="swmeta source">מקור: CP Appliance Chart 2026</span>'},
+   {d:'t',v:A,h:'ניהול מדיניות עקבי',x:'SmartConsole מספק ניהול מדיניות ואוטומציה עקביים ל־Quantum, Maestro וסביבות ענן נתמכות. פערי המוצר מול SASE נבחנים בנפרד ולא מוסתרים בתוך הטענה הזו.<span class="swmeta source">מקור: תיעוד Check Point</span>'},
+   {d:'c',v:['pa'],h:'TCO תחרותי מול Palo Alto',x:'בתרחיש ההשוואה במצגת, העלות ל־3 שנים היא 22K$ מול 43K$ ברמת 10 Gbps. זהו אומדן תצורה ולא מחירון רשמי, והוא משתנה לפי bundle, אזור והנחת ערוץ.<span class="swmeta assumption">הנחת תכנון: מודל TCO פנימי</span>'},
+   {d:'c',v:['ft','pa','cs'],h:'תקינה בקו מוצר רחב',x:'FIPS 140-2 ו־EAL4+ תומכים במכרזים מוסדרים. לפני שימוש בטענה מול לקוח יש לאמת את הכיסוי המדויק לפי דגם, גרסת תוכנה ו־SKU.<span class="swmeta source">מקור: מסמכי תקינה של Check Point</span>'},
+   {d:'c',v:A,h:'שותפים ובסיס לקוחות מותקן',x:'הערוץ והבסיס המותקן מאפשרים שיחה סביב חידוש, הרחבת קיבולת ושדרוג. זו נקודת מינוף מסחרית, לא טענה שכל המכירות עוברות דרך שותפים.<span class="swmeta assumption">הנחת תכנון: מודל GTM</span>'}]},
   {k:'W',t:'חולשות',s:'למה מפסידים עסקאות שנמדדות ב-Throughput',items:[
-   {d:'t',v:['ft','pa'],hinge:1,h:'Throughput מסונן: 25 Gbps לכל RU',x:'תעבורה מסוננת (Threat Prevention) היא מה שעובר בקופסה כשכל מנועי האבטחה פועלים. אצלנו כל בדיקה מעבר לכתובת ולפורט רצה על מעבד x86 רגיל, ולכן מתקבלים 25 Gbps לכל RU, מול כ-33 ב-Fortinet וכ-38 ב-Palo Alto. כשפותחים תעבורה מוצפנת לבדיקה נשארים כ-10 Gbps בלבד. זה הקריטריון שמכריע במרכזי נתונים, וזה מה שלקוח מטה בודק בחידוש.'},
-   {d:'t',v:['ft','pa'],h:'אין האצה חומרתית לסינון תוכן',x:'שבב החומרה שלנו מאיץ רק ניתוב בסיסי לפי כתובת ופורט. ההצפנה וחיפוש חתימות ההתקפות רצים בתוכנה על המעבד. ל-Fortinet יש שבב תוכן ייעודי (CP9) ול-Palo Alto כרטיס עיבוד ייעודי (DPC) שמבצעים בדיוק את זה בחומרה.'},
-   {d:'t',v:['ft','pa'],h:'715 אלף חיבורים חדשים בשנייה',x:'זהו מספר החיבורים החדשים שהקופסה פותחת בכל שנייה, מדד שמכריע באתרים עמוסים, ב-API ובמיקרו־שירותים. אצל Fortinet 3 מיליון ואצל Palo Alto 3.6 מיליון, פער של פי ארבעה עד חמישה.'},
-   {d:'t',v:['ft'],h:'SD-WAN לא מגיע בתוך המוצר',x:'SD-WAN הוא חיבור סניפים דרך אינטרנט רגיל במקום קווים יקרים, עם ניתוב חכם בין הקווים. ב-FortiGate הוא כלול במערכת ההפעלה ללא תוספת מחיר, ואצלנו זו רכישה נפרדת. בסניפים אנחנו יקרים יותר עוד לפני שדיברנו על אבטחה.'},
-   {d:'c',v:['ft'],h:'יקרים ב-57% מ-Fortinet',x:'באותה רמה של 10 Gbps תעבורה מסוננת: 22K$ אצלנו מול 14K$ ב-Fortinet. Fortinet גם אגרסיבית במיוחד בחידושי רישוי ובעסקאות גדולות, ושם ההפרש הזה מכריע.'},
-   {d:'c',v:['ft'],h:'מודל רישוי מסובך',x:'הרישוי אצלנו נבנה מחבילות של מנועי אבטחה (NGTP, NGTX, Harmony), והלקוח צריך להבין מה נכלל בכל חבילה. אצל Fortinet יש מנוי אחד בשם FortiGuard, וזה פשוט יותר להצגה ולהשוואה.'},
-   {d:'c',v:['cs','pa'],h:'תמיכה לא אחידה בין אזורים',x:'לפי ביקורות לקוחות ב-PeerSpot, איכות התמיכה משתנה מחוץ לארה"ב ולאירופה. מול Cisco, שמערך התמיכה שלה נחשב לסטנדרט בתעשייה, זה סעיף שחוזר בהתנגדויות בתהליך המכירה.'}]},
+   {d:'t',v:['ft','pa'],hinge:1,h:'TLS Threat Prevention הוא צוואר הבקבוק',x:'9800 מספק 25 Gbps Threat Prevention, אך 10.1 Gbps TLS Threat Prevention. במכרזים שבהם רוב התעבורה מוצפנת, מדד TP+TLS הוא המגביל ולכן זהו הפער העסקי המרכזי.<span class="swmeta source">מקור: CP Appliance Chart 2026</span>'},
+   {d:'t',v:['ft','pa'],h:'אין האצה ייעודית לסינון תוכן',x:'ב־9800 עיבודי TLS וסינון תוכן נשענים על משאבי x86 כלליים. זהו פער לעומת FortiASIC ו־DPC במתחרים, ולכן נקודת מפתח לאימות ב־PoC.<span class="swmeta source">מקור: ארכיטקטורות ודפי נתונים של היצרנים</span>'},
+   {d:'t',v:['ft','pa'],h:'715 אלף חיבורים חדשים בשנייה',x:'9800 מספק 715K CPS. FortiGate 6500F מצהיר על עד 3M ו־PA-5450 על עד 3.6M. תנאי המדידה שונים, לכן זו אינדיקציה ליכולת scale ולא benchmark אחיד.<span class="swmeta source">מקור: דפי נתונים של היצרנים</span>'},
+   {d:'t',v:['ft'],h:'Fortinet חזקה יותר בסניפים',x:'בסניפים, מחיר ו־SD-WAN משולב הם גורמי הכרעה. לכן שדרוג ל־9000 אינו משנה את התחרות שם, והמוקד נשאר ב־HQ ובמרכזי נתונים.<span class="swmeta assumption">הנחת תכנון: ניתוח סגמנטים</span>'},
+   {d:'c',v:['ft'],h:'פער TCO מול Fortinet',x:'בתרחיש ההשוואה במצגת, Fortinet זולה יותר ברמת 10 Gbps. שיעור הפער משתנה לפי bundle, אזור והנחת ערוץ ואין להציגו כמחיר שוק קבוע.<span class="swmeta assumption">הנחת תכנון: מודל TCO פנימי</span>'},
+   {d:'c',v:['ft'],h:'השוואת רישוי מורכבת יותר',x:'חבילות NGTP, NGTX ו־Harmony מקשות על השוואה מול חבילת FortiGuard. זו נקודת חיכוך בשיחת מכירה ולא מדד כמותי.<span class="swmeta assumption">הנחת תכנון: ניתוח GTM</span>'},
+   {d:'c',v:['cs','pa'],h:'אין מסלול שדרוג פנימי ל־9800',x:'כאשר 10.1 Gbps TP+TLS אינו מספיק, הלקוח בוחר ב־Maestro או בדגם גדול יותר. זהו הבסיס הישיר להצעת הכרטיס, ולא טענה כללית על איכות התמיכה.<span class="swmeta source">מקור: נתוני 9800 ומפת הפתרונות</span>'}]},
   {k:'O',t:'הזדמנויות',s:'איפה נפתח חלון הזדמנות',items:[
-   {d:'t',v:['ft'],h:'להשתמש בסיליקון של אחרים (DPU)',x:'DPU הוא כרטיס עם מעבד רשת מובנה שנכנס לקופסה. NVIDIA BlueField-3 מספק הצפנה ב-400 Gbps וחיפוש תבניות בחומרה, בלי שנפתח שבב בעצמנו. Check Point כבר מריצה עליו את AIFF, ומ-2027 המעבר להצפנה עמידה בפני קוונטים יהפוך האצה כזו להכרח.'},
-   {d:'t',v:['ft'],h:'Fortinet כבולה לשבב שלה',x:'אצל Fortinet שדרוג יכולת הסינון מחייב קופסה חדשה, כי הלוגיקה צרובה בשבב. במודל שלנו, של מעבד רגיל בתוספת כרטיס האצה, השדרוג הוא כרטיס שנכנס לחריץ קיים באותה קופסה.'},
-   {d:'t',v:['pa'],h:'להריץ AI על הקופסה בלי לגזול מהמעבד',x:'מנוע ה-AI (למשל Lakera) יכול לרוץ על ליבות ה-Arm שבתוך ה-DPU, כך שאינו גוזל כוח עיבוד מהאבטחה עצמה. שוק אבטחת ה-AI מוערך ב-21.9 מיליארד דולר. Palo Alto מריצה את יכולות ה-AI שלה על המעבד הראשי.'},
-   {d:'c',v:['ft','pa'],h:'גל החלפת ציוד 2025 עד 2027',x:'בסיס הלקוחות מחליף חומרה בדיוק בשנים האלה. שדרוג באמצעות כרטיס בשטח נמכר בלי להחליף קופסה שלמה ובלי לשלם שוב על החומרה, וזו נקודת פתיחה נוחה לשיחת החידוש.'},
-   {d:'c',v:['ft'],h:'שדרוג באותה קופסה, לא קופסה חדשה',x:'מעבד רגיל בתוספת כרטיס האצה מאריך את חיי אותה קופסה ל-5 עד 7 שנים. במודל של שבב ייעודי, כל קפיצה ב-Throughput מחייבת רכישת חומרה חדשה. זה הטיעון הכספי שלנו מול Fortinet.'},
-   {d:'c',v:['pa'],h:'מרכזי נתונים: 2.8 עד 4.0 מיליארד דולר',x:'זהו הסגמנט היחיד שבו הקריטריון המכריע הוא הנדסי, כלומר בדיוק מה שכרטיס ההאצה משפר. הדגמים 9700 ו-9800 כבר משווקים לשם, ולכן לא נדרש קו מוצר חדש.'}]},
+   {d:'t',v:['ft'],h:'DPU מקצר את נתיב הפיתוח',x:'BlueField-3 מספקת בסיס להאצת הצפנה ועיבוד רשת. Check Point כבר מפעילה AI Cloud Protect על BlueField-3. שימוש ב־9000 הוא הזדמנות לפיתוח, לא יכולת קיימת. ה־PoC יבדוק TP+TLS, תאימות וצריכת הספק.<span class="swmeta source">מקור: Check Point AI Cloud Protect</span>'},
+   {d:'t',v:['ft'],h:'מסלול שדרוג ללא appliance refresh',x:'ב־Fortinet שדרוג ביצועים מוביל בדרך כלל לבחירת appliance מדור או דגם חדש. אם ה־PoC יאשר מודול ל־9800, Check Point תוכל להציע שדרוג על הפלטפורמה הקיימת. זו הנחת פתרון, לא יכולת קיימת.<span class="swmeta assumption">הנחת תכנון: תזה ל־PoC</span>'},
+   {d:'t',v:['pa'],h:'יכולות משלימות בלי להעמיס על ה־gateway',x:'DPU יכול לארח עיבודים משלימים על ליבות Arm ולשחרר משאבי x86. ההבדלה המוצעת היא מסלול שדרוג ב־1U, לא הטענה של־Palo Alto אין האצה ייעודית.<span class="swmeta source">מקור: BlueField architecture ו־PA-5450</span>'},
+   {d:'c',v:['ft','pa'],h:'חלון חידושים ותכנון קיבולת',x:'בעת חידוש או הרחבת קיבולת, הלקוח בוחן החלפת appliance, הרחבת Maestro או שדרוג ביצועים. היקף ההזדמנות יכומת מול CRM. זו הנחת תכנון ולא גל החלפה מתועד.<span class="swmeta assumption">הנחת תכנון: אימות מול CRM</span>'},
+   {d:'c',v:['ft'],h:'ערך כלכלי אפשרי ללקוח הקיים',x:'מודול שדרוג עשוי לדחות החלפת appliance ולצמצם CAPEX ו־cutover. משך החיים בפועל תלוי בקיבולת, תמיכה ותאימות. זו הנחת ערך לבדיקת ה־PoC.<span class="swmeta assumption">הנחת תכנון: ערך ללקוח</span>'},
+   {d:'c',v:['pa'],h:'מרכזי נתונים: 2.8 עד 4.0 מיליארד דולר',x:'זהו אומדן סגמנטציה ל־2026 עד 2030. הסגמנט מתאים לפתרון משום שביצועי TP+TLS ו־TCO הם גורמי הכרעה.<span class="swmeta assumption">הנחת תכנון: מודל TAM במצגת</span>'}]},
   {k:'T',t:'איומים',s:'מה קורה אם לא נזוז',items:[
-   {d:'t',v:['ft','pa'],h:'המתחרים מעלים את הרף',x:'Palo Alto השיקה את PA-7500 עם 1.44 טרה־ביט תעבורה מסוננת ויכולות אבטחה ל-AI. Fortinet משפרת את דיוק הזיהוי שלה בעזרת AI, וסוגרת בדיוק את הפער שבו אנחנו מובילים היום.'},
-   {d:'t',v:['pa','cs'],h:'המעבר לאבטחה כשירות ענן (SASE)',x:'SASE הוא אבטחה שנצרכת כשירות ענן במקום דרך קופסה בארגון. Prisma Access ו-Umbrella לוקחים את קצה הקמפוס, וספקי הענן הגדולים מציעים אבטחה משלהם. התקציב שעובר לשם לא חוזר לחומרה.'},
-   {d:'t',v:A,h:'CVE-2026-50751: פגיעה בתדמית האבטחה',x:'חולשת עקיפת אימות שפורסמה ביוני 2026. הנזק כאן תדמיתי בעיקרו: הטיעון המרכזי שלנו הוא דיוק זיהוי, ואירוע כזה מחליש בדיוק אותו בשיחה עם מנהל אבטחת מידע.'},
-   {d:'c',v:['ft'],h:'שחיקה בשוק הבינוני',x:'Fortinet חוטפת חידושי רישוי בשוק הבינוני בשילוב של מחיר נמוך ו-SD-WAN שכלול במוצר. כל חידוש שנופל שם הוא הכנסה חוזרת שיוצאת מהבסיס שלנו.'},
-   {d:'c',v:['ft','pa'],h:'שותפים הולכים אחרי הצמיחה',x:'שותפים משקיעים אצל מי שמצמיח להם רווח: ב-Palo Alto זה גודל העסקה, וב-Fortinet זה נפח ושירותים מנוהלים. אם אין לנו סיפור צמיחה, השותף מוביל את הלקוח למתחרה.'},
-   {d:'c',v:['cs'],h:'Cisco מוכרת איחוד עם Splunk',x:'בארגונים שכבר בנויים על Cisco, ההצעה היא לאחד רשת, אבטחה ונתוני Splunk אצל ספק אחד. התמיכה והשירותים של Cisco הופכים לטיעון שמדלג על השוואת ביצועים.'}]}]; const wrap=document.getElementById('swot2');
+   {d:'t',v:['ft','pa'],h:'המתחרים מרחיבים ביצועי TLS ועיבוד תוכן',x:'Fortinet ו־Palo Alto ממשיכות להשקיע בחומרה ייעודית ובמערכות מודולריות. הפער ב־RFPs של מרכזי נתונים ומטה עלול להעמיק אם אין מסלול שדרוג.<span class="swmeta source">מקור: דפי נתונים של Fortinet ו־Palo Alto</span>'},
+   {d:'t',v:['pa','cs'],h:'SASE מצמצם חלק מהביקוש לחומרה',x:'בענן ובחלק מהסניפים, SASE מסיט חלק מהתקציב מ־appliances. לכן ההשקעה ב־9000 מתמקדת במרכזי נתונים ובמטה, ולא אמורה לפתור את פער ה־SASE.<span class="swmeta source">מקור: Gartner MQ והערכת סגמנטים</span>'},
+   {d:'t',v:A,h:'שחיקה בחידושים כשהביצועים אינם מספיקים',x:'ב־HQ ובמרכזי נתונים, חידוש חושף את הפער ב־TP+TLS. בלי upgrade SKU, צוות המכירות נשען על הנחה, הרחבת Maestro או appliance גדול יותר.<span class="swmeta assumption">הנחת תכנון: ניתוח עסקי במצגת</span>'},
+   {d:'c',v:['ft'],h:'Fortinet שוחקת חידושים בשוק הבינוני',x:'מחיר ו־SD-WAN משולב מחזקים את Fortinet בשוק הבינוני. ההשפעה על Renewals היא סיכון מסחרי שצריך לאמת מול CRM, ולא נתון שוק קשיח.<span class="swmeta assumption">הנחת תכנון: אימות מול CRM</span>'},
+   {d:'c',v:['ft','pa'],h:'היעדר SKU יוצר סיכון בערוץ',x:'ללא מסלול שדרוג תחרותי, שותף עלול להציע הרחבת Maestro, הנחה או מוצר מתחרה. SKU פשוט מחזק את הסיבה להשאיר את העסקה ב־Check Point.<span class="swmeta assumption">הנחת תכנון: מודל ערוץ</span>'},
+   {d:'c',v:['cs'],h:'יתרון פלטפורמה אצל לקוחות Cisco',x:'אצל לקוחות שכבר מושקעים ב־Cisco וב־Splunk, Cisco יכולה למכור אינטגרציה ותפעול. יתרון ביצועים לבדו לא תמיד מספיק כדי לנצח את העסקה.<span class="swmeta source">מקור: אסטרטגיית Cisco ו־Splunk</span>'}]}]; const wrap=document.getElementById('swot2');
  wrap.innerHTML=Q.map(q=>`<div class="q ${q.k}"><div class="qh"><b>${q.k}</b><div><h3>${q.t}</h3><small>${q.s}</small></div></div>
-   <div class="dims">${['t','c'].map(d=>`<div class="dim ${d}"><h5>${d==='t'?'🔧 טכני':'💼 מסחרי'}</h5>${q.items.filter(i=>i.d===d).map(i=>`<div class="it ${i.hinge?'hinge':''}" data-d="${i.d}" data-v="${i.v.join(' ')}"><span class="vs">${i.v.map(v=>`<i class="${v}"></i>`).join('')}</span><div><b>${i.h}</b><small>${i.x}</small></div></div>`).join('')}</div>`).join('')}</div></div>`).join('');
+   <div class="dims">${['t','c'].map(d=>`<div class="dim ${d}"><h5>${d==='t'?'🔧 טכני':'💼 מסחרי'}</h5>${q.items.filter(i=>i.d===d).map(i=>`<div class="it ${i.hinge?'hinge':''}" data-d="${i.d}" data-v="${i.v.join(' ')}"><span class="vs">${i.v.map(v=>`<i class="${v}"></i>`).join('')}</span><div><b>${i.h}<span class="swi" aria-hidden="true">i</span></b><small>${i.x}</small></div></div>`).join('')}</div>`).join('')}</div></div>`).join('');
  let dim='c', vs='cs';
  function apply(){wrap.querySelectorAll('.it').forEach(it=>{const ok=(dim==='all'||it.dataset.d===dim)&&(vs==='all'||it.dataset.v.split(' ').includes(vs)); it.classList.toggle('off',!ok);});
   wrap.querySelectorAll('.dim').forEach(d=>d.classList.toggle('off',dim!=='all'&&!d.classList.contains(dim)));}
