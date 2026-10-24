@@ -870,6 +870,21 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 #sApxLicense .apxbottom{margin-top:9px;background:#fff5f8;border:1px solid var(--primary);border-left:4px solid var(--primary);border-radius:8px;padding:8px 13px;font-size:11px;color:var(--text);line-height:1.55;}
 #sApxLicense .apxbottom .bt{font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.04em;font-size:10px;margin-right:6px;}
 #sApxLicense .apxbottom b{color:var(--primary);}
+#sApxPoc .pocstats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:10px 0 16px;}
+#sApxPoc .pocstat{background:var(--off);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:10px;padding:12px 16px;}
+#sApxPoc .pocstat.stop{border-left-color:var(--light);}
+#sApxPoc .pocstat .pv{font-family:var(--font-num);font-size:24px;font-weight:800;color:var(--primary);line-height:1;direction:ltr;}
+#sApxPoc .pocstat.stop .pv{color:var(--mid);}
+#sApxPoc .pocstat .pl{font-size:10.5px;color:var(--mid);margin-top:7px;line-height:1.4;}
+#sApxPoc .brk{grid-template-columns:1fr 1fr;margin-top:4px;}
+#sApxPoc .brk .bc{padding:14px 18px;}
+#sApxPoc .brk .bt{font-size:13px;margin-bottom:11px;}
+#sApxPoc .brk .bar{height:36px;border-radius:7px;}
+#sApxPoc .brk .bar span{font-size:11px;}
+#sApxPoc .brk .leg{font-size:10px;margin-top:11px;gap:6px 14px;}
+#sApxPoc .pocnote{margin-top:16px;background:#fff5f8;border:1px solid var(--primary);border-left:4px solid var(--primary);border-radius:8px;padding:10px 15px;font-size:11px;color:var(--text);line-height:1.6;}
+#sApxPoc .pocnote b{color:var(--primary);}
+#sApxPoc .src.box a{color:var(--primary);text-decoration:underline;}
 /* ── s6 chart: Cisco TP clarification tooltip ── */
 .deccard{position:relative;}
 #dectip{position:absolute;left:46px;right:14px;top:58px;z-index:30;background:#fff;border:1px solid var(--border);border-left:3px solid #5a8f9e;border-radius:8px;box-shadow:0 8px 22px rgba(41,14,35,.16);padding:8px 11px;font-size:11px;line-height:1.5;color:var(--dark);font-weight:500;}
@@ -1398,6 +1413,8 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 .s17 .ask-gate .num,.s17 .ask-gate .en{color:#8ef0b8;}
 .s17 .ask-stop{font-size:11px;color:rgba(255,255,255,.6);line-height:1.4;}
 .s17 .ask-stop .num{color:rgba(255,255,255,.85);}
+.s17 .ask-brk{margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.14);font-size:9.5px;color:rgba(255,255,255,.52);line-height:1.5;}
+.s17 .ask-brk b{color:rgba(255,255,255,.8);font-weight:700;}
 </style>
 </head>
 <body>
@@ -1942,6 +1959,59 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
   <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
 </section>
 
+<section class="slide" data-ch="5" id="sApxPoc">
+  <div class="rail"></div>
+  <div class="body">
+    <div class="eyebrow">CHAPTER 5 · THE SOLUTION</div>
+    <h1 class="title">The PoC in detail — <span class="hl">$2.9M · ~6 months · one gate</span></h1>
+    <div class="pocstats">
+      <div class="pocstat"><div class="pv">25 Gbps+</div><div class="pl">Success gate — <span class="en">TP</span> under <span class="en">TLS</span> (×2.5 vs <span class="num">10G</span> today)</div></div>
+      <div class="pocstat"><div class="pv">10 eng · 6 mo</div><div class="pl">Focused team working to a single measurable gate</div></div>
+      <div class="pocstat stop"><div class="pv">$4.3M</div><div class="pl">Held back — released to <span class="en">GA</span> only if the gate is met</div></div>
+    </div>
+    <div class="brk">
+      <div class="bc">
+        <div class="bt"><span>Investment structure · PoC</span><span class="tot">$2.9M</span></div>
+        <div class="bar">
+          <span style="flex:1.25;background:var(--primary)">$1.25M</span>
+          <span style="flex:.65;background:var(--amber)">$0.65M</span>
+          <span style="flex:.6;background:var(--teal)">$0.6M</span>
+          <span style="flex:.4;background:var(--purple)">$0.4M</span>
+        </div>
+        <div class="leg">
+          <span><i style="background:var(--primary)"></i>R&amp;D · 10 engineers × 6 mo</span>
+          <span><i style="background:var(--amber)"></i>dev kits · NRE (bought up-front)</span>
+          <span><i style="background:var(--teal)"></i>HW eng · thermal · FIPS scoping</span>
+          <span><i style="background:var(--purple)"></i>GTM · design-partner prep</span>
+        </div>
+      </div>
+      <div class="bc">
+        <div class="bt"><span>Effort timeline · PoC</span><span class="tot">~6 months</span></div>
+        <div class="bar">
+          <span style="flex:1;background:var(--primary)">1</span>
+          <span style="flex:2;background:var(--teal)">2</span>
+          <span style="flex:2;background:var(--purple)">2</span>
+          <span style="flex:1;background:var(--amber)">1</span>
+        </div>
+        <div class="leg">
+          <span><i style="background:var(--primary)"></i>dev-kit &amp; lab bring-up (1)</span>
+          <span><i style="background:var(--teal)"></i>offload integration — core (2)</span>
+          <span><i style="background:var(--purple)"></i>TLS gate measurement · 25G+ (2)</span>
+          <span><i style="background:var(--amber)"></i>thermal + FIPS scoping (1)</span>
+        </div>
+      </div>
+    </div>
+    <div class="pocnote">
+      <b>How to read it:</b> the PoC is a phase-slice of the full <span class="en">$7.2M</span> / 18-month program — it front-loads a focused subset of each cost category and the first ~6 months of effort against one measurable gate. <b>If 25 Gbps+ under TLS is met</b>, the remaining <b>$4.3M → GA</b> (~12 more months) is released; <b>if not, we stop here.</b>
+    </div>
+    <div class="src box" style="margin-top:8px">
+      <span class="t">Sources &amp; assumptions</span> <a href="https://docs.nvidia.com/networking/display/bluefield3dpu" target="_blank" rel="noopener">Nvidia BlueField-3 datasheet</a> · <a href="https://csrc.nist.gov/projects/cryptographic-module-validation-program" target="_blank" rel="noopener">NIST CMVP (FIPS 140-3)</a> · <a href="https://www.checkpoint.com/press-releases/check-point-redefines-ai-security-for-enterprises-with-ai-cloud-protect-powered-by-nvidia-bluefield/" target="_blank" rel="noopener">Check Point AIFF PR</a> · The PoC split is a phase allocation of the $7.2M planning estimate (R&amp;D $1.25M = 10 eng × 6 mo × loaded rate · dev kits/NRE $0.65M · HW/thermal/FIPS scoping $0.6M · GTM prep $0.4M) · timeline is an effort estimate, not a schedule commitment · <b>full line-by-line build-up in the Excel model — "PoC — detail" sheet</b></span>
+    </div>
+  </div>
+  <div class="tristripe"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="footer"><span class="c">Check Point Software Technologies · Confidential</span><span class="n">Barak Rozenfeld · Senior PM Assignment 2026</span></div>
+</section>
+
 <!-- ═══════════ 10 · BUSINESS CASE ═══════════ -->
 <section class="slide" data-ch="5" id="s10">
   <div class="rail"></div>
@@ -2055,6 +2125,7 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
         <div class="ask-big">Approve <span class="num">$2.9M</span> for a focused <span class="en">PoC</span></div>
         <div class="ask-gate">Success gate: <span class="num">25 Gbps+</span> under <span class="en">TLS</span></div>
         <div class="ask-stop">If the target is not met, we stop before the remaining <span class="num">$4.3M</span></div>
+        <div class="ask-brk"><b>What the $2.9M buys (~6 months):</b> R&amp;D ~$1.25M (10 eng × 6 mo) · dev kits/NRE ~$0.65M · HW + FIPS scoping ~$0.6M · GTM prep ~$0.4M <span style="opacity:.8">— phase split of the $7.2M; full build-up in the Excel model</span></div>
       </div>
     </div>
     <div class="src box" style="margin-top:8px">
