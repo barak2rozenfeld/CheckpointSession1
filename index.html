@@ -748,6 +748,8 @@ table.tb .n{font-family:var(--font-num);direction:ltr;font-weight:800;white-spac
 .stairs .mdl.rec .sp.cpu b{color:#d8a8e8;}
 .stairs .mdl .sp.nic b{color:var(--steel);}
 .stairs .mdl.rec .sp.nic b{color:#a8d4df;}
+.stairs .mdl .sp.pcie b{color:var(--amber);font-weight:800;}
+.stairs .mdl.rec .sp.pcie b{color:#f3c879;}
 
 .stairs .mdl .sp.thr span{color:var(--mid);}
 .stairs .mdl .sp.thr b{color:var(--primary-dark);font-size:9.5px;white-space:nowrap;}
@@ -2292,15 +2294,15 @@ setCfg(0);
 
 /* ───────── LINEUP: stairs + org-size slider ───────── */
 const MODELS=[
- {m:'9100',fit:'Branch',tp:6.5,tls:2.96,fw:80,cores:8,cpu:'Core i3-13100E',ram:16,rammax:64,nic:1,lo:0,hi:500,mpu:13},
- {m:'9200',fit:'Small enterprise',tp:8,tls:3.6,fw:80,cores:8,cpu:'Core i3-13100E',ram:16,rammax:64,nic:2,lo:500,hi:1000,mpu:8},
- {m:'9300',fit:'Mid-size enterprise',tp:10.5,tls:5.1,fw:200,cores:16,cpu:'Core i5-13400E',ram:16,rammax:64,nic:1,lo:1000,hi:2500,mpu:4.2},
- {m:'9400',fit:'Enterprise HQ',tp:14,tls:5.5,fw:200,cores:20,cpu:'Core i5-13500E',ram:32,rammax:64,nic:1,lo:2500,hi:5000,mpu:2.8},
- {m:'9700',fit:'Large enterprise HQ',tp:20,tls:9.6,fw:400,cores:32,cpu:'Xeon Silver 4314',ram:32,rammax:128,nic:2,lo:5000,hi:10000,mpu:2},
- {m:'9800',fit:'Data center',tp:25,tls:10.1,fw:400,cores:40,cpu:'Xeon Silver 4316',ram:32,rammax:128,nic:2,lo:10000,hi:1e9,mpu:2}];
+ {m:'9100',fit:'Branch',tp:6.5,tls:2.96,fw:80,cores:8,cpu:'Core i3-13100E',ram:16,rammax:64,nic:1,lo:0,hi:500,mpu:13,pcie:'—'},
+ {m:'9200',fit:'Small enterprise',tp:8,tls:3.6,fw:80,cores:8,cpu:'Core i3-13100E',ram:16,rammax:64,nic:2,lo:500,hi:1000,mpu:8,pcie:'—'},
+ {m:'9300',fit:'Mid-size enterprise',tp:10.5,tls:5.1,fw:200,cores:16,cpu:'Core i5-13400E',ram:16,rammax:64,nic:1,lo:1000,hi:2500,mpu:4.2,pcie:'—'},
+ {m:'9400',fit:'Enterprise HQ',tp:14,tls:5.5,fw:200,cores:20,cpu:'Core i5-13500E',ram:32,rammax:64,nic:1,lo:2500,hi:5000,mpu:2.8,pcie:'—'},
+ {m:'9700',fit:'Large enterprise HQ',tp:20,tls:9.6,fw:400,cores:32,cpu:'Xeon Silver 4314',ram:32,rammax:128,nic:2,lo:5000,hi:10000,mpu:2,pcie:'1× Gen5 x16'},
+ {m:'9800',fit:'Data center',tp:25,tls:10.1,fw:400,cores:40,cpu:'Xeon Silver 4316',ram:32,rammax:128,nic:2,lo:10000,hi:1e9,mpu:2,pcie:'1× Gen5 x16'}];
 const stairs=document.getElementById('stairs'), org=document.getElementById('org');
 function thrFmt(lo,hi){if(lo===0)return'up to '+hi.toLocaleString();if(hi>=1e8)return lo.toLocaleString()+'+';return lo.toLocaleString()+'–'+hi.toLocaleString();}
-stairs.innerHTML=MODELS.map((d,i)=>`<div class="mdl${d.hr?' hr':''}" data-i="${i}">${d.hr?'<div class="hrb">★ High-runner</div>':''}<div class="cap"><div class="m">${d.m}</div><div class="fit">${d.fit}</div></div><div class="bd"><div class="tp">${d.tp}<small>Gbps Threat Prevention</small></div><div class="sp thr"><span>Users</span><b>${thrFmt(d.lo,d.hi)}</b></div><div class="sp"><span>TP+TLS</span><b>~${Math.round(d.tls)}G</b></div><div class="sp cpu"><span>CPU cores</span><b>${d.cores}</b></div><div class="sp"><span>Processor</span><b>${d.cpu}</b></div><div class="sp"><span>RAM</span><b>${d.ram} GB</b></div><div class="sp nic"><span>NIC slots</span><b>${d.nic}</b></div></div></div>`).join('');
+stairs.innerHTML=MODELS.map((d,i)=>`<div class="mdl${d.hr?' hr':''}" data-i="${i}">${d.hr?'<div class="hrb">★ High-runner</div>':''}<div class="cap"><div class="m">${d.m}</div><div class="fit">${d.fit}</div></div><div class="bd"><div class="tp">${d.tp}<small>Gbps Threat Prevention</small></div><div class="sp thr"><span>Users</span><b>${thrFmt(d.lo,d.hi)}</b></div><div class="sp"><span>TP+TLS</span><b>~${Math.round(d.tls)}G</b></div><div class="sp cpu"><span>CPU cores</span><b>${d.cores}</b></div><div class="sp"><span>Processor</span><b>${d.cpu}</b></div><div class="sp"><span>RAM</span><b>${d.ram} GB</b></div><div class="sp"><span>Max RAM</span><b>${d.rammax} GB</b></div><div class="sp nic"><span>NIC slots</span><b>${d.nic}</b></div><div class="sp pcie"><span>Free PCIe</span><b>${d.pcie}</b></div></div></div>`).join('');
 function orgUsers(v){return Math.round(Math.pow(10,2+v/100*2.1)/10)*10;} /* 0→100 users, 100→~12,500 users (9800 stays within capacity) */
 function lineup(){const u=orgUsers(+org.value); document.getElementById('orgv').textContent=u.toLocaleString()+' users';
  const rec=MODELS.findIndex(d=>u>=d.lo&&u<d.hi);
